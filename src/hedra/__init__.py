@@ -14,7 +14,7 @@ from .types import (
     VoicesResponseBody,
 )
 from .errors import UnprocessableEntityError
-from . import audio, characters, portait, projects, voice
+from . import audio, characters, portrait, projects, voice
 from .characters import ApiGenerateTalkingAvatarRequestBodyAspectRatio, ApiGenerateTalkingAvatarRequestBodyAudioSource
 from .client import AsyncHedra, Hedra
 from .environment import HedraEnvironment
@@ -41,7 +41,7 @@ __all__ = [
     "__version__",
     "audio",
     "characters",
-    "portait",
+    "portrait",
     "projects",
     "voice",
 ]

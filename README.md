@@ -25,6 +25,24 @@ from hedra import Hedra
 client = Hedra(
     api_key="YOUR_API_KEY",
 )
+
+audio_url = None
+with open("audio.mp3", "rb") as f:
+    response = client.audio.upload_audio(file=f)
+    audio_url = response.url
+
+image_url = None
+with open("image.jpg", "rb") as f:
+    response = client.portait.upload_image(file=f)
+    image_url = response.url
+
+# with open("example.mp3", "rb") as f:
+response = client.characters.initialize_talking_head_avatar(
+        voice_url=audio_url,
+        avatar_image=image_url
+)
+
+print(response)
 client.audio.upload_audio()
 ```
 

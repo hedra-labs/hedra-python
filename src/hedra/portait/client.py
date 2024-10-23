@@ -16,7 +16,7 @@ from ..core.client_wrapper import AsyncClientWrapper
 OMIT = typing.cast(typing.Any, ...)
 
 
-class PortaitClient:
+class PortraitClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -53,7 +53,7 @@ class PortaitClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.portait.upload_image()
+        client.portrait.upload_image()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/portrait",
@@ -96,7 +96,7 @@ class PortaitClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncPortaitClient:
+class AsyncPortraitClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -138,7 +138,7 @@ class AsyncPortaitClient:
 
 
         async def main() -> None:
-            await client.portait.upload_image()
+            await client.portrait.upload_image()
 
 
         asyncio.run(main())

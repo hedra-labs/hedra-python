@@ -6,13 +6,13 @@ import httpx
 from .core.client_wrapper import SyncClientWrapper
 from .voice.client import VoiceClient
 from .audio.client import AudioClient
-from .portait.client import PortaitClient
+from .portrait.client import PortraitClient
 from .characters.client import CharactersClient
 from .projects.client import ProjectsClient
 from .core.client_wrapper import AsyncClientWrapper
 from .voice.client import AsyncVoiceClient
 from .audio.client import AsyncAudioClient
-from .portait.client import AsyncPortaitClient
+from .portrait.client import AsyncPortraitClient
 from .characters.client import AsyncCharactersClient
 from .projects.client import AsyncProjectsClient
 
@@ -77,7 +77,7 @@ class Hedra:
         )
         self.voice = VoiceClient(client_wrapper=self._client_wrapper)
         self.audio = AudioClient(client_wrapper=self._client_wrapper)
-        self.portait = PortaitClient(client_wrapper=self._client_wrapper)
+        self.portrait = PortraitClient(client_wrapper=self._client_wrapper)
         self.characters = CharactersClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
 
@@ -142,7 +142,7 @@ class AsyncHedra:
         )
         self.voice = AsyncVoiceClient(client_wrapper=self._client_wrapper)
         self.audio = AsyncAudioClient(client_wrapper=self._client_wrapper)
-        self.portait = AsyncPortaitClient(client_wrapper=self._client_wrapper)
+        self.portrait = AsyncPortraitClient(client_wrapper=self._client_wrapper)
         self.characters = AsyncCharactersClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
 

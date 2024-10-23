@@ -111,8 +111,8 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-## Portait
-<details><summary><code>client.portait.<a href="src/hedra/portait/client.py">upload_image</a>(...)</code></summary>
+## Portrait
+<details><summary><code>client.portrait.<a href="src/hedra/portrait/client.py">upload_image</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ from hedra import Hedra
 client = Hedra(
     api_key="YOUR_API_KEY",
 )
-client.portait.upload_image()
+client.portrait.upload_image()
 
 ```
 </dd>
