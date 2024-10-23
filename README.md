@@ -33,7 +33,7 @@ with open("audio.mp3", "rb") as f:
 
 image_url = None
 with open("image.jpg", "rb") as f:
-    response = client.portait.upload_image(file=f)
+    response = client.portrait.upload_image(file=f)
     image_url = response.url
 
 # with open("example.mp3", "rb") as f:
