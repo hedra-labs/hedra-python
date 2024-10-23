@@ -51,7 +51,7 @@ class Hedra:
 
     Examples
     --------
-    from dsinghvi import Hedra
+    from hedra import Hedra
 
     client = Hedra(
         api_key="YOUR_API_KEY",
@@ -99,7 +99,7 @@ class Hedra:
 
         Examples
         --------
-        from dsinghvi import Hedra
+        from hedra import Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
@@ -156,7 +156,7 @@ class AsyncHedra:
 
     Examples
     --------
-    from dsinghvi import AsyncHedra
+    from hedra import AsyncHedra
 
     client = AsyncHedra(
         api_key="YOUR_API_KEY",
@@ -208,7 +208,7 @@ class AsyncHedra:
         --------
         import asyncio
 
-        from dsinghvi import AsyncHedra
+        from hedra import AsyncHedra
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",

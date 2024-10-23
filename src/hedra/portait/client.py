@@ -16,14 +16,15 @@ from ..core.client_wrapper import AsyncClientWrapper
 OMIT = typing.cast(typing.Any, ...)
 
 
-class AudioClient:
+class PortaitClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_access_upload_audio(
+    def api_access_upload_image(
         self,
         *,
         file: core.File,
+        aspect_ratio: typing.Optional[str] = None,
         content_length: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UploadAudioResponseBody:
@@ -32,6 +33,8 @@ class AudioClient:
         ----------
         file : core.File
             See core.File for more documentation
+
+        aspect_ratio : typing.Optional[str]
 
         content_length : typing.Optional[int]
 
@@ -45,16 +48,19 @@ class AudioClient:
 
         Examples
         --------
-        from dsinghvi import Hedra
+        from hedra import Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.audio.api_access_upload_audio()
+        client.portait.api_access_upload_image()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/audio",
+            "v1/portrait",
             method="POST",
+            params={
+                "aspect_ratio": aspect_ratio,
+            },
             data={},
             files={
                 "file": file,
@@ -90,14 +96,15 @@ class AudioClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncAudioClient:
+class AsyncPortaitClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_access_upload_audio(
+    async def api_access_upload_image(
         self,
         *,
         file: core.File,
+        aspect_ratio: typing.Optional[str] = None,
         content_length: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UploadAudioResponseBody:
@@ -106,6 +113,8 @@ class AsyncAudioClient:
         ----------
         file : core.File
             See core.File for more documentation
+
+        aspect_ratio : typing.Optional[str]
 
         content_length : typing.Optional[int]
 
@@ -121,7 +130,7 @@ class AsyncAudioClient:
         --------
         import asyncio
 
-        from dsinghvi import AsyncHedra
+        from hedra import AsyncHedra
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -129,14 +138,17 @@ class AsyncAudioClient:
 
 
         async def main() -> None:
-            await client.audio.api_access_upload_audio()
+            await client.portait.api_access_upload_image()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/audio",
+            "v1/portrait",
             method="POST",
+            params={
+                "aspect_ratio": aspect_ratio,
+            },
             data={},
             files={
                 "file": file,

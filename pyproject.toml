@@ -24,7 +24,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "dsinghvi", from = "src"}
+    { include = "hedra", from = "src"}
 ]
 
 [project.urls]

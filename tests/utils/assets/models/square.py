@@ -4,7 +4,7 @@
 
 import typing_extensions
 import typing_extensions
-from dsinghvi.core.serialization import FieldMetadata
+from hedra.core.serialization import FieldMetadata
 
 
 class SquareParams(typing_extensions.TypedDict):

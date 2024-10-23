@@ -34,7 +34,7 @@ class ProjectsClient:
 
         Examples
         --------
-        from dsinghvi import Hedra
+        from hedra import Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
@@ -78,7 +78,7 @@ class ProjectsClient:
 
         Examples
         --------
-        from dsinghvi import Hedra
+        from hedra import Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
@@ -134,7 +134,7 @@ class ProjectsClient:
 
         Examples
         --------
-        from dsinghvi import Hedra
+        from hedra import Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
@@ -196,7 +196,7 @@ class ProjectsClient:
 
         Examples
         --------
-        from dsinghvi import Hedra
+        from hedra import Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
@@ -260,7 +260,7 @@ class AsyncProjectsClient:
         --------
         import asyncio
 
-        from dsinghvi import AsyncHedra
+        from hedra import AsyncHedra
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -312,7 +312,7 @@ class AsyncProjectsClient:
         --------
         import asyncio
 
-        from dsinghvi import AsyncHedra
+        from hedra import AsyncHedra
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -376,7 +376,7 @@ class AsyncProjectsClient:
         --------
         import asyncio
 
-        from dsinghvi import AsyncHedra
+        from hedra import AsyncHedra
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -446,7 +446,7 @@ class AsyncProjectsClient:
         --------
         import asyncio
 
-        from dsinghvi import AsyncHedra
+        from hedra import AsyncHedra
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",

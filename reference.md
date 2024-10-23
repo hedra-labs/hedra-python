@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/dsinghvi/client.py">ping_ping_get</a>()</code></summary>
+<details><summary><code>client.<a href="src/hedra/client.py">ping_ping_get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -46,7 +46,7 @@ client.ping_ping_get()
 </details>
 
 ## Voice
-<details><summary><code>client.voice.<a href="src/dsinghvi/voice/client.py">api_access_get_voices</a>()</code></summary>
+<details><summary><code>client.voice.<a href="src/hedra/voice/client.py">api_access_get_voices</a>()</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ client.ping_ping_get()
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -93,7 +93,7 @@ client.voice.api_access_get_voices()
 </details>
 
 ## Audio
-<details><summary><code>client.audio.<a href="src/dsinghvi/audio/client.py">api_access_upload_audio</a>(...)</code></summary>
+<details><summary><code>client.audio.<a href="src/hedra/audio/client.py">api_access_upload_audio</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -106,7 +106,7 @@ client.voice.api_access_get_voices()
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -158,7 +158,7 @@ core.File` — See core.File for more documentation
 </details>
 
 ## Portait
-<details><summary><code>client.portait.<a href="src/dsinghvi/portait/client.py">api_access_upload_image</a>(...)</code></summary>
+<details><summary><code>client.portait.<a href="src/hedra/portait/client.py">api_access_upload_image</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -171,7 +171,7 @@ core.File` — See core.File for more documentation
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -231,7 +231,7 @@ core.File` — See core.File for more documentation
 </details>
 
 ## Characters
-<details><summary><code>client.characters.<a href="src/dsinghvi/characters/client.py">api_access_initialize_talking_head_avatar</a>(...)</code></summary>
+<details><summary><code>client.characters.<a href="src/hedra/characters/client.py">api_access_initialize_talking_head_avatar</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -244,7 +244,7 @@ core.File` — See core.File for more documentation
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -342,7 +342,7 @@ client.characters.api_access_initialize_talking_head_avatar()
 </details>
 
 ## Projects
-<details><summary><code>client.projects.<a href="src/dsinghvi/projects/client.py">api_access_get_all_user_projects</a>()</code></summary>
+<details><summary><code>client.projects.<a href="src/hedra/projects/client.py">api_access_get_all_user_projects</a>()</code></summary>
 <dl>
 <dd>
 
@@ -355,7 +355,7 @@ client.characters.api_access_initialize_talking_head_avatar()
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -388,7 +388,7 @@ client.projects.api_access_get_all_user_projects()
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/dsinghvi/projects/client.py">api_access_get_project</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/hedra/projects/client.py">api_access_get_project</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -401,7 +401,7 @@ client.projects.api_access_get_all_user_projects()
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -444,7 +444,7 @@ client.projects.api_access_get_project(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/dsinghvi/projects/client.py">api_access_delete_project</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/hedra/projects/client.py">api_access_delete_project</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -457,7 +457,7 @@ client.projects.api_access_get_project(
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",
@@ -500,7 +500,7 @@ client.projects.api_access_delete_project(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/dsinghvi/projects/client.py">api_access_share_project</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/hedra/projects/client.py">api_access_share_project</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -513,7 +513,7 @@ client.projects.api_access_delete_project(
 <dd>
 
 ```python
-from dsinghvi import Hedra
+from hedra import Hedra
 
 client = Hedra(
     api_key="YOUR_API_KEY",

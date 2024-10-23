@@ -2,7 +2,7 @@
 
 from typing import List, Any
 
-from dsinghvi.core.serialization import convert_and_respect_annotation_metadata
+from hedra.core.serialization import convert_and_respect_annotation_metadata
 from .assets.models import ShapeParams, ObjectWithOptionalFieldParams
 
 
