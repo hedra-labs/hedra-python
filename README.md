@@ -8,7 +8,7 @@ The Hedra Python library provides convenient access to the Hedra API from Python
 ## Installation
 
 ```sh
-pip install hedra
+pip install hedra-python
 ```
 
 ## Reference
