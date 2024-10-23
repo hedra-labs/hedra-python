@@ -23,7 +23,7 @@ class CharactersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_access_initialize_talking_head_avatar(
+    def initialize_talking_head_avatar(
         self,
         *,
         content_length: typing.Optional[int] = None,
@@ -77,7 +77,7 @@ class CharactersClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.characters.api_access_initialize_talking_head_avatar()
+        client.characters.initialize_talking_head_avatar()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/characters",
@@ -128,7 +128,7 @@ class AsyncCharactersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_access_initialize_talking_head_avatar(
+    async def initialize_talking_head_avatar(
         self,
         *,
         content_length: typing.Optional[int] = None,
@@ -187,7 +187,7 @@ class AsyncCharactersClient:
 
 
         async def main() -> None:
-            await client.characters.api_access_initialize_talking_head_avatar()
+            await client.characters.initialize_talking_head_avatar()
 
 
         asyncio.run(main())

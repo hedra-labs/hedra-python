@@ -9,10 +9,6 @@ from .audio.client import AudioClient
 from .portait.client import PortaitClient
 from .characters.client import CharactersClient
 from .projects.client import ProjectsClient
-from .core.request_options import RequestOptions
-from .core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
 from .voice.client import AsyncVoiceClient
 from .audio.client import AsyncAudioClient
@@ -85,46 +81,6 @@ class Hedra:
         self.characters = CharactersClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
 
-    def ping_ping_get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[typing.Any]:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.Optional[typing.Any]
-            Successful Response
-
-        Examples
-        --------
-        from hedra import Hedra
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.ping_ping_get()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "ping",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Optional[typing.Any],
-                    parse_obj_as(
-                        type_=typing.Optional[typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncHedra:
     """
@@ -189,56 +145,6 @@ class AsyncHedra:
         self.portait = AsyncPortaitClient(client_wrapper=self._client_wrapper)
         self.characters = AsyncCharactersClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-
-    async def ping_ping_get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.Optional[typing.Any]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.ping_ping_get()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "ping",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Optional[typing.Any],
-                    parse_obj_as(
-                        type_=typing.Optional[typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: HedraEnvironment) -> str:

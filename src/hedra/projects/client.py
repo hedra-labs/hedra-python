@@ -18,9 +18,7 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_access_get_all_user_projects(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserAvatarJobsResponse:
+    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserAvatarJobsResponse:
         """
         Parameters
         ----------
@@ -39,7 +37,7 @@ class ProjectsClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.projects.api_access_get_all_user_projects()
+        client.projects.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects",
@@ -60,9 +58,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_access_get_project(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AvatarProjectItem:
+    def get(self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AvatarProjectItem:
         """
         Parameters
         ----------
@@ -83,7 +79,7 @@ class ProjectsClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.projects.api_access_get_project(
+        client.projects.get(
             project_id="project_id",
         )
         """
@@ -116,7 +112,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_access_delete_project(
+    def delete(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
@@ -139,7 +135,7 @@ class ProjectsClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.projects.api_access_delete_project(
+        client.projects.delete(
             project_id="project_id",
         )
         """
@@ -172,7 +168,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_access_share_project(
+    def share(
         self,
         project_id: str,
         *,
@@ -201,7 +197,7 @@ class ProjectsClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.projects.api_access_share_project(
+        client.projects.share(
             project_id="project_id",
         )
         """
@@ -242,9 +238,7 @@ class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_access_get_all_user_projects(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUserAvatarJobsResponse:
+    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetUserAvatarJobsResponse:
         """
         Parameters
         ----------
@@ -268,7 +262,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.api_access_get_all_user_projects()
+            await client.projects.get_all()
 
 
         asyncio.run(main())
@@ -292,7 +286,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_access_get_project(
+    async def get(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AvatarProjectItem:
         """
@@ -320,7 +314,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.api_access_get_project(
+            await client.projects.get(
                 project_id="project_id",
             )
 
@@ -356,7 +350,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_access_delete_project(
+    async def delete(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
@@ -384,7 +378,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.api_access_delete_project(
+            await client.projects.delete(
                 project_id="project_id",
             )
 
@@ -420,7 +414,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_access_share_project(
+    async def share(
         self,
         project_id: str,
         *,
@@ -454,7 +448,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.api_access_share_project(
+            await client.projects.share(
                 project_id="project_id",
             )
 

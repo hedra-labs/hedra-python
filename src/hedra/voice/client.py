@@ -14,7 +14,7 @@ class VoiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_access_get_voices(self, *, request_options: typing.Optional[RequestOptions] = None) -> VoicesResponseBody:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VoicesResponseBody:
         """
         Parameters
         ----------
@@ -33,7 +33,7 @@ class VoiceClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.voice.api_access_get_voices()
+        client.voice.get()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices",
@@ -59,9 +59,7 @@ class AsyncVoiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_access_get_voices(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> VoicesResponseBody:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VoicesResponseBody:
         """
         Parameters
         ----------
@@ -85,7 +83,7 @@ class AsyncVoiceClient:
 
 
         async def main() -> None:
-            await client.voice.api_access_get_voices()
+            await client.voice.get()
 
 
         asyncio.run(main())

@@ -20,7 +20,7 @@ class AudioClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_access_upload_audio(
+    def upload_audio(
         self,
         *,
         file: core.File,
@@ -50,7 +50,7 @@ class AudioClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.audio.api_access_upload_audio()
+        client.audio.upload_audio()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/audio",
@@ -94,7 +94,7 @@ class AsyncAudioClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_access_upload_audio(
+    async def upload_audio(
         self,
         *,
         file: core.File,
@@ -129,7 +129,7 @@ class AsyncAudioClient:
 
 
         async def main() -> None:
-            await client.audio.api_access_upload_audio()
+            await client.audio.upload_audio()
 
 
         asyncio.run(main())

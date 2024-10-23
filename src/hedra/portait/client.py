@@ -20,7 +20,7 @@ class PortaitClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_access_upload_image(
+    def upload_image(
         self,
         *,
         file: core.File,
@@ -53,7 +53,7 @@ class PortaitClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.portait.api_access_upload_image()
+        client.portait.upload_image()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/portrait",
@@ -100,7 +100,7 @@ class AsyncPortaitClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_access_upload_image(
+    async def upload_image(
         self,
         *,
         file: core.File,
@@ -138,7 +138,7 @@ class AsyncPortaitClient:
 
 
         async def main() -> None:
-            await client.portait.api_access_upload_image()
+            await client.portait.upload_image()
 
 
         asyncio.run(main())
