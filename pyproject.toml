@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "hedra"
-version = "0.8.0b2"
+name = "hedra-python"
+version = "0.1.0"
 description = ""
 readme = "README.md"
 authors = []
@@ -28,7 +28,7 @@ packages = [
 ]
 
 [project.urls]
-Repository = 'https://github.com/fern-demo/hedra-python'
+Repository = 'https://github.com/hedra-labs/hedra-python'
 
 [tool.poetry.dependencies]
 python = "^3.8"
