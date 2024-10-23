@@ -4,4 +4,4 @@ import enum
 
 
 class HedraEnvironment(enum.Enum):
-    DEFAULT = "/api"
+    PRODUCTION = "https://mercury.dev.dream-ai.com/api"

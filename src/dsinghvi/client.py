@@ -35,7 +35,7 @@ class Hedra:
 
 
 
-        Defaults to HedraEnvironment.DEFAULT
+        Defaults to HedraEnvironment.PRODUCTION
 
 
 
@@ -62,7 +62,7 @@ class Hedra:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: HedraEnvironment = HedraEnvironment.DEFAULT,
+        environment: HedraEnvironment = HedraEnvironment.PRODUCTION,
         api_key: str,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -140,7 +140,7 @@ class AsyncHedra:
 
 
 
-        Defaults to HedraEnvironment.DEFAULT
+        Defaults to HedraEnvironment.PRODUCTION
 
 
 
@@ -167,7 +167,7 @@ class AsyncHedra:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: HedraEnvironment = HedraEnvironment.DEFAULT,
+        environment: HedraEnvironment = HedraEnvironment.PRODUCTION,
         api_key: str,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
