@@ -1,0 +1,316 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+import os
+from typing import Any, cast
+
+import pytest
+
+from hedra import Hedra, AsyncHedra
+from hedra.types import AvatarProjectItem, ProjectListResponse
+from tests.utils import assert_matches_type
+
+base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
+
+
+class TestProjects:
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    def test_method_retrieve(self, client: Hedra) -> None:
+        project = client.projects.retrieve(
+            "project_id",
+        )
+        assert_matches_type(AvatarProjectItem, project, path=["response"])
+
+    @parametrize
+    def test_raw_response_retrieve(self, client: Hedra) -> None:
+        response = client.projects.with_raw_response.retrieve(
+            "project_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = response.parse()
+        assert_matches_type(AvatarProjectItem, project, path=["response"])
+
+    @parametrize
+    def test_streaming_response_retrieve(self, client: Hedra) -> None:
+        with client.projects.with_streaming_response.retrieve(
+            "project_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = response.parse()
+            assert_matches_type(AvatarProjectItem, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_retrieve(self, client: Hedra) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
+            client.projects.with_raw_response.retrieve(
+                "",
+            )
+
+    @parametrize
+    def test_method_list(self, client: Hedra) -> None:
+        project = client.projects.list()
+        assert_matches_type(ProjectListResponse, project, path=["response"])
+
+    @parametrize
+    def test_raw_response_list(self, client: Hedra) -> None:
+        response = client.projects.with_raw_response.list()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = response.parse()
+        assert_matches_type(ProjectListResponse, project, path=["response"])
+
+    @parametrize
+    def test_streaming_response_list(self, client: Hedra) -> None:
+        with client.projects.with_streaming_response.list() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = response.parse()
+            assert_matches_type(ProjectListResponse, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_delete(self, client: Hedra) -> None:
+        project = client.projects.delete(
+            "project_id",
+        )
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    def test_raw_response_delete(self, client: Hedra) -> None:
+        response = client.projects.with_raw_response.delete(
+            "project_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = response.parse()
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    def test_streaming_response_delete(self, client: Hedra) -> None:
+        with client.projects.with_streaming_response.delete(
+            "project_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = response.parse()
+            assert_matches_type(object, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_delete(self, client: Hedra) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
+            client.projects.with_raw_response.delete(
+                "",
+            )
+
+    @parametrize
+    def test_method_sharing(self, client: Hedra) -> None:
+        project = client.projects.sharing(
+            project_id="project_id",
+        )
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    def test_method_sharing_with_all_params(self, client: Hedra) -> None:
+        project = client.projects.sharing(
+            project_id="project_id",
+            shared=True,
+        )
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    def test_raw_response_sharing(self, client: Hedra) -> None:
+        response = client.projects.with_raw_response.sharing(
+            project_id="project_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = response.parse()
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    def test_streaming_response_sharing(self, client: Hedra) -> None:
+        with client.projects.with_streaming_response.sharing(
+            project_id="project_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = response.parse()
+            assert_matches_type(object, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_sharing(self, client: Hedra) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
+            client.projects.with_raw_response.sharing(
+                project_id="",
+            )
+
+
+class TestAsyncProjects:
+    parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    async def test_method_retrieve(self, async_client: AsyncHedra) -> None:
+        project = await async_client.projects.retrieve(
+            "project_id",
+        )
+        assert_matches_type(AvatarProjectItem, project, path=["response"])
+
+    @parametrize
+    async def test_raw_response_retrieve(self, async_client: AsyncHedra) -> None:
+        response = await async_client.projects.with_raw_response.retrieve(
+            "project_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = await response.parse()
+        assert_matches_type(AvatarProjectItem, project, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_retrieve(self, async_client: AsyncHedra) -> None:
+        async with async_client.projects.with_streaming_response.retrieve(
+            "project_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = await response.parse()
+            assert_matches_type(AvatarProjectItem, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_retrieve(self, async_client: AsyncHedra) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
+            await async_client.projects.with_raw_response.retrieve(
+                "",
+            )
+
+    @parametrize
+    async def test_method_list(self, async_client: AsyncHedra) -> None:
+        project = await async_client.projects.list()
+        assert_matches_type(ProjectListResponse, project, path=["response"])
+
+    @parametrize
+    async def test_raw_response_list(self, async_client: AsyncHedra) -> None:
+        response = await async_client.projects.with_raw_response.list()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = await response.parse()
+        assert_matches_type(ProjectListResponse, project, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_list(self, async_client: AsyncHedra) -> None:
+        async with async_client.projects.with_streaming_response.list() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = await response.parse()
+            assert_matches_type(ProjectListResponse, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_delete(self, async_client: AsyncHedra) -> None:
+        project = await async_client.projects.delete(
+            "project_id",
+        )
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncHedra) -> None:
+        response = await async_client.projects.with_raw_response.delete(
+            "project_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = await response.parse()
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncHedra) -> None:
+        async with async_client.projects.with_streaming_response.delete(
+            "project_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = await response.parse()
+            assert_matches_type(object, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncHedra) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
+            await async_client.projects.with_raw_response.delete(
+                "",
+            )
+
+    @parametrize
+    async def test_method_sharing(self, async_client: AsyncHedra) -> None:
+        project = await async_client.projects.sharing(
+            project_id="project_id",
+        )
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    async def test_method_sharing_with_all_params(self, async_client: AsyncHedra) -> None:
+        project = await async_client.projects.sharing(
+            project_id="project_id",
+            shared=True,
+        )
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    async def test_raw_response_sharing(self, async_client: AsyncHedra) -> None:
+        response = await async_client.projects.with_raw_response.sharing(
+            project_id="project_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        project = await response.parse()
+        assert_matches_type(object, project, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_sharing(self, async_client: AsyncHedra) -> None:
+        async with async_client.projects.with_streaming_response.sharing(
+            project_id="project_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            project = await response.parse()
+            assert_matches_type(object, project, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_sharing(self, async_client: AsyncHedra) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
+            await async_client.projects.with_raw_response.sharing(
+                project_id="",
+            )
