@@ -27,9 +27,13 @@ pip install git+ssh://git@github.com/stainless-sdks/hedra-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from hedra import Hedra
 
-client = Hedra()
+client = Hedra(
+    # This is the default and can be omitted
+    api_key=os.environ.get("X_API_KEY"),
+)
 
 character = client.characters.create()
 print(character.job_id)
@@ -45,10 +49,14 @@ so that your API Key is not stored in source control.
 Simply import `AsyncHedra` instead of `Hedra` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from hedra import AsyncHedra
 
-client = AsyncHedra()
+client = AsyncHedra(
+    # This is the default and can be omitted
+    api_key=os.environ.get("X_API_KEY"),
+)
 
 
 async def main() -> None:
