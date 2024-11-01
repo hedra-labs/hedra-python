@@ -21,7 +21,7 @@ from hedra import Hedra, AsyncHedra, APIResponseValidationError
 from hedra._types import Omit
 from hedra._models import BaseModel, FinalRequestOptions
 from hedra._constants import RAW_RESPONSE_HEADER
-from hedra._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from hedra._exceptions import HedraError, APIStatusError, APITimeoutError, APIResponseValidationError
 from hedra._base_client import DEFAULT_TIMEOUT, HTTPX_DEFAULT_TIMEOUT, BaseClient, make_request_options
 
 from .utils import update_env
@@ -322,6 +322,16 @@ class TestHedra:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = Hedra(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("X-API-Key") == api_key
+
+        with pytest.raises(HedraError):
+            with update_env(**{"X_API_KEY": Omit()}):
+                client2 = Hedra(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Hedra(
@@ -1072,6 +1082,16 @@ class TestAsyncHedra:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = AsyncHedra(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert request.headers.get("X-API-Key") == api_key
+
+        with pytest.raises(HedraError):
+            with update_env(**{"X_API_KEY": Omit()}):
+                client2 = AsyncHedra(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncHedra(
