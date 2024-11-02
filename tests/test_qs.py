@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from hedra_python._qs import Querystring, stringify
+from hedra._qs import Querystring, stringify
 
 
 def test_empty() -> None:
