@@ -17,17 +17,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from hedra_python import Hedra, AsyncHedra, APIResponseValidationError
-from hedra_python._types import Omit
-from hedra_python._models import BaseModel, FinalRequestOptions
-from hedra_python._constants import RAW_RESPONSE_HEADER
-from hedra_python._exceptions import HedraError, APIStatusError, APITimeoutError, APIResponseValidationError
-from hedra_python._base_client import (
-    DEFAULT_TIMEOUT,
-    HTTPX_DEFAULT_TIMEOUT,
-    BaseClient,
-    make_request_options,
-)
+from hedra import Hedra, AsyncHedra, APIResponseValidationError
+from hedra._types import Omit
+from hedra._models import BaseModel, FinalRequestOptions
+from hedra._constants import RAW_RESPONSE_HEADER
+from hedra._exceptions import HedraError, APIStatusError, APITimeoutError, APIResponseValidationError
+from hedra._base_client import DEFAULT_TIMEOUT, HTTPX_DEFAULT_TIMEOUT, BaseClient, make_request_options
 
 from .utils import update_env
 
@@ -226,10 +221,10 @@ class TestHedra:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "hedra_python/_legacy_response.py",
-                        "hedra_python/_response.py",
+                        "hedra/_legacy_response.py",
+                        "hedra/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "hedra_python/_compat.py",
+                        "hedra/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -703,7 +698,7 @@ class TestHedra:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/characters").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -718,7 +713,7 @@ class TestHedra:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/characters").mock(return_value=httpx.Response(500))
@@ -734,7 +729,7 @@ class TestHedra:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -765,7 +760,7 @@ class TestHedra:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(self, client: Hedra, failures_before_success: int, respx_mock: MockRouter) -> None:
         client = client.with_options(max_retries=4)
@@ -786,7 +781,7 @@ class TestHedra:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: Hedra, failures_before_success: int, respx_mock: MockRouter
@@ -984,10 +979,10 @@ class TestAsyncHedra:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "hedra_python/_legacy_response.py",
-                        "hedra_python/_response.py",
+                        "hedra/_legacy_response.py",
+                        "hedra/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "hedra_python/_compat.py",
+                        "hedra/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1475,7 +1470,7 @@ class TestAsyncHedra:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/characters").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -1490,7 +1485,7 @@ class TestAsyncHedra:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/characters").mock(return_value=httpx.Response(500))
@@ -1506,7 +1501,7 @@ class TestAsyncHedra:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
@@ -1538,7 +1533,7 @@ class TestAsyncHedra:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
@@ -1562,7 +1557,7 @@ class TestAsyncHedra:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("hedra_python._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
