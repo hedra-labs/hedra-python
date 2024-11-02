@@ -329,7 +329,7 @@ class TestHedra:
         assert request.headers.get("X-API-Key") == api_key
 
         with pytest.raises(HedraError):
-            with update_env(**{"X_API_KEY": Omit()}):
+            with update_env(**{"HEDRA_API_KEY": Omit()}):
                 client2 = Hedra(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
@@ -1089,7 +1089,7 @@ class TestAsyncHedra:
         assert request.headers.get("X-API-Key") == api_key
 
         with pytest.raises(HedraError):
-            with update_env(**{"X_API_KEY": Omit()}):
+            with update_env(**{"HEDRA_API_KEY": Omit()}):
                 client2 = AsyncHedra(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
