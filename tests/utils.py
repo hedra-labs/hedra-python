@@ -8,8 +8,8 @@ from typing import Any, TypeVar, Iterator, cast
 from datetime import date, datetime
 from typing_extensions import Literal, get_args, get_origin, assert_type
 
-from hedra._types import Omit, NoneType
-from hedra._utils import (
+from hedra_python._types import Omit, NoneType
+from hedra_python._utils import (
     is_dict,
     is_list,
     is_list_type,
@@ -17,8 +17,8 @@ from hedra._utils import (
     extract_type_arg,
     is_annotated_type,
 )
-from hedra._compat import PYDANTIC_V2, field_outer_type, get_model_fields
-from hedra._models import BaseModel
+from hedra_python._compat import PYDANTIC_V2, field_outer_type, get_model_fields
+from hedra_python._models import BaseModel
 
 BaseModelT = TypeVar("BaseModelT", bound=BaseModel)
 

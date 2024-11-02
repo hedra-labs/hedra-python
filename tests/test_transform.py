@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from hedra._types import Base64FileInput
-from hedra._utils import (
+from hedra_python._types import Base64FileInput
+from hedra_python._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from hedra._compat import PYDANTIC_V2
-from hedra._models import BaseModel
+from hedra_python._compat import PYDANTIC_V2
+from hedra_python._models import BaseModel
 
 _T = TypeVar("_T")
 
