@@ -92,13 +92,13 @@ class Hedra(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous hedra client instance.
 
-        This automatically infers the `api_key` argument from the `X_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `HEDRA_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("X_API_KEY")
+            api_key = os.environ.get("HEDRA_API_KEY")
         if api_key is None:
             raise HedraError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the X_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the HEDRA_API_KEY environment variable"
             )
         self.api_key = api_key
 
@@ -287,13 +287,13 @@ class AsyncHedra(AsyncAPIClient):
     ) -> None:
         """Construct a new async hedra client instance.
 
-        This automatically infers the `api_key` argument from the `X_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `HEDRA_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("X_API_KEY")
+            api_key = os.environ.get("HEDRA_API_KEY")
         if api_key is None:
             raise HedraError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the X_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the HEDRA_API_KEY environment variable"
             )
         self.api_key = api_key
 
