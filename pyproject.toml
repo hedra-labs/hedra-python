@@ -1,6 +1,6 @@
 [project]
 name = "hedra-python"
-version = "0.1.0-alpha.2"
+version = "0.1.2"
 description = "The official Python library for the hedra API"
 dynamic = ["readme"]
 license = "Apache-2.0"
