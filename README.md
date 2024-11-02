@@ -15,12 +15,9 @@ The REST API documentation can be found on [hedra.com](https://hedra.com/docs). 
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/hedra-labs/hedra-python.git
+# install from PyPI
+pip install --pre hedra-python
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre hedra-python`
 
 ## Usage
 
@@ -32,7 +29,7 @@ from hedra import Hedra
 
 client = Hedra(
     # This is the default and can be omitted
-    api_key=os.environ.get("X_API_KEY"),
+    api_key=os.environ.get("HEDRA_API_KEY"),
 )
 
 character = client.characters.create()
@@ -41,7 +38,7 @@ print(character.job_id)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `X_API_KEY="My API Key"` to your `.env` file
+to add `HEDRA_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -55,7 +52,7 @@ from hedra import AsyncHedra
 
 client = AsyncHedra(
     # This is the default and can be omitted
-    api_key=os.environ.get("X_API_KEY"),
+    api_key=os.environ.get("HEDRA_API_KEY"),
 )
 
 
