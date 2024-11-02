@@ -16,7 +16,7 @@ The REST API documentation can be found on [hedra.com](https://hedra.com/docs). 
 
 ```sh
 # install from PyPI
-pip install --pre hedra-python
+pip install hedra-python
 ```
 
 ## Usage
