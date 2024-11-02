@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from hedra import Hedra, AsyncHedra
-from hedra._streaming import Stream, AsyncStream, ServerSentEvent
+from hedra_python import Hedra, AsyncHedra
+from hedra_python._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

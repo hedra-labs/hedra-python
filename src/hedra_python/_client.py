@@ -105,7 +105,7 @@ class Hedra(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("HEDRA_BASE_URL")
         if base_url is None:
-            base_url = f"/api"
+            base_url = f"https://mercury.dev.dream-ai.com/api"
 
         super().__init__(
             version=__version__,
@@ -300,7 +300,7 @@ class AsyncHedra(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("HEDRA_BASE_URL")
         if base_url is None:
-            base_url = f"/api"
+            base_url = f"https://mercury.dev.dream-ai.com/api"
 
         super().__init__(
             version=__version__,
