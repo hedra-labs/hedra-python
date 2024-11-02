@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
+from hedra import Hedra, AsyncHedra
+from hedra.types import VoiceListResponse
 from tests.utils import assert_matches_type
-from hedra_python import Hedra, AsyncHedra
-from hedra_python.types import VoiceListResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
