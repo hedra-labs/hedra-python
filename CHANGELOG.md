@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.1 (2024-11-02)
+
+Full Changelog: [v0.0.1-alpha.1...v0.1.0-alpha.1](https://github.com/hedra-labs/hedra-python/compare/v0.0.1-alpha.1...v0.1.0-alpha.1)
+
+### Features
+
+* **api:** update via SDK Studio ([#4](https://github.com/hedra-labs/hedra-python/issues/4)) ([ac1f185](https://github.com/hedra-labs/hedra-python/commit/ac1f185d7793da1317f75414623774dbbfc722d0))
+* **api:** update via SDK Studio ([#6](https://github.com/hedra-labs/hedra-python/issues/6)) ([cf85b9b](https://github.com/hedra-labs/hedra-python/commit/cf85b9baef794e52e0d86de90af6b9ba277ad401))
+
 ## 0.0.1-alpha.1 (2024-11-02)
 
 Full Changelog: [v0.0.1-alpha.0...v0.0.1-alpha.1](https://github.com/hedra-labs/hedra-python/compare/v0.0.1-alpha.0...v0.0.1-alpha.1)

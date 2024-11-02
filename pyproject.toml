@@ -1,11 +1,11 @@
 [project]
-name = "hedra"
-version = "0.0.1-alpha.1"
+name = "hedra-python"
+version = "0.1.0-alpha.1"
 description = "The official Python library for the hedra API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Hedra", email = "dev-feedback@hedra.com" },
+{ name = "Hedra", email = "support@hedra.com" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

@@ -1,6 +1,6 @@
 # Hedra Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/hedra.svg)](https://pypi.org/project/hedra/)
+[![PyPI version](https://img.shields.io/pypi/v/hedra-python.svg)](https://pypi.org/project/hedra-python/)
 
 The Hedra Python library provides convenient access to the Hedra REST API from any Python 3.7+
 application. The library includes type definitions for all request params and response fields,
@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.hedra.com](https://docs.hedra.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [hedra.com](https://hedra.com/docs). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -20,7 +20,7 @@ pip install git+ssh://git@github.com/hedra-labs/hedra-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre hedra`
+> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre hedra-python`
 
 ## Usage
 
