@@ -28,8 +28,7 @@ import os
 from hedra import Hedra
 
 client = Hedra(
-    # This is the default and can be omitted
-    api_key=os.environ.get("HEDRA_API_KEY"),
+    api_key=os.environ.get("HEDRA_API_KEY"),  # This is the default and can be omitted
 )
 
 character = client.characters.create()
@@ -51,8 +50,7 @@ import asyncio
 from hedra import AsyncHedra
 
 client = AsyncHedra(
-    # This is the default and can be omitted
-    api_key=os.environ.get("HEDRA_API_KEY"),
+    api_key=os.environ.get("HEDRA_API_KEY"),  # This is the default and can be omitted
 )
 
 
