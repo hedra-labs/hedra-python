@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/hedra-python.svg)](https://pypi.org/project/hedra-python/)
 
-The Hedra Python library provides convenient access to the Hedra REST API from any Python 3.7+
+The Hedra Python library provides convenient access to the Hedra REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -28,8 +28,7 @@ import os
 from hedra import Hedra
 
 client = Hedra(
-    # This is the default and can be omitted
-    api_key=os.environ.get("HEDRA_API_KEY"),
+    api_key=os.environ.get("HEDRA_API_KEY"),  # This is the default and can be omitted
 )
 
 character = client.characters.create()
@@ -51,8 +50,7 @@ import asyncio
 from hedra import AsyncHedra
 
 client = AsyncHedra(
-    # This is the default and can be omitted
-    api_key=os.environ.get("HEDRA_API_KEY"),
+    api_key=os.environ.get("HEDRA_API_KEY"),  # This is the default and can be omitted
 )
 
 
@@ -170,11 +168,13 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `HEDRA_LOG` to `debug`.
+You can enable logging by setting the environment variable `HEDRA_LOG` to `info`.
 
 ```shell
-$ export HEDRA_LOG=debug
+$ export HEDRA_LOG=info
 ```
+
+Or to `debug` for more verbose logging.
 
 ### How to tell whether `None` means `null` or missing
 
@@ -314,7 +314,7 @@ print(hedra.__version__)
 
 ## Requirements
 
-Python 3.7 or higher.
+Python 3.8 or higher.
 
 ## Contributing
 
