@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.3 (2024-11-28)
+
+Full Changelog: [v0.1.2...v0.1.3](https://github.com/hedra-labs/hedra-python/compare/v0.1.2...v0.1.3)
+
+### Bug Fixes
+
+* **client:** compat with new httpx 0.28.0 release ([#23](https://github.com/hedra-labs/hedra-python/issues/23)) ([007fd82](https://github.com/hedra-labs/hedra-python/commit/007fd824c21468b3e3bc986d2f08b58256bbe5d1))
+
+
+### Chores
+
+* **internal:** exclude mypy from running on tests ([#22](https://github.com/hedra-labs/hedra-python/issues/22)) ([cdd20eb](https://github.com/hedra-labs/hedra-python/commit/cdd20ebf2f188eeca21a23528f443b44366a431a))
+* **internal:** fix compat model_dump method when warnings are passed ([#19](https://github.com/hedra-labs/hedra-python/issues/19)) ([591c5fa](https://github.com/hedra-labs/hedra-python/commit/591c5fa63f422f06056f8f143807dbfd69185db9))
+* rebuild project due to codegen change ([#13](https://github.com/hedra-labs/hedra-python/issues/13)) ([1175b8d](https://github.com/hedra-labs/hedra-python/commit/1175b8d115ffeac5f353b3b36bce819d9a1b0c94))
+* rebuild project due to codegen change ([#15](https://github.com/hedra-labs/hedra-python/issues/15)) ([52b39df](https://github.com/hedra-labs/hedra-python/commit/52b39df5468ca2ab5245a9876669be5545a54e7c))
+* rebuild project due to codegen change ([#16](https://github.com/hedra-labs/hedra-python/issues/16)) ([bc36a8c](https://github.com/hedra-labs/hedra-python/commit/bc36a8c6f977f92da2d593bb056eba537a1a5836))
+* rebuild project due to codegen change ([#17](https://github.com/hedra-labs/hedra-python/issues/17)) ([b75af72](https://github.com/hedra-labs/hedra-python/commit/b75af72041260621da34f76e7b59d6147ac30722))
+* rebuild project due to codegen change ([#18](https://github.com/hedra-labs/hedra-python/issues/18)) ([7806a74](https://github.com/hedra-labs/hedra-python/commit/7806a74949b47b1347b1498e1cee7d8dbadb2e9c))
+* remove now unused `cached-property` dep ([#21](https://github.com/hedra-labs/hedra-python/issues/21)) ([cadbf83](https://github.com/hedra-labs/hedra-python/commit/cadbf8369caba1d4eb7ac920a1a4cc17c740bee2))
+
+
+### Documentation
+
+* add info log level to readme ([#20](https://github.com/hedra-labs/hedra-python/issues/20)) ([9dff95f](https://github.com/hedra-labs/hedra-python/commit/9dff95f5e8d23cc79bbf62a3776167ff1fd6c0f9))
+
 ## 0.1.2 (2024-11-02)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.2](https://github.com/hedra-labs/hedra-python/compare/v0.1.0-alpha.2...v0.1.2)
