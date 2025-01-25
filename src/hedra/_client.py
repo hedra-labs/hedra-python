@@ -8,7 +8,7 @@ from typing_extensions import Self, override
 
 import httpx
 
-from . import resources, _exceptions
+from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
@@ -33,6 +33,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from .resources import audio, voices, projects, portraits, characters
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import HedraError, APIStatusError
 from ._base_client import (
@@ -42,25 +43,15 @@ from ._base_client import (
     make_request_options,
 )
 
-__all__ = [
-    "Timeout",
-    "Transport",
-    "ProxiesTypes",
-    "RequestOptions",
-    "resources",
-    "Hedra",
-    "AsyncHedra",
-    "Client",
-    "AsyncClient",
-]
+__all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Hedra", "AsyncHedra", "Client", "AsyncClient"]
 
 
 class Hedra(SyncAPIClient):
-    voices: resources.VoicesResource
-    audio: resources.AudioResource
-    portraits: resources.PortraitsResource
-    characters: resources.CharactersResource
-    projects: resources.ProjectsResource
+    voices: voices.VoicesResource
+    audio: audio.AudioResource
+    portraits: portraits.PortraitsResource
+    characters: characters.CharactersResource
+    projects: projects.ProjectsResource
     with_raw_response: HedraWithRawResponse
     with_streaming_response: HedraWithStreamedResponse
 
@@ -118,11 +109,11 @@ class Hedra(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.voices = resources.VoicesResource(self)
-        self.audio = resources.AudioResource(self)
-        self.portraits = resources.PortraitsResource(self)
-        self.characters = resources.CharactersResource(self)
-        self.projects = resources.ProjectsResource(self)
+        self.voices = voices.VoicesResource(self)
+        self.audio = audio.AudioResource(self)
+        self.portraits = portraits.PortraitsResource(self)
+        self.characters = characters.CharactersResource(self)
+        self.projects = projects.ProjectsResource(self)
         self.with_raw_response = HedraWithRawResponse(self)
         self.with_streaming_response = HedraWithStreamedResponse(self)
 
@@ -251,11 +242,11 @@ class Hedra(SyncAPIClient):
 
 
 class AsyncHedra(AsyncAPIClient):
-    voices: resources.AsyncVoicesResource
-    audio: resources.AsyncAudioResource
-    portraits: resources.AsyncPortraitsResource
-    characters: resources.AsyncCharactersResource
-    projects: resources.AsyncProjectsResource
+    voices: voices.AsyncVoicesResource
+    audio: audio.AsyncAudioResource
+    portraits: portraits.AsyncPortraitsResource
+    characters: characters.AsyncCharactersResource
+    projects: projects.AsyncProjectsResource
     with_raw_response: AsyncHedraWithRawResponse
     with_streaming_response: AsyncHedraWithStreamedResponse
 
@@ -313,11 +304,11 @@ class AsyncHedra(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.voices = resources.AsyncVoicesResource(self)
-        self.audio = resources.AsyncAudioResource(self)
-        self.portraits = resources.AsyncPortraitsResource(self)
-        self.characters = resources.AsyncCharactersResource(self)
-        self.projects = resources.AsyncProjectsResource(self)
+        self.voices = voices.AsyncVoicesResource(self)
+        self.audio = audio.AsyncAudioResource(self)
+        self.portraits = portraits.AsyncPortraitsResource(self)
+        self.characters = characters.AsyncCharactersResource(self)
+        self.projects = projects.AsyncProjectsResource(self)
         self.with_raw_response = AsyncHedraWithRawResponse(self)
         self.with_streaming_response = AsyncHedraWithStreamedResponse(self)
 
@@ -447,11 +438,11 @@ class AsyncHedra(AsyncAPIClient):
 
 class HedraWithRawResponse:
     def __init__(self, client: Hedra) -> None:
-        self.voices = resources.VoicesResourceWithRawResponse(client.voices)
-        self.audio = resources.AudioResourceWithRawResponse(client.audio)
-        self.portraits = resources.PortraitsResourceWithRawResponse(client.portraits)
-        self.characters = resources.CharactersResourceWithRawResponse(client.characters)
-        self.projects = resources.ProjectsResourceWithRawResponse(client.projects)
+        self.voices = voices.VoicesResourceWithRawResponse(client.voices)
+        self.audio = audio.AudioResourceWithRawResponse(client.audio)
+        self.portraits = portraits.PortraitsResourceWithRawResponse(client.portraits)
+        self.characters = characters.CharactersResourceWithRawResponse(client.characters)
+        self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
 
         self.ping = to_raw_response_wrapper(
             client.ping,
@@ -460,11 +451,11 @@ class HedraWithRawResponse:
 
 class AsyncHedraWithRawResponse:
     def __init__(self, client: AsyncHedra) -> None:
-        self.voices = resources.AsyncVoicesResourceWithRawResponse(client.voices)
-        self.audio = resources.AsyncAudioResourceWithRawResponse(client.audio)
-        self.portraits = resources.AsyncPortraitsResourceWithRawResponse(client.portraits)
-        self.characters = resources.AsyncCharactersResourceWithRawResponse(client.characters)
-        self.projects = resources.AsyncProjectsResourceWithRawResponse(client.projects)
+        self.voices = voices.AsyncVoicesResourceWithRawResponse(client.voices)
+        self.audio = audio.AsyncAudioResourceWithRawResponse(client.audio)
+        self.portraits = portraits.AsyncPortraitsResourceWithRawResponse(client.portraits)
+        self.characters = characters.AsyncCharactersResourceWithRawResponse(client.characters)
+        self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
 
         self.ping = async_to_raw_response_wrapper(
             client.ping,
@@ -473,11 +464,11 @@ class AsyncHedraWithRawResponse:
 
 class HedraWithStreamedResponse:
     def __init__(self, client: Hedra) -> None:
-        self.voices = resources.VoicesResourceWithStreamingResponse(client.voices)
-        self.audio = resources.AudioResourceWithStreamingResponse(client.audio)
-        self.portraits = resources.PortraitsResourceWithStreamingResponse(client.portraits)
-        self.characters = resources.CharactersResourceWithStreamingResponse(client.characters)
-        self.projects = resources.ProjectsResourceWithStreamingResponse(client.projects)
+        self.voices = voices.VoicesResourceWithStreamingResponse(client.voices)
+        self.audio = audio.AudioResourceWithStreamingResponse(client.audio)
+        self.portraits = portraits.PortraitsResourceWithStreamingResponse(client.portraits)
+        self.characters = characters.CharactersResourceWithStreamingResponse(client.characters)
+        self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
 
         self.ping = to_streamed_response_wrapper(
             client.ping,
@@ -486,11 +477,11 @@ class HedraWithStreamedResponse:
 
 class AsyncHedraWithStreamedResponse:
     def __init__(self, client: AsyncHedra) -> None:
-        self.voices = resources.AsyncVoicesResourceWithStreamingResponse(client.voices)
-        self.audio = resources.AsyncAudioResourceWithStreamingResponse(client.audio)
-        self.portraits = resources.AsyncPortraitsResourceWithStreamingResponse(client.portraits)
-        self.characters = resources.AsyncCharactersResourceWithStreamingResponse(client.characters)
-        self.projects = resources.AsyncProjectsResourceWithStreamingResponse(client.projects)
+        self.voices = voices.AsyncVoicesResourceWithStreamingResponse(client.voices)
+        self.audio = audio.AsyncAudioResourceWithStreamingResponse(client.audio)
+        self.portraits = portraits.AsyncPortraitsResourceWithStreamingResponse(client.portraits)
+        self.characters = characters.AsyncCharactersResourceWithStreamingResponse(client.characters)
+        self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
 
         self.ping = async_to_streamed_response_wrapper(
             client.ping,
