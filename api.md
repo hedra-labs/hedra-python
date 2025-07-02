@@ -1,14 +1,8 @@
 # Hedra
 
-Types:
-
-```python
-from hedra.types import PingResponse
-```
-
 Methods:
 
-- <code title="get /ping">client.<a href="./src/hedra/_client.py">ping</a>() -> <a href="./src/hedra/types/ping_response.py">object</a></code>
+- <code title="get /ping">client.<a href="./src/hedra/_client.py">ping</a>() -> object</code>
 
 # Voices
 
@@ -63,17 +57,12 @@ Methods:
 Types:
 
 ```python
-from hedra.types import (
-    AvatarProjectItem,
-    ProjectListResponse,
-    ProjectDeleteResponse,
-    ProjectSharingResponse,
-)
+from hedra.types import AvatarProjectItem, ProjectListResponse
 ```
 
 Methods:
 
 - <code title="get /v1/projects/{project_id}">client.projects.<a href="./src/hedra/resources/projects.py">retrieve</a>(project_id) -> <a href="./src/hedra/types/avatar_project_item.py">AvatarProjectItem</a></code>
 - <code title="get /v1/projects">client.projects.<a href="./src/hedra/resources/projects.py">list</a>() -> <a href="./src/hedra/types/project_list_response.py">ProjectListResponse</a></code>
-- <code title="delete /v1/projects/{project_id}">client.projects.<a href="./src/hedra/resources/projects.py">delete</a>(project_id) -> <a href="./src/hedra/types/project_delete_response.py">object</a></code>
-- <code title="post /v1/projects/{project_id}/sharing">client.projects.<a href="./src/hedra/resources/projects.py">sharing</a>(project_id, \*\*<a href="src/hedra/types/project_sharing_params.py">params</a>) -> <a href="./src/hedra/types/project_sharing_response.py">object</a></code>
+- <code title="delete /v1/projects/{project_id}">client.projects.<a href="./src/hedra/resources/projects.py">delete</a>(project_id) -> object</code>
+- <code title="post /v1/projects/{project_id}/sharing">client.projects.<a href="./src/hedra/resources/projects.py">sharing</a>(project_id, \*\*<a href="src/hedra/types/project_sharing_params.py">params</a>) -> object</code>

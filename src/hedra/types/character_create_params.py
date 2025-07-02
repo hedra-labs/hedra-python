@@ -12,13 +12,13 @@ __all__ = ["CharacterCreateParams", "AvatarImageInput"]
 
 class CharacterCreateParams(TypedDict, total=False):
     aspect_ratio: Annotated[Literal["1:1", "16:9", "9:16"], PropertyInfo(alias="aspectRatio")]
-    """URL of audio uploaded using the /v1/audio endpoint"""
+    """Desired aspect ratio for the generated video"""
 
     audio_source: Annotated[Literal["tts", "audio"], PropertyInfo(alias="audioSource")]
     """`tts` for text to speech or `audio`"""
 
     avatar_image: Annotated[Optional[str], PropertyInfo(alias="avatarImage")]
-    """URL of image uploaded via /v1/portrait"""
+    """URL of image uploaded via /v1/portrait or base64-encoded image"""
 
     avatar_image_input: Annotated[Optional[AvatarImageInput], PropertyInfo(alias="avatarImageInput")]
     """Image metadata"""
