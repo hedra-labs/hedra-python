@@ -22,10 +22,7 @@ from ._types import (
     ProxiesTypes,
     RequestOptions,
 )
-from ._utils import (
-    is_given,
-    get_async_library,
-)
+from ._utils import is_given, get_async_library
 from ._version import __version__
 from ._response import (
     to_raw_response_wrapper,
@@ -81,7 +78,7 @@ class Hedra(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous hedra client instance.
+        """Construct a new synchronous Hedra client instance.
 
         This automatically infers the `api_key` argument from the `HEDRA_API_KEY` environment variable if it is not provided.
         """
@@ -276,7 +273,7 @@ class AsyncHedra(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async hedra client instance.
+        """Construct a new async AsyncHedra client instance.
 
         This automatically infers the `api_key` argument from the `HEDRA_API_KEY` environment variable if it is not provided.
         """

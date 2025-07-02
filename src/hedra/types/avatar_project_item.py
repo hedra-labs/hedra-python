@@ -34,7 +34,7 @@ class AvatarProjectItem(BaseModel):
 
     stage: Optional[str] = None
 
-    status: Optional[str] = None
+    status: Optional[Literal["Queued", "InProgress", "Completed", "Failed"]] = None
 
     text: Optional[str] = None
 
