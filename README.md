@@ -31,8 +31,12 @@ client = Hedra(
     api_key=os.environ.get("HEDRA_API_KEY"),  # This is the default and can be omitted
 )
 
-character = client.characters.create()
-print(character.job_id)
+response = client.generations(
+    generated_video_inputs={"text_prompt": "text_prompt"},
+    ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+    audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -55,8 +59,12 @@ client = AsyncHedra(
 
 
 async def main() -> None:
-    character = await client.characters.create()
-    print(character.job_id)
+    response = await client.generations(
+        generated_video_inputs={"text_prompt": "text_prompt"},
+        ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+        audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+        start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    )
 
 
 asyncio.run(main())
@@ -89,8 +97,12 @@ async def main() -> None:
         api_key=os.environ.get("HEDRA_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        character = await client.characters.create()
-        print(character.job_id)
+        response = await client.generations(
+            generated_video_inputs={"text_prompt": "text_prompt"},
+            ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+            audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+            start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+        )
 
 
 asyncio.run(main())
@@ -114,28 +126,11 @@ from hedra import Hedra
 
 client = Hedra()
 
-character = client.characters.create(
-    avatar_image_input={"prompt": "prompt"},
+response = client.generations(
+    generated_video_inputs={"text_prompt": "text_prompt"},
 )
-print(character.avatar_image_input)
+print(response.generated_video_inputs)
 ```
-
-## File uploads
-
-Request parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
-
-```python
-from pathlib import Path
-from hedra import Hedra
-
-client = Hedra()
-
-client.audio.create(
-    file=Path("/path/to/file"),
-)
-```
-
-The async client uses the exact same interface. If you pass a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance, the file contents will be read asynchronously automatically.
 
 ## Handling errors
 
@@ -153,7 +148,12 @@ from hedra import Hedra
 client = Hedra()
 
 try:
-    client.characters.create()
+    client.generations(
+        generated_video_inputs={"text_prompt": "text_prompt"},
+        ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+        audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+        start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    )
 except hedra.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -196,7 +196,12 @@ client = Hedra(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).characters.create()
+client.with_options(max_retries=5).generations(
+    generated_video_inputs={"text_prompt": "text_prompt"},
+    ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+    audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+)
 ```
 
 ### Timeouts
@@ -219,7 +224,12 @@ client = Hedra(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).characters.create()
+client.with_options(timeout=5.0).generations(
+    generated_video_inputs={"text_prompt": "text_prompt"},
+    ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+    audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -260,11 +270,18 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from hedra import Hedra
 
 client = Hedra()
-response = client.characters.with_raw_response.create()
+response = client.with_raw_response.generations(
+    generated_video_inputs={
+        "text_prompt": "text_prompt"
+    },
+    ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+    audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+)
 print(response.headers.get('X-My-Header'))
 
-character = response.parse()  # get the object that `characters.create()` would have returned
-print(character.job_id)
+client = response.parse()  # get the object that `generations()` would have returned
+print(client)
 ```
 
 These methods return an [`APIResponse`](https://github.com/hedra-labs/hedra-python/tree/main/src/hedra/_response.py) object.
@@ -278,7 +295,12 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.characters.with_streaming_response.create() as response:
+with client.with_streaming_response.generations(
+    generated_video_inputs={"text_prompt": "text_prompt"},
+    ai_model_id="d1dd37a3-e39a-4854-a298-6510289f9cf2",
+    audio_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+    start_keyframe_id="3c90c3cc-0d44-4b50-8888-8dd25736052a",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
