@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable, Optional
+from typing import Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
+
+from .generated_video_inputs_param import GeneratedVideoInputsParam
 
 __all__ = [
     "ClientGenerationsParams",
     "GenerateVideoRequestInput",
-    "GenerateVideoRequestInputGeneratedVideoInputs",
     "GenerateTextToSpeechRequest",
     "GenerateImageRequest",
     "GenerateIsolatedAudioRequest",
@@ -18,7 +19,7 @@ __all__ = [
 
 
 class GenerateVideoRequestInput(TypedDict, total=False):
-    generated_video_inputs: Required[GenerateVideoRequestInputGeneratedVideoInputs]
+    generated_video_inputs: Required[GeneratedVideoInputsParam]
     """Inputs for generating the video."""
 
     ai_model_id: str
@@ -31,23 +32,6 @@ class GenerateVideoRequestInput(TypedDict, total=False):
     """The id of the Image asset to use as the start keyframe."""
 
     type: Literal["video"]
-
-
-class GenerateVideoRequestInputGeneratedVideoInputs(TypedDict, total=False):
-    text_prompt: Required[str]
-    """Prompt for video generation."""
-
-    aspect_ratio: Optional[str]
-    """Aspect ratio for the video."""
-
-    bounding_box_target: Optional[Iterable[object]]
-    """Normalized coordinates for primary speaker position (Character3 only)"""
-
-    duration_ms: Optional[int]
-    """Duration of the video in milliseconds."""
-
-    resolution: Optional[str]
-    """Resolution for the video."""
 
 
 class GenerateTextToSpeechRequest(TypedDict, total=False):

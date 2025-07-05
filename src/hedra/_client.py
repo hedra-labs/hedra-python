@@ -37,6 +37,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from .resources import assets, client, models, billing
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import HedraError, APIStatusError
 from ._base_client import (
@@ -46,11 +47,16 @@ from ._base_client import (
     make_request_options,
 )
 from .types.generations_response import GenerationsResponse
+from .types.generated_video_inputs_param import GeneratedVideoInputsParam
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Hedra", "AsyncHedra", "Client", "AsyncClient"]
 
 
 class Hedra(SyncAPIClient):
+    models: models.ModelsResource
+    assets: assets.AssetsResource
+    client: client.ClientResource
+    billing: billing.BillingResource
     with_raw_response: HedraWithRawResponse
     with_streaming_response: HedraWithStreamedResponse
 
@@ -108,6 +114,10 @@ class Hedra(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.models = models.ModelsResource(self)
+        self.assets = assets.AssetsResource(self)
+        self.client = client.ClientResource(self)
+        self.billing = billing.BillingResource(self)
         self.with_raw_response = HedraWithRawResponse(self)
         self.with_streaming_response = HedraWithStreamedResponse(self)
 
@@ -186,7 +196,7 @@ class Hedra(SyncAPIClient):
     def generations(
         self,
         *,
-        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs,
+        generated_video_inputs: GeneratedVideoInputsParam,
         ai_model_id: str | NotGiven = NOT_GIVEN,
         audio_id: Optional[str] | NotGiven = NOT_GIVEN,
         start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -411,8 +421,7 @@ class Hedra(SyncAPIClient):
     def generations(
         self,
         *,
-        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs
-        | NotGiven = NOT_GIVEN,
+        generated_video_inputs: GeneratedVideoInputsParam | NotGiven = NOT_GIVEN,
         ai_model_id: str | NotGiven = NOT_GIVEN,
         audio_id: Optional[str] | NotGiven = NOT_GIVEN,
         start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -504,6 +513,10 @@ class Hedra(SyncAPIClient):
 
 
 class AsyncHedra(AsyncAPIClient):
+    models: models.AsyncModelsResource
+    assets: assets.AsyncAssetsResource
+    client: client.AsyncClientResource
+    billing: billing.AsyncBillingResource
     with_raw_response: AsyncHedraWithRawResponse
     with_streaming_response: AsyncHedraWithStreamedResponse
 
@@ -561,6 +574,10 @@ class AsyncHedra(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.models = models.AsyncModelsResource(self)
+        self.assets = assets.AsyncAssetsResource(self)
+        self.client = client.AsyncClientResource(self)
+        self.billing = billing.AsyncBillingResource(self)
         self.with_raw_response = AsyncHedraWithRawResponse(self)
         self.with_streaming_response = AsyncHedraWithStreamedResponse(self)
 
@@ -639,7 +656,7 @@ class AsyncHedra(AsyncAPIClient):
     async def generations(
         self,
         *,
-        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs,
+        generated_video_inputs: GeneratedVideoInputsParam,
         ai_model_id: str | NotGiven = NOT_GIVEN,
         audio_id: Optional[str] | NotGiven = NOT_GIVEN,
         start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -864,8 +881,7 @@ class AsyncHedra(AsyncAPIClient):
     async def generations(
         self,
         *,
-        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs
-        | NotGiven = NOT_GIVEN,
+        generated_video_inputs: GeneratedVideoInputsParam | NotGiven = NOT_GIVEN,
         ai_model_id: str | NotGiven = NOT_GIVEN,
         audio_id: Optional[str] | NotGiven = NOT_GIVEN,
         start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
@@ -958,6 +974,11 @@ class AsyncHedra(AsyncAPIClient):
 
 class HedraWithRawResponse:
     def __init__(self, client: Hedra) -> None:
+        self.models = models.ModelsResourceWithRawResponse(client.models)
+        self.assets = assets.AssetsResourceWithRawResponse(client.assets)
+        self.client = client.ClientResourceWithRawResponse(client.client)
+        self.billing = billing.BillingResourceWithRawResponse(client.billing)
+
         self.generations = to_raw_response_wrapper(
             client.generations,
         )
@@ -965,6 +986,11 @@ class HedraWithRawResponse:
 
 class AsyncHedraWithRawResponse:
     def __init__(self, client: AsyncHedra) -> None:
+        self.models = models.AsyncModelsResourceWithRawResponse(client.models)
+        self.assets = assets.AsyncAssetsResourceWithRawResponse(client.assets)
+        self.client = client.AsyncClientResourceWithRawResponse(client.client)
+        self.billing = billing.AsyncBillingResourceWithRawResponse(client.billing)
+
         self.generations = async_to_raw_response_wrapper(
             client.generations,
         )
@@ -972,6 +998,11 @@ class AsyncHedraWithRawResponse:
 
 class HedraWithStreamedResponse:
     def __init__(self, client: Hedra) -> None:
+        self.models = models.ModelsResourceWithStreamingResponse(client.models)
+        self.assets = assets.AssetsResourceWithStreamingResponse(client.assets)
+        self.client = client.ClientResourceWithStreamingResponse(client.client)
+        self.billing = billing.BillingResourceWithStreamingResponse(client.billing)
+
         self.generations = to_streamed_response_wrapper(
             client.generations,
         )
@@ -979,6 +1010,11 @@ class HedraWithStreamedResponse:
 
 class AsyncHedraWithStreamedResponse:
     def __init__(self, client: AsyncHedra) -> None:
+        self.models = models.AsyncModelsResourceWithStreamingResponse(client.models)
+        self.assets = assets.AsyncAssetsResourceWithStreamingResponse(client.assets)
+        self.client = client.AsyncClientResourceWithStreamingResponse(client.client)
+        self.billing = billing.AsyncBillingResourceWithStreamingResponse(client.billing)
+
         self.generations = async_to_streamed_response_wrapper(
             client.generations,
         )
