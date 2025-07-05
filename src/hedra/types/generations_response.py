@@ -5,11 +5,11 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .generated_video_inputs import GeneratedVideoInputs
 
 __all__ = [
     "GenerationsResponse",
     "GenerateVideoResponse",
-    "GenerateVideoResponseGeneratedVideoInputs",
     "GenerateTextToSpeechResponse",
     "GenerateImageResponse",
     "GenerateImageToImageResponse",
@@ -19,23 +19,6 @@ __all__ = [
 ]
 
 
-class GenerateVideoResponseGeneratedVideoInputs(BaseModel):
-    text_prompt: str
-    """Prompt for video generation."""
-
-    aspect_ratio: Optional[str] = None
-    """Aspect ratio for the video."""
-
-    bounding_box_target: Optional[List[object]] = None
-    """Normalized coordinates for primary speaker position (Character3 only)"""
-
-    duration_ms: Optional[int] = None
-    """Duration of the video in milliseconds."""
-
-    resolution: Optional[str] = None
-    """Resolution for the video."""
-
-
 class GenerateVideoResponse(BaseModel):
     id: str
     """The id of the generation created."""
@@ -43,7 +26,7 @@ class GenerateVideoResponse(BaseModel):
     asset_id: str
     """The id of the video asset resulting from the generation."""
 
-    generated_video_inputs: GenerateVideoResponseGeneratedVideoInputs
+    generated_video_inputs: GeneratedVideoInputs
     """Inputs for generating the video."""
 
     ai_model_id: Optional[str] = None
