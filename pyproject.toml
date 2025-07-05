@@ -39,6 +39,17 @@ Repository = "https://github.com/hedra-labs/hedra-python"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.6"]
+cli = [
+    "click>=8.0.0",
+    "rich>=13.0.0", 
+    "python-dotenv>=1.0.0",
+    "deepface>=0.0.75",
+    "opencv-python>=4.0.0",
+    "pillow>=8.0.0",
+]
+
+[project.scripts]
+hedra = "hedra.lib.cli.__main__:main"
 
 [tool.rye]
 managed = true
