@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Union, Mapping
-from typing_extensions import Self, override
+from typing import Any, Union, Mapping, Optional, cast
+from typing_extensions import Self, Literal, overload, override
 
 import httpx
 
 from . import _exceptions
 from ._qs import Querystring
+from .types import client_generations_params
 from ._types import (
     NOT_GIVEN,
     Body,
@@ -22,7 +23,13 @@ from ._types import (
     ProxiesTypes,
     RequestOptions,
 )
-from ._utils import is_given, get_async_library
+from ._utils import (
+    is_given,
+    required_args,
+    maybe_transform,
+    get_async_library,
+    async_maybe_transform,
+)
 from ._version import __version__
 from ._response import (
     to_raw_response_wrapper,
@@ -30,7 +37,6 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import audio, voices, projects, portraits, characters
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import HedraError, APIStatusError
 from ._base_client import (
@@ -39,16 +45,12 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .types.generations_response import GenerationsResponse
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Hedra", "AsyncHedra", "Client", "AsyncClient"]
 
 
 class Hedra(SyncAPIClient):
-    voices: voices.VoicesResource
-    audio: audio.AudioResource
-    portraits: portraits.PortraitsResource
-    characters: characters.CharactersResource
-    projects: projects.ProjectsResource
     with_raw_response: HedraWithRawResponse
     with_streaming_response: HedraWithStreamedResponse
 
@@ -93,7 +95,7 @@ class Hedra(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("HEDRA_BASE_URL")
         if base_url is None:
-            base_url = f"https://mercury.dev.dream-ai.com/api"
+            base_url = f"https://api.hedra.com/web-app/Public"
 
         super().__init__(
             version=__version__,
@@ -106,11 +108,6 @@ class Hedra(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.voices = voices.VoicesResource(self)
-        self.audio = audio.AudioResource(self)
-        self.portraits = portraits.PortraitsResource(self)
-        self.characters = characters.CharactersResource(self)
-        self.projects = projects.ProjectsResource(self)
         self.with_raw_response = HedraWithRawResponse(self)
         self.with_streaming_response = HedraWithStreamedResponse(self)
 
@@ -185,23 +182,291 @@ class Hedra(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def ping(
+    @overload
+    def generations(
         self,
         *,
+        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs,
+        ai_model_id: str | NotGiven = NOT_GIVEN,
+        audio_id: Optional[str] | NotGiven = NOT_GIVEN,
+        start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
+        type: Literal["video"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """Ping"""
-        return self.get(
-            "/ping",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          generated_video_inputs: Inputs for generating the video.
+
+          ai_model_id: ID of the model to use for the generation.
+
+          audio_id: The id of the Audio asset to use.
+
+          start_keyframe_id: The id of the Image asset to use as the start keyframe.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def generations(
+        self,
+        *,
+        text: str,
+        voice_id: str,
+        speed: float | NotGiven = NOT_GIVEN,
+        stability: float | NotGiven = NOT_GIVEN,
+        type: Literal["text_to_speech"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          text: The text to convert to speech.
+
+          voice_id: The id of the Voice to use.
+
+          speed: Speed should be between 0.7 and 1.2, where 0.7 is the slowest and 1.2 is the
+              fastest. This varies the speed of the generated speech.
+
+          stability: Stability should be between 0-1, where 0 is the most stable and 1 is the most
+              unstable. This varies the consistency between your outputs.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def generations(
+        self,
+        *,
+        ai_model_id: str,
+        text_prompt: str,
+        aspect_ratio: Optional[str] | NotGiven = NOT_GIVEN,
+        resolution: Optional[str] | NotGiven = NOT_GIVEN,
+        start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
+        type: Literal["image"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          ai_model_id: The model to use.
+
+          text_prompt: The text prompt for image generation or image editing.
+
+          aspect_ratio: The aspect ratio to use.
+
+          resolution: The resolution to use formatted like '540p', '1080p', '1440p (2K QHD)', etc.
+
+          start_keyframe_id: The id of the Image asset to use as the start keyframe.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def generations(
+        self,
+        *,
+        ai_model_id: str,
+        audio_id: str,
+        type: Literal["audio_isolation"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          ai_model_id: The id of the model to use for audio isolation.
+
+          audio_id: The id of the audio asset requiring sound isolation.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def generations(
+        self,
+        *,
+        ai_model_id: str,
+        audio_id: str,
+        voice_id: str,
+        type: Literal["speech_to_speech"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          ai_model_id: The id of the model to use for audio isolation.
+
+          audio_id: The id of the audio asset requiring sound isolation.
+
+          voice_id: The id of the Voice to use.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def generations(
+        self,
+        *,
+        audio_id: str,
+        name: str,
+        type: Literal["voice_clone"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          audio_id: The id of the Audio asset to use as the basis for the clone.
+
+          name: The name of the new voice. Required by ElevenLabs to create a new voice.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(
+        ["generated_video_inputs"],
+        ["text", "voice_id"],
+        ["ai_model_id", "text_prompt"],
+        ["ai_model_id", "audio_id"],
+        ["ai_model_id", "audio_id", "voice_id"],
+        ["audio_id", "name"],
+    )
+    def generations(
+        self,
+        *,
+        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs
+        | NotGiven = NOT_GIVEN,
+        ai_model_id: str | NotGiven = NOT_GIVEN,
+        audio_id: Optional[str] | NotGiven = NOT_GIVEN,
+        start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
+        type: Literal["video"]
+        | Literal["text_to_speech"]
+        | Literal["image"]
+        | Literal["audio_isolation"]
+        | Literal["speech_to_speech"]
+        | Literal["voice_clone"]
+        | NotGiven = NOT_GIVEN,
+        text: str | NotGiven = NOT_GIVEN,
+        voice_id: str | NotGiven = NOT_GIVEN,
+        speed: float | NotGiven = NOT_GIVEN,
+        stability: float | NotGiven = NOT_GIVEN,
+        text_prompt: str | NotGiven = NOT_GIVEN,
+        aspect_ratio: Optional[str] | NotGiven = NOT_GIVEN,
+        resolution: Optional[str] | NotGiven = NOT_GIVEN,
+        name: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        return cast(
+            GenerationsResponse,
+            self.post(
+                "/generations",
+                body=maybe_transform(
+                    {
+                        "generated_video_inputs": generated_video_inputs,
+                        "ai_model_id": ai_model_id,
+                        "audio_id": audio_id,
+                        "start_keyframe_id": start_keyframe_id,
+                        "type": type,
+                        "text": text,
+                        "voice_id": voice_id,
+                        "speed": speed,
+                        "stability": stability,
+                        "text_prompt": text_prompt,
+                        "aspect_ratio": aspect_ratio,
+                        "resolution": resolution,
+                        "name": name,
+                    },
+                    client_generations_params.ClientGenerationsParams,
+                ),
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, GenerationsResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=object,
         )
 
     @override
@@ -239,11 +504,6 @@ class Hedra(SyncAPIClient):
 
 
 class AsyncHedra(AsyncAPIClient):
-    voices: voices.AsyncVoicesResource
-    audio: audio.AsyncAudioResource
-    portraits: portraits.AsyncPortraitsResource
-    characters: characters.AsyncCharactersResource
-    projects: projects.AsyncProjectsResource
     with_raw_response: AsyncHedraWithRawResponse
     with_streaming_response: AsyncHedraWithStreamedResponse
 
@@ -288,7 +548,7 @@ class AsyncHedra(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("HEDRA_BASE_URL")
         if base_url is None:
-            base_url = f"https://mercury.dev.dream-ai.com/api"
+            base_url = f"https://api.hedra.com/web-app/Public"
 
         super().__init__(
             version=__version__,
@@ -301,11 +561,6 @@ class AsyncHedra(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.voices = voices.AsyncVoicesResource(self)
-        self.audio = audio.AsyncAudioResource(self)
-        self.portraits = portraits.AsyncPortraitsResource(self)
-        self.characters = characters.AsyncCharactersResource(self)
-        self.projects = projects.AsyncProjectsResource(self)
         self.with_raw_response = AsyncHedraWithRawResponse(self)
         self.with_streaming_response = AsyncHedraWithStreamedResponse(self)
 
@@ -380,23 +635,291 @@ class AsyncHedra(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    async def ping(
+    @overload
+    async def generations(
         self,
         *,
+        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs,
+        ai_model_id: str | NotGiven = NOT_GIVEN,
+        audio_id: Optional[str] | NotGiven = NOT_GIVEN,
+        start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
+        type: Literal["video"] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """Ping"""
-        return await self.get(
-            "/ping",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          generated_video_inputs: Inputs for generating the video.
+
+          ai_model_id: ID of the model to use for the generation.
+
+          audio_id: The id of the Audio asset to use.
+
+          start_keyframe_id: The id of the Image asset to use as the start keyframe.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def generations(
+        self,
+        *,
+        text: str,
+        voice_id: str,
+        speed: float | NotGiven = NOT_GIVEN,
+        stability: float | NotGiven = NOT_GIVEN,
+        type: Literal["text_to_speech"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          text: The text to convert to speech.
+
+          voice_id: The id of the Voice to use.
+
+          speed: Speed should be between 0.7 and 1.2, where 0.7 is the slowest and 1.2 is the
+              fastest. This varies the speed of the generated speech.
+
+          stability: Stability should be between 0-1, where 0 is the most stable and 1 is the most
+              unstable. This varies the consistency between your outputs.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def generations(
+        self,
+        *,
+        ai_model_id: str,
+        text_prompt: str,
+        aspect_ratio: Optional[str] | NotGiven = NOT_GIVEN,
+        resolution: Optional[str] | NotGiven = NOT_GIVEN,
+        start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
+        type: Literal["image"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          ai_model_id: The model to use.
+
+          text_prompt: The text prompt for image generation or image editing.
+
+          aspect_ratio: The aspect ratio to use.
+
+          resolution: The resolution to use formatted like '540p', '1080p', '1440p (2K QHD)', etc.
+
+          start_keyframe_id: The id of the Image asset to use as the start keyframe.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def generations(
+        self,
+        *,
+        ai_model_id: str,
+        audio_id: str,
+        type: Literal["audio_isolation"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          ai_model_id: The id of the model to use for audio isolation.
+
+          audio_id: The id of the audio asset requiring sound isolation.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def generations(
+        self,
+        *,
+        ai_model_id: str,
+        audio_id: str,
+        voice_id: str,
+        type: Literal["speech_to_speech"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          ai_model_id: The id of the model to use for audio isolation.
+
+          audio_id: The id of the audio asset requiring sound isolation.
+
+          voice_id: The id of the Voice to use.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def generations(
+        self,
+        *,
+        audio_id: str,
+        name: str,
+        type: Literal["voice_clone"] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        """
+        Generate Asset
+
+        Args:
+          audio_id: The id of the Audio asset to use as the basis for the clone.
+
+          name: The name of the new voice. Required by ElevenLabs to create a new voice.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(
+        ["generated_video_inputs"],
+        ["text", "voice_id"],
+        ["ai_model_id", "text_prompt"],
+        ["ai_model_id", "audio_id"],
+        ["ai_model_id", "audio_id", "voice_id"],
+        ["audio_id", "name"],
+    )
+    async def generations(
+        self,
+        *,
+        generated_video_inputs: client_generations_params.GenerateVideoRequestInputGeneratedVideoInputs
+        | NotGiven = NOT_GIVEN,
+        ai_model_id: str | NotGiven = NOT_GIVEN,
+        audio_id: Optional[str] | NotGiven = NOT_GIVEN,
+        start_keyframe_id: Optional[str] | NotGiven = NOT_GIVEN,
+        type: Literal["video"]
+        | Literal["text_to_speech"]
+        | Literal["image"]
+        | Literal["audio_isolation"]
+        | Literal["speech_to_speech"]
+        | Literal["voice_clone"]
+        | NotGiven = NOT_GIVEN,
+        text: str | NotGiven = NOT_GIVEN,
+        voice_id: str | NotGiven = NOT_GIVEN,
+        speed: float | NotGiven = NOT_GIVEN,
+        stability: float | NotGiven = NOT_GIVEN,
+        text_prompt: str | NotGiven = NOT_GIVEN,
+        aspect_ratio: Optional[str] | NotGiven = NOT_GIVEN,
+        resolution: Optional[str] | NotGiven = NOT_GIVEN,
+        name: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> GenerationsResponse:
+        return cast(
+            GenerationsResponse,
+            await self.post(
+                "/generations",
+                body=await async_maybe_transform(
+                    {
+                        "generated_video_inputs": generated_video_inputs,
+                        "ai_model_id": ai_model_id,
+                        "audio_id": audio_id,
+                        "start_keyframe_id": start_keyframe_id,
+                        "type": type,
+                        "text": text,
+                        "voice_id": voice_id,
+                        "speed": speed,
+                        "stability": stability,
+                        "text_prompt": text_prompt,
+                        "aspect_ratio": aspect_ratio,
+                        "resolution": resolution,
+                        "name": name,
+                    },
+                    client_generations_params.ClientGenerationsParams,
+                ),
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, GenerationsResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=object,
         )
 
     @override
@@ -435,53 +958,29 @@ class AsyncHedra(AsyncAPIClient):
 
 class HedraWithRawResponse:
     def __init__(self, client: Hedra) -> None:
-        self.voices = voices.VoicesResourceWithRawResponse(client.voices)
-        self.audio = audio.AudioResourceWithRawResponse(client.audio)
-        self.portraits = portraits.PortraitsResourceWithRawResponse(client.portraits)
-        self.characters = characters.CharactersResourceWithRawResponse(client.characters)
-        self.projects = projects.ProjectsResourceWithRawResponse(client.projects)
-
-        self.ping = to_raw_response_wrapper(
-            client.ping,
+        self.generations = to_raw_response_wrapper(
+            client.generations,
         )
 
 
 class AsyncHedraWithRawResponse:
     def __init__(self, client: AsyncHedra) -> None:
-        self.voices = voices.AsyncVoicesResourceWithRawResponse(client.voices)
-        self.audio = audio.AsyncAudioResourceWithRawResponse(client.audio)
-        self.portraits = portraits.AsyncPortraitsResourceWithRawResponse(client.portraits)
-        self.characters = characters.AsyncCharactersResourceWithRawResponse(client.characters)
-        self.projects = projects.AsyncProjectsResourceWithRawResponse(client.projects)
-
-        self.ping = async_to_raw_response_wrapper(
-            client.ping,
+        self.generations = async_to_raw_response_wrapper(
+            client.generations,
         )
 
 
 class HedraWithStreamedResponse:
     def __init__(self, client: Hedra) -> None:
-        self.voices = voices.VoicesResourceWithStreamingResponse(client.voices)
-        self.audio = audio.AudioResourceWithStreamingResponse(client.audio)
-        self.portraits = portraits.PortraitsResourceWithStreamingResponse(client.portraits)
-        self.characters = characters.CharactersResourceWithStreamingResponse(client.characters)
-        self.projects = projects.ProjectsResourceWithStreamingResponse(client.projects)
-
-        self.ping = to_streamed_response_wrapper(
-            client.ping,
+        self.generations = to_streamed_response_wrapper(
+            client.generations,
         )
 
 
 class AsyncHedraWithStreamedResponse:
     def __init__(self, client: AsyncHedra) -> None:
-        self.voices = voices.AsyncVoicesResourceWithStreamingResponse(client.voices)
-        self.audio = audio.AsyncAudioResourceWithStreamingResponse(client.audio)
-        self.portraits = portraits.AsyncPortraitsResourceWithStreamingResponse(client.portraits)
-        self.characters = characters.AsyncCharactersResourceWithStreamingResponse(client.characters)
-        self.projects = projects.AsyncProjectsResourceWithStreamingResponse(client.projects)
-
-        self.ping = async_to_streamed_response_wrapper(
-            client.ping,
+        self.generations = async_to_streamed_response_wrapper(
+            client.generations,
         )
 
 

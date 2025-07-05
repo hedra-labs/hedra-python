@@ -712,20 +712,24 @@ class TestHedra:
     @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Hedra) -> None:
-        respx_mock.post("/v1/characters").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/generations").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.characters.with_streaming_response.create().__enter__()
+            client.with_streaming_response.generations(
+                generated_video_inputs={"text_prompt": "text_prompt"}
+            ).__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Hedra) -> None:
-        respx_mock.post("/v1/characters").mock(return_value=httpx.Response(500))
+        respx_mock.post("/generations").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.characters.with_streaming_response.create().__enter__()
+            client.with_streaming_response.generations(
+                generated_video_inputs={"text_prompt": "text_prompt"}
+            ).__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -752,9 +756,9 @@ class TestHedra:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/characters").mock(side_effect=retry_handler)
+        respx_mock.post("/generations").mock(side_effect=retry_handler)
 
-        response = client.characters.with_raw_response.create()
+        response = client.with_raw_response.generations(generated_video_inputs={"text_prompt": "text_prompt"})
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -774,9 +778,11 @@ class TestHedra:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/characters").mock(side_effect=retry_handler)
+        respx_mock.post("/generations").mock(side_effect=retry_handler)
 
-        response = client.characters.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.with_raw_response.generations(
+            generated_video_inputs={"text_prompt": "text_prompt"}, extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -797,9 +803,11 @@ class TestHedra:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/characters").mock(side_effect=retry_handler)
+        respx_mock.post("/generations").mock(side_effect=retry_handler)
 
-        response = client.characters.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.with_raw_response.generations(
+            generated_video_inputs={"text_prompt": "text_prompt"}, extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1523,20 +1531,24 @@ class TestAsyncHedra:
     @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncHedra) -> None:
-        respx_mock.post("/v1/characters").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/generations").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.characters.with_streaming_response.create().__aenter__()
+            await async_client.with_streaming_response.generations(
+                generated_video_inputs={"text_prompt": "text_prompt"}
+            ).__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("hedra._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncHedra) -> None:
-        respx_mock.post("/v1/characters").mock(return_value=httpx.Response(500))
+        respx_mock.post("/generations").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.characters.with_streaming_response.create().__aenter__()
+            await async_client.with_streaming_response.generations(
+                generated_video_inputs={"text_prompt": "text_prompt"}
+            ).__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1564,9 +1576,9 @@ class TestAsyncHedra:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/characters").mock(side_effect=retry_handler)
+        respx_mock.post("/generations").mock(side_effect=retry_handler)
 
-        response = await client.characters.with_raw_response.create()
+        response = await client.with_raw_response.generations(generated_video_inputs={"text_prompt": "text_prompt"})
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1589,9 +1601,11 @@ class TestAsyncHedra:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/characters").mock(side_effect=retry_handler)
+        respx_mock.post("/generations").mock(side_effect=retry_handler)
 
-        response = await client.characters.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.with_raw_response.generations(
+            generated_video_inputs={"text_prompt": "text_prompt"}, extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1613,9 +1627,11 @@ class TestAsyncHedra:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/characters").mock(side_effect=retry_handler)
+        respx_mock.post("/generations").mock(side_effect=retry_handler)
 
-        response = await client.characters.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.with_raw_response.generations(
+            generated_video_inputs={"text_prompt": "text_prompt"}, extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
