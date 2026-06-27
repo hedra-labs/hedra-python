@@ -1,53 +1,51 @@
-name: CI
+name: ci
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-      - next
+  pull_request: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  lint:
-    name: lint
+  compile:
     runs-on: ubuntu-latest
-    
-
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Rye
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Bootstrap poetry
         run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.35.0'
-          RYE_INSTALL_OPTION: '--yes'
-
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
-        run: rye sync --all-features
-
-      - name: Run lints
-        run: ./scripts/lint
+        run: poetry install
+      - name: Compile
+        run: poetry run mypy .
   test:
-    name: test
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Rye
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Bootstrap poetry
         run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.35.0'
-          RYE_INSTALL_OPTION: '--yes'
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Install dependencies
+        run: poetry install
 
-      - name: Bootstrap
-        run: ./scripts/bootstrap
+      - name: Test
+        run: poetry run pytest -rP -n auto .
 
-      - name: Run tests
-        run: ./scripts/test
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
 
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .

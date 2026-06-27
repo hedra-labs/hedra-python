@@ -1,0 +1,29 @@
+# Files Fern must NOT overwrite when it regenerates this SDK (via PR from the
+# hedra-labs/fern-config repo). See https://buildwithfern.com/learn/sdks/capabilities/customize-files
+
+# PyPI distribution name (hedra-python) + project metadata; import name is `hedra`
+pyproject.toml
+
+# README install/badge + usage use the hedra-python distribution name
+README.md
+
+# version.py looks up the hedra-python distribution
+src/hedra/version.py
+# Hand-written client wrapper: reads HEDRA_API_KEY at construction time.
+# BaseHedra/AsyncBaseHedra (base_client.py) regenerate normally.
+src/hedra/client.py
+
+# Fix for retry-after-ms parsing (upstream Fern emits a str-vs-int comparison)
+src/hedra/core/http_client.py
+
+
+# Hand-maintained docs / history
+CHANGELOG.md
+MIGRATION.md
+LICENSE
+
+# CI is hand-maintained (Fern doesn't manage workflows here)
+.github/
+
+# Hand-written tests
+tests/custom/
