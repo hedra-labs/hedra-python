@@ -3,3 +3,6 @@
 __pycache__/
 dist/
 poetry.toml
+
+# Fern generation metadata (records commit/dirty/invokedBy — not reproducible)
+.fern/
