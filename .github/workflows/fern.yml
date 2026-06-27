@@ -31,12 +31,15 @@ jobs:
         run: |
           VER="$(grep -m1 '^version = ' pyproject.toml | sed 's/.*"\(.*\)".*/\1/')"
           fern generate --local --group local --version "$VER" --force --no-prompt
+          echo "=== generated package layout ==="
+          find . -path ./.git -prune -o -name '*.py' -print | grep -E 'hedra' | sort | head -60
           python3 fern/postprocess.py
       - name: Fail if generated code is out of date
         run: |
           git add -A
           if ! git diff --cached --quiet; then
             echo "::error::Committed SDK is out of date with fern/. Run the 'fern' workflow (regenerate) or 'fern generate --local --group local'."
+            git status --short
             git diff --cached --stat
             exit 1
           fi
