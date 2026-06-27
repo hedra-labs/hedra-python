@@ -27,3 +27,7 @@ LICENSE
 
 # Hand-written tests (Fern manages everything else under tests/)
 tests/custom/
+
+# Post-generation patch script (runs after `fern generate`; not a Fern input, so
+# must be protected from the output-dir clean that local-file-system output does)
+fern/postprocess.py
