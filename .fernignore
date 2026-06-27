@@ -1,33 +1,22 @@
-# Files customized after generation that Fern must NOT overwrite on regeneration.
-# `fern generate` preserves these; the regenerate workflow (.github/workflows/fern.yml)
-# opens a PR so the diff is always reviewed before merge.
-# See https://buildwithfern.com/learn/sdks/capabilities/customize-files
+# Files Fern must NOT overwrite when it regenerates this SDK (via PR from the
+# hedra-labs/fern-config repo). See https://buildwithfern.com/learn/sdks/capabilities/customize-files
 
-# PyPI distribution name (hedra-python) + project metadata
+# PyPI distribution name (hedra-python) + project metadata; import name is `hedra`
 pyproject.toml
 
-# README install/badge + usage examples use the hedra-python distribution name
+# README install/badge + usage use the hedra-python distribution name
 README.md
 
-# version.py looks up the hedra-python distribution (import name is hedra)
+# version.py looks up the hedra-python distribution
 src/hedra/version.py
 
-# Hand-maintained docs and history
+# Hand-maintained docs / history
 CHANGELOG.md
 MIGRATION.md
 LICENSE
 
-# .gitignore is customized (local secrets/venvs + .fern metadata)
-.gitignore
+# CI is hand-maintained (Fern doesn't manage workflows here)
+.github/
 
-# Workflows are hand-maintained (ci.yml customized to run on PRs)
-.github/workflows/ci.yml
-.github/workflows/publish-pypi.yml
-.github/workflows/fern.yml
-
-# Hand-written tests (Fern manages everything else under tests/)
+# Hand-written tests
 tests/custom/
-
-# Post-generation patch script (runs after `fern generate`; not a Fern input, so
-# must be protected from the output-dir clean that local-file-system output does)
-fern/postprocess.py

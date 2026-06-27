@@ -9,8 +9,8 @@ poetry.toml
 .envrc
 .venv/
 
-# Fern generation metadata (records commit/dirty/invokedBy — not reproducible)
-.fern/
+# Throwaway local generation output
+.fern-build/
 
 # Stray uv lockfile (this project uses poetry.lock)
 uv.lock
