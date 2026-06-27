@@ -9,6 +9,13 @@ README.md
 
 # version.py looks up the hedra-python distribution
 src/hedra/version.py
+# Hand-written client wrapper: reads HEDRA_API_KEY at construction time.
+# BaseHedra/AsyncBaseHedra (base_client.py) regenerate normally.
+src/hedra/client.py
+
+# Fix for retry-after-ms parsing (upstream Fern emits a str-vs-int comparison)
+src/hedra/core/http_client.py
+
 
 # Hand-maintained docs / history
 CHANGELOG.md
