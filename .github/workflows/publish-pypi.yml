@@ -26,5 +26,6 @@ jobs:
 
       - name: Publish to PyPI
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+          # Accept either secret name (the Stainless workflow used HEDRA_PYPI_TOKEN).
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN || secrets.HEDRA_PYPI_TOKEN }}
         run: poetry publish

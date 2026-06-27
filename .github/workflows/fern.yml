@@ -31,6 +31,7 @@ jobs:
         run: |
           VER="$(grep -m1 '^version = ' pyproject.toml | sed 's/.*"\(.*\)".*/\1/')"
           fern generate --local --group local --version "$VER" --force --no-prompt
+          python3 fern/postprocess.py
       - name: Fail if generated code is out of date
         run: |
           git add -A
@@ -52,6 +53,7 @@ jobs:
         run: |
           VER="$(grep -m1 '^version = ' pyproject.toml | sed 's/.*"\(.*\)".*/\1/')"
           fern generate --local --group local --version "$VER" --force --no-prompt
+          python3 fern/postprocess.py
       - name: Open pull request
         uses: peter-evans/create-pull-request@v6
         with:

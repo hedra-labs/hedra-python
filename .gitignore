@@ -4,5 +4,10 @@ __pycache__/
 dist/
 poetry.toml
 
+# Local secrets and virtualenvs
+.env
+.envrc
+.venv/
+
 # Fern generation metadata (records commit/dirty/invokedBy — not reproducible)
 .fern/

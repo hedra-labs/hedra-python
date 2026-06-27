@@ -55,8 +55,6 @@ def test_missing_api_key_raises() -> None:
 
 
 def test_hedra_api_key_env_fallback() -> None:
-    # The env var is read as a constructor default at import time, so it must be
-    # set before `hedra` is imported — verify in a clean subprocess.
     script = (
         "from hedra import Hedra\n"
         "c = Hedra()\n"
@@ -67,3 +65,20 @@ def test_hedra_api_key_env_fallback() -> None:
     result = subprocess.run([sys.executable, "-c", script], env=env, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
     assert "ok" in result.stdout
+
+
+def test_hedra_api_key_env_read_at_construction_not_import(monkeypatch: pytest.MonkeyPatch) -> None:
+    # Regression: the env var must be read when the client is constructed, not
+    # captured as an import-time default. Mirrors `import Hedra; load_dotenv(); Hedra()`.
+    monkeypatch.setenv("HEDRA_API_KEY", "set-after-import")
+    client = Hedra()
+    assert client._client_wrapper.api_key == "set-after-import"
+
+
+def test_parse_retry_after_ms_header() -> None:
+    # Regression: retry-after-ms is a string; it must not be compared to int 0.
+    from hedra.core.http_client import _parse_retry_after
+
+    assert _parse_retry_after(httpx.Headers({"retry-after-ms": "2500"})) == 2.5
+    assert _parse_retry_after(httpx.Headers({"retry-after-ms": "0"})) == 0
+    assert _parse_retry_after(httpx.Headers({"retry-after": "3"})) == 3

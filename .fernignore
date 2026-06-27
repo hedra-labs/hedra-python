@@ -17,6 +17,9 @@ CHANGELOG.md
 MIGRATION.md
 LICENSE
 
+# .gitignore is customized (local secrets/venvs + .fern metadata)
+.gitignore
+
 # Workflows are hand-maintained (ci.yml customized to run on PRs)
 .github/workflows/ci.yml
 .github/workflows/publish-pypi.yml
