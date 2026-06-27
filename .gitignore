@@ -11,3 +11,6 @@ poetry.toml
 
 # Fern generation metadata (records commit/dirty/invokedBy — not reproducible)
 .fern/
+
+# Stray uv lockfile (this project uses poetry.lock)
+uv.lock
