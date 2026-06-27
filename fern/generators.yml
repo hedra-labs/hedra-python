@@ -1,0 +1,17 @@
+api:
+  specs:
+    - openapi: openapi/openapi.json
+      overrides: openapi/overrides.yml
+
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 5.15.0
+        output:
+          location: local-file-system
+          path: ..
+        config:
+          client_class_name: Hedra
+          package_name: hedra

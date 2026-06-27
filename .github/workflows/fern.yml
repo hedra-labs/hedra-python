@@ -1,0 +1,45 @@
+name: fern
+# Validates the Fern API definition on PRs, and regenerates the SDK on demand.
+# Regeneration runs the Python generator locally via Docker (available natively on
+# Linux runners) and opens a PR with the result. Files listed in .fernignore are
+# preserved.
+on:
+  pull_request:
+    paths:
+      - "fern/**"
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Check Fern config
+        run: fern check
+
+  regenerate:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Generate SDK
+        run: fern generate --local --group local --no-prompt
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: regenerate SDK from Fern"
+          title: "chore: regenerate SDK from Fern"
+          body: "Automated SDK regeneration via `fern generate`."
+          branch: fern/regenerate
+          delete-branch: true

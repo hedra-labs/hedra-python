@@ -1,0 +1,26 @@
+# Files customized after generation that Fern must NOT overwrite on regeneration.
+# `fern generate` preserves these; the regenerate workflow (.github/workflows/fern.yml)
+# opens a PR so the diff is always reviewed before merge.
+# See https://buildwithfern.com/learn/sdks/capabilities/customize-files
+
+# PyPI distribution name (hedra-python) + project metadata
+pyproject.toml
+
+# README install/badge + usage examples use the hedra-python distribution name
+README.md
+
+# version.py looks up the hedra-python distribution (import name is hedra)
+src/hedra/version.py
+
+# Hand-maintained docs and history
+CHANGELOG.md
+MIGRATION.md
+LICENSE
+
+# Workflows are hand-maintained (ci.yml customized to run on PRs)
+.github/workflows/ci.yml
+.github/workflows/publish-pypi.yml
+.github/workflows/fern.yml
+
+# Hand-written tests (Fern manages everything else under tests/)
+tests/custom/

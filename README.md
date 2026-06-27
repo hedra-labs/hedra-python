@@ -1,321 +1,203 @@
-# Hedra Python API library
+# Hedra Python Library
 
-[![PyPI version](https://img.shields.io/pypi/v/hedra-python.svg)](https://pypi.org/project/hedra-python/)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Hedra%2FPython)
+[![pypi](https://img.shields.io/pypi/v/hedra-python)](https://pypi.python.org/pypi/hedra-python)
 
-The Hedra Python library provides convenient access to the Hedra REST API from any Python 3.7+
-application. The library includes type definitions for all request params and response fields,
-and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
+The Hedra Python library provides convenient access to the Hedra APIs from Python.
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+## Table of Contents
 
-## Documentation
-
-The REST API documentation can be found on [hedra.com](https://hedra.com/docs). The full API of this library can be found in [api.md](api.md).
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
 
 ## Installation
 
 ```sh
-# install from PyPI
 pip install hedra-python
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
-The full API of this library can be found in [api.md](api.md).
+Instantiate and use the client with the following:
 
 ```python
-import os
 from hedra import Hedra
 
 client = Hedra(
-    # This is the default and can be omitted
-    api_key=os.environ.get("HEDRA_API_KEY"),
+    api_key="<value>",
 )
 
-character = client.characters.create()
-print(character.job_id)
+client.create_asset(
+    name="name",
+    type="text",
+)
 ```
 
-While you can provide an `api_key` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `HEDRA_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
-
-## Async usage
-
-Simply import `AsyncHedra` instead of `Hedra` and use `await` with each API call:
+The API key can also be provided via the `HEDRA_API_KEY` environment variable, in which
+case `api_key` may be omitted:
 
 ```python
 import os
+
+from hedra import Hedra
+
+# Reads HEDRA_API_KEY from the environment
+client = Hedra()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<value>",
+    environment=HedraEnvironment.DEFAULT,
+)
+```
+
+## Async Client
+
+The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
+
+```python
 import asyncio
+
 from hedra import AsyncHedra
 
 client = AsyncHedra(
-    # This is the default and can be omitted
-    api_key=os.environ.get("HEDRA_API_KEY"),
+    api_key="<value>",
 )
 
 
 async def main() -> None:
-    character = await client.characters.create()
-    print(character.job_id)
+    await client.create_asset(
+        name="name",
+        type="text",
+    )
 
 
 asyncio.run(main())
 ```
 
-Functionality between the synchronous and asynchronous clients is otherwise identical.
+## Exception Handling
 
-## Using types
-
-Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:
-
-- Serializing back into JSON, `model.to_json()`
-- Converting to a dictionary, `model.to_dict()`
-
-Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
-
-## Handling errors
-
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `hedra.APIConnectionError` is raised.
-
-When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `hedra.APIStatusError` is raised, containing `status_code` and `response` properties.
-
-All errors inherit from `hedra.APIError`.
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
 
 ```python
-import hedra
-from hedra import Hedra
-
-client = Hedra()
+from hedra.core.api_error import ApiError
 
 try:
-    client.characters.create()
-except hedra.APIConnectionError as e:
-    print("The server could not be reached")
-    print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except hedra.RateLimitError as e:
-    print("A 429 status code was received; we should back off a bit.")
-except hedra.APIStatusError as e:
-    print("Another non-200-range status code was received")
+    client.create_asset(...)
+except ApiError as e:
     print(e.status_code)
-    print(e.response)
+    print(e.body)
 ```
 
-Error codes are as followed:
+## Advanced
 
-| Status Code | Error Type                 |
-| ----------- | -------------------------- |
-| 400         | `BadRequestError`          |
-| 401         | `AuthenticationError`      |
-| 403         | `PermissionDeniedError`    |
-| 404         | `NotFoundError`            |
-| 422         | `UnprocessableEntityError` |
-| 429         | `RateLimitError`           |
-| >=500       | `InternalServerError`      |
-| N/A         | `APIConnectionError`       |
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from hedra import Hedra
+
+client = Hedra(...)
+response = client.with_raw_response.create_asset(...)
+print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
-Certain errors are automatically retried 2 times by default, with a short exponential backoff.
-Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,
-429 Rate Limit, and >=500 Internal errors are all retried by default.
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
 
-You can use the `max_retries` option to configure or disable retry settings:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
+
+**`legacy`** (current default): retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+
+Use the `max_retries` request option to configure this behavior.
 
 ```python
-from hedra import Hedra
-
-# Configure the default for all requests:
-client = Hedra(
-    # default is 2
-    max_retries=0,
-)
-
-# Or, configure per-request:
-client.with_options(max_retries=5).characters.create()
+client.create_asset(..., request_options={
+    "max_retries": 1
+})
 ```
 
 ### Timeouts
 
-By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
 from hedra import Hedra
 
-# Configure the default for all requests:
-client = Hedra(
-    # 20 seconds (default is 1 minute)
-    timeout=20.0,
-)
+client = Hedra(..., timeout=20.0)
 
-# More granular control:
-client = Hedra(
-    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
-)
-
-# Override per-request:
-client.with_options(timeout=5.0).characters.create()
+# Override timeout for a specific method
+client.create_asset(..., request_options={
+    "timeout_in_seconds": 1
+})
 ```
 
-On timeout, an `APITimeoutError` is thrown.
+### Custom Client
 
-Note that requests that time out are [retried twice by default](#retries).
-
-## Advanced
-
-### Logging
-
-We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
-
-You can enable logging by setting the environment variable `HEDRA_LOG` to `debug`.
-
-```shell
-$ export HEDRA_LOG=debug
-```
-
-### How to tell whether `None` means `null` or missing
-
-In an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:
-
-```py
-if response.my_field is None:
-  if 'my_field' not in response.model_fields_set:
-    print('Got json like {}, without a "my_field" key present at all.')
-  else:
-    print('Got json like {"my_field": null}.')
-```
-
-### Accessing raw response data (e.g. headers)
-
-The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
-
-```py
-from hedra import Hedra
-
-client = Hedra()
-response = client.characters.with_raw_response.create()
-print(response.headers.get('X-My-Header'))
-
-character = response.parse()  # get the object that `characters.create()` would have returned
-print(character.job_id)
-```
-
-These methods return an [`APIResponse`](https://github.com/hedra-labs/hedra-python/tree/main/src/hedra/_response.py) object.
-
-The async client returns an [`AsyncAPIResponse`](https://github.com/hedra-labs/hedra-python/tree/main/src/hedra/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
-
-#### `.with_streaming_response`
-
-The above interface eagerly reads the full response body when you make the request, which may not always be what you want.
-
-To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
+You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
+and transports.
 
 ```python
-with client.characters.with_streaming_response.create() as response:
-    print(response.headers.get("X-My-Header"))
-
-    for line in response.iter_lines():
-        print(line)
-```
-
-The context manager is required so that the response will reliably be closed.
-
-### Making custom/undocumented requests
-
-This library is typed for convenient access to the documented API.
-
-If you need to access undocumented endpoints, params, or response properties, the library can still be used.
-
-#### Undocumented endpoints
-
-To make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other
-http verbs. Options on the client will be respected (such as retries) will be respected when making this
-request.
-
-```py
 import httpx
-
-response = client.post(
-    "/foo",
-    cast_to=httpx.Response,
-    body={"my_param": True},
-)
-
-print(response.headers.get("x-foo"))
-```
-
-#### Undocumented request params
-
-If you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request
-options.
-
-#### Undocumented response properties
-
-To access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You
-can also get all the extra fields on the Pydantic model as a dict with
-[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).
-
-### Configuring the HTTP client
-
-You can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:
-
-- Support for proxies
-- Custom transports
-- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality
-
-```python
-from hedra import Hedra, DefaultHttpxClient
+from hedra import Hedra
 
 client = Hedra(
-    # Or use the `HEDRA_BASE_URL` env var
-    base_url="http://my.test.server.example.com:8083",
-    http_client=DefaultHttpxClient(
-        proxies="http://my.test.proxy.example.com",
+    ...,
+    httpx_client=httpx.Client(
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )
 ```
 
-You can also customize the client on a per-request basis by using `with_options()`:
-
-```python
-client.with_options(http_client=DefaultHttpxClient(...))
-```
-
-### Managing HTTP resources
-
-By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
-
-## Versioning
-
-This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
-
-1. Changes that only affect static types, without breaking runtime behavior.
-2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals)_.
-3. Changes that we do not expect to impact the vast majority of users in practice.
-
-We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
-
-We are keen for your feedback; please open an [issue](https://www.github.com/hedra-labs/hedra-python/issues) with questions, bugs, or suggestions.
-
-### Determining the installed version
-
-If you've upgraded to the latest version but aren't seeing any new features you were expecting then your python environment is likely still using an older version.
-
-You can determine the version that is being used at runtime with:
-
-```py
-import hedra
-print(hedra.__version__)
-```
-
-## Requirements
-
-Python 3.7 or higher.
-
 ## Contributing
 
-See [the contributing documentation](./CONTRIBUTING.md).
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
