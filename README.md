@@ -10,7 +10,7 @@ The Hedra Python library provides convenient access to the Hedra APIs from Pytho
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
+- [Custom base URL](#custom-base-url)
 - [Pagination](#pagination)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
@@ -71,17 +71,17 @@ from hedra import Hedra
 client = Hedra()
 ```
 
-## Environments
+## Custom base URL
 
-This SDK allows you to configure different environments for API requests.
+The client targets `https://api.hedra.com/v3`. Override it with `base_url` if you
+need to point elsewhere (e.g. a mock server in tests):
 
 ```python
 from hedra import Hedra
-from hedra.environment import HedraEnvironment
 
 client = Hedra(
     api_key="<value>",
-    environment=HedraEnvironment.STAGING,  # default: HedraEnvironment.PRODUCTION
+    base_url="http://localhost:8000/v3",
 )
 ```
 

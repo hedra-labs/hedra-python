@@ -38,9 +38,8 @@ dict (per-model schemas: `client.models.get(model).input_schema` or
 `api_key=` and the `HEDRA_API_KEY` env fallback work as before — pass the
 `<key_id>:<secret>` string.
 
-**Environments.** `HedraEnvironment.PRODUCTION` (`https://api.hedra.com/v3`,
-default) and `HedraEnvironment.STAGING` (`https://api.staging.hedra.com/v3`)
-replace `HedraEnvironment.DEFAULT`.
+**Environments.** `HedraEnvironment.PRODUCTION` (`https://api.hedra.com/v3`)
+replaces `HedraEnvironment.DEFAULT`; use `base_url=` to point anywhere else.
 
 **Pagination.** `client.requests.list()` returns a `SyncPager` /
 `AsyncPager` that fetches cursor pages lazily as you iterate.
