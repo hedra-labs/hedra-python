@@ -179,6 +179,7 @@ __all__ = [
     "VoiceListResponse",
     "VoiceSummary",
     "WebhookPublicKey",
+    "__version__",
     "files",
     "keys",
     "models",
