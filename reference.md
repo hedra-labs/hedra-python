@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="src/hedra/client.py">list_models</a>(...) -> typing.List[AiModel]</code></summary>
+## Queue
+<details><summary><code>client.queue.<a href="src/hedra/queue/client.py">submit</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,11 +17,13 @@ from hedra import Hedra
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
 )
 
-client.list_models()
+client.queue.submit(
+    model="model",
+)
 
 ```
 </dd>
@@ -36,7 +39,39 @@ client.list_models()
 <dl>
 <dd>
 
-**types:** `typing.Optional[typing.List[str]]` 
+**model:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -56,7 +91,8 @@ client.list_models()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/hedra/client.py">list_voices</a>() -> typing.List[Asset]</code></summary>
+## Requests
+<details><summary><code>client.requests.<a href="src/hedra/requests/client.py">list</a>(...) -> RequestListResponse</code></summary>
 <dl>
 <dd>
 
@@ -73,11 +109,11 @@ from hedra import Hedra
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
 )
 
-client.list_voices()
+client.requests.list()
 
 ```
 </dd>
@@ -93,58 +129,7 @@ client.list_voices()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/hedra/client.py">list_assets</a>(...) -> typing.List[Asset]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
-)
-
-client.list_assets(
-    type="text",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type:** `AssetType` 
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -152,7 +137,7 @@ client.list_assets(
 <dl>
 <dd>
 
-**ids:** `typing.Optional[str]` 
+**cursor:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -172,7 +157,7 @@ client.list_assets(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/hedra/client.py">create_asset</a>(...) -> CreateAssetResponse</code></summary>
+<details><summary><code>client.requests.<a href="src/hedra/requests/client.py">get</a>(...) -> ResultResponse</code></summary>
 <dl>
 <dd>
 
@@ -189,13 +174,12 @@ from hedra import Hedra
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
 )
 
-client.create_asset(
-    name="name",
-    type="text",
+client.requests.get(
+    request_id="request_id",
 )
 
 ```
@@ -212,15 +196,7 @@ client.create_asset(
 <dl>
 <dd>
 
-**name:** `str` — Name of the asset. Default to user-provided file name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `AssetType` — The type of the asset.
+**request_id:** `str` 
     
 </dd>
 </dl>
@@ -240,7 +216,7 @@ client.create_asset(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/hedra/client.py">upload_asset</a>(...) -> Asset</code></summary>
+<details><summary><code>client.requests.<a href="src/hedra/requests/client.py">get_status</a>(...) -> StatusResponse</code></summary>
 <dl>
 <dd>
 
@@ -257,12 +233,807 @@ from hedra import Hedra
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
 )
 
-client.upload_asset(
-    id="id",
+client.requests.get_status(
+    request_id="request_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.requests.<a href="src/hedra/requests/client.py">stream</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.requests.stream(
+    request_id="request_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_event_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Models
+<details><summary><code>client.models.<a href="src/hedra/models/client.py">list</a>(...) -> ModelListResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.models.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.models.<a href="src/hedra/models/client.py">get</a>(...) -> ModelDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.models.get(
+    model="model",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.models.<a href="src/hedra/models/client.py">list_voices</a>(...) -> VoiceListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Voices this model accepts — scoped to the model's voice provider.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.models.list_voices(
+    model="model",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.models.<a href="src/hedra/models/client.py">get_openapi</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+A standalone one-operation OpenAPI spec for this model's submit call.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.models.get_openapi(
+    model="model",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.models.<a href="src/hedra/models/client.py">estimate</a>(...) -> EstimateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.models.estimate(
+    model="model",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Keys
+<details><summary><code>client.keys.<a href="src/hedra/keys/client.py">list</a>(...) -> KeyListResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.keys.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.keys.<a href="src/hedra/keys/client.py">create</a>(...) -> KeyCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.keys.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kind:** `typing.Optional[ApiKeyKind]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expires_at:** `typing.Optional[datetime.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.keys.<a href="src/hedra/keys/client.py">rotate</a>(...) -> KeyRotateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.keys.rotate(
+    key_id="key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**key_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grace_period_seconds:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.keys.<a href="src/hedra/keys/client.py">revoke</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.keys.revoke(
+    key_id="key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**key_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Tokens
+<details><summary><code>client.tokens.<a href="src/hedra/tokens/client.py">create</a>(...) -> TokenCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.tokens.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ttl_seconds:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Files
+<details><summary><code>client.files.<a href="src/hedra/files/client.py">upload</a>(...) -> FileUploadResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.files.upload(
     file="example_file",
 )
 
@@ -276,14 +1047,6 @@ client.upload_asset(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**id:** `str` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -308,7 +1071,8 @@ client.upload_asset(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/hedra/client.py">list_generations</a>(...) -> PagedResponseGeneration</code></summary>
+## Webhooks
+<details><summary><code>client.webhooks.<a href="src/hedra/webhooks/client.py">get_public_key</a>() -> WebhookPublicKey</code></summary>
 <dl>
 <dd>
 
@@ -325,246 +1089,11 @@ from hedra import Hedra
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
 )
 
-client.list_generations()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type:** `typing.Optional[ListGenerationsRequestType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_before:** `typing.Optional[datetime.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_after:** `typing.Optional[datetime.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt_query:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_thread_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ids:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Number of items returned in the page.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `typing.Optional[int]` — Number of records skipped.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/hedra/client.py">generate_asset</a>(...) -> GenerateAssetResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, GenerateAssetRequest_Video, GeneratedVideoInputs
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
-)
-
-client.generate_asset(
-    request=GenerateAssetRequest_Video(
-        generated_video_inputs=GeneratedVideoInputs(
-            text_prompt="text_prompt",
-        ),
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `GenerateAssetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/hedra/client.py">get_status</a>(...) -> GenerationStatusResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
-)
-
-client.get_status(
-    generation_id="generation_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**generation_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/hedra/client.py">get_credits</a>() -> CreditBalance</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
-)
-
-client.get_credits()
+client.webhooks.get_public_key()
 
 ```
 </dd>

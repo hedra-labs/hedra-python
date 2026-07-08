@@ -6,255 +6,73 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .ai_model import AiModel
-    from .ai_model_price import AiModelPrice
-    from .asset import Asset
-    from .asset_asset import (
-        AssetAsset,
-        AssetAsset_GeneratedAudio,
-        AssetAsset_GeneratedImage,
-        AssetAsset_GeneratedVideo,
-        AssetAsset_UploadedAudio,
-        AssetAsset_UploadedImage,
-        AssetAsset_UploadedVideo,
-        AssetAsset_Voice,
-    )
-    from .asset_type import AssetType
-    from .batch_image_result_item import BatchImageResultItem
-    from .batch_video_result_item import BatchVideoResultItem
-    from .create_asset_response import CreateAssetResponse
-    from .credit_balance import CreditBalance
-    from .dimension import Dimension
-    from .generate_asset_request import (
-        GenerateAssetRequest,
-        GenerateAssetRequest_AudioFromVideo,
-        GenerateAssetRequest_AudioIsolation,
-        GenerateAssetRequest_Image,
-        GenerateAssetRequest_ImageToImage,
-        GenerateAssetRequest_ImageUpscale,
-        GenerateAssetRequest_MotionControl,
-        GenerateAssetRequest_SpeechToSpeech,
-        GenerateAssetRequest_TextToSound,
-        GenerateAssetRequest_TextToSpeech,
-        GenerateAssetRequest_Video,
-        GenerateAssetRequest_VideoToVideo,
-        GenerateAssetRequest_VideoUpscale,
-        GenerateAssetRequest_VideoWithAudio,
-        GenerateAssetRequest_VoiceClone,
-    )
-    from .generate_asset_response import (
-        GenerateAssetResponse,
-        GenerateAssetResponse_AudioFromVideo,
-        GenerateAssetResponse_AudioIsolation,
-        GenerateAssetResponse_Image,
-        GenerateAssetResponse_ImageToImage,
-        GenerateAssetResponse_ImageUpscale,
-        GenerateAssetResponse_MotionControl,
-        GenerateAssetResponse_SpeechToSpeech,
-        GenerateAssetResponse_TextToSound,
-        GenerateAssetResponse_TextToSpeech,
-        GenerateAssetResponse_Video,
-        GenerateAssetResponse_VideoToVideo,
-        GenerateAssetResponse_VideoUpscale,
-        GenerateAssetResponse_VideoWithAudio,
-        GenerateAssetResponse_VoiceClone,
-    )
-    from .generate_audio_from_video_request import GenerateAudioFromVideoRequest
-    from .generate_audio_from_video_response import GenerateAudioFromVideoResponse
-    from .generate_image_request import GenerateImageRequest
-    from .generate_image_response import GenerateImageResponse
-    from .generate_image_upscale_request import GenerateImageUpscaleRequest
-    from .generate_image_upscale_response import GenerateImageUpscaleResponse
-    from .generate_isolated_audio_request import GenerateIsolatedAudioRequest
-    from .generate_isolated_audio_response import GenerateIsolatedAudioResponse
-    from .generate_motion_control_request_input import GenerateMotionControlRequestInput
-    from .generate_motion_control_request_output import GenerateMotionControlRequestOutput
-    from .generate_motion_control_response import GenerateMotionControlResponse
-    from .generate_speech_to_speech_request import GenerateSpeechToSpeechRequest
-    from .generate_speech_to_speech_response import GenerateSpeechToSpeechResponse
-    from .generate_text_to_sound_request import GenerateTextToSoundRequest
-    from .generate_text_to_sound_response import GenerateTextToSoundResponse
-    from .generate_text_to_speech_request import GenerateTextToSpeechRequest
-    from .generate_text_to_speech_request_type import GenerateTextToSpeechRequestType
-    from .generate_text_to_speech_response import GenerateTextToSpeechResponse
-    from .generate_video_request_input import GenerateVideoRequestInput
-    from .generate_video_request_output import GenerateVideoRequestOutput
-    from .generate_video_response import GenerateVideoResponse
-    from .generate_video_to_video_request import GenerateVideoToVideoRequest
-    from .generate_video_to_video_response import GenerateVideoToVideoResponse
-    from .generate_video_upscale_request import GenerateVideoUpscaleRequest
-    from .generate_video_upscale_response import GenerateVideoUpscaleResponse
-    from .generate_video_with_audio_request import GenerateVideoWithAudioRequest
-    from .generate_video_with_audio_response import GenerateVideoWithAudioResponse
-    from .generate_voice_clone_request import GenerateVoiceCloneRequest
-    from .generate_voice_clone_response import GenerateVoiceCloneResponse
-    from .generated_audio import GeneratedAudio
-    from .generated_audio_inputs import GeneratedAudioInputs
-    from .generated_image import GeneratedImage
-    from .generated_image_inputs import GeneratedImageInputs
-    from .generated_video import GeneratedVideo
-    from .generated_video_inputs import GeneratedVideoInputs
-    from .generated_video_inputs_character_orientation import GeneratedVideoInputsCharacterOrientation
-    from .generation import Generation
-    from .generation_error import GenerationError
-    from .generation_error_type import GenerationErrorType
-    from .generation_input import (
-        GenerationInput,
-        GenerationInput_AudioFromVideo,
-        GenerationInput_AudioIsolation,
-        GenerationInput_Image,
-        GenerationInput_ImageToImage,
-        GenerationInput_ImageUpscale,
-        GenerationInput_MotionControl,
-        GenerationInput_SpeechToSpeech,
-        GenerationInput_TextToSound,
-        GenerationInput_TextToSpeech,
-        GenerationInput_Video,
-        GenerationInput_VideoToVideo,
-        GenerationInput_VideoUpscale,
-        GenerationInput_VideoWithAudio,
-        GenerationInput_VoiceClone,
-    )
-    from .generation_status import GenerationStatus
-    from .generation_status_response import GenerationStatusResponse
-    from .generation_type import GenerationType
+    from .api_key_kind import ApiKeyKind
+    from .api_key_scope import ApiKeyScope
+    from .error_code import ErrorCode
+    from .error_envelope import ErrorEnvelope
+    from .error_response import ErrorResponse
+    from .estimate_response import EstimateResponse
+    from .file_upload_response import FileUploadResponse
     from .http_validation_error import HttpValidationError
-    from .kling_o1edit_element import KlingO1EditElement
-    from .list_generations_request_type import ListGenerationsRequestType
-    from .normalized_point import NormalizedPoint
-    from .page_info import PageInfo
-    from .paged_response_generation import PagedResponseGeneration
-    from .paging_params import PagingParams
-    from .pricing import Pricing
-    from .supported_language import SupportedLanguage
-    from .uploaded_audio import UploadedAudio
-    from .uploaded_image import UploadedImage
-    from .uploaded_video import UploadedVideo
+    from .key_create_response import KeyCreateResponse
+    from .key_list_response import KeyListResponse
+    from .key_rotate_response import KeyRotateResponse
+    from .key_status import KeyStatus
+    from .key_summary import KeySummary
+    from .metrics import Metrics
+    from .model_detail import ModelDetail
+    from .model_list_response import ModelListResponse
+    from .model_route import ModelRoute
+    from .model_summary import ModelSummary
+    from .model_variant import ModelVariant
+    from .output_item import OutputItem
+    from .request_list_response import RequestListResponse
+    from .request_status import RequestStatus
+    from .request_summary import RequestSummary
+    from .result_response import ResultResponse
+    from .status_log import StatusLog
+    from .status_response import StatusResponse
+    from .submit_response import SubmitResponse
+    from .token_create_response import TokenCreateResponse
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
-    from .voice import Voice
-    from .voice_label import VoiceLabel
+    from .voice_list_response import VoiceListResponse
+    from .voice_summary import VoiceSummary
+    from .webhook_public_key import WebhookPublicKey
 _dynamic_imports: typing.Dict[str, str] = {
-    "AiModel": ".ai_model",
-    "AiModelPrice": ".ai_model_price",
-    "Asset": ".asset",
-    "AssetAsset": ".asset_asset",
-    "AssetAsset_GeneratedAudio": ".asset_asset",
-    "AssetAsset_GeneratedImage": ".asset_asset",
-    "AssetAsset_GeneratedVideo": ".asset_asset",
-    "AssetAsset_UploadedAudio": ".asset_asset",
-    "AssetAsset_UploadedImage": ".asset_asset",
-    "AssetAsset_UploadedVideo": ".asset_asset",
-    "AssetAsset_Voice": ".asset_asset",
-    "AssetType": ".asset_type",
-    "BatchImageResultItem": ".batch_image_result_item",
-    "BatchVideoResultItem": ".batch_video_result_item",
-    "CreateAssetResponse": ".create_asset_response",
-    "CreditBalance": ".credit_balance",
-    "Dimension": ".dimension",
-    "GenerateAssetRequest": ".generate_asset_request",
-    "GenerateAssetRequest_AudioFromVideo": ".generate_asset_request",
-    "GenerateAssetRequest_AudioIsolation": ".generate_asset_request",
-    "GenerateAssetRequest_Image": ".generate_asset_request",
-    "GenerateAssetRequest_ImageToImage": ".generate_asset_request",
-    "GenerateAssetRequest_ImageUpscale": ".generate_asset_request",
-    "GenerateAssetRequest_MotionControl": ".generate_asset_request",
-    "GenerateAssetRequest_SpeechToSpeech": ".generate_asset_request",
-    "GenerateAssetRequest_TextToSound": ".generate_asset_request",
-    "GenerateAssetRequest_TextToSpeech": ".generate_asset_request",
-    "GenerateAssetRequest_Video": ".generate_asset_request",
-    "GenerateAssetRequest_VideoToVideo": ".generate_asset_request",
-    "GenerateAssetRequest_VideoUpscale": ".generate_asset_request",
-    "GenerateAssetRequest_VideoWithAudio": ".generate_asset_request",
-    "GenerateAssetRequest_VoiceClone": ".generate_asset_request",
-    "GenerateAssetResponse": ".generate_asset_response",
-    "GenerateAssetResponse_AudioFromVideo": ".generate_asset_response",
-    "GenerateAssetResponse_AudioIsolation": ".generate_asset_response",
-    "GenerateAssetResponse_Image": ".generate_asset_response",
-    "GenerateAssetResponse_ImageToImage": ".generate_asset_response",
-    "GenerateAssetResponse_ImageUpscale": ".generate_asset_response",
-    "GenerateAssetResponse_MotionControl": ".generate_asset_response",
-    "GenerateAssetResponse_SpeechToSpeech": ".generate_asset_response",
-    "GenerateAssetResponse_TextToSound": ".generate_asset_response",
-    "GenerateAssetResponse_TextToSpeech": ".generate_asset_response",
-    "GenerateAssetResponse_Video": ".generate_asset_response",
-    "GenerateAssetResponse_VideoToVideo": ".generate_asset_response",
-    "GenerateAssetResponse_VideoUpscale": ".generate_asset_response",
-    "GenerateAssetResponse_VideoWithAudio": ".generate_asset_response",
-    "GenerateAssetResponse_VoiceClone": ".generate_asset_response",
-    "GenerateAudioFromVideoRequest": ".generate_audio_from_video_request",
-    "GenerateAudioFromVideoResponse": ".generate_audio_from_video_response",
-    "GenerateImageRequest": ".generate_image_request",
-    "GenerateImageResponse": ".generate_image_response",
-    "GenerateImageUpscaleRequest": ".generate_image_upscale_request",
-    "GenerateImageUpscaleResponse": ".generate_image_upscale_response",
-    "GenerateIsolatedAudioRequest": ".generate_isolated_audio_request",
-    "GenerateIsolatedAudioResponse": ".generate_isolated_audio_response",
-    "GenerateMotionControlRequestInput": ".generate_motion_control_request_input",
-    "GenerateMotionControlRequestOutput": ".generate_motion_control_request_output",
-    "GenerateMotionControlResponse": ".generate_motion_control_response",
-    "GenerateSpeechToSpeechRequest": ".generate_speech_to_speech_request",
-    "GenerateSpeechToSpeechResponse": ".generate_speech_to_speech_response",
-    "GenerateTextToSoundRequest": ".generate_text_to_sound_request",
-    "GenerateTextToSoundResponse": ".generate_text_to_sound_response",
-    "GenerateTextToSpeechRequest": ".generate_text_to_speech_request",
-    "GenerateTextToSpeechRequestType": ".generate_text_to_speech_request_type",
-    "GenerateTextToSpeechResponse": ".generate_text_to_speech_response",
-    "GenerateVideoRequestInput": ".generate_video_request_input",
-    "GenerateVideoRequestOutput": ".generate_video_request_output",
-    "GenerateVideoResponse": ".generate_video_response",
-    "GenerateVideoToVideoRequest": ".generate_video_to_video_request",
-    "GenerateVideoToVideoResponse": ".generate_video_to_video_response",
-    "GenerateVideoUpscaleRequest": ".generate_video_upscale_request",
-    "GenerateVideoUpscaleResponse": ".generate_video_upscale_response",
-    "GenerateVideoWithAudioRequest": ".generate_video_with_audio_request",
-    "GenerateVideoWithAudioResponse": ".generate_video_with_audio_response",
-    "GenerateVoiceCloneRequest": ".generate_voice_clone_request",
-    "GenerateVoiceCloneResponse": ".generate_voice_clone_response",
-    "GeneratedAudio": ".generated_audio",
-    "GeneratedAudioInputs": ".generated_audio_inputs",
-    "GeneratedImage": ".generated_image",
-    "GeneratedImageInputs": ".generated_image_inputs",
-    "GeneratedVideo": ".generated_video",
-    "GeneratedVideoInputs": ".generated_video_inputs",
-    "GeneratedVideoInputsCharacterOrientation": ".generated_video_inputs_character_orientation",
-    "Generation": ".generation",
-    "GenerationError": ".generation_error",
-    "GenerationErrorType": ".generation_error_type",
-    "GenerationInput": ".generation_input",
-    "GenerationInput_AudioFromVideo": ".generation_input",
-    "GenerationInput_AudioIsolation": ".generation_input",
-    "GenerationInput_Image": ".generation_input",
-    "GenerationInput_ImageToImage": ".generation_input",
-    "GenerationInput_ImageUpscale": ".generation_input",
-    "GenerationInput_MotionControl": ".generation_input",
-    "GenerationInput_SpeechToSpeech": ".generation_input",
-    "GenerationInput_TextToSound": ".generation_input",
-    "GenerationInput_TextToSpeech": ".generation_input",
-    "GenerationInput_Video": ".generation_input",
-    "GenerationInput_VideoToVideo": ".generation_input",
-    "GenerationInput_VideoUpscale": ".generation_input",
-    "GenerationInput_VideoWithAudio": ".generation_input",
-    "GenerationInput_VoiceClone": ".generation_input",
-    "GenerationStatus": ".generation_status",
-    "GenerationStatusResponse": ".generation_status_response",
-    "GenerationType": ".generation_type",
+    "ApiKeyKind": ".api_key_kind",
+    "ApiKeyScope": ".api_key_scope",
+    "ErrorCode": ".error_code",
+    "ErrorEnvelope": ".error_envelope",
+    "ErrorResponse": ".error_response",
+    "EstimateResponse": ".estimate_response",
+    "FileUploadResponse": ".file_upload_response",
     "HttpValidationError": ".http_validation_error",
-    "KlingO1EditElement": ".kling_o1edit_element",
-    "ListGenerationsRequestType": ".list_generations_request_type",
-    "NormalizedPoint": ".normalized_point",
-    "PageInfo": ".page_info",
-    "PagedResponseGeneration": ".paged_response_generation",
-    "PagingParams": ".paging_params",
-    "Pricing": ".pricing",
-    "SupportedLanguage": ".supported_language",
-    "UploadedAudio": ".uploaded_audio",
-    "UploadedImage": ".uploaded_image",
-    "UploadedVideo": ".uploaded_video",
+    "KeyCreateResponse": ".key_create_response",
+    "KeyListResponse": ".key_list_response",
+    "KeyRotateResponse": ".key_rotate_response",
+    "KeyStatus": ".key_status",
+    "KeySummary": ".key_summary",
+    "Metrics": ".metrics",
+    "ModelDetail": ".model_detail",
+    "ModelListResponse": ".model_list_response",
+    "ModelRoute": ".model_route",
+    "ModelSummary": ".model_summary",
+    "ModelVariant": ".model_variant",
+    "OutputItem": ".output_item",
+    "RequestListResponse": ".request_list_response",
+    "RequestStatus": ".request_status",
+    "RequestSummary": ".request_summary",
+    "ResultResponse": ".result_response",
+    "StatusLog": ".status_log",
+    "StatusResponse": ".status_response",
+    "SubmitResponse": ".submit_response",
+    "TokenCreateResponse": ".token_create_response",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
-    "Voice": ".voice",
-    "VoiceLabel": ".voice_label",
+    "VoiceListResponse": ".voice_list_response",
+    "VoiceSummary": ".voice_summary",
+    "WebhookPublicKey": ".webhook_public_key",
 }
 
 
@@ -280,124 +98,37 @@ def __dir__():
 
 
 __all__ = [
-    "AiModel",
-    "AiModelPrice",
-    "Asset",
-    "AssetAsset",
-    "AssetAsset_GeneratedAudio",
-    "AssetAsset_GeneratedImage",
-    "AssetAsset_GeneratedVideo",
-    "AssetAsset_UploadedAudio",
-    "AssetAsset_UploadedImage",
-    "AssetAsset_UploadedVideo",
-    "AssetAsset_Voice",
-    "AssetType",
-    "BatchImageResultItem",
-    "BatchVideoResultItem",
-    "CreateAssetResponse",
-    "CreditBalance",
-    "Dimension",
-    "GenerateAssetRequest",
-    "GenerateAssetRequest_AudioFromVideo",
-    "GenerateAssetRequest_AudioIsolation",
-    "GenerateAssetRequest_Image",
-    "GenerateAssetRequest_ImageToImage",
-    "GenerateAssetRequest_ImageUpscale",
-    "GenerateAssetRequest_MotionControl",
-    "GenerateAssetRequest_SpeechToSpeech",
-    "GenerateAssetRequest_TextToSound",
-    "GenerateAssetRequest_TextToSpeech",
-    "GenerateAssetRequest_Video",
-    "GenerateAssetRequest_VideoToVideo",
-    "GenerateAssetRequest_VideoUpscale",
-    "GenerateAssetRequest_VideoWithAudio",
-    "GenerateAssetRequest_VoiceClone",
-    "GenerateAssetResponse",
-    "GenerateAssetResponse_AudioFromVideo",
-    "GenerateAssetResponse_AudioIsolation",
-    "GenerateAssetResponse_Image",
-    "GenerateAssetResponse_ImageToImage",
-    "GenerateAssetResponse_ImageUpscale",
-    "GenerateAssetResponse_MotionControl",
-    "GenerateAssetResponse_SpeechToSpeech",
-    "GenerateAssetResponse_TextToSound",
-    "GenerateAssetResponse_TextToSpeech",
-    "GenerateAssetResponse_Video",
-    "GenerateAssetResponse_VideoToVideo",
-    "GenerateAssetResponse_VideoUpscale",
-    "GenerateAssetResponse_VideoWithAudio",
-    "GenerateAssetResponse_VoiceClone",
-    "GenerateAudioFromVideoRequest",
-    "GenerateAudioFromVideoResponse",
-    "GenerateImageRequest",
-    "GenerateImageResponse",
-    "GenerateImageUpscaleRequest",
-    "GenerateImageUpscaleResponse",
-    "GenerateIsolatedAudioRequest",
-    "GenerateIsolatedAudioResponse",
-    "GenerateMotionControlRequestInput",
-    "GenerateMotionControlRequestOutput",
-    "GenerateMotionControlResponse",
-    "GenerateSpeechToSpeechRequest",
-    "GenerateSpeechToSpeechResponse",
-    "GenerateTextToSoundRequest",
-    "GenerateTextToSoundResponse",
-    "GenerateTextToSpeechRequest",
-    "GenerateTextToSpeechRequestType",
-    "GenerateTextToSpeechResponse",
-    "GenerateVideoRequestInput",
-    "GenerateVideoRequestOutput",
-    "GenerateVideoResponse",
-    "GenerateVideoToVideoRequest",
-    "GenerateVideoToVideoResponse",
-    "GenerateVideoUpscaleRequest",
-    "GenerateVideoUpscaleResponse",
-    "GenerateVideoWithAudioRequest",
-    "GenerateVideoWithAudioResponse",
-    "GenerateVoiceCloneRequest",
-    "GenerateVoiceCloneResponse",
-    "GeneratedAudio",
-    "GeneratedAudioInputs",
-    "GeneratedImage",
-    "GeneratedImageInputs",
-    "GeneratedVideo",
-    "GeneratedVideoInputs",
-    "GeneratedVideoInputsCharacterOrientation",
-    "Generation",
-    "GenerationError",
-    "GenerationErrorType",
-    "GenerationInput",
-    "GenerationInput_AudioFromVideo",
-    "GenerationInput_AudioIsolation",
-    "GenerationInput_Image",
-    "GenerationInput_ImageToImage",
-    "GenerationInput_ImageUpscale",
-    "GenerationInput_MotionControl",
-    "GenerationInput_SpeechToSpeech",
-    "GenerationInput_TextToSound",
-    "GenerationInput_TextToSpeech",
-    "GenerationInput_Video",
-    "GenerationInput_VideoToVideo",
-    "GenerationInput_VideoUpscale",
-    "GenerationInput_VideoWithAudio",
-    "GenerationInput_VoiceClone",
-    "GenerationStatus",
-    "GenerationStatusResponse",
-    "GenerationType",
+    "ApiKeyKind",
+    "ApiKeyScope",
+    "ErrorCode",
+    "ErrorEnvelope",
+    "ErrorResponse",
+    "EstimateResponse",
+    "FileUploadResponse",
     "HttpValidationError",
-    "KlingO1EditElement",
-    "ListGenerationsRequestType",
-    "NormalizedPoint",
-    "PageInfo",
-    "PagedResponseGeneration",
-    "PagingParams",
-    "Pricing",
-    "SupportedLanguage",
-    "UploadedAudio",
-    "UploadedImage",
-    "UploadedVideo",
+    "KeyCreateResponse",
+    "KeyListResponse",
+    "KeyRotateResponse",
+    "KeyStatus",
+    "KeySummary",
+    "Metrics",
+    "ModelDetail",
+    "ModelListResponse",
+    "ModelRoute",
+    "ModelSummary",
+    "ModelVariant",
+    "OutputItem",
+    "RequestListResponse",
+    "RequestStatus",
+    "RequestSummary",
+    "ResultResponse",
+    "StatusLog",
+    "StatusResponse",
+    "SubmitResponse",
+    "TokenCreateResponse",
     "ValidationError",
     "ValidationErrorLocItem",
-    "Voice",
-    "VoiceLabel",
+    "VoiceListResponse",
+    "VoiceSummary",
+    "WebhookPublicKey",
 ]

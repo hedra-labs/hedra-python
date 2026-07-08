@@ -4,4 +4,5 @@ import enum
 
 
 class HedraEnvironment(enum.Enum):
-    DEFAULT = "https://api.hedra.com/web-app/public"
+    PRODUCTION = "https://api.hedra.com/v3"
+    STAGING = "https://api.staging.hedra.com/v3"

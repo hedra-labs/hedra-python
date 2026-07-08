@@ -11,7 +11,7 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
-        api_key: str,
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -20,7 +20,7 @@ class BaseClientWrapper:
         max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        self.api_key = api_key
+        self._api_key = api_key
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -33,16 +33,21 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "hedra/0.2.0",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "hedra",
-            "X-Fern-SDK-Version": "0.2.0",
             **(self.get_custom_headers() or {}),
         }
-        headers["X-API-Key"] = self.api_key
+        api_key = self._get_api_key()
+        if api_key is not None:
+            headers["Authorization"] = f"Bearer {api_key}"
         return headers
+
+    def _get_api_key(self) -> typing.Optional[str]:
+        if isinstance(self._api_key, str) or self._api_key is None:
+            return self._api_key
+        else:
+            return self._api_key()
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
@@ -67,7 +72,7 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_key: str,
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -101,7 +106,7 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_key: str,
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
