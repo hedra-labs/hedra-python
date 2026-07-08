@@ -3,6 +3,11 @@
 
 # PyPI distribution name (hedra-python) + project metadata; import name is `hedra`
 pyproject.toml
+# ...and the lockfile resolved against it (Fern's lock targets its own pyproject)
+poetry.lock
+
+# Local-dev ignores are hand-maintained
+.gitignore
 
 # README install/badge + usage use the hedra-python distribution name
 README.md
