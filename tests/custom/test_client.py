@@ -22,43 +22,69 @@ def _client_with_capture(captured: dict, body: dict, *, api_key: str = "test-key
     return Hedra(api_key=api_key, httpx_client=httpx.Client(transport=httpx.MockTransport(handler)))
 
 
-def test_api_key_header_and_base_url() -> None:
+def test_bearer_auth_header_and_base_url() -> None:
     captured: dict = {}
-    client = _client_with_capture(captured, {"remaining": 1, "expiring": 0, "used": 0})
+    client = _client_with_capture(captured, {"data": [], "next_cursor": None})
 
-    client.get_credits()
+    client.models.list()
 
     request = captured["request"]
-    assert request.headers["X-API-Key"] == "test-key"
-    assert str(request.url) == "https://api.hedra.com/web-app/public/billing/credits"
+    assert request.headers["Authorization"] == "Bearer test-key"
+    assert str(request.url) == "https://api.hedra.com/v3/models"
 
 
-def test_list_generations_flattens_limit_and_offset_into_query() -> None:
+def test_queue_submit_posts_to_model_path() -> None:
     captured: dict = {}
-    client = _client_with_capture(captured, {"page_info": {"limit": 5, "offset": 10}, "data": []})
+    client = _client_with_capture(
+        captured,
+        {
+            "request_id": "req_123",
+            "model": "kling-o3-pro-i2v",
+            "status": "IN_QUEUE",
+            "status_url": "https://api.hedra.com/v3/requests/req_123/status",
+            "response_url": "https://api.hedra.com/v3/requests/req_123",
+        },
+    )
 
-    client.list_generations(limit=5, offset=10)
+    client.queue.submit(model="kling-o3-pro", input={"prompt": "a fox"})
+
+    request = captured["request"]
+    assert request.method == "POST"
+    assert str(request.url) == "https://api.hedra.com/v3/queue/kling-o3-pro"
+
+
+def test_requests_list_sends_cursor_pagination_params() -> None:
+    captured: dict = {}
+    client = _client_with_capture(captured, {"data": [], "next_cursor": None})
+
+    pager = client.requests.list(limit=5)
+    list(pager)  # drain the pager so the first page request fires
 
     url = captured["request"].url
-    # Flattened scalar query params — NOT a nested paging_params object.
     assert url.params.get("limit") == "5"
-    assert url.params.get("offset") == "10"
-    assert "paging_params" not in str(url)
 
 
-def test_missing_api_key_raises() -> None:
-    # No api_key passed and HEDRA_API_KEY not set in this process.
+def test_missing_api_key_sends_no_authorization_header() -> None:
+    # The v3 catalog endpoints are public; constructing without a key is valid
+    # and simply sends unauthenticated requests.
     os.environ.pop("HEDRA_API_KEY", None)
-    with pytest.raises(Exception) as exc_info:
-        Hedra(api_key=None)
-    assert "HEDRA_API_KEY" in str(exc_info.value)
+    captured: dict = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["request"] = request
+        return httpx.Response(200, json={"data": [], "next_cursor": None})
+
+    client = Hedra(api_key=None, httpx_client=httpx.Client(transport=httpx.MockTransport(handler)))
+    client.models.list()
+
+    assert "Authorization" not in captured["request"].headers
 
 
 def test_hedra_api_key_env_fallback() -> None:
     script = (
         "from hedra import Hedra\n"
         "c = Hedra()\n"
-        "assert c._client_wrapper.api_key == 'env-key'\n"
+        "assert c._client_wrapper._get_api_key() == 'env-key'\n"
         "print('ok')\n"
     )
     env = {**os.environ, "HEDRA_API_KEY": "env-key"}
@@ -72,7 +98,7 @@ def test_hedra_api_key_env_read_at_construction_not_import(monkeypatch: pytest.M
     # captured as an import-time default. Mirrors `import Hedra; load_dotenv(); Hedra()`.
     monkeypatch.setenv("HEDRA_API_KEY", "set-after-import")
     client = Hedra()
-    assert client._client_wrapper.api_key == "set-after-import"
+    assert client._client_wrapper._get_api_key() == "set-after-import"
 
 
 def test_parse_retry_after_ms_header() -> None:

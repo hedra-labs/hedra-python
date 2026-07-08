@@ -10,7 +10,8 @@ The Hedra Python library provides convenient access to the Hedra APIs from Pytho
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
+- [Custom base URL](#custom-base-url)
+- [Pagination](#pagination)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -41,13 +42,24 @@ client = Hedra(
     api_key="<value>",
 )
 
-client.create_asset(
-    name="name",
-    type="text",
+result = client.queue.submit(
+    model="kling-o3-pro",
+    input={
+        "prompt": "a fox sprinting across fresh snow",
+        "aspect_ratio": "16:9",
+    },
 )
+print(result.request_id, result.status)
+
+# Poll until terminal
+status = client.requests.get_status(result.request_id)
+
+# Fetch the finished result (outputs, metrics)
+final = client.requests.get(result.request_id)
 ```
 
-The API key can also be provided via the `HEDRA_API_KEY` environment variable, in which
+The client authenticates with `Authorization: Bearer <api key>`; an API key is the
+`<key_id>:<secret>` credential from the Hedra console. The API key can also be provided via the `HEDRA_API_KEY` environment variable, in which
 case `api_key` may be omitted:
 
 ```python
@@ -59,18 +71,27 @@ from hedra import Hedra
 client = Hedra()
 ```
 
-## Environments
+## Custom base URL
 
-This SDK allows you to configure different environments for API requests.
+The client targets `https://api.hedra.com/v3`. Override it with `base_url` if you
+need to point elsewhere (e.g. a mock server in tests):
 
 ```python
 from hedra import Hedra
-from hedra.environment import HedraEnvironment
 
 client = Hedra(
     api_key="<value>",
-    environment=HedraEnvironment.DEFAULT,
+    base_url="http://localhost:8000/v3",
 )
+```
+
+## Pagination
+
+`client.requests.list(...)` returns a pager that auto-fetches pages as you iterate:
+
+```python
+for request in client.requests.list(limit=50):
+    print(request.request_id, request.status)
 ```
 
 ## Async Client
@@ -88,9 +109,9 @@ client = AsyncHedra(
 
 
 async def main() -> None:
-    await client.create_asset(
-        name="name",
-        type="text",
+    await client.queue.submit(
+        model="kling-o3-pro",
+        input={"prompt": "a fox sprinting across fresh snow"},
     )
 
 
@@ -106,7 +127,7 @@ will be thrown.
 from hedra.core.api_error import ApiError
 
 try:
-    client.create_asset(...)
+    client.queue.submit(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -123,7 +144,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from hedra import Hedra
 
 client = Hedra(...)
-response = client.with_raw_response.create_asset(...)
+response = client.queue.with_raw_response.submit(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -154,7 +175,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.create_asset(..., request_options={
+client.queue.submit(..., request_options={
     "max_retries": 1
 })
 ```
@@ -169,7 +190,7 @@ from hedra import Hedra
 client = Hedra(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.create_asset(..., request_options={
+client.queue.submit(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

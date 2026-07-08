@@ -1,5 +1,50 @@
 # Migration guide
 
+## 0.2.x → 0.3.0 (API v3)
+
+`hedra-python` 0.3.0 retargets the SDK at **Hedra API v3** (`https://api.hedra.com/v3`),
+the queue-based generation API. This is a breaking release. The PyPI package name
+(`hedra-python`) and import name (`hedra`) are unchanged.
+
+### What changed
+
+**API surface.** The flat 0.2.x methods are replaced by resource groups:
+
+| 0.2.x | 0.3.0 | Endpoint |
+| --- | --- | --- |
+| `client.generate_asset(...)` | `client.queue.submit(model=..., input={...})` | `POST /v3/queue/{model}` |
+| `client.get_status(...)` | `client.requests.get_status(request_id)` | `GET /v3/requests/{id}/status` |
+| `client.list_generations(...)` | `client.requests.list(...)` (cursor pager) | `GET /v3/requests` |
+| — | `client.requests.get(request_id)` | `GET /v3/requests/{id}` |
+| — | `client.requests.stream(request_id)` (SSE) | `GET /v3/requests/{id}/stream` |
+| `client.list_models()` | `client.models.list(...)` | `GET /v3/models` |
+| — | `client.models.get(model)` | `GET /v3/models/{model}` |
+| `client.list_voices()` | `client.models.list_voices(model)` | `GET /v3/models/{model}/voices` |
+| — | `client.models.estimate(model, input={...})` | `POST /v3/models/{model}/estimate` |
+| — | `client.models.get_openapi(model)` | `GET /v3/models/{model}/openapi.json` |
+| `client.create_asset(...)` + `client.upload_asset(...)` | `client.files.upload(file=...)` | `POST /v3/files` |
+| `client.get_credits()` | — (v3 balance/usage endpoints are not live yet) | |
+| — | `client.keys.create/list/rotate/revoke` | `/v3/keys*` |
+| — | `client.tokens.create()` | `POST /v3/tokens` |
+| — | `client.webhooks.get_public_key()` | `GET /v3/webhooks/public-key` |
+
+Generation submits take the model id in the path and a schema-validated `input`
+dict (per-model schemas: `client.models.get(model).input_schema` or
+`GET /v3/models/{model}/openapi.json`). Statuses are `IN_QUEUE` → `IN_PROGRESS` →
+`COMPLETED` | `FAILED`; a request's `outputs` is always an array.
+
+**Auth.** `X-API-Key: sk_hedra_…` is replaced by standard
+`Authorization: Bearer <key_id>:<secret>` (v3 API keys from the console).
+`api_key=` and the `HEDRA_API_KEY` env fallback work as before — pass the
+`<key_id>:<secret>` string.
+
+**Environments.** `HedraEnvironment.PRODUCTION` (`https://api.hedra.com/v3`)
+replaces `HedraEnvironment.DEFAULT`; use `base_url=` to point anywhere else.
+
+**Pagination.** `client.requests.list()` returns a `SyncPager` /
+`AsyncPager` that fetches cursor pages lazily as you iterate.
+
+
 ## 0.1.x (Stainless) → 0.2.0 (Fern)
 
 `hedra-python` 0.2.0 is a ground-up regeneration of the SDK. It switches the code

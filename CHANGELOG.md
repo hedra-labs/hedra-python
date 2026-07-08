@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (2026-07-08)
+
+### Features
+
+* **api:** retarget the SDK at Hedra API v3 (`https://api.hedra.com/v3`). Resource-grouped
+  client (`client.queue`, `client.requests`, `client.models`, `client.keys`,
+  `client.tokens`, `client.files`, `client.webhooks`) replaces the flat 0.2.x methods.
+  See [MIGRATION.md](./MIGRATION.md) for the full mapping. **Breaking.**
+* **auth:** standard `Authorization: Bearer <key_id>:<secret>` replaces the `X-API-Key`
+  header. `HEDRA_API_KEY` env fallback unchanged.
+* **pagination:** `client.requests.list()` returns an auto-paginating cursor pager.
+* **streaming:** `client.requests.stream()` follows a request's progress over SSE.
+
 ## 0.1.2 (2024-11-02)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.2](https://github.com/hedra-labs/hedra-python/compare/v0.1.0-alpha.2...v0.1.2)
