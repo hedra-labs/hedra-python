@@ -5,3 +5,4 @@ import enum
 
 class HedraEnvironment(enum.Enum):
     PRODUCTION = "https://api.hedra.com/v3"
+    STAGING = "https://api.staging.hedra.com/v3"

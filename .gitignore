@@ -3,14 +3,3 @@
 __pycache__/
 dist/
 poetry.toml
-
-# Local secrets and virtualenvs
-.env
-.envrc
-.venv/
-
-# Throwaway local generation output
-.fern-build/
-
-# Stray uv lockfile (this project uses poetry.lock)
-uv.lock
