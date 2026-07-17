@@ -19,6 +19,20 @@ class ResultResponse(UniversalBaseModel):
     metrics: typing.Optional[Metrics] = None
     error: typing.Optional[ErrorEnvelope] = None
     logs: typing.Optional[typing.List[StatusLog]] = None
+    credits_spent: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Net display credits this request cost; 0 when fully refunded; absent until charged.
+    """
+
+    usd_spent: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Net cost in USD, derived from usd_micros_spent.
+    """
+
+    usd_micros_spent: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Net cost in integer micro-dollars (1e-6 USD); present while USD billing or the API wallet is enabled.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

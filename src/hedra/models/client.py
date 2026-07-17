@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..types.estimate_response import EstimateResponse
 from ..types.model_detail import ModelDetail
 from ..types.model_list_response import ModelListResponse
+from ..types.request_list_response import RequestListResponse
 from ..types.voice_list_response import VoiceListResponse
 from .raw_client import AsyncRawModelsClient, RawModelsClient
 
@@ -83,6 +84,47 @@ class ModelsClient:
         )
         """
         _response = self._raw_client.get(model, request_options=request_options)
+        return _response.data
+
+    def list_model_requests(
+        self,
+        model: str,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RequestListResponse:
+        """
+        Parameters
+        ----------
+        model : str
+
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RequestListResponse
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.models.list_model_requests(
+            model="model",
+        )
+        """
+        _response = self._raw_client.list_model_requests(
+            model, limit=limit, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     def list_voices(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceListResponse:
@@ -269,6 +311,55 @@ class AsyncModelsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(model, request_options=request_options)
+        return _response.data
+
+    async def list_model_requests(
+        self,
+        model: str,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RequestListResponse:
+        """
+        Parameters
+        ----------
+        model : str
+
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RequestListResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.models.list_model_requests(
+                model="model",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_model_requests(
+            model, limit=limit, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     async def list_voices(

@@ -9,8 +9,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class FileUploadResponse(UniversalBaseModel):
     """
     ``POST /v3/files`` result. The presigned ``url`` *is* the file handle:
-    pass it as ``input.image_url`` / ``audio_url`` / ``video_url`` on submit
-    (once reference inputs are wired — see the v3 plan doc).
+    pass it as ``{"source": "url", "url": <url>}`` in any media input the
+    model's schema advertises (``image`` / ``end_image`` / ``images`` /
+    ``audio`` / ``video``) on submit.
     """
 
     url: str

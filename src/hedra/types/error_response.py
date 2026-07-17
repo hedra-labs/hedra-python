@@ -9,10 +9,12 @@ from .error_envelope import ErrorEnvelope
 
 class ErrorResponse(UniversalBaseModel):
     """
-    Top-level error body: ``{"error": {...}}``.
+    Top-level error body: ``{"error": {...}}`` plus correlation ids.
     """
 
     error: ErrorEnvelope
+    request_id: typing.Optional[str] = None
+    trace_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
