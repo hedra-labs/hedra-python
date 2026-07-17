@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.request_list_response import RequestListResponse
+from ..types.request_log_list_response import RequestLogListResponse
 from ..types.request_summary import RequestSummary
 from ..types.result_response import ResultResponse
 from ..types.status_response import StatusResponse
@@ -119,6 +120,47 @@ class RequestsClient:
         )
         """
         _response = self._raw_client.get_status(request_id, request_options=request_options)
+        return _response.data
+
+    def list_request_logs(
+        self,
+        request_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RequestLogListResponse:
+        """
+        Parameters
+        ----------
+        request_id : str
+
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RequestLogListResponse
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.requests.list_request_logs(
+            request_id="request_id",
+        )
+        """
+        _response = self._raw_client.list_request_logs(
+            request_id, limit=limit, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     def stream(
@@ -292,6 +334,55 @@ class AsyncRequestsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_status(request_id, request_options=request_options)
+        return _response.data
+
+    async def list_request_logs(
+        self,
+        request_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RequestLogListResponse:
+        """
+        Parameters
+        ----------
+        request_id : str
+
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RequestLogListResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.requests.list_request_logs(
+                request_id="request_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_request_logs(
+            request_id, limit=limit, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     async def stream(

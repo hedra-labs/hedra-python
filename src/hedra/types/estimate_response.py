@@ -7,8 +7,22 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class EstimateResponse(UniversalBaseModel):
+    """
+    Price of a would-be submit. ``usd``/``usd_micros`` are present while
+    USD billing or the API wallet is enabled.
+    """
+
     model: str
     credits: int
+    usd: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Price in USD, derived from usd_micros.
+    """
+
+    usd_micros: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Exact price in integer micro-dollars (1e-6 USD).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

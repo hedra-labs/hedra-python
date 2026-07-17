@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_code import ErrorCode
+from .field_error import FieldError
 
 
 class ErrorEnvelope(UniversalBaseModel):
@@ -12,6 +13,8 @@ class ErrorEnvelope(UniversalBaseModel):
     message: str
     retryable: typing.Optional[bool] = None
     retry_after: typing.Optional[int] = None
+    param: typing.Optional[str] = None
+    details: typing.Optional[typing.List[FieldError]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

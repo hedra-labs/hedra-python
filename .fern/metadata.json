@@ -1,0 +1,19 @@
+{
+  "cliVersion": "5.57.0",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "5.15.0",
+  "generatorConfig": {
+    "package_name": "hedra",
+    "client": {
+      "class_name": "BaseHedra",
+      "filename": "base_client.py",
+      "exported_class_name": "Hedra",
+      "exported_filename": "client.py"
+    }
+  },
+  "originGitCommit": "5cb567ed13ef0162966ccc598f9be6452b6a95a1",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "ci",
+  "ciProvider": "github",
+  "sdkVersion": "0.1.3"
+}

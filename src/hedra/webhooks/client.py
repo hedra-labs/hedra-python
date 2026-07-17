@@ -4,8 +4,15 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.webhook_default_config import WebhookDefaultConfig
+from ..types.webhook_delivery_list_response import WebhookDeliveryListResponse
+from ..types.webhook_delivery_summary import WebhookDeliverySummary
 from ..types.webhook_public_key import WebhookPublicKey
+from ..types.webhook_test_response import WebhookTestResponse
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class WebhooksClient:
@@ -45,6 +52,189 @@ class WebhooksClient:
         client.webhooks.get_public_key()
         """
         _response = self._raw_client.get_public_key(request_options=request_options)
+        return _response.data
+
+    def get_default(self, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookDefaultConfig:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDefaultConfig
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.get_default()
+        """
+        _response = self._raw_client.get_default(request_options=request_options)
+        return _response.data
+
+    def put_default(
+        self,
+        *,
+        url: str,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhookDefaultConfig:
+        """
+        Parameters
+        ----------
+        url : str
+
+        enabled : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDefaultConfig
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.put_default(
+            url="url",
+        )
+        """
+        _response = self._raw_client.put_default(url=url, enabled=enabled, request_options=request_options)
+        return _response.data
+
+    def delete_default(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.delete_default()
+        """
+        _response = self._raw_client.delete_default(request_options=request_options)
+        return _response.data
+
+    def test_default(self, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookTestResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookTestResponse
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.test_default()
+        """
+        _response = self._raw_client.test_default(request_options=request_options)
+        return _response.data
+
+    def list_deliveries(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhookDeliveryListResponse:
+        """
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDeliveryListResponse
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.list_deliveries()
+        """
+        _response = self._raw_client.list_deliveries(limit=limit, cursor=cursor, request_options=request_options)
+        return _response.data
+
+    def redeliver(
+        self, request_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookDeliverySummary:
+        """
+        Replay a finished delivery: reset it to PENDING and re-fire the signed POST.
+
+        404 if the delivery isn't visible to the caller; 409 if a delivery for the
+        request is still in flight (a replay must not stack on it). The delivery is
+        re-validated (SSRF) and re-signed at send time, and the receiver dedupes on
+        ``X-Hedra-Webhook-Id``, so a replay is safe.
+
+        The webhook id is stable across the original and every replay, so a receiver
+        that dedupes on it will ignore a replay of an event it already recorded —
+        redeliver only helps events the receiver never successfully processed (e.g. it
+        was down when the original fired).
+
+        Parameters
+        ----------
+        request_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDeliverySummary
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.redeliver(
+            request_id="request_id",
+        )
+        """
+        _response = self._raw_client.redeliver(request_id, request_options=request_options)
         return _response.data
 
 
@@ -93,4 +283,235 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_public_key(request_options=request_options)
+        return _response.data
+
+    async def get_default(self, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookDefaultConfig:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDefaultConfig
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.get_default()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_default(request_options=request_options)
+        return _response.data
+
+    async def put_default(
+        self,
+        *,
+        url: str,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhookDefaultConfig:
+        """
+        Parameters
+        ----------
+        url : str
+
+        enabled : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDefaultConfig
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.put_default(
+                url="url",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.put_default(url=url, enabled=enabled, request_options=request_options)
+        return _response.data
+
+    async def delete_default(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.delete_default()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_default(request_options=request_options)
+        return _response.data
+
+    async def test_default(self, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookTestResponse:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookTestResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.test_default()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test_default(request_options=request_options)
+        return _response.data
+
+    async def list_deliveries(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhookDeliveryListResponse:
+        """
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDeliveryListResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.list_deliveries()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_deliveries(limit=limit, cursor=cursor, request_options=request_options)
+        return _response.data
+
+    async def redeliver(
+        self, request_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookDeliverySummary:
+        """
+        Replay a finished delivery: reset it to PENDING and re-fire the signed POST.
+
+        404 if the delivery isn't visible to the caller; 409 if a delivery for the
+        request is still in flight (a replay must not stack on it). The delivery is
+        re-validated (SSRF) and re-signed at send time, and the receiver dedupes on
+        ``X-Hedra-Webhook-Id``, so a replay is safe.
+
+        The webhook id is stable across the original and every replay, so a receiver
+        that dedupes on it will ignore a replay of an event it already recorded —
+        redeliver only helps events the receiver never successfully processed (e.g. it
+        was down when the original fired).
+
+        Parameters
+        ----------
+        request_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookDeliverySummary
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.redeliver(
+                request_id="request_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.redeliver(request_id, request_options=request_options)
         return _response.data

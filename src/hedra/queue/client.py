@@ -4,6 +4,77 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.generation_input_dreamina31 import GenerationInputDreamina31
+from ..types.generation_input_elevenlabs_flash_multilingual_v2 import GenerationInputElevenlabsFlashMultilingualV2
+from ..types.generation_input_elevenlabs_flash_v2 import GenerationInputElevenlabsFlashV2
+from ..types.generation_input_elevenlabs_multilingual_v2 import GenerationInputElevenlabsMultilingualV2
+from ..types.generation_input_elevenlabs_v3 import GenerationInputElevenlabsV3
+from ..types.generation_input_elevenlabs_v3331 import GenerationInputElevenlabsV3331
+from ..types.generation_input_flux2flex import GenerationInputFlux2Flex
+from ..types.generation_input_flux2klein9b import GenerationInputFlux2Klein9B
+from ..types.generation_input_flux2max import GenerationInputFlux2Max
+from ..types.generation_input_flux2pro import GenerationInputFlux2Pro
+from ..types.generation_input_flux11pro import GenerationInputFlux11Pro
+from ..types.generation_input_flux11ultra import GenerationInputFlux11Ultra
+from ..types.generation_input_flux_dev import GenerationInputFluxDev
+from ..types.generation_input_flux_kontext_max import GenerationInputFluxKontextMax
+from ..types.generation_input_flux_kontext_pro import GenerationInputFluxKontextPro
+from ..types.generation_input_gpt_image2high import GenerationInputGptImage2High
+from ..types.generation_input_gpt_image2low import GenerationInputGptImage2Low
+from ..types.generation_input_gpt_image2medium import GenerationInputGptImage2Medium
+from ..types.generation_input_gpt_image15 import GenerationInputGptImage15
+from ..types.generation_input_grok_imagine import GenerationInputGrokImagine
+from ..types.generation_input_grok_video import GenerationInputGrokVideo
+from ..types.generation_input_happy_horse import GenerationInputHappyHorse
+from ..types.generation_input_hedra_avatar import GenerationInputHedraAvatar
+from ..types.generation_input_hedra_avatar_staging import GenerationInputHedraAvatarStaging
+from ..types.generation_input_hedra_character3 import GenerationInputHedraCharacter3
+from ..types.generation_input_hedra_omnia import GenerationInputHedraOmnia
+from ..types.generation_input_ideogram_v2 import GenerationInputIdeogramV2
+from ..types.generation_input_imagen3 import GenerationInputImagen3
+from ..types.generation_input_imagen4 import GenerationInputImagen4
+from ..types.generation_input_kling16 import GenerationInputKling16
+from ..types.generation_input_kling21master import GenerationInputKling21Master
+from ..types.generation_input_kling21pro import GenerationInputKling21Pro
+from ..types.generation_input_kling25turbo import GenerationInputKling25Turbo
+from ..types.generation_input_kling26pro import GenerationInputKling26Pro
+from ..types.generation_input_kling_ai_avatar_v2pro import GenerationInputKlingAiAvatarV2Pro
+from ..types.generation_input_kling_ai_avatar_v2standard import GenerationInputKlingAiAvatarV2Standard
+from ..types.generation_input_kling_o1 import GenerationInputKlingO1
+from ..types.generation_input_kling_o3pro import GenerationInputKlingO3Pro
+from ..types.generation_input_kling_o3standard import GenerationInputKlingO3Standard
+from ..types.generation_input_kling_v3pro import GenerationInputKlingV3Pro
+from ..types.generation_input_kling_v3standard import GenerationInputKlingV3Standard
+from ..types.generation_input_minimax_hailuo02pro import GenerationInputMinimaxHailuo02Pro
+from ..types.generation_input_minimax_hailuo02standard import GenerationInputMinimaxHailuo02Standard
+from ..types.generation_input_minimax_hailuo23fast_pro import GenerationInputMinimaxHailuo23FastPro
+from ..types.generation_input_minimax_hailuo23fast_standard import GenerationInputMinimaxHailuo23FastStandard
+from ..types.generation_input_minimax_hailuo23pro import GenerationInputMinimaxHailuo23Pro
+from ..types.generation_input_minimax_hailuo23standard import GenerationInputMinimaxHailuo23Standard
+from ..types.generation_input_minimax_speech25hd_preview import GenerationInputMinimaxSpeech25HdPreview
+from ..types.generation_input_minimax_speech25turbo_preview import GenerationInputMinimaxSpeech25TurboPreview
+from ..types.generation_input_nano_banana import GenerationInputNanoBanana
+from ..types.generation_input_nano_banana2 import GenerationInputNanoBanana2
+from ..types.generation_input_nano_banana_pro import GenerationInputNanoBananaPro
+from ..types.generation_input_omnihuman15 import GenerationInputOmnihuman15
+from ..types.generation_input_recraft_v3 import GenerationInputRecraftV3
+from ..types.generation_input_sana import GenerationInputSana
+from ..types.generation_input_seedance15pro import GenerationInputSeedance15Pro
+from ..types.generation_input_seedance20 import GenerationInputSeedance20
+from ..types.generation_input_seedance20fast import GenerationInputSeedance20Fast
+from ..types.generation_input_seedance20mini import GenerationInputSeedance20Mini
+from ..types.generation_input_seedream40 import GenerationInputSeedream40
+from ..types.generation_input_seedream45 import GenerationInputSeedream45
+from ..types.generation_input_seedream50lite import GenerationInputSeedream50Lite
+from ..types.generation_input_sonic import GenerationInputSonic
+from ..types.generation_input_sora2pro import GenerationInputSora2Pro
+from ..types.generation_input_veed_fabric10 import GenerationInputVeedFabric10
+from ..types.generation_input_veed_fabric10fast import GenerationInputVeedFabric10Fast
+from ..types.generation_input_veo2 import GenerationInputVeo2
+from ..types.generation_input_veo3 import GenerationInputVeo3
+from ..types.generation_input_veo3fast import GenerationInputVeo3Fast
+from ..types.generation_input_veo31 import GenerationInputVeo31
+from ..types.generation_input_veo31fast import GenerationInputVeo31Fast
 from ..types.submit_response import SubmitResponse
 from .raw_client import AsyncRawQueueClient, RawQueueClient
 
@@ -26,28 +97,30 @@ class QueueClient:
         """
         return self._raw_client
 
-    def submit(
+    def submit_dreamina31(
         self,
-        model: str,
         *,
-        input: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        input: GenerationInputDreamina31,
         webhook: typing.Optional[str] = OMIT,
         idempotency_key: typing.Optional[str] = OMIT,
         priority: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
         Parameters
         ----------
-        model : str
-
-        input : typing.Optional[typing.Dict[str, typing.Any]]
+        input : GenerationInputDreamina31
 
         webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
 
         priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -55,21 +128,4147 @@ class QueueClient:
         Returns
         -------
         SubmitResponse
-            Successful Response
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
 
         Examples
         --------
-        from hedra import Hedra
+        from hedra import GenerationInputDreamina31, Hedra
 
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.queue.submit(
-            model="model",
+        client.queue.submit_dreamina31(
+            input=GenerationInputDreamina31(
+                prompt="prompt",
+            ),
         )
         """
-        _response = self._raw_client.submit(
-            model,
+        _response = self._raw_client.submit_dreamina31(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_elevenlabs_flash_multilingual_v2(
+        self,
+        *,
+        input: GenerationInputElevenlabsFlashMultilingualV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsFlashMultilingualV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputElevenlabsFlashMultilingualV2, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_elevenlabs_flash_multilingual_v2(
+            input=GenerationInputElevenlabsFlashMultilingualV2(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_flash_multilingual_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_elevenlabs_flash_v2(
+        self,
+        *,
+        input: GenerationInputElevenlabsFlashV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsFlashV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputElevenlabsFlashV2, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_elevenlabs_flash_v2(
+            input=GenerationInputElevenlabsFlashV2(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_flash_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_elevenlabs_multilingual_v2(
+        self,
+        *,
+        input: GenerationInputElevenlabsMultilingualV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsMultilingualV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputElevenlabsMultilingualV2, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_elevenlabs_multilingual_v2(
+            input=GenerationInputElevenlabsMultilingualV2(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_multilingual_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_elevenlabs_v3(
+        self,
+        *,
+        input: GenerationInputElevenlabsV3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsV3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputElevenlabsV3, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_elevenlabs_v3(
+            input=GenerationInputElevenlabsV3(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_v3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_elevenlabs_v3331(
+        self,
+        *,
+        input: GenerationInputElevenlabsV3331,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsV3331
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputElevenlabsV3331, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_elevenlabs_v3331(
+            input=GenerationInputElevenlabsV3331(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_v3331(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux11pro(
+        self,
+        *,
+        input: GenerationInputFlux11Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputFlux11Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFlux11Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux11pro(
+            input=GenerationInputFlux11Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux11pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux11ultra(
+        self,
+        *,
+        input: GenerationInputFlux11Ultra,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputFlux11Ultra
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFlux11Ultra, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux11ultra(
+            input=GenerationInputFlux11Ultra(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux11ultra(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux_dev(
+        self,
+        *,
+        input: GenerationInputFluxDev,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputFluxDev
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFluxDev, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux_dev(
+            input=GenerationInputFluxDev(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux_dev(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux_kontext_max(
+        self,
+        *,
+        input: GenerationInputFluxKontextMax,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux-kontext-max` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux-kontext-max-i2i`
+        - prompt only -> `flux-kontext-max-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFluxKontextMax
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFluxKontextMax, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux_kontext_max(
+            input=GenerationInputFluxKontextMax(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux_kontext_max(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux_kontext_pro(
+        self,
+        *,
+        input: GenerationInputFluxKontextPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux-kontext-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux-kontext-pro-i2i`
+        - prompt only -> `flux-kontext-pro-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFluxKontextPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFluxKontextPro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux_kontext_pro(
+            input=GenerationInputFluxKontextPro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux_kontext_pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux2flex(
+        self,
+        *,
+        input: GenerationInputFlux2Flex,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-flex` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-flex-i2i`
+        - prompt only -> `flux2-flex-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Flex
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFlux2Flex, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux2flex(
+            input=GenerationInputFlux2Flex(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2flex(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux2klein9b(
+        self,
+        *,
+        input: GenerationInputFlux2Klein9B,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-klein-9b` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-klein-9b-i2i`
+        - prompt only -> `flux2-klein-9b-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Klein9B
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFlux2Klein9B, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux2klein9b(
+            input=GenerationInputFlux2Klein9B(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2klein9b(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux2max(
+        self,
+        *,
+        input: GenerationInputFlux2Max,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-max` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-max-i2i`
+        - prompt only -> `flux2-max-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Max
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFlux2Max, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux2max(
+            input=GenerationInputFlux2Max(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2max(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_flux2pro(
+        self,
+        *,
+        input: GenerationInputFlux2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-pro-i2i`
+        - prompt only -> `flux2-pro-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputFlux2Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_flux2pro(
+            input=GenerationInputFlux2Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_gpt_image15(
+        self,
+        *,
+        input: GenerationInputGptImage15,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-15` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-15-i2i`
+        - prompt only -> `gpt-image-15-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage15
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputGptImage15, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_gpt_image15(
+            input=GenerationInputGptImage15(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_gpt_image15(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_gpt_image2high(
+        self,
+        *,
+        input: GenerationInputGptImage2High,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-2-high` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-2-high-i2i`
+        - prompt only -> `gpt-image-2-high-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage2High
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputGptImage2High, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_gpt_image2high(
+            input=GenerationInputGptImage2High(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_gpt_image2high(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_gpt_image2low(
+        self,
+        *,
+        input: GenerationInputGptImage2Low,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-2-low` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-2-low-i2i`
+        - prompt only -> `gpt-image-2-low-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage2Low
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputGptImage2Low, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_gpt_image2low(
+            input=GenerationInputGptImage2Low(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_gpt_image2low(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_gpt_image2medium(
+        self,
+        *,
+        input: GenerationInputGptImage2Medium,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-2-medium` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-2-medium-i2i`
+        - prompt only -> `gpt-image-2-medium-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage2Medium
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputGptImage2Medium, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_gpt_image2medium(
+            input=GenerationInputGptImage2Medium(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_gpt_image2medium(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_grok_imagine(
+        self,
+        *,
+        input: GenerationInputGrokImagine,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `grok-imagine` is a model family; the inputs present select the variant:
+        - prompt + image -> `grok-imagine-i2i`
+        - prompt only -> `grok-imagine-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGrokImagine
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputGrokImagine, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_grok_imagine(
+            input=GenerationInputGrokImagine(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_grok_imagine(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_grok_video(
+        self,
+        *,
+        input: GenerationInputGrokVideo,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `grok-video` is a model family; the inputs present select the variant:
+        - prompt + image -> `grok-video-i2v`
+        - prompt only -> `grok-video-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputGrokVideo
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputGrokVideo, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_grok_video(
+            input=GenerationInputGrokVideo(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_grok_video(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_happy_horse(
+        self,
+        *,
+        input: GenerationInputHappyHorse,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `happy-horse` is a model family; the inputs present select the variant:
+        - prompt + image -> `happy-horse-i2v`
+        - prompt only -> `happy-horse-ir2v`
+        - prompt only -> `happy-horse-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputHappyHorse
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputHappyHorse, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_happy_horse(
+            input=GenerationInputHappyHorse(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_happy_horse(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_hedra_avatar(
+        self,
+        *,
+        input: GenerationInputHedraAvatar,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraAvatar
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputHedraAvatar,
+            GenerationInputHedraAvatarAudio_Url,
+            GenerationInputHedraAvatarImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_hedra_avatar(
+            input=GenerationInputHedraAvatar(
+                prompt="prompt",
+                image=GenerationInputHedraAvatarImage_Url(
+                    url="url",
+                ),
+                audio=GenerationInputHedraAvatarAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_hedra_avatar(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_hedra_avatar_staging(
+        self,
+        *,
+        input: GenerationInputHedraAvatarStaging,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraAvatarStaging
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputHedraAvatarStaging,
+            GenerationInputHedraAvatarStagingAudio_Url,
+            GenerationInputHedraAvatarStagingImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_hedra_avatar_staging(
+            input=GenerationInputHedraAvatarStaging(
+                prompt="prompt",
+                image=GenerationInputHedraAvatarStagingImage_Url(
+                    url="url",
+                ),
+                audio=GenerationInputHedraAvatarStagingAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_hedra_avatar_staging(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_hedra_character3(
+        self,
+        *,
+        input: GenerationInputHedraCharacter3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraCharacter3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputHedraCharacter3,
+            GenerationInputHedraCharacter3Audio_Url,
+            GenerationInputHedraCharacter3Image_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_hedra_character3(
+            input=GenerationInputHedraCharacter3(
+                prompt="prompt",
+                image=GenerationInputHedraCharacter3Image_Url(
+                    url="url",
+                ),
+                audio=GenerationInputHedraCharacter3Audio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_hedra_character3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_hedra_omnia(
+        self,
+        *,
+        input: GenerationInputHedraOmnia,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraOmnia
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputHedraOmnia,
+            GenerationInputHedraOmniaAudio_Url,
+            GenerationInputHedraOmniaImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_hedra_omnia(
+            input=GenerationInputHedraOmnia(
+                prompt="prompt",
+                image=GenerationInputHedraOmniaImage_Url(
+                    url="url",
+                ),
+                audio=GenerationInputHedraOmniaAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_hedra_omnia(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_ideogram_v2(
+        self,
+        *,
+        input: GenerationInputIdeogramV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputIdeogramV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputIdeogramV2, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_ideogram_v2(
+            input=GenerationInputIdeogramV2(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_ideogram_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_imagen3(
+        self,
+        *,
+        input: GenerationInputImagen3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputImagen3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputImagen3, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_imagen3(
+            input=GenerationInputImagen3(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_imagen3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_imagen4(
+        self,
+        *,
+        input: GenerationInputImagen4,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputImagen4
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputImagen4, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_imagen4(
+            input=GenerationInputImagen4(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_imagen4(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling16(
+        self,
+        *,
+        input: GenerationInputKling16,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-16` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-16-i2v`
+        - prompt only -> `kling-16-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling16
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKling16, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling16(
+            input=GenerationInputKling16(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling16(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling21master(
+        self,
+        *,
+        input: GenerationInputKling21Master,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-21-master` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-21-master-i2v`
+        - prompt only -> `kling-21-master-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling21Master
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKling21Master, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling21master(
+            input=GenerationInputKling21Master(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling21master(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling21pro(
+        self,
+        *,
+        input: GenerationInputKling21Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-21-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-21-pro-i2v`
+        - prompt only -> `kling-21-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling21Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKling21Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling21pro(
+            input=GenerationInputKling21Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling21pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling25turbo(
+        self,
+        *,
+        input: GenerationInputKling25Turbo,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-25-turbo` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-25-turbo-i2v`
+        - prompt only -> `kling-25-turbo-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling25Turbo
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKling25Turbo, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling25turbo(
+            input=GenerationInputKling25Turbo(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling25turbo(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling26pro(
+        self,
+        *,
+        input: GenerationInputKling26Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-26-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-26-pro-i2v`
+        - prompt only -> `kling-26-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling26Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKling26Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling26pro(
+            input=GenerationInputKling26Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling26pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_ai_avatar_v2pro(
+        self,
+        *,
+        input: GenerationInputKlingAiAvatarV2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputKlingAiAvatarV2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputKlingAiAvatarV2Pro,
+            GenerationInputKlingAiAvatarV2ProAudio_Url,
+            GenerationInputKlingAiAvatarV2ProImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_ai_avatar_v2pro(
+            input=GenerationInputKlingAiAvatarV2Pro(
+                prompt="prompt",
+                image=GenerationInputKlingAiAvatarV2ProImage_Url(
+                    url="url",
+                ),
+                audio=GenerationInputKlingAiAvatarV2ProAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_ai_avatar_v2pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_ai_avatar_v2standard(
+        self,
+        *,
+        input: GenerationInputKlingAiAvatarV2Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputKlingAiAvatarV2Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputKlingAiAvatarV2Standard,
+            GenerationInputKlingAiAvatarV2StandardAudio_Url,
+            GenerationInputKlingAiAvatarV2StandardImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_ai_avatar_v2standard(
+            input=GenerationInputKlingAiAvatarV2Standard(
+                prompt="prompt",
+                image=GenerationInputKlingAiAvatarV2StandardImage_Url(
+                    url="url",
+                ),
+                audio=GenerationInputKlingAiAvatarV2StandardAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_ai_avatar_v2standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_o1(
+        self,
+        *,
+        input: GenerationInputKlingO1,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-o1` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-o1-i2v`
+        - prompt + image + end_image -> `kling-o1-ie2v`
+        - prompt + images -> `kling-o1-ir2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingO1
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKlingO1, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_o1(
+            input=GenerationInputKlingO1(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_o1(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_o3pro(
+        self,
+        *,
+        input: GenerationInputKlingO3Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-o3-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-o3-pro-i2v`
+        - prompt + image + end_image -> `kling-o3-pro-ie2v`
+        - prompt + images -> `kling-o3-pro-ir2v`
+        - prompt only -> `kling-o3-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingO3Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKlingO3Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_o3pro(
+            input=GenerationInputKlingO3Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_o3pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_o3standard(
+        self,
+        *,
+        input: GenerationInputKlingO3Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-o3-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-o3-standard-i2v`
+        - prompt + image + end_image -> `kling-o3-standard-ie2v`
+        - prompt + images -> `kling-o3-standard-ir2v`
+        - prompt only -> `kling-o3-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingO3Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKlingO3Standard, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_o3standard(
+            input=GenerationInputKlingO3Standard(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_o3standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_v3pro(
+        self,
+        *,
+        input: GenerationInputKlingV3Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-v3-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-v3-pro-i2v`
+        - prompt + image + end_image -> `kling-v3-pro-ie2v`
+        - prompt only -> `kling-v3-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingV3Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKlingV3Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_v3pro(
+            input=GenerationInputKlingV3Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_v3pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_kling_v3standard(
+        self,
+        *,
+        input: GenerationInputKlingV3Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-v3-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-v3-standard-i2v`
+        - prompt + image + end_image -> `kling-v3-standard-ie2v`
+        - prompt only -> `kling-v3-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingV3Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputKlingV3Standard, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_kling_v3standard(
+            input=GenerationInputKlingV3Standard(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_v3standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_hailuo02pro(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo02Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-02-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-02-pro-i2v`
+        - prompt only -> `minimax-hailuo-02-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo02Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputMinimaxHailuo02Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_hailuo02pro(
+            input=GenerationInputMinimaxHailuo02Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_hailuo02pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_hailuo02standard(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo02Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-02-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-02-standard-i2v`
+        - prompt only -> `minimax-hailuo-02-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo02Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputMinimaxHailuo02Standard, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_hailuo02standard(
+            input=GenerationInputMinimaxHailuo02Standard(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_hailuo02standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_hailuo23fast_pro(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23FastPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23FastPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputMinimaxHailuo23FastPro,
+            GenerationInputMinimaxHailuo23FastProImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_hailuo23fast_pro(
+            input=GenerationInputMinimaxHailuo23FastPro(
+                prompt="prompt",
+                image=GenerationInputMinimaxHailuo23FastProImage_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_hailuo23fast_pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_hailuo23fast_standard(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23FastStandard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23FastStandard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputMinimaxHailuo23FastStandard,
+            GenerationInputMinimaxHailuo23FastStandardImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_hailuo23fast_standard(
+            input=GenerationInputMinimaxHailuo23FastStandard(
+                prompt="prompt",
+                image=GenerationInputMinimaxHailuo23FastStandardImage_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_hailuo23fast_standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_hailuo23pro(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-23-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-23-pro-i2v`
+        - prompt only -> `minimax-hailuo-23-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputMinimaxHailuo23Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_hailuo23pro(
+            input=GenerationInputMinimaxHailuo23Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_hailuo23pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_hailuo23standard(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-23-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-23-standard-i2v`
+        - prompt only -> `minimax-hailuo-23-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputMinimaxHailuo23Standard, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_hailuo23standard(
+            input=GenerationInputMinimaxHailuo23Standard(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_hailuo23standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_speech25hd_preview(
+        self,
+        *,
+        input: GenerationInputMinimaxSpeech25HdPreview,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxSpeech25HdPreview
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputMinimaxSpeech25HdPreview, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_speech25hd_preview(
+            input=GenerationInputMinimaxSpeech25HdPreview(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_speech25hd_preview(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_minimax_speech25turbo_preview(
+        self,
+        *,
+        input: GenerationInputMinimaxSpeech25TurboPreview,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxSpeech25TurboPreview
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputMinimaxSpeech25TurboPreview, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_minimax_speech25turbo_preview(
+            input=GenerationInputMinimaxSpeech25TurboPreview(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_speech25turbo_preview(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_nano_banana(
+        self,
+        *,
+        input: GenerationInputNanoBanana,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `nano-banana` is a model family; the inputs present select the variant:
+        - prompt only -> `nano-banana`
+        - prompt + image -> `nano-banana-i2i`
+        - prompt only -> `nano-banana-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputNanoBanana
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputNanoBanana, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_nano_banana(
+            input=GenerationInputNanoBanana(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_nano_banana(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_nano_banana2(
+        self,
+        *,
+        input: GenerationInputNanoBanana2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputNanoBanana2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputNanoBanana2, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_nano_banana2(
+            input=GenerationInputNanoBanana2(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_nano_banana2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_nano_banana_pro(
+        self,
+        *,
+        input: GenerationInputNanoBananaPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `nano-banana-pro` is a model family; the inputs present select the variant:
+        - prompt only -> `nano-banana-pro`
+        - prompt + image -> `nano-banana-pro-i2i`
+        - prompt only -> `nano-banana-pro-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputNanoBananaPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputNanoBananaPro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_nano_banana_pro(
+            input=GenerationInputNanoBananaPro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_nano_banana_pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_omnihuman15(
+        self,
+        *,
+        input: GenerationInputOmnihuman15,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputOmnihuman15
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputOmnihuman15,
+            GenerationInputOmnihuman15Audio_Url,
+            GenerationInputOmnihuman15Image_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_omnihuman15(
+            input=GenerationInputOmnihuman15(
+                prompt="prompt",
+                image=GenerationInputOmnihuman15Image_Url(
+                    url="url",
+                ),
+                audio=GenerationInputOmnihuman15Audio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_omnihuman15(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_recraft_v3(
+        self,
+        *,
+        input: GenerationInputRecraftV3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputRecraftV3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputRecraftV3, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_recraft_v3(
+            input=GenerationInputRecraftV3(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_recraft_v3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_sana(
+        self,
+        *,
+        input: GenerationInputSana,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSana
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSana, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_sana(
+            input=GenerationInputSana(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_sana(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedance15pro(
+        self,
+        *,
+        input: GenerationInputSeedance15Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance15Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedance15Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedance15pro(
+            input=GenerationInputSeedance15Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedance15pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedance20(
+        self,
+        *,
+        input: GenerationInputSeedance20,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance20
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedance20, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedance20(
+            input=GenerationInputSeedance20(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedance20(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedance20fast(
+        self,
+        *,
+        input: GenerationInputSeedance20Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance20Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedance20Fast, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedance20fast(
+            input=GenerationInputSeedance20Fast(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedance20fast(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedance20mini(
+        self,
+        *,
+        input: GenerationInputSeedance20Mini,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance20Mini
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedance20Mini, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedance20mini(
+            input=GenerationInputSeedance20Mini(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedance20mini(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedream40(
+        self,
+        *,
+        input: GenerationInputSeedream40,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `seedream-40` is a model family; the inputs present select the variant:
+        - prompt + image -> `seedream-40-i2i`
+        - prompt only -> `seedream-40-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputSeedream40
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedream40, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedream40(
+            input=GenerationInputSeedream40(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedream40(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedream45(
+        self,
+        *,
+        input: GenerationInputSeedream45,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `seedream-45` is a model family; the inputs present select the variant:
+        - prompt + image -> `seedream-45-i2i`
+        - prompt only -> `seedream-45-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputSeedream45
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedream45, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedream45(
+            input=GenerationInputSeedream45(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedream45(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_seedream50lite(
+        self,
+        *,
+        input: GenerationInputSeedream50Lite,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `seedream-50-lite` is a model family; the inputs present select the variant:
+        - prompt + image -> `seedream-50-lite-i2i`
+        - prompt only -> `seedream-50-lite-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputSeedream50Lite
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSeedream50Lite, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_seedream50lite(
+            input=GenerationInputSeedream50Lite(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedream50lite(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_sonic(
+        self,
+        *,
+        input: GenerationInputSonic,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSonic
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSonic, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_sonic(
+            input=GenerationInputSonic(
+                text="text",
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_sonic(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_sora2pro(
+        self,
+        *,
+        input: GenerationInputSora2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `sora-2-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `sora-2-pro-i2v`
+        - prompt only -> `sora-2-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputSora2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputSora2Pro, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_sora2pro(
+            input=GenerationInputSora2Pro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_sora2pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veed_fabric10(
+        self,
+        *,
+        input: GenerationInputVeedFabric10,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeedFabric10
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputVeedFabric10,
+            GenerationInputVeedFabric10Audio_Url,
+            GenerationInputVeedFabric10Image_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veed_fabric10(
+            input=GenerationInputVeedFabric10(
+                prompt="prompt",
+                image=GenerationInputVeedFabric10Image_Url(
+                    url="url",
+                ),
+                audio=GenerationInputVeedFabric10Audio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veed_fabric10(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veed_fabric10fast(
+        self,
+        *,
+        input: GenerationInputVeedFabric10Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeedFabric10Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            GenerationInputVeedFabric10Fast,
+            GenerationInputVeedFabric10FastAudio_Url,
+            GenerationInputVeedFabric10FastImage_Url,
+            Hedra,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veed_fabric10fast(
+            input=GenerationInputVeedFabric10Fast(
+                prompt="prompt",
+                image=GenerationInputVeedFabric10FastImage_Url(
+                    url="url",
+                ),
+                audio=GenerationInputVeedFabric10FastAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veed_fabric10fast(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veo2(
+        self,
+        *,
+        input: GenerationInputVeo2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `veo-2` is a model family; the inputs present select the variant:
+        - prompt + image -> `veo-2-i2v`
+        - prompt only -> `veo-2-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputVeo2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputVeo2, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veo2(
+            input=GenerationInputVeo2(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veo2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veo3(
+        self,
+        *,
+        input: GenerationInputVeo3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `veo-3` is a model family; the inputs present select the variant:
+        - prompt + image -> `veo-3-i2v`
+        - prompt only -> `veo-3-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputVeo3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputVeo3, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veo3(
+            input=GenerationInputVeo3(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veo3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veo3fast(
+        self,
+        *,
+        input: GenerationInputVeo3Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `veo-3-fast` is a model family; the inputs present select the variant:
+        - prompt + image -> `veo-3-fast-i2v`
+        - prompt only -> `veo-3-fast-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputVeo3Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputVeo3Fast, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veo3fast(
+            input=GenerationInputVeo3Fast(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veo3fast(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veo31(
+        self,
+        *,
+        input: GenerationInputVeo31,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeo31
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputVeo31, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veo31(
+            input=GenerationInputVeo31(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veo31(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def submit_veo31fast(
+        self,
+        *,
+        input: GenerationInputVeo31Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeo31Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        from hedra import GenerationInputVeo31Fast, Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.queue.submit_veo31fast(
+            input=GenerationInputVeo31Fast(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veo31fast(
             input=input,
             webhook=webhook,
             idempotency_key=idempotency_key,
@@ -94,28 +4293,30 @@ class AsyncQueueClient:
         """
         return self._raw_client
 
-    async def submit(
+    async def submit_dreamina31(
         self,
-        model: str,
         *,
-        input: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        input: GenerationInputDreamina31,
         webhook: typing.Optional[str] = OMIT,
         idempotency_key: typing.Optional[str] = OMIT,
         priority: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
         Parameters
         ----------
-        model : str
-
-        input : typing.Optional[typing.Dict[str, typing.Any]]
+        input : GenerationInputDreamina31
 
         webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
 
         priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -123,13 +4324,13 @@ class AsyncQueueClient:
         Returns
         -------
         SubmitResponse
-            Successful Response
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
 
         Examples
         --------
         import asyncio
 
-        from hedra import AsyncHedra
+        from hedra import AsyncHedra, GenerationInputDreamina31
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -137,15 +4338,4701 @@ class AsyncQueueClient:
 
 
         async def main() -> None:
-            await client.queue.submit(
-                model="model",
+            await client.queue.submit_dreamina31(
+                input=GenerationInputDreamina31(
+                    prompt="prompt",
+                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.submit(
-            model,
+        _response = await self._raw_client.submit_dreamina31(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_elevenlabs_flash_multilingual_v2(
+        self,
+        *,
+        input: GenerationInputElevenlabsFlashMultilingualV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsFlashMultilingualV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputElevenlabsFlashMultilingualV2
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_elevenlabs_flash_multilingual_v2(
+                input=GenerationInputElevenlabsFlashMultilingualV2(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_flash_multilingual_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_elevenlabs_flash_v2(
+        self,
+        *,
+        input: GenerationInputElevenlabsFlashV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsFlashV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputElevenlabsFlashV2
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_elevenlabs_flash_v2(
+                input=GenerationInputElevenlabsFlashV2(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_flash_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_elevenlabs_multilingual_v2(
+        self,
+        *,
+        input: GenerationInputElevenlabsMultilingualV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsMultilingualV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputElevenlabsMultilingualV2
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_elevenlabs_multilingual_v2(
+                input=GenerationInputElevenlabsMultilingualV2(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_multilingual_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_elevenlabs_v3(
+        self,
+        *,
+        input: GenerationInputElevenlabsV3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsV3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputElevenlabsV3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_elevenlabs_v3(
+                input=GenerationInputElevenlabsV3(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_v3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_elevenlabs_v3331(
+        self,
+        *,
+        input: GenerationInputElevenlabsV3331,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputElevenlabsV3331
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputElevenlabsV3331
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_elevenlabs_v3331(
+                input=GenerationInputElevenlabsV3331(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_v3331(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux11pro(
+        self,
+        *,
+        input: GenerationInputFlux11Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputFlux11Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFlux11Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux11pro(
+                input=GenerationInputFlux11Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux11pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux11ultra(
+        self,
+        *,
+        input: GenerationInputFlux11Ultra,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputFlux11Ultra
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFlux11Ultra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux11ultra(
+                input=GenerationInputFlux11Ultra(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux11ultra(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux_dev(
+        self,
+        *,
+        input: GenerationInputFluxDev,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputFluxDev
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFluxDev
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux_dev(
+                input=GenerationInputFluxDev(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux_dev(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux_kontext_max(
+        self,
+        *,
+        input: GenerationInputFluxKontextMax,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux-kontext-max` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux-kontext-max-i2i`
+        - prompt only -> `flux-kontext-max-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFluxKontextMax
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFluxKontextMax
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux_kontext_max(
+                input=GenerationInputFluxKontextMax(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux_kontext_max(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux_kontext_pro(
+        self,
+        *,
+        input: GenerationInputFluxKontextPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux-kontext-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux-kontext-pro-i2i`
+        - prompt only -> `flux-kontext-pro-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFluxKontextPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFluxKontextPro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux_kontext_pro(
+                input=GenerationInputFluxKontextPro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux_kontext_pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux2flex(
+        self,
+        *,
+        input: GenerationInputFlux2Flex,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-flex` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-flex-i2i`
+        - prompt only -> `flux2-flex-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Flex
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFlux2Flex
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux2flex(
+                input=GenerationInputFlux2Flex(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2flex(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux2klein9b(
+        self,
+        *,
+        input: GenerationInputFlux2Klein9B,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-klein-9b` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-klein-9b-i2i`
+        - prompt only -> `flux2-klein-9b-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Klein9B
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFlux2Klein9B
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux2klein9b(
+                input=GenerationInputFlux2Klein9B(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2klein9b(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux2max(
+        self,
+        *,
+        input: GenerationInputFlux2Max,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-max` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-max-i2i`
+        - prompt only -> `flux2-max-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Max
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFlux2Max
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux2max(
+                input=GenerationInputFlux2Max(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2max(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_flux2pro(
+        self,
+        *,
+        input: GenerationInputFlux2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `flux2-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `flux2-pro-i2i`
+        - prompt only -> `flux2-pro-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputFlux2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputFlux2Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_flux2pro(
+                input=GenerationInputFlux2Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_gpt_image15(
+        self,
+        *,
+        input: GenerationInputGptImage15,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-15` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-15-i2i`
+        - prompt only -> `gpt-image-15-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage15
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputGptImage15
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_gpt_image15(
+                input=GenerationInputGptImage15(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_gpt_image15(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_gpt_image2high(
+        self,
+        *,
+        input: GenerationInputGptImage2High,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-2-high` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-2-high-i2i`
+        - prompt only -> `gpt-image-2-high-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage2High
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputGptImage2High
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_gpt_image2high(
+                input=GenerationInputGptImage2High(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_gpt_image2high(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_gpt_image2low(
+        self,
+        *,
+        input: GenerationInputGptImage2Low,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-2-low` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-2-low-i2i`
+        - prompt only -> `gpt-image-2-low-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage2Low
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputGptImage2Low
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_gpt_image2low(
+                input=GenerationInputGptImage2Low(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_gpt_image2low(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_gpt_image2medium(
+        self,
+        *,
+        input: GenerationInputGptImage2Medium,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `gpt-image-2-medium` is a model family; the inputs present select the variant:
+        - prompt + image -> `gpt-image-2-medium-i2i`
+        - prompt only -> `gpt-image-2-medium-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGptImage2Medium
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputGptImage2Medium
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_gpt_image2medium(
+                input=GenerationInputGptImage2Medium(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_gpt_image2medium(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_grok_imagine(
+        self,
+        *,
+        input: GenerationInputGrokImagine,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `grok-imagine` is a model family; the inputs present select the variant:
+        - prompt + image -> `grok-imagine-i2i`
+        - prompt only -> `grok-imagine-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputGrokImagine
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputGrokImagine
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_grok_imagine(
+                input=GenerationInputGrokImagine(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_grok_imagine(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_grok_video(
+        self,
+        *,
+        input: GenerationInputGrokVideo,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `grok-video` is a model family; the inputs present select the variant:
+        - prompt + image -> `grok-video-i2v`
+        - prompt only -> `grok-video-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputGrokVideo
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputGrokVideo
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_grok_video(
+                input=GenerationInputGrokVideo(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_grok_video(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_happy_horse(
+        self,
+        *,
+        input: GenerationInputHappyHorse,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `happy-horse` is a model family; the inputs present select the variant:
+        - prompt + image -> `happy-horse-i2v`
+        - prompt only -> `happy-horse-ir2v`
+        - prompt only -> `happy-horse-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputHappyHorse
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputHappyHorse
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_happy_horse(
+                input=GenerationInputHappyHorse(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_happy_horse(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_hedra_avatar(
+        self,
+        *,
+        input: GenerationInputHedraAvatar,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraAvatar
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputHedraAvatar,
+            GenerationInputHedraAvatarAudio_Url,
+            GenerationInputHedraAvatarImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_hedra_avatar(
+                input=GenerationInputHedraAvatar(
+                    prompt="prompt",
+                    image=GenerationInputHedraAvatarImage_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputHedraAvatarAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_hedra_avatar(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_hedra_avatar_staging(
+        self,
+        *,
+        input: GenerationInputHedraAvatarStaging,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraAvatarStaging
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputHedraAvatarStaging,
+            GenerationInputHedraAvatarStagingAudio_Url,
+            GenerationInputHedraAvatarStagingImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_hedra_avatar_staging(
+                input=GenerationInputHedraAvatarStaging(
+                    prompt="prompt",
+                    image=GenerationInputHedraAvatarStagingImage_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputHedraAvatarStagingAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_hedra_avatar_staging(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_hedra_character3(
+        self,
+        *,
+        input: GenerationInputHedraCharacter3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraCharacter3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputHedraCharacter3,
+            GenerationInputHedraCharacter3Audio_Url,
+            GenerationInputHedraCharacter3Image_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_hedra_character3(
+                input=GenerationInputHedraCharacter3(
+                    prompt="prompt",
+                    image=GenerationInputHedraCharacter3Image_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputHedraCharacter3Audio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_hedra_character3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_hedra_omnia(
+        self,
+        *,
+        input: GenerationInputHedraOmnia,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputHedraOmnia
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputHedraOmnia,
+            GenerationInputHedraOmniaAudio_Url,
+            GenerationInputHedraOmniaImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_hedra_omnia(
+                input=GenerationInputHedraOmnia(
+                    prompt="prompt",
+                    image=GenerationInputHedraOmniaImage_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputHedraOmniaAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_hedra_omnia(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_ideogram_v2(
+        self,
+        *,
+        input: GenerationInputIdeogramV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputIdeogramV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputIdeogramV2
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_ideogram_v2(
+                input=GenerationInputIdeogramV2(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_ideogram_v2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_imagen3(
+        self,
+        *,
+        input: GenerationInputImagen3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputImagen3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputImagen3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_imagen3(
+                input=GenerationInputImagen3(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_imagen3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_imagen4(
+        self,
+        *,
+        input: GenerationInputImagen4,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputImagen4
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputImagen4
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_imagen4(
+                input=GenerationInputImagen4(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_imagen4(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling16(
+        self,
+        *,
+        input: GenerationInputKling16,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-16` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-16-i2v`
+        - prompt only -> `kling-16-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling16
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKling16
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling16(
+                input=GenerationInputKling16(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling16(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling21master(
+        self,
+        *,
+        input: GenerationInputKling21Master,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-21-master` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-21-master-i2v`
+        - prompt only -> `kling-21-master-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling21Master
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKling21Master
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling21master(
+                input=GenerationInputKling21Master(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling21master(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling21pro(
+        self,
+        *,
+        input: GenerationInputKling21Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-21-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-21-pro-i2v`
+        - prompt only -> `kling-21-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling21Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKling21Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling21pro(
+                input=GenerationInputKling21Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling21pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling25turbo(
+        self,
+        *,
+        input: GenerationInputKling25Turbo,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-25-turbo` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-25-turbo-i2v`
+        - prompt only -> `kling-25-turbo-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling25Turbo
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKling25Turbo
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling25turbo(
+                input=GenerationInputKling25Turbo(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling25turbo(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling26pro(
+        self,
+        *,
+        input: GenerationInputKling26Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-26-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-26-pro-i2v`
+        - prompt only -> `kling-26-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKling26Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKling26Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling26pro(
+                input=GenerationInputKling26Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling26pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_ai_avatar_v2pro(
+        self,
+        *,
+        input: GenerationInputKlingAiAvatarV2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputKlingAiAvatarV2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputKlingAiAvatarV2Pro,
+            GenerationInputKlingAiAvatarV2ProAudio_Url,
+            GenerationInputKlingAiAvatarV2ProImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_ai_avatar_v2pro(
+                input=GenerationInputKlingAiAvatarV2Pro(
+                    prompt="prompt",
+                    image=GenerationInputKlingAiAvatarV2ProImage_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputKlingAiAvatarV2ProAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_ai_avatar_v2pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_ai_avatar_v2standard(
+        self,
+        *,
+        input: GenerationInputKlingAiAvatarV2Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputKlingAiAvatarV2Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputKlingAiAvatarV2Standard,
+            GenerationInputKlingAiAvatarV2StandardAudio_Url,
+            GenerationInputKlingAiAvatarV2StandardImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_ai_avatar_v2standard(
+                input=GenerationInputKlingAiAvatarV2Standard(
+                    prompt="prompt",
+                    image=GenerationInputKlingAiAvatarV2StandardImage_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputKlingAiAvatarV2StandardAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_ai_avatar_v2standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_o1(
+        self,
+        *,
+        input: GenerationInputKlingO1,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-o1` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-o1-i2v`
+        - prompt + image + end_image -> `kling-o1-ie2v`
+        - prompt + images -> `kling-o1-ir2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingO1
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKlingO1
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_o1(
+                input=GenerationInputKlingO1(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_o1(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_o3pro(
+        self,
+        *,
+        input: GenerationInputKlingO3Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-o3-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-o3-pro-i2v`
+        - prompt + image + end_image -> `kling-o3-pro-ie2v`
+        - prompt + images -> `kling-o3-pro-ir2v`
+        - prompt only -> `kling-o3-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingO3Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKlingO3Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_o3pro(
+                input=GenerationInputKlingO3Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_o3pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_o3standard(
+        self,
+        *,
+        input: GenerationInputKlingO3Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-o3-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-o3-standard-i2v`
+        - prompt + image + end_image -> `kling-o3-standard-ie2v`
+        - prompt + images -> `kling-o3-standard-ir2v`
+        - prompt only -> `kling-o3-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingO3Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKlingO3Standard
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_o3standard(
+                input=GenerationInputKlingO3Standard(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_o3standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_v3pro(
+        self,
+        *,
+        input: GenerationInputKlingV3Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-v3-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-v3-pro-i2v`
+        - prompt + image + end_image -> `kling-v3-pro-ie2v`
+        - prompt only -> `kling-v3-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingV3Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKlingV3Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_v3pro(
+                input=GenerationInputKlingV3Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_v3pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_kling_v3standard(
+        self,
+        *,
+        input: GenerationInputKlingV3Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `kling-v3-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `kling-v3-standard-i2v`
+        - prompt + image + end_image -> `kling-v3-standard-ie2v`
+        - prompt only -> `kling-v3-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputKlingV3Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputKlingV3Standard
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_kling_v3standard(
+                input=GenerationInputKlingV3Standard(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_v3standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_hailuo02pro(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo02Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-02-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-02-pro-i2v`
+        - prompt only -> `minimax-hailuo-02-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo02Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputMinimaxHailuo02Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_hailuo02pro(
+                input=GenerationInputMinimaxHailuo02Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_hailuo02pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_hailuo02standard(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo02Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-02-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-02-standard-i2v`
+        - prompt only -> `minimax-hailuo-02-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo02Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputMinimaxHailuo02Standard
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_hailuo02standard(
+                input=GenerationInputMinimaxHailuo02Standard(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_hailuo02standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_hailuo23fast_pro(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23FastPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23FastPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputMinimaxHailuo23FastPro,
+            GenerationInputMinimaxHailuo23FastProImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_hailuo23fast_pro(
+                input=GenerationInputMinimaxHailuo23FastPro(
+                    prompt="prompt",
+                    image=GenerationInputMinimaxHailuo23FastProImage_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_hailuo23fast_pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_hailuo23fast_standard(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23FastStandard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23FastStandard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputMinimaxHailuo23FastStandard,
+            GenerationInputMinimaxHailuo23FastStandardImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_hailuo23fast_standard(
+                input=GenerationInputMinimaxHailuo23FastStandard(
+                    prompt="prompt",
+                    image=GenerationInputMinimaxHailuo23FastStandardImage_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_hailuo23fast_standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_hailuo23pro(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-23-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-23-pro-i2v`
+        - prompt only -> `minimax-hailuo-23-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputMinimaxHailuo23Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_hailuo23pro(
+                input=GenerationInputMinimaxHailuo23Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_hailuo23pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_hailuo23standard(
+        self,
+        *,
+        input: GenerationInputMinimaxHailuo23Standard,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `minimax-hailuo-23-standard` is a model family; the inputs present select the variant:
+        - prompt + image -> `minimax-hailuo-23-standard-i2v`
+        - prompt only -> `minimax-hailuo-23-standard-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxHailuo23Standard
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputMinimaxHailuo23Standard
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_hailuo23standard(
+                input=GenerationInputMinimaxHailuo23Standard(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_hailuo23standard(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_speech25hd_preview(
+        self,
+        *,
+        input: GenerationInputMinimaxSpeech25HdPreview,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxSpeech25HdPreview
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputMinimaxSpeech25HdPreview
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_speech25hd_preview(
+                input=GenerationInputMinimaxSpeech25HdPreview(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_speech25hd_preview(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_minimax_speech25turbo_preview(
+        self,
+        *,
+        input: GenerationInputMinimaxSpeech25TurboPreview,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputMinimaxSpeech25TurboPreview
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputMinimaxSpeech25TurboPreview
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_minimax_speech25turbo_preview(
+                input=GenerationInputMinimaxSpeech25TurboPreview(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_speech25turbo_preview(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_nano_banana(
+        self,
+        *,
+        input: GenerationInputNanoBanana,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `nano-banana` is a model family; the inputs present select the variant:
+        - prompt only -> `nano-banana`
+        - prompt + image -> `nano-banana-i2i`
+        - prompt only -> `nano-banana-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputNanoBanana
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputNanoBanana
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_nano_banana(
+                input=GenerationInputNanoBanana(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_nano_banana(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_nano_banana2(
+        self,
+        *,
+        input: GenerationInputNanoBanana2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputNanoBanana2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputNanoBanana2
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_nano_banana2(
+                input=GenerationInputNanoBanana2(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_nano_banana2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_nano_banana_pro(
+        self,
+        *,
+        input: GenerationInputNanoBananaPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `nano-banana-pro` is a model family; the inputs present select the variant:
+        - prompt only -> `nano-banana-pro`
+        - prompt + image -> `nano-banana-pro-i2i`
+        - prompt only -> `nano-banana-pro-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputNanoBananaPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputNanoBananaPro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_nano_banana_pro(
+                input=GenerationInputNanoBananaPro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_nano_banana_pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_omnihuman15(
+        self,
+        *,
+        input: GenerationInputOmnihuman15,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputOmnihuman15
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputOmnihuman15,
+            GenerationInputOmnihuman15Audio_Url,
+            GenerationInputOmnihuman15Image_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_omnihuman15(
+                input=GenerationInputOmnihuman15(
+                    prompt="prompt",
+                    image=GenerationInputOmnihuman15Image_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputOmnihuman15Audio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_omnihuman15(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_recraft_v3(
+        self,
+        *,
+        input: GenerationInputRecraftV3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputRecraftV3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputRecraftV3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_recraft_v3(
+                input=GenerationInputRecraftV3(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_recraft_v3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_sana(
+        self,
+        *,
+        input: GenerationInputSana,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSana
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSana
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_sana(
+                input=GenerationInputSana(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_sana(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedance15pro(
+        self,
+        *,
+        input: GenerationInputSeedance15Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance15Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedance15Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedance15pro(
+                input=GenerationInputSeedance15Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedance15pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedance20(
+        self,
+        *,
+        input: GenerationInputSeedance20,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance20
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedance20
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedance20(
+                input=GenerationInputSeedance20(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedance20(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedance20fast(
+        self,
+        *,
+        input: GenerationInputSeedance20Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance20Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedance20Fast
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedance20fast(
+                input=GenerationInputSeedance20Fast(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedance20fast(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedance20mini(
+        self,
+        *,
+        input: GenerationInputSeedance20Mini,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSeedance20Mini
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedance20Mini
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedance20mini(
+                input=GenerationInputSeedance20Mini(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedance20mini(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedream40(
+        self,
+        *,
+        input: GenerationInputSeedream40,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `seedream-40` is a model family; the inputs present select the variant:
+        - prompt + image -> `seedream-40-i2i`
+        - prompt only -> `seedream-40-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputSeedream40
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedream40
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedream40(
+                input=GenerationInputSeedream40(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedream40(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedream45(
+        self,
+        *,
+        input: GenerationInputSeedream45,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `seedream-45` is a model family; the inputs present select the variant:
+        - prompt + image -> `seedream-45-i2i`
+        - prompt only -> `seedream-45-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputSeedream45
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedream45
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedream45(
+                input=GenerationInputSeedream45(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedream45(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_seedream50lite(
+        self,
+        *,
+        input: GenerationInputSeedream50Lite,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `seedream-50-lite` is a model family; the inputs present select the variant:
+        - prompt + image -> `seedream-50-lite-i2i`
+        - prompt only -> `seedream-50-lite-t2i`
+
+        Parameters
+        ----------
+        input : GenerationInputSeedream50Lite
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSeedream50Lite
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_seedream50lite(
+                input=GenerationInputSeedream50Lite(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedream50lite(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_sonic(
+        self,
+        *,
+        input: GenerationInputSonic,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputSonic
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSonic
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_sonic(
+                input=GenerationInputSonic(
+                    text="text",
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_sonic(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_sora2pro(
+        self,
+        *,
+        input: GenerationInputSora2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `sora-2-pro` is a model family; the inputs present select the variant:
+        - prompt + image -> `sora-2-pro-i2v`
+        - prompt only -> `sora-2-pro-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputSora2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputSora2Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_sora2pro(
+                input=GenerationInputSora2Pro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_sora2pro(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veed_fabric10(
+        self,
+        *,
+        input: GenerationInputVeedFabric10,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeedFabric10
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputVeedFabric10,
+            GenerationInputVeedFabric10Audio_Url,
+            GenerationInputVeedFabric10Image_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veed_fabric10(
+                input=GenerationInputVeedFabric10(
+                    prompt="prompt",
+                    image=GenerationInputVeedFabric10Image_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputVeedFabric10Audio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veed_fabric10(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veed_fabric10fast(
+        self,
+        *,
+        input: GenerationInputVeedFabric10Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeedFabric10Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            GenerationInputVeedFabric10Fast,
+            GenerationInputVeedFabric10FastAudio_Url,
+            GenerationInputVeedFabric10FastImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veed_fabric10fast(
+                input=GenerationInputVeedFabric10Fast(
+                    prompt="prompt",
+                    image=GenerationInputVeedFabric10FastImage_Url(
+                        url="url",
+                    ),
+                    audio=GenerationInputVeedFabric10FastAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veed_fabric10fast(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veo2(
+        self,
+        *,
+        input: GenerationInputVeo2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `veo-2` is a model family; the inputs present select the variant:
+        - prompt + image -> `veo-2-i2v`
+        - prompt only -> `veo-2-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputVeo2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputVeo2
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veo2(
+                input=GenerationInputVeo2(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veo2(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veo3(
+        self,
+        *,
+        input: GenerationInputVeo3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `veo-3` is a model family; the inputs present select the variant:
+        - prompt + image -> `veo-3-i2v`
+        - prompt only -> `veo-3-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputVeo3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputVeo3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veo3(
+                input=GenerationInputVeo3(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veo3(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veo3fast(
+        self,
+        *,
+        input: GenerationInputVeo3Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        `veo-3-fast` is a model family; the inputs present select the variant:
+        - prompt + image -> `veo-3-fast-i2v`
+        - prompt only -> `veo-3-fast-t2v`
+
+        Parameters
+        ----------
+        input : GenerationInputVeo3Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputVeo3Fast
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veo3fast(
+                input=GenerationInputVeo3Fast(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veo3fast(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veo31(
+        self,
+        *,
+        input: GenerationInputVeo31,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeo31
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputVeo31
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veo31(
+                input=GenerationInputVeo31(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veo31(
+            input=input,
+            webhook=webhook,
+            idempotency_key=idempotency_key,
+            priority=priority,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def submit_veo31fast(
+        self,
+        *,
+        input: GenerationInputVeo31Fast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        priority: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous generation and returns `202` with a request id. Fetch the result at `GET /v3/requests/{request_id}` — each item in its `outputs[]` follows the `GenerationOutput` schema — or track progress via `GET /v3/requests/{request_id}/status` / the SSE stream at `GET /v3/requests/{request_id}/stream`.
+
+        Parameters
+        ----------
+        input : GenerationInputVeo31Fast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate generation.
+
+        priority : typing.Optional[str]
+            Requested queue priority (per-tier priority is planned).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The generation runs asynchronously; poll `status_url` / `response_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, GenerationInputVeo31Fast
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.queue.submit_veo31fast(
+                input=GenerationInputVeo31Fast(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veo31fast(
             input=input,
             webhook=webhook,
             idempotency_key=idempotency_key,

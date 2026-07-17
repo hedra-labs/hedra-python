@@ -8,17 +8,862 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .api_key_kind import ApiKeyKind
     from .api_key_scope import ApiKeyScope
+    from .balance_response import BalanceResponse
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
     from .estimate_response import EstimateResponse
+    from .field_error import FieldError
     from .file_upload_response import FileUploadResponse
+    from .generation_input_dreamina31 import GenerationInputDreamina31
+    from .generation_input_dreamina31aspect_ratio import GenerationInputDreamina31AspectRatio
+    from .generation_input_dreamina31resolution import GenerationInputDreamina31Resolution
+    from .generation_input_elevenlabs_flash_multilingual_v2 import GenerationInputElevenlabsFlashMultilingualV2
+    from .generation_input_elevenlabs_flash_v2 import GenerationInputElevenlabsFlashV2
+    from .generation_input_elevenlabs_multilingual_v2 import GenerationInputElevenlabsMultilingualV2
+    from .generation_input_elevenlabs_v3 import GenerationInputElevenlabsV3
+    from .generation_input_elevenlabs_v3331 import GenerationInputElevenlabsV3331
+    from .generation_input_flux11pro import GenerationInputFlux11Pro
+    from .generation_input_flux11pro_aspect_ratio import GenerationInputFlux11ProAspectRatio
+    from .generation_input_flux11pro_resolution import GenerationInputFlux11ProResolution
+    from .generation_input_flux11ultra import GenerationInputFlux11Ultra
+    from .generation_input_flux11ultra_aspect_ratio import GenerationInputFlux11UltraAspectRatio
+    from .generation_input_flux11ultra_resolution import GenerationInputFlux11UltraResolution
+    from .generation_input_flux2flex import GenerationInputFlux2Flex
+    from .generation_input_flux2flex_aspect_ratio import GenerationInputFlux2FlexAspectRatio
+    from .generation_input_flux2flex_image import (
+        GenerationInputFlux2FlexImage,
+        GenerationInputFlux2FlexImage_Asset,
+        GenerationInputFlux2FlexImage_Url,
+    )
+    from .generation_input_flux2flex_image_asset import GenerationInputFlux2FlexImageAsset
+    from .generation_input_flux2flex_image_url import GenerationInputFlux2FlexImageUrl
+    from .generation_input_flux2klein9b import GenerationInputFlux2Klein9B
+    from .generation_input_flux2klein9b_aspect_ratio import GenerationInputFlux2Klein9BAspectRatio
+    from .generation_input_flux2klein9b_image import (
+        GenerationInputFlux2Klein9BImage,
+        GenerationInputFlux2Klein9BImage_Asset,
+        GenerationInputFlux2Klein9BImage_Url,
+    )
+    from .generation_input_flux2klein9b_image_asset import GenerationInputFlux2Klein9BImageAsset
+    from .generation_input_flux2klein9b_image_url import GenerationInputFlux2Klein9BImageUrl
+    from .generation_input_flux2max import GenerationInputFlux2Max
+    from .generation_input_flux2max_aspect_ratio import GenerationInputFlux2MaxAspectRatio
+    from .generation_input_flux2max_image import (
+        GenerationInputFlux2MaxImage,
+        GenerationInputFlux2MaxImage_Asset,
+        GenerationInputFlux2MaxImage_Url,
+    )
+    from .generation_input_flux2max_image_asset import GenerationInputFlux2MaxImageAsset
+    from .generation_input_flux2max_image_url import GenerationInputFlux2MaxImageUrl
+    from .generation_input_flux2pro import GenerationInputFlux2Pro
+    from .generation_input_flux2pro_aspect_ratio import GenerationInputFlux2ProAspectRatio
+    from .generation_input_flux2pro_image import (
+        GenerationInputFlux2ProImage,
+        GenerationInputFlux2ProImage_Asset,
+        GenerationInputFlux2ProImage_Url,
+    )
+    from .generation_input_flux2pro_image_asset import GenerationInputFlux2ProImageAsset
+    from .generation_input_flux2pro_image_url import GenerationInputFlux2ProImageUrl
+    from .generation_input_flux_dev import GenerationInputFluxDev
+    from .generation_input_flux_dev_aspect_ratio import GenerationInputFluxDevAspectRatio
+    from .generation_input_flux_dev_resolution import GenerationInputFluxDevResolution
+    from .generation_input_flux_kontext_max import GenerationInputFluxKontextMax
+    from .generation_input_flux_kontext_max_aspect_ratio import GenerationInputFluxKontextMaxAspectRatio
+    from .generation_input_flux_kontext_max_image import (
+        GenerationInputFluxKontextMaxImage,
+        GenerationInputFluxKontextMaxImage_Asset,
+        GenerationInputFluxKontextMaxImage_Url,
+    )
+    from .generation_input_flux_kontext_max_image_asset import GenerationInputFluxKontextMaxImageAsset
+    from .generation_input_flux_kontext_max_image_url import GenerationInputFluxKontextMaxImageUrl
+    from .generation_input_flux_kontext_max_resolution import GenerationInputFluxKontextMaxResolution
+    from .generation_input_flux_kontext_pro import GenerationInputFluxKontextPro
+    from .generation_input_flux_kontext_pro_aspect_ratio import GenerationInputFluxKontextProAspectRatio
+    from .generation_input_flux_kontext_pro_image import (
+        GenerationInputFluxKontextProImage,
+        GenerationInputFluxKontextProImage_Asset,
+        GenerationInputFluxKontextProImage_Url,
+    )
+    from .generation_input_flux_kontext_pro_image_asset import GenerationInputFluxKontextProImageAsset
+    from .generation_input_flux_kontext_pro_image_url import GenerationInputFluxKontextProImageUrl
+    from .generation_input_flux_kontext_pro_resolution import GenerationInputFluxKontextProResolution
+    from .generation_input_gpt_image15 import GenerationInputGptImage15
+    from .generation_input_gpt_image15aspect_ratio import GenerationInputGptImage15AspectRatio
+    from .generation_input_gpt_image15image import (
+        GenerationInputGptImage15Image,
+        GenerationInputGptImage15Image_Asset,
+        GenerationInputGptImage15Image_Url,
+    )
+    from .generation_input_gpt_image15image_asset import GenerationInputGptImage15ImageAsset
+    from .generation_input_gpt_image15image_url import GenerationInputGptImage15ImageUrl
+    from .generation_input_gpt_image15resolution import GenerationInputGptImage15Resolution
+    from .generation_input_gpt_image2high import GenerationInputGptImage2High
+    from .generation_input_gpt_image2high_aspect_ratio import GenerationInputGptImage2HighAspectRatio
+    from .generation_input_gpt_image2high_image import (
+        GenerationInputGptImage2HighImage,
+        GenerationInputGptImage2HighImage_Asset,
+        GenerationInputGptImage2HighImage_Url,
+    )
+    from .generation_input_gpt_image2high_image_asset import GenerationInputGptImage2HighImageAsset
+    from .generation_input_gpt_image2high_image_url import GenerationInputGptImage2HighImageUrl
+    from .generation_input_gpt_image2high_resolution import GenerationInputGptImage2HighResolution
+    from .generation_input_gpt_image2low import GenerationInputGptImage2Low
+    from .generation_input_gpt_image2low_aspect_ratio import GenerationInputGptImage2LowAspectRatio
+    from .generation_input_gpt_image2low_image import (
+        GenerationInputGptImage2LowImage,
+        GenerationInputGptImage2LowImage_Asset,
+        GenerationInputGptImage2LowImage_Url,
+    )
+    from .generation_input_gpt_image2low_image_asset import GenerationInputGptImage2LowImageAsset
+    from .generation_input_gpt_image2low_image_url import GenerationInputGptImage2LowImageUrl
+    from .generation_input_gpt_image2low_resolution import GenerationInputGptImage2LowResolution
+    from .generation_input_gpt_image2medium import GenerationInputGptImage2Medium
+    from .generation_input_gpt_image2medium_aspect_ratio import GenerationInputGptImage2MediumAspectRatio
+    from .generation_input_gpt_image2medium_image import (
+        GenerationInputGptImage2MediumImage,
+        GenerationInputGptImage2MediumImage_Asset,
+        GenerationInputGptImage2MediumImage_Url,
+    )
+    from .generation_input_gpt_image2medium_image_asset import GenerationInputGptImage2MediumImageAsset
+    from .generation_input_gpt_image2medium_image_url import GenerationInputGptImage2MediumImageUrl
+    from .generation_input_gpt_image2medium_resolution import GenerationInputGptImage2MediumResolution
+    from .generation_input_grok_imagine import GenerationInputGrokImagine
+    from .generation_input_grok_imagine_aspect_ratio import GenerationInputGrokImagineAspectRatio
+    from .generation_input_grok_imagine_image import (
+        GenerationInputGrokImagineImage,
+        GenerationInputGrokImagineImage_Asset,
+        GenerationInputGrokImagineImage_Url,
+    )
+    from .generation_input_grok_imagine_image_asset import GenerationInputGrokImagineImageAsset
+    from .generation_input_grok_imagine_image_url import GenerationInputGrokImagineImageUrl
+    from .generation_input_grok_video import GenerationInputGrokVideo
+    from .generation_input_grok_video_aspect_ratio import GenerationInputGrokVideoAspectRatio
+    from .generation_input_grok_video_image import (
+        GenerationInputGrokVideoImage,
+        GenerationInputGrokVideoImage_Asset,
+        GenerationInputGrokVideoImage_Url,
+    )
+    from .generation_input_grok_video_image_asset import GenerationInputGrokVideoImageAsset
+    from .generation_input_grok_video_image_url import GenerationInputGrokVideoImageUrl
+    from .generation_input_grok_video_resolution import GenerationInputGrokVideoResolution
+    from .generation_input_happy_horse import GenerationInputHappyHorse
+    from .generation_input_happy_horse_aspect_ratio import GenerationInputHappyHorseAspectRatio
+    from .generation_input_happy_horse_image import (
+        GenerationInputHappyHorseImage,
+        GenerationInputHappyHorseImage_Asset,
+        GenerationInputHappyHorseImage_Url,
+    )
+    from .generation_input_happy_horse_image_asset import GenerationInputHappyHorseImageAsset
+    from .generation_input_happy_horse_image_url import GenerationInputHappyHorseImageUrl
+    from .generation_input_happy_horse_images_item import (
+        GenerationInputHappyHorseImagesItem,
+        GenerationInputHappyHorseImagesItem_Asset,
+        GenerationInputHappyHorseImagesItem_Url,
+    )
+    from .generation_input_happy_horse_images_item_asset import GenerationInputHappyHorseImagesItemAsset
+    from .generation_input_happy_horse_images_item_url import GenerationInputHappyHorseImagesItemUrl
+    from .generation_input_happy_horse_resolution import GenerationInputHappyHorseResolution
+    from .generation_input_hedra_avatar import GenerationInputHedraAvatar
+    from .generation_input_hedra_avatar_aspect_ratio import GenerationInputHedraAvatarAspectRatio
+    from .generation_input_hedra_avatar_audio import (
+        GenerationInputHedraAvatarAudio,
+        GenerationInputHedraAvatarAudio_Asset,
+        GenerationInputHedraAvatarAudio_Url,
+    )
+    from .generation_input_hedra_avatar_audio_asset import GenerationInputHedraAvatarAudioAsset
+    from .generation_input_hedra_avatar_audio_url import GenerationInputHedraAvatarAudioUrl
+    from .generation_input_hedra_avatar_image import (
+        GenerationInputHedraAvatarImage,
+        GenerationInputHedraAvatarImage_Asset,
+        GenerationInputHedraAvatarImage_Url,
+    )
+    from .generation_input_hedra_avatar_image_asset import GenerationInputHedraAvatarImageAsset
+    from .generation_input_hedra_avatar_image_url import GenerationInputHedraAvatarImageUrl
+    from .generation_input_hedra_avatar_resolution import GenerationInputHedraAvatarResolution
+    from .generation_input_hedra_avatar_staging import GenerationInputHedraAvatarStaging
+    from .generation_input_hedra_avatar_staging_aspect_ratio import GenerationInputHedraAvatarStagingAspectRatio
+    from .generation_input_hedra_avatar_staging_audio import (
+        GenerationInputHedraAvatarStagingAudio,
+        GenerationInputHedraAvatarStagingAudio_Asset,
+        GenerationInputHedraAvatarStagingAudio_Url,
+    )
+    from .generation_input_hedra_avatar_staging_audio_asset import GenerationInputHedraAvatarStagingAudioAsset
+    from .generation_input_hedra_avatar_staging_audio_url import GenerationInputHedraAvatarStagingAudioUrl
+    from .generation_input_hedra_avatar_staging_image import (
+        GenerationInputHedraAvatarStagingImage,
+        GenerationInputHedraAvatarStagingImage_Asset,
+        GenerationInputHedraAvatarStagingImage_Url,
+    )
+    from .generation_input_hedra_avatar_staging_image_asset import GenerationInputHedraAvatarStagingImageAsset
+    from .generation_input_hedra_avatar_staging_image_url import GenerationInputHedraAvatarStagingImageUrl
+    from .generation_input_hedra_avatar_staging_resolution import GenerationInputHedraAvatarStagingResolution
+    from .generation_input_hedra_character3 import GenerationInputHedraCharacter3
+    from .generation_input_hedra_character3aspect_ratio import GenerationInputHedraCharacter3AspectRatio
+    from .generation_input_hedra_character3audio import (
+        GenerationInputHedraCharacter3Audio,
+        GenerationInputHedraCharacter3Audio_Asset,
+        GenerationInputHedraCharacter3Audio_Url,
+    )
+    from .generation_input_hedra_character3audio_asset import GenerationInputHedraCharacter3AudioAsset
+    from .generation_input_hedra_character3audio_url import GenerationInputHedraCharacter3AudioUrl
+    from .generation_input_hedra_character3image import (
+        GenerationInputHedraCharacter3Image,
+        GenerationInputHedraCharacter3Image_Asset,
+        GenerationInputHedraCharacter3Image_Url,
+    )
+    from .generation_input_hedra_character3image_asset import GenerationInputHedraCharacter3ImageAsset
+    from .generation_input_hedra_character3image_url import GenerationInputHedraCharacter3ImageUrl
+    from .generation_input_hedra_character3resolution import GenerationInputHedraCharacter3Resolution
+    from .generation_input_hedra_omnia import GenerationInputHedraOmnia
+    from .generation_input_hedra_omnia_aspect_ratio import GenerationInputHedraOmniaAspectRatio
+    from .generation_input_hedra_omnia_audio import (
+        GenerationInputHedraOmniaAudio,
+        GenerationInputHedraOmniaAudio_Asset,
+        GenerationInputHedraOmniaAudio_Url,
+    )
+    from .generation_input_hedra_omnia_audio_asset import GenerationInputHedraOmniaAudioAsset
+    from .generation_input_hedra_omnia_audio_url import GenerationInputHedraOmniaAudioUrl
+    from .generation_input_hedra_omnia_image import (
+        GenerationInputHedraOmniaImage,
+        GenerationInputHedraOmniaImage_Asset,
+        GenerationInputHedraOmniaImage_Url,
+    )
+    from .generation_input_hedra_omnia_image_asset import GenerationInputHedraOmniaImageAsset
+    from .generation_input_hedra_omnia_image_url import GenerationInputHedraOmniaImageUrl
+    from .generation_input_hedra_omnia_resolution import GenerationInputHedraOmniaResolution
+    from .generation_input_ideogram_v2 import GenerationInputIdeogramV2
+    from .generation_input_ideogram_v2aspect_ratio import GenerationInputIdeogramV2AspectRatio
+    from .generation_input_ideogram_v2resolution import GenerationInputIdeogramV2Resolution
+    from .generation_input_imagen3 import GenerationInputImagen3
+    from .generation_input_imagen3aspect_ratio import GenerationInputImagen3AspectRatio
+    from .generation_input_imagen3resolution import GenerationInputImagen3Resolution
+    from .generation_input_imagen4 import GenerationInputImagen4
+    from .generation_input_imagen4aspect_ratio import GenerationInputImagen4AspectRatio
+    from .generation_input_imagen4resolution import GenerationInputImagen4Resolution
+    from .generation_input_kling16 import GenerationInputKling16
+    from .generation_input_kling16aspect_ratio import GenerationInputKling16AspectRatio
+    from .generation_input_kling16image import (
+        GenerationInputKling16Image,
+        GenerationInputKling16Image_Asset,
+        GenerationInputKling16Image_Url,
+    )
+    from .generation_input_kling16image_asset import GenerationInputKling16ImageAsset
+    from .generation_input_kling16image_url import GenerationInputKling16ImageUrl
+    from .generation_input_kling16resolution import GenerationInputKling16Resolution
+    from .generation_input_kling21master import GenerationInputKling21Master
+    from .generation_input_kling21master_aspect_ratio import GenerationInputKling21MasterAspectRatio
+    from .generation_input_kling21master_image import (
+        GenerationInputKling21MasterImage,
+        GenerationInputKling21MasterImage_Asset,
+        GenerationInputKling21MasterImage_Url,
+    )
+    from .generation_input_kling21master_image_asset import GenerationInputKling21MasterImageAsset
+    from .generation_input_kling21master_image_url import GenerationInputKling21MasterImageUrl
+    from .generation_input_kling21master_resolution import GenerationInputKling21MasterResolution
+    from .generation_input_kling21pro import GenerationInputKling21Pro
+    from .generation_input_kling21pro_aspect_ratio import GenerationInputKling21ProAspectRatio
+    from .generation_input_kling21pro_image import (
+        GenerationInputKling21ProImage,
+        GenerationInputKling21ProImage_Asset,
+        GenerationInputKling21ProImage_Url,
+    )
+    from .generation_input_kling21pro_image_asset import GenerationInputKling21ProImageAsset
+    from .generation_input_kling21pro_image_url import GenerationInputKling21ProImageUrl
+    from .generation_input_kling21pro_resolution import GenerationInputKling21ProResolution
+    from .generation_input_kling25turbo import GenerationInputKling25Turbo
+    from .generation_input_kling25turbo_aspect_ratio import GenerationInputKling25TurboAspectRatio
+    from .generation_input_kling25turbo_image import (
+        GenerationInputKling25TurboImage,
+        GenerationInputKling25TurboImage_Asset,
+        GenerationInputKling25TurboImage_Url,
+    )
+    from .generation_input_kling25turbo_image_asset import GenerationInputKling25TurboImageAsset
+    from .generation_input_kling25turbo_image_url import GenerationInputKling25TurboImageUrl
+    from .generation_input_kling25turbo_resolution import GenerationInputKling25TurboResolution
+    from .generation_input_kling26pro import GenerationInputKling26Pro
+    from .generation_input_kling26pro_aspect_ratio import GenerationInputKling26ProAspectRatio
+    from .generation_input_kling26pro_image import (
+        GenerationInputKling26ProImage,
+        GenerationInputKling26ProImage_Asset,
+        GenerationInputKling26ProImage_Url,
+    )
+    from .generation_input_kling26pro_image_asset import GenerationInputKling26ProImageAsset
+    from .generation_input_kling26pro_image_url import GenerationInputKling26ProImageUrl
+    from .generation_input_kling26pro_resolution import GenerationInputKling26ProResolution
+    from .generation_input_kling_ai_avatar_v2pro import GenerationInputKlingAiAvatarV2Pro
+    from .generation_input_kling_ai_avatar_v2pro_aspect_ratio import GenerationInputKlingAiAvatarV2ProAspectRatio
+    from .generation_input_kling_ai_avatar_v2pro_audio import (
+        GenerationInputKlingAiAvatarV2ProAudio,
+        GenerationInputKlingAiAvatarV2ProAudio_Asset,
+        GenerationInputKlingAiAvatarV2ProAudio_Url,
+    )
+    from .generation_input_kling_ai_avatar_v2pro_audio_asset import GenerationInputKlingAiAvatarV2ProAudioAsset
+    from .generation_input_kling_ai_avatar_v2pro_audio_url import GenerationInputKlingAiAvatarV2ProAudioUrl
+    from .generation_input_kling_ai_avatar_v2pro_image import (
+        GenerationInputKlingAiAvatarV2ProImage,
+        GenerationInputKlingAiAvatarV2ProImage_Asset,
+        GenerationInputKlingAiAvatarV2ProImage_Url,
+    )
+    from .generation_input_kling_ai_avatar_v2pro_image_asset import GenerationInputKlingAiAvatarV2ProImageAsset
+    from .generation_input_kling_ai_avatar_v2pro_image_url import GenerationInputKlingAiAvatarV2ProImageUrl
+    from .generation_input_kling_ai_avatar_v2pro_resolution import GenerationInputKlingAiAvatarV2ProResolution
+    from .generation_input_kling_ai_avatar_v2standard import GenerationInputKlingAiAvatarV2Standard
+    from .generation_input_kling_ai_avatar_v2standard_aspect_ratio import (
+        GenerationInputKlingAiAvatarV2StandardAspectRatio,
+    )
+    from .generation_input_kling_ai_avatar_v2standard_audio import (
+        GenerationInputKlingAiAvatarV2StandardAudio,
+        GenerationInputKlingAiAvatarV2StandardAudio_Asset,
+        GenerationInputKlingAiAvatarV2StandardAudio_Url,
+    )
+    from .generation_input_kling_ai_avatar_v2standard_audio_asset import (
+        GenerationInputKlingAiAvatarV2StandardAudioAsset,
+    )
+    from .generation_input_kling_ai_avatar_v2standard_audio_url import GenerationInputKlingAiAvatarV2StandardAudioUrl
+    from .generation_input_kling_ai_avatar_v2standard_image import (
+        GenerationInputKlingAiAvatarV2StandardImage,
+        GenerationInputKlingAiAvatarV2StandardImage_Asset,
+        GenerationInputKlingAiAvatarV2StandardImage_Url,
+    )
+    from .generation_input_kling_ai_avatar_v2standard_image_asset import (
+        GenerationInputKlingAiAvatarV2StandardImageAsset,
+    )
+    from .generation_input_kling_ai_avatar_v2standard_image_url import GenerationInputKlingAiAvatarV2StandardImageUrl
+    from .generation_input_kling_ai_avatar_v2standard_resolution import GenerationInputKlingAiAvatarV2StandardResolution
+    from .generation_input_kling_o1 import GenerationInputKlingO1
+    from .generation_input_kling_o1aspect_ratio import GenerationInputKlingO1AspectRatio
+    from .generation_input_kling_o1end_image import (
+        GenerationInputKlingO1EndImage,
+        GenerationInputKlingO1EndImage_Asset,
+        GenerationInputKlingO1EndImage_Url,
+    )
+    from .generation_input_kling_o1end_image_asset import GenerationInputKlingO1EndImageAsset
+    from .generation_input_kling_o1end_image_url import GenerationInputKlingO1EndImageUrl
+    from .generation_input_kling_o1image import (
+        GenerationInputKlingO1Image,
+        GenerationInputKlingO1Image_Asset,
+        GenerationInputKlingO1Image_Url,
+    )
+    from .generation_input_kling_o1image_asset import GenerationInputKlingO1ImageAsset
+    from .generation_input_kling_o1image_url import GenerationInputKlingO1ImageUrl
+    from .generation_input_kling_o1images_item import (
+        GenerationInputKlingO1ImagesItem,
+        GenerationInputKlingO1ImagesItem_Asset,
+        GenerationInputKlingO1ImagesItem_Url,
+    )
+    from .generation_input_kling_o1images_item_asset import GenerationInputKlingO1ImagesItemAsset
+    from .generation_input_kling_o1images_item_url import GenerationInputKlingO1ImagesItemUrl
+    from .generation_input_kling_o1resolution import GenerationInputKlingO1Resolution
+    from .generation_input_kling_o3pro import GenerationInputKlingO3Pro
+    from .generation_input_kling_o3pro_aspect_ratio import GenerationInputKlingO3ProAspectRatio
+    from .generation_input_kling_o3pro_end_image import (
+        GenerationInputKlingO3ProEndImage,
+        GenerationInputKlingO3ProEndImage_Asset,
+        GenerationInputKlingO3ProEndImage_Url,
+    )
+    from .generation_input_kling_o3pro_end_image_asset import GenerationInputKlingO3ProEndImageAsset
+    from .generation_input_kling_o3pro_end_image_url import GenerationInputKlingO3ProEndImageUrl
+    from .generation_input_kling_o3pro_image import (
+        GenerationInputKlingO3ProImage,
+        GenerationInputKlingO3ProImage_Asset,
+        GenerationInputKlingO3ProImage_Url,
+    )
+    from .generation_input_kling_o3pro_image_asset import GenerationInputKlingO3ProImageAsset
+    from .generation_input_kling_o3pro_image_url import GenerationInputKlingO3ProImageUrl
+    from .generation_input_kling_o3pro_images_item import (
+        GenerationInputKlingO3ProImagesItem,
+        GenerationInputKlingO3ProImagesItem_Asset,
+        GenerationInputKlingO3ProImagesItem_Url,
+    )
+    from .generation_input_kling_o3pro_images_item_asset import GenerationInputKlingO3ProImagesItemAsset
+    from .generation_input_kling_o3pro_images_item_url import GenerationInputKlingO3ProImagesItemUrl
+    from .generation_input_kling_o3pro_resolution import GenerationInputKlingO3ProResolution
+    from .generation_input_kling_o3standard import GenerationInputKlingO3Standard
+    from .generation_input_kling_o3standard_aspect_ratio import GenerationInputKlingO3StandardAspectRatio
+    from .generation_input_kling_o3standard_end_image import (
+        GenerationInputKlingO3StandardEndImage,
+        GenerationInputKlingO3StandardEndImage_Asset,
+        GenerationInputKlingO3StandardEndImage_Url,
+    )
+    from .generation_input_kling_o3standard_end_image_asset import GenerationInputKlingO3StandardEndImageAsset
+    from .generation_input_kling_o3standard_end_image_url import GenerationInputKlingO3StandardEndImageUrl
+    from .generation_input_kling_o3standard_image import (
+        GenerationInputKlingO3StandardImage,
+        GenerationInputKlingO3StandardImage_Asset,
+        GenerationInputKlingO3StandardImage_Url,
+    )
+    from .generation_input_kling_o3standard_image_asset import GenerationInputKlingO3StandardImageAsset
+    from .generation_input_kling_o3standard_image_url import GenerationInputKlingO3StandardImageUrl
+    from .generation_input_kling_o3standard_images_item import (
+        GenerationInputKlingO3StandardImagesItem,
+        GenerationInputKlingO3StandardImagesItem_Asset,
+        GenerationInputKlingO3StandardImagesItem_Url,
+    )
+    from .generation_input_kling_o3standard_images_item_asset import GenerationInputKlingO3StandardImagesItemAsset
+    from .generation_input_kling_o3standard_images_item_url import GenerationInputKlingO3StandardImagesItemUrl
+    from .generation_input_kling_o3standard_resolution import GenerationInputKlingO3StandardResolution
+    from .generation_input_kling_v3pro import GenerationInputKlingV3Pro
+    from .generation_input_kling_v3pro_aspect_ratio import GenerationInputKlingV3ProAspectRatio
+    from .generation_input_kling_v3pro_end_image import (
+        GenerationInputKlingV3ProEndImage,
+        GenerationInputKlingV3ProEndImage_Asset,
+        GenerationInputKlingV3ProEndImage_Url,
+    )
+    from .generation_input_kling_v3pro_end_image_asset import GenerationInputKlingV3ProEndImageAsset
+    from .generation_input_kling_v3pro_end_image_url import GenerationInputKlingV3ProEndImageUrl
+    from .generation_input_kling_v3pro_image import (
+        GenerationInputKlingV3ProImage,
+        GenerationInputKlingV3ProImage_Asset,
+        GenerationInputKlingV3ProImage_Url,
+    )
+    from .generation_input_kling_v3pro_image_asset import GenerationInputKlingV3ProImageAsset
+    from .generation_input_kling_v3pro_image_url import GenerationInputKlingV3ProImageUrl
+    from .generation_input_kling_v3pro_resolution import GenerationInputKlingV3ProResolution
+    from .generation_input_kling_v3standard import GenerationInputKlingV3Standard
+    from .generation_input_kling_v3standard_aspect_ratio import GenerationInputKlingV3StandardAspectRatio
+    from .generation_input_kling_v3standard_end_image import (
+        GenerationInputKlingV3StandardEndImage,
+        GenerationInputKlingV3StandardEndImage_Asset,
+        GenerationInputKlingV3StandardEndImage_Url,
+    )
+    from .generation_input_kling_v3standard_end_image_asset import GenerationInputKlingV3StandardEndImageAsset
+    from .generation_input_kling_v3standard_end_image_url import GenerationInputKlingV3StandardEndImageUrl
+    from .generation_input_kling_v3standard_image import (
+        GenerationInputKlingV3StandardImage,
+        GenerationInputKlingV3StandardImage_Asset,
+        GenerationInputKlingV3StandardImage_Url,
+    )
+    from .generation_input_kling_v3standard_image_asset import GenerationInputKlingV3StandardImageAsset
+    from .generation_input_kling_v3standard_image_url import GenerationInputKlingV3StandardImageUrl
+    from .generation_input_kling_v3standard_resolution import GenerationInputKlingV3StandardResolution
+    from .generation_input_minimax_hailuo02pro import GenerationInputMinimaxHailuo02Pro
+    from .generation_input_minimax_hailuo02pro_aspect_ratio import GenerationInputMinimaxHailuo02ProAspectRatio
+    from .generation_input_minimax_hailuo02pro_image import (
+        GenerationInputMinimaxHailuo02ProImage,
+        GenerationInputMinimaxHailuo02ProImage_Asset,
+        GenerationInputMinimaxHailuo02ProImage_Url,
+    )
+    from .generation_input_minimax_hailuo02pro_image_asset import GenerationInputMinimaxHailuo02ProImageAsset
+    from .generation_input_minimax_hailuo02pro_image_url import GenerationInputMinimaxHailuo02ProImageUrl
+    from .generation_input_minimax_hailuo02pro_resolution import GenerationInputMinimaxHailuo02ProResolution
+    from .generation_input_minimax_hailuo02standard import GenerationInputMinimaxHailuo02Standard
+    from .generation_input_minimax_hailuo02standard_aspect_ratio import (
+        GenerationInputMinimaxHailuo02StandardAspectRatio,
+    )
+    from .generation_input_minimax_hailuo02standard_image import (
+        GenerationInputMinimaxHailuo02StandardImage,
+        GenerationInputMinimaxHailuo02StandardImage_Asset,
+        GenerationInputMinimaxHailuo02StandardImage_Url,
+    )
+    from .generation_input_minimax_hailuo02standard_image_asset import GenerationInputMinimaxHailuo02StandardImageAsset
+    from .generation_input_minimax_hailuo02standard_image_url import GenerationInputMinimaxHailuo02StandardImageUrl
+    from .generation_input_minimax_hailuo02standard_resolution import GenerationInputMinimaxHailuo02StandardResolution
+    from .generation_input_minimax_hailuo23fast_pro import GenerationInputMinimaxHailuo23FastPro
+    from .generation_input_minimax_hailuo23fast_pro_aspect_ratio import GenerationInputMinimaxHailuo23FastProAspectRatio
+    from .generation_input_minimax_hailuo23fast_pro_image import (
+        GenerationInputMinimaxHailuo23FastProImage,
+        GenerationInputMinimaxHailuo23FastProImage_Asset,
+        GenerationInputMinimaxHailuo23FastProImage_Url,
+    )
+    from .generation_input_minimax_hailuo23fast_pro_image_asset import GenerationInputMinimaxHailuo23FastProImageAsset
+    from .generation_input_minimax_hailuo23fast_pro_image_url import GenerationInputMinimaxHailuo23FastProImageUrl
+    from .generation_input_minimax_hailuo23fast_pro_resolution import GenerationInputMinimaxHailuo23FastProResolution
+    from .generation_input_minimax_hailuo23fast_standard import GenerationInputMinimaxHailuo23FastStandard
+    from .generation_input_minimax_hailuo23fast_standard_aspect_ratio import (
+        GenerationInputMinimaxHailuo23FastStandardAspectRatio,
+    )
+    from .generation_input_minimax_hailuo23fast_standard_image import (
+        GenerationInputMinimaxHailuo23FastStandardImage,
+        GenerationInputMinimaxHailuo23FastStandardImage_Asset,
+        GenerationInputMinimaxHailuo23FastStandardImage_Url,
+    )
+    from .generation_input_minimax_hailuo23fast_standard_image_asset import (
+        GenerationInputMinimaxHailuo23FastStandardImageAsset,
+    )
+    from .generation_input_minimax_hailuo23fast_standard_image_url import (
+        GenerationInputMinimaxHailuo23FastStandardImageUrl,
+    )
+    from .generation_input_minimax_hailuo23fast_standard_resolution import (
+        GenerationInputMinimaxHailuo23FastStandardResolution,
+    )
+    from .generation_input_minimax_hailuo23pro import GenerationInputMinimaxHailuo23Pro
+    from .generation_input_minimax_hailuo23pro_aspect_ratio import GenerationInputMinimaxHailuo23ProAspectRatio
+    from .generation_input_minimax_hailuo23pro_image import (
+        GenerationInputMinimaxHailuo23ProImage,
+        GenerationInputMinimaxHailuo23ProImage_Asset,
+        GenerationInputMinimaxHailuo23ProImage_Url,
+    )
+    from .generation_input_minimax_hailuo23pro_image_asset import GenerationInputMinimaxHailuo23ProImageAsset
+    from .generation_input_minimax_hailuo23pro_image_url import GenerationInputMinimaxHailuo23ProImageUrl
+    from .generation_input_minimax_hailuo23pro_resolution import GenerationInputMinimaxHailuo23ProResolution
+    from .generation_input_minimax_hailuo23standard import GenerationInputMinimaxHailuo23Standard
+    from .generation_input_minimax_hailuo23standard_aspect_ratio import (
+        GenerationInputMinimaxHailuo23StandardAspectRatio,
+    )
+    from .generation_input_minimax_hailuo23standard_image import (
+        GenerationInputMinimaxHailuo23StandardImage,
+        GenerationInputMinimaxHailuo23StandardImage_Asset,
+        GenerationInputMinimaxHailuo23StandardImage_Url,
+    )
+    from .generation_input_minimax_hailuo23standard_image_asset import GenerationInputMinimaxHailuo23StandardImageAsset
+    from .generation_input_minimax_hailuo23standard_image_url import GenerationInputMinimaxHailuo23StandardImageUrl
+    from .generation_input_minimax_hailuo23standard_resolution import GenerationInputMinimaxHailuo23StandardResolution
+    from .generation_input_minimax_speech25hd_preview import GenerationInputMinimaxSpeech25HdPreview
+    from .generation_input_minimax_speech25turbo_preview import GenerationInputMinimaxSpeech25TurboPreview
+    from .generation_input_nano_banana import GenerationInputNanoBanana
+    from .generation_input_nano_banana2 import GenerationInputNanoBanana2
+    from .generation_input_nano_banana2aspect_ratio import GenerationInputNanoBanana2AspectRatio
+    from .generation_input_nano_banana2image import (
+        GenerationInputNanoBanana2Image,
+        GenerationInputNanoBanana2Image_Asset,
+        GenerationInputNanoBanana2Image_Url,
+    )
+    from .generation_input_nano_banana2image_asset import GenerationInputNanoBanana2ImageAsset
+    from .generation_input_nano_banana2image_url import GenerationInputNanoBanana2ImageUrl
+    from .generation_input_nano_banana2resolution import GenerationInputNanoBanana2Resolution
+    from .generation_input_nano_banana_aspect_ratio import GenerationInputNanoBananaAspectRatio
+    from .generation_input_nano_banana_image import (
+        GenerationInputNanoBananaImage,
+        GenerationInputNanoBananaImage_Asset,
+        GenerationInputNanoBananaImage_Url,
+    )
+    from .generation_input_nano_banana_image_asset import GenerationInputNanoBananaImageAsset
+    from .generation_input_nano_banana_image_url import GenerationInputNanoBananaImageUrl
+    from .generation_input_nano_banana_pro import GenerationInputNanoBananaPro
+    from .generation_input_nano_banana_pro_aspect_ratio import GenerationInputNanoBananaProAspectRatio
+    from .generation_input_nano_banana_pro_image import (
+        GenerationInputNanoBananaProImage,
+        GenerationInputNanoBananaProImage_Asset,
+        GenerationInputNanoBananaProImage_Url,
+    )
+    from .generation_input_nano_banana_pro_image_asset import GenerationInputNanoBananaProImageAsset
+    from .generation_input_nano_banana_pro_image_url import GenerationInputNanoBananaProImageUrl
+    from .generation_input_nano_banana_pro_resolution import GenerationInputNanoBananaProResolution
+    from .generation_input_omnihuman15 import GenerationInputOmnihuman15
+    from .generation_input_omnihuman15aspect_ratio import GenerationInputOmnihuman15AspectRatio
+    from .generation_input_omnihuman15audio import (
+        GenerationInputOmnihuman15Audio,
+        GenerationInputOmnihuman15Audio_Asset,
+        GenerationInputOmnihuman15Audio_Url,
+    )
+    from .generation_input_omnihuman15audio_asset import GenerationInputOmnihuman15AudioAsset
+    from .generation_input_omnihuman15audio_url import GenerationInputOmnihuman15AudioUrl
+    from .generation_input_omnihuman15image import (
+        GenerationInputOmnihuman15Image,
+        GenerationInputOmnihuman15Image_Asset,
+        GenerationInputOmnihuman15Image_Url,
+    )
+    from .generation_input_omnihuman15image_asset import GenerationInputOmnihuman15ImageAsset
+    from .generation_input_omnihuman15image_url import GenerationInputOmnihuman15ImageUrl
+    from .generation_input_omnihuman15resolution import GenerationInputOmnihuman15Resolution
+    from .generation_input_recraft_v3 import GenerationInputRecraftV3
+    from .generation_input_recraft_v3aspect_ratio import GenerationInputRecraftV3AspectRatio
+    from .generation_input_recraft_v3resolution import GenerationInputRecraftV3Resolution
+    from .generation_input_sana import GenerationInputSana
+    from .generation_input_sana_aspect_ratio import GenerationInputSanaAspectRatio
+    from .generation_input_sana_resolution import GenerationInputSanaResolution
+    from .generation_input_seedance15pro import GenerationInputSeedance15Pro
+    from .generation_input_seedance15pro_aspect_ratio import GenerationInputSeedance15ProAspectRatio
+    from .generation_input_seedance15pro_end_image import (
+        GenerationInputSeedance15ProEndImage,
+        GenerationInputSeedance15ProEndImage_Asset,
+        GenerationInputSeedance15ProEndImage_Url,
+    )
+    from .generation_input_seedance15pro_end_image_asset import GenerationInputSeedance15ProEndImageAsset
+    from .generation_input_seedance15pro_end_image_url import GenerationInputSeedance15ProEndImageUrl
+    from .generation_input_seedance15pro_image import (
+        GenerationInputSeedance15ProImage,
+        GenerationInputSeedance15ProImage_Asset,
+        GenerationInputSeedance15ProImage_Url,
+    )
+    from .generation_input_seedance15pro_image_asset import GenerationInputSeedance15ProImageAsset
+    from .generation_input_seedance15pro_image_url import GenerationInputSeedance15ProImageUrl
+    from .generation_input_seedance15pro_resolution import GenerationInputSeedance15ProResolution
+    from .generation_input_seedance20 import GenerationInputSeedance20
+    from .generation_input_seedance20aspect_ratio import GenerationInputSeedance20AspectRatio
+    from .generation_input_seedance20audios_item import (
+        GenerationInputSeedance20AudiosItem,
+        GenerationInputSeedance20AudiosItem_Asset,
+        GenerationInputSeedance20AudiosItem_Url,
+    )
+    from .generation_input_seedance20audios_item_asset import GenerationInputSeedance20AudiosItemAsset
+    from .generation_input_seedance20audios_item_url import GenerationInputSeedance20AudiosItemUrl
+    from .generation_input_seedance20end_image import (
+        GenerationInputSeedance20EndImage,
+        GenerationInputSeedance20EndImage_Asset,
+        GenerationInputSeedance20EndImage_Url,
+    )
+    from .generation_input_seedance20end_image_asset import GenerationInputSeedance20EndImageAsset
+    from .generation_input_seedance20end_image_url import GenerationInputSeedance20EndImageUrl
+    from .generation_input_seedance20fast import GenerationInputSeedance20Fast
+    from .generation_input_seedance20fast_aspect_ratio import GenerationInputSeedance20FastAspectRatio
+    from .generation_input_seedance20fast_audios_item import (
+        GenerationInputSeedance20FastAudiosItem,
+        GenerationInputSeedance20FastAudiosItem_Asset,
+        GenerationInputSeedance20FastAudiosItem_Url,
+    )
+    from .generation_input_seedance20fast_audios_item_asset import GenerationInputSeedance20FastAudiosItemAsset
+    from .generation_input_seedance20fast_audios_item_url import GenerationInputSeedance20FastAudiosItemUrl
+    from .generation_input_seedance20fast_end_image import (
+        GenerationInputSeedance20FastEndImage,
+        GenerationInputSeedance20FastEndImage_Asset,
+        GenerationInputSeedance20FastEndImage_Url,
+    )
+    from .generation_input_seedance20fast_end_image_asset import GenerationInputSeedance20FastEndImageAsset
+    from .generation_input_seedance20fast_end_image_url import GenerationInputSeedance20FastEndImageUrl
+    from .generation_input_seedance20fast_image import (
+        GenerationInputSeedance20FastImage,
+        GenerationInputSeedance20FastImage_Asset,
+        GenerationInputSeedance20FastImage_Url,
+    )
+    from .generation_input_seedance20fast_image_asset import GenerationInputSeedance20FastImageAsset
+    from .generation_input_seedance20fast_image_url import GenerationInputSeedance20FastImageUrl
+    from .generation_input_seedance20fast_images_item import (
+        GenerationInputSeedance20FastImagesItem,
+        GenerationInputSeedance20FastImagesItem_Asset,
+        GenerationInputSeedance20FastImagesItem_Url,
+    )
+    from .generation_input_seedance20fast_images_item_asset import GenerationInputSeedance20FastImagesItemAsset
+    from .generation_input_seedance20fast_images_item_url import GenerationInputSeedance20FastImagesItemUrl
+    from .generation_input_seedance20fast_resolution import GenerationInputSeedance20FastResolution
+    from .generation_input_seedance20fast_videos_item import (
+        GenerationInputSeedance20FastVideosItem,
+        GenerationInputSeedance20FastVideosItem_Asset,
+        GenerationInputSeedance20FastVideosItem_Url,
+    )
+    from .generation_input_seedance20fast_videos_item_asset import GenerationInputSeedance20FastVideosItemAsset
+    from .generation_input_seedance20fast_videos_item_url import GenerationInputSeedance20FastVideosItemUrl
+    from .generation_input_seedance20image import (
+        GenerationInputSeedance20Image,
+        GenerationInputSeedance20Image_Asset,
+        GenerationInputSeedance20Image_Url,
+    )
+    from .generation_input_seedance20image_asset import GenerationInputSeedance20ImageAsset
+    from .generation_input_seedance20image_url import GenerationInputSeedance20ImageUrl
+    from .generation_input_seedance20images_item import (
+        GenerationInputSeedance20ImagesItem,
+        GenerationInputSeedance20ImagesItem_Asset,
+        GenerationInputSeedance20ImagesItem_Url,
+    )
+    from .generation_input_seedance20images_item_asset import GenerationInputSeedance20ImagesItemAsset
+    from .generation_input_seedance20images_item_url import GenerationInputSeedance20ImagesItemUrl
+    from .generation_input_seedance20mini import GenerationInputSeedance20Mini
+    from .generation_input_seedance20mini_aspect_ratio import GenerationInputSeedance20MiniAspectRatio
+    from .generation_input_seedance20mini_audios_item import (
+        GenerationInputSeedance20MiniAudiosItem,
+        GenerationInputSeedance20MiniAudiosItem_Asset,
+        GenerationInputSeedance20MiniAudiosItem_Url,
+    )
+    from .generation_input_seedance20mini_audios_item_asset import GenerationInputSeedance20MiniAudiosItemAsset
+    from .generation_input_seedance20mini_audios_item_url import GenerationInputSeedance20MiniAudiosItemUrl
+    from .generation_input_seedance20mini_end_image import (
+        GenerationInputSeedance20MiniEndImage,
+        GenerationInputSeedance20MiniEndImage_Asset,
+        GenerationInputSeedance20MiniEndImage_Url,
+    )
+    from .generation_input_seedance20mini_end_image_asset import GenerationInputSeedance20MiniEndImageAsset
+    from .generation_input_seedance20mini_end_image_url import GenerationInputSeedance20MiniEndImageUrl
+    from .generation_input_seedance20mini_image import (
+        GenerationInputSeedance20MiniImage,
+        GenerationInputSeedance20MiniImage_Asset,
+        GenerationInputSeedance20MiniImage_Url,
+    )
+    from .generation_input_seedance20mini_image_asset import GenerationInputSeedance20MiniImageAsset
+    from .generation_input_seedance20mini_image_url import GenerationInputSeedance20MiniImageUrl
+    from .generation_input_seedance20mini_images_item import (
+        GenerationInputSeedance20MiniImagesItem,
+        GenerationInputSeedance20MiniImagesItem_Asset,
+        GenerationInputSeedance20MiniImagesItem_Url,
+    )
+    from .generation_input_seedance20mini_images_item_asset import GenerationInputSeedance20MiniImagesItemAsset
+    from .generation_input_seedance20mini_images_item_url import GenerationInputSeedance20MiniImagesItemUrl
+    from .generation_input_seedance20mini_resolution import GenerationInputSeedance20MiniResolution
+    from .generation_input_seedance20mini_videos_item import (
+        GenerationInputSeedance20MiniVideosItem,
+        GenerationInputSeedance20MiniVideosItem_Asset,
+        GenerationInputSeedance20MiniVideosItem_Url,
+    )
+    from .generation_input_seedance20mini_videos_item_asset import GenerationInputSeedance20MiniVideosItemAsset
+    from .generation_input_seedance20mini_videos_item_url import GenerationInputSeedance20MiniVideosItemUrl
+    from .generation_input_seedance20resolution import GenerationInputSeedance20Resolution
+    from .generation_input_seedance20videos_item import (
+        GenerationInputSeedance20VideosItem,
+        GenerationInputSeedance20VideosItem_Asset,
+        GenerationInputSeedance20VideosItem_Url,
+    )
+    from .generation_input_seedance20videos_item_asset import GenerationInputSeedance20VideosItemAsset
+    from .generation_input_seedance20videos_item_url import GenerationInputSeedance20VideosItemUrl
+    from .generation_input_seedream40 import GenerationInputSeedream40
+    from .generation_input_seedream40aspect_ratio import GenerationInputSeedream40AspectRatio
+    from .generation_input_seedream40image import (
+        GenerationInputSeedream40Image,
+        GenerationInputSeedream40Image_Asset,
+        GenerationInputSeedream40Image_Url,
+    )
+    from .generation_input_seedream40image_asset import GenerationInputSeedream40ImageAsset
+    from .generation_input_seedream40image_url import GenerationInputSeedream40ImageUrl
+    from .generation_input_seedream40resolution import GenerationInputSeedream40Resolution
+    from .generation_input_seedream45 import GenerationInputSeedream45
+    from .generation_input_seedream45aspect_ratio import GenerationInputSeedream45AspectRatio
+    from .generation_input_seedream45image import (
+        GenerationInputSeedream45Image,
+        GenerationInputSeedream45Image_Asset,
+        GenerationInputSeedream45Image_Url,
+    )
+    from .generation_input_seedream45image_asset import GenerationInputSeedream45ImageAsset
+    from .generation_input_seedream45image_url import GenerationInputSeedream45ImageUrl
+    from .generation_input_seedream45resolution import GenerationInputSeedream45Resolution
+    from .generation_input_seedream50lite import GenerationInputSeedream50Lite
+    from .generation_input_seedream50lite_aspect_ratio import GenerationInputSeedream50LiteAspectRatio
+    from .generation_input_seedream50lite_image import (
+        GenerationInputSeedream50LiteImage,
+        GenerationInputSeedream50LiteImage_Asset,
+        GenerationInputSeedream50LiteImage_Url,
+    )
+    from .generation_input_seedream50lite_image_asset import GenerationInputSeedream50LiteImageAsset
+    from .generation_input_seedream50lite_image_url import GenerationInputSeedream50LiteImageUrl
+    from .generation_input_seedream50lite_resolution import GenerationInputSeedream50LiteResolution
+    from .generation_input_sonic import GenerationInputSonic
+    from .generation_input_sora2pro import GenerationInputSora2Pro
+    from .generation_input_sora2pro_aspect_ratio import GenerationInputSora2ProAspectRatio
+    from .generation_input_sora2pro_image import (
+        GenerationInputSora2ProImage,
+        GenerationInputSora2ProImage_Asset,
+        GenerationInputSora2ProImage_Url,
+    )
+    from .generation_input_sora2pro_image_asset import GenerationInputSora2ProImageAsset
+    from .generation_input_sora2pro_image_url import GenerationInputSora2ProImageUrl
+    from .generation_input_sora2pro_resolution import GenerationInputSora2ProResolution
+    from .generation_input_veed_fabric10 import GenerationInputVeedFabric10
+    from .generation_input_veed_fabric10aspect_ratio import GenerationInputVeedFabric10AspectRatio
+    from .generation_input_veed_fabric10audio import (
+        GenerationInputVeedFabric10Audio,
+        GenerationInputVeedFabric10Audio_Asset,
+        GenerationInputVeedFabric10Audio_Url,
+    )
+    from .generation_input_veed_fabric10audio_asset import GenerationInputVeedFabric10AudioAsset
+    from .generation_input_veed_fabric10audio_url import GenerationInputVeedFabric10AudioUrl
+    from .generation_input_veed_fabric10fast import GenerationInputVeedFabric10Fast
+    from .generation_input_veed_fabric10fast_aspect_ratio import GenerationInputVeedFabric10FastAspectRatio
+    from .generation_input_veed_fabric10fast_audio import (
+        GenerationInputVeedFabric10FastAudio,
+        GenerationInputVeedFabric10FastAudio_Asset,
+        GenerationInputVeedFabric10FastAudio_Url,
+    )
+    from .generation_input_veed_fabric10fast_audio_asset import GenerationInputVeedFabric10FastAudioAsset
+    from .generation_input_veed_fabric10fast_audio_url import GenerationInputVeedFabric10FastAudioUrl
+    from .generation_input_veed_fabric10fast_image import (
+        GenerationInputVeedFabric10FastImage,
+        GenerationInputVeedFabric10FastImage_Asset,
+        GenerationInputVeedFabric10FastImage_Url,
+    )
+    from .generation_input_veed_fabric10fast_image_asset import GenerationInputVeedFabric10FastImageAsset
+    from .generation_input_veed_fabric10fast_image_url import GenerationInputVeedFabric10FastImageUrl
+    from .generation_input_veed_fabric10fast_resolution import GenerationInputVeedFabric10FastResolution
+    from .generation_input_veed_fabric10image import (
+        GenerationInputVeedFabric10Image,
+        GenerationInputVeedFabric10Image_Asset,
+        GenerationInputVeedFabric10Image_Url,
+    )
+    from .generation_input_veed_fabric10image_asset import GenerationInputVeedFabric10ImageAsset
+    from .generation_input_veed_fabric10image_url import GenerationInputVeedFabric10ImageUrl
+    from .generation_input_veed_fabric10resolution import GenerationInputVeedFabric10Resolution
+    from .generation_input_veo2 import GenerationInputVeo2
+    from .generation_input_veo2aspect_ratio import GenerationInputVeo2AspectRatio
+    from .generation_input_veo2image import (
+        GenerationInputVeo2Image,
+        GenerationInputVeo2Image_Asset,
+        GenerationInputVeo2Image_Url,
+    )
+    from .generation_input_veo2image_asset import GenerationInputVeo2ImageAsset
+    from .generation_input_veo2image_url import GenerationInputVeo2ImageUrl
+    from .generation_input_veo2resolution import GenerationInputVeo2Resolution
+    from .generation_input_veo3 import GenerationInputVeo3
+    from .generation_input_veo31 import GenerationInputVeo31
+    from .generation_input_veo31aspect_ratio import GenerationInputVeo31AspectRatio
+    from .generation_input_veo31end_image import (
+        GenerationInputVeo31EndImage,
+        GenerationInputVeo31EndImage_Asset,
+        GenerationInputVeo31EndImage_Url,
+    )
+    from .generation_input_veo31end_image_asset import GenerationInputVeo31EndImageAsset
+    from .generation_input_veo31end_image_url import GenerationInputVeo31EndImageUrl
+    from .generation_input_veo31fast import GenerationInputVeo31Fast
+    from .generation_input_veo31fast_aspect_ratio import GenerationInputVeo31FastAspectRatio
+    from .generation_input_veo31fast_end_image import (
+        GenerationInputVeo31FastEndImage,
+        GenerationInputVeo31FastEndImage_Asset,
+        GenerationInputVeo31FastEndImage_Url,
+    )
+    from .generation_input_veo31fast_end_image_asset import GenerationInputVeo31FastEndImageAsset
+    from .generation_input_veo31fast_end_image_url import GenerationInputVeo31FastEndImageUrl
+    from .generation_input_veo31fast_image import (
+        GenerationInputVeo31FastImage,
+        GenerationInputVeo31FastImage_Asset,
+        GenerationInputVeo31FastImage_Url,
+    )
+    from .generation_input_veo31fast_image_asset import GenerationInputVeo31FastImageAsset
+    from .generation_input_veo31fast_image_url import GenerationInputVeo31FastImageUrl
+    from .generation_input_veo31fast_resolution import GenerationInputVeo31FastResolution
+    from .generation_input_veo31fast_video import (
+        GenerationInputVeo31FastVideo,
+        GenerationInputVeo31FastVideo_Asset,
+        GenerationInputVeo31FastVideo_Url,
+    )
+    from .generation_input_veo31fast_video_asset import GenerationInputVeo31FastVideoAsset
+    from .generation_input_veo31fast_video_url import GenerationInputVeo31FastVideoUrl
+    from .generation_input_veo31image import (
+        GenerationInputVeo31Image,
+        GenerationInputVeo31Image_Asset,
+        GenerationInputVeo31Image_Url,
+    )
+    from .generation_input_veo31image_asset import GenerationInputVeo31ImageAsset
+    from .generation_input_veo31image_url import GenerationInputVeo31ImageUrl
+    from .generation_input_veo31images_item import (
+        GenerationInputVeo31ImagesItem,
+        GenerationInputVeo31ImagesItem_Asset,
+        GenerationInputVeo31ImagesItem_Url,
+    )
+    from .generation_input_veo31images_item_asset import GenerationInputVeo31ImagesItemAsset
+    from .generation_input_veo31images_item_url import GenerationInputVeo31ImagesItemUrl
+    from .generation_input_veo31resolution import GenerationInputVeo31Resolution
+    from .generation_input_veo31video import (
+        GenerationInputVeo31Video,
+        GenerationInputVeo31Video_Asset,
+        GenerationInputVeo31Video_Url,
+    )
+    from .generation_input_veo31video_asset import GenerationInputVeo31VideoAsset
+    from .generation_input_veo31video_url import GenerationInputVeo31VideoUrl
+    from .generation_input_veo3aspect_ratio import GenerationInputVeo3AspectRatio
+    from .generation_input_veo3fast import GenerationInputVeo3Fast
+    from .generation_input_veo3fast_aspect_ratio import GenerationInputVeo3FastAspectRatio
+    from .generation_input_veo3fast_image import (
+        GenerationInputVeo3FastImage,
+        GenerationInputVeo3FastImage_Asset,
+        GenerationInputVeo3FastImage_Url,
+    )
+    from .generation_input_veo3fast_image_asset import GenerationInputVeo3FastImageAsset
+    from .generation_input_veo3fast_image_url import GenerationInputVeo3FastImageUrl
+    from .generation_input_veo3fast_resolution import GenerationInputVeo3FastResolution
+    from .generation_input_veo3image import (
+        GenerationInputVeo3Image,
+        GenerationInputVeo3Image_Asset,
+        GenerationInputVeo3Image_Url,
+    )
+    from .generation_input_veo3image_asset import GenerationInputVeo3ImageAsset
+    from .generation_input_veo3image_url import GenerationInputVeo3ImageUrl
+    from .generation_input_veo3resolution import GenerationInputVeo3Resolution
     from .http_validation_error import HttpValidationError
     from .key_create_response import KeyCreateResponse
     from .key_list_response import KeyListResponse
     from .key_rotate_response import KeyRotateResponse
     from .key_status import KeyStatus
     from .key_summary import KeySummary
+    from .log_drain_config import LogDrainConfig
+    from .log_drain_format import LogDrainFormat
+    from .log_drain_list_response import LogDrainListResponse
+    from .log_drain_test_response import LogDrainTestResponse
     from .metrics import Metrics
     from .model_detail import ModelDetail
     from .model_list_response import ModelListResponse
@@ -27,6 +872,11 @@ if typing.TYPE_CHECKING:
     from .model_variant import ModelVariant
     from .output_item import OutputItem
     from .request_list_response import RequestListResponse
+    from .request_log_emitter import RequestLogEmitter
+    from .request_log_event import RequestLogEvent
+    from .request_log_item import RequestLogItem
+    from .request_log_level import RequestLogLevel
+    from .request_log_list_response import RequestLogListResponse
     from .request_status import RequestStatus
     from .request_summary import RequestSummary
     from .result_response import ResultResponse
@@ -34,25 +884,680 @@ if typing.TYPE_CHECKING:
     from .status_response import StatusResponse
     from .submit_response import SubmitResponse
     from .token_create_response import TokenCreateResponse
+    from .usage_bucket import UsageBucket
+    from .usage_group_by import UsageGroupBy
+    from .usage_response import UsageResponse
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
     from .voice_list_response import VoiceListResponse
     from .voice_summary import VoiceSummary
+    from .webhook_default_config import WebhookDefaultConfig
+    from .webhook_delivery_list_response import WebhookDeliveryListResponse
+    from .webhook_delivery_status import WebhookDeliveryStatus
+    from .webhook_delivery_summary import WebhookDeliverySummary
     from .webhook_public_key import WebhookPublicKey
+    from .webhook_test_response import WebhookTestResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiKeyKind": ".api_key_kind",
     "ApiKeyScope": ".api_key_scope",
+    "BalanceResponse": ".balance_response",
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
     "EstimateResponse": ".estimate_response",
+    "FieldError": ".field_error",
     "FileUploadResponse": ".file_upload_response",
+    "GenerationInputDreamina31": ".generation_input_dreamina31",
+    "GenerationInputDreamina31AspectRatio": ".generation_input_dreamina31aspect_ratio",
+    "GenerationInputDreamina31Resolution": ".generation_input_dreamina31resolution",
+    "GenerationInputElevenlabsFlashMultilingualV2": ".generation_input_elevenlabs_flash_multilingual_v2",
+    "GenerationInputElevenlabsFlashV2": ".generation_input_elevenlabs_flash_v2",
+    "GenerationInputElevenlabsMultilingualV2": ".generation_input_elevenlabs_multilingual_v2",
+    "GenerationInputElevenlabsV3": ".generation_input_elevenlabs_v3",
+    "GenerationInputElevenlabsV3331": ".generation_input_elevenlabs_v3331",
+    "GenerationInputFlux11Pro": ".generation_input_flux11pro",
+    "GenerationInputFlux11ProAspectRatio": ".generation_input_flux11pro_aspect_ratio",
+    "GenerationInputFlux11ProResolution": ".generation_input_flux11pro_resolution",
+    "GenerationInputFlux11Ultra": ".generation_input_flux11ultra",
+    "GenerationInputFlux11UltraAspectRatio": ".generation_input_flux11ultra_aspect_ratio",
+    "GenerationInputFlux11UltraResolution": ".generation_input_flux11ultra_resolution",
+    "GenerationInputFlux2Flex": ".generation_input_flux2flex",
+    "GenerationInputFlux2FlexAspectRatio": ".generation_input_flux2flex_aspect_ratio",
+    "GenerationInputFlux2FlexImage": ".generation_input_flux2flex_image",
+    "GenerationInputFlux2FlexImageAsset": ".generation_input_flux2flex_image_asset",
+    "GenerationInputFlux2FlexImageUrl": ".generation_input_flux2flex_image_url",
+    "GenerationInputFlux2FlexImage_Asset": ".generation_input_flux2flex_image",
+    "GenerationInputFlux2FlexImage_Url": ".generation_input_flux2flex_image",
+    "GenerationInputFlux2Klein9B": ".generation_input_flux2klein9b",
+    "GenerationInputFlux2Klein9BAspectRatio": ".generation_input_flux2klein9b_aspect_ratio",
+    "GenerationInputFlux2Klein9BImage": ".generation_input_flux2klein9b_image",
+    "GenerationInputFlux2Klein9BImageAsset": ".generation_input_flux2klein9b_image_asset",
+    "GenerationInputFlux2Klein9BImageUrl": ".generation_input_flux2klein9b_image_url",
+    "GenerationInputFlux2Klein9BImage_Asset": ".generation_input_flux2klein9b_image",
+    "GenerationInputFlux2Klein9BImage_Url": ".generation_input_flux2klein9b_image",
+    "GenerationInputFlux2Max": ".generation_input_flux2max",
+    "GenerationInputFlux2MaxAspectRatio": ".generation_input_flux2max_aspect_ratio",
+    "GenerationInputFlux2MaxImage": ".generation_input_flux2max_image",
+    "GenerationInputFlux2MaxImageAsset": ".generation_input_flux2max_image_asset",
+    "GenerationInputFlux2MaxImageUrl": ".generation_input_flux2max_image_url",
+    "GenerationInputFlux2MaxImage_Asset": ".generation_input_flux2max_image",
+    "GenerationInputFlux2MaxImage_Url": ".generation_input_flux2max_image",
+    "GenerationInputFlux2Pro": ".generation_input_flux2pro",
+    "GenerationInputFlux2ProAspectRatio": ".generation_input_flux2pro_aspect_ratio",
+    "GenerationInputFlux2ProImage": ".generation_input_flux2pro_image",
+    "GenerationInputFlux2ProImageAsset": ".generation_input_flux2pro_image_asset",
+    "GenerationInputFlux2ProImageUrl": ".generation_input_flux2pro_image_url",
+    "GenerationInputFlux2ProImage_Asset": ".generation_input_flux2pro_image",
+    "GenerationInputFlux2ProImage_Url": ".generation_input_flux2pro_image",
+    "GenerationInputFluxDev": ".generation_input_flux_dev",
+    "GenerationInputFluxDevAspectRatio": ".generation_input_flux_dev_aspect_ratio",
+    "GenerationInputFluxDevResolution": ".generation_input_flux_dev_resolution",
+    "GenerationInputFluxKontextMax": ".generation_input_flux_kontext_max",
+    "GenerationInputFluxKontextMaxAspectRatio": ".generation_input_flux_kontext_max_aspect_ratio",
+    "GenerationInputFluxKontextMaxImage": ".generation_input_flux_kontext_max_image",
+    "GenerationInputFluxKontextMaxImageAsset": ".generation_input_flux_kontext_max_image_asset",
+    "GenerationInputFluxKontextMaxImageUrl": ".generation_input_flux_kontext_max_image_url",
+    "GenerationInputFluxKontextMaxImage_Asset": ".generation_input_flux_kontext_max_image",
+    "GenerationInputFluxKontextMaxImage_Url": ".generation_input_flux_kontext_max_image",
+    "GenerationInputFluxKontextMaxResolution": ".generation_input_flux_kontext_max_resolution",
+    "GenerationInputFluxKontextPro": ".generation_input_flux_kontext_pro",
+    "GenerationInputFluxKontextProAspectRatio": ".generation_input_flux_kontext_pro_aspect_ratio",
+    "GenerationInputFluxKontextProImage": ".generation_input_flux_kontext_pro_image",
+    "GenerationInputFluxKontextProImageAsset": ".generation_input_flux_kontext_pro_image_asset",
+    "GenerationInputFluxKontextProImageUrl": ".generation_input_flux_kontext_pro_image_url",
+    "GenerationInputFluxKontextProImage_Asset": ".generation_input_flux_kontext_pro_image",
+    "GenerationInputFluxKontextProImage_Url": ".generation_input_flux_kontext_pro_image",
+    "GenerationInputFluxKontextProResolution": ".generation_input_flux_kontext_pro_resolution",
+    "GenerationInputGptImage15": ".generation_input_gpt_image15",
+    "GenerationInputGptImage15AspectRatio": ".generation_input_gpt_image15aspect_ratio",
+    "GenerationInputGptImage15Image": ".generation_input_gpt_image15image",
+    "GenerationInputGptImage15ImageAsset": ".generation_input_gpt_image15image_asset",
+    "GenerationInputGptImage15ImageUrl": ".generation_input_gpt_image15image_url",
+    "GenerationInputGptImage15Image_Asset": ".generation_input_gpt_image15image",
+    "GenerationInputGptImage15Image_Url": ".generation_input_gpt_image15image",
+    "GenerationInputGptImage15Resolution": ".generation_input_gpt_image15resolution",
+    "GenerationInputGptImage2High": ".generation_input_gpt_image2high",
+    "GenerationInputGptImage2HighAspectRatio": ".generation_input_gpt_image2high_aspect_ratio",
+    "GenerationInputGptImage2HighImage": ".generation_input_gpt_image2high_image",
+    "GenerationInputGptImage2HighImageAsset": ".generation_input_gpt_image2high_image_asset",
+    "GenerationInputGptImage2HighImageUrl": ".generation_input_gpt_image2high_image_url",
+    "GenerationInputGptImage2HighImage_Asset": ".generation_input_gpt_image2high_image",
+    "GenerationInputGptImage2HighImage_Url": ".generation_input_gpt_image2high_image",
+    "GenerationInputGptImage2HighResolution": ".generation_input_gpt_image2high_resolution",
+    "GenerationInputGptImage2Low": ".generation_input_gpt_image2low",
+    "GenerationInputGptImage2LowAspectRatio": ".generation_input_gpt_image2low_aspect_ratio",
+    "GenerationInputGptImage2LowImage": ".generation_input_gpt_image2low_image",
+    "GenerationInputGptImage2LowImageAsset": ".generation_input_gpt_image2low_image_asset",
+    "GenerationInputGptImage2LowImageUrl": ".generation_input_gpt_image2low_image_url",
+    "GenerationInputGptImage2LowImage_Asset": ".generation_input_gpt_image2low_image",
+    "GenerationInputGptImage2LowImage_Url": ".generation_input_gpt_image2low_image",
+    "GenerationInputGptImage2LowResolution": ".generation_input_gpt_image2low_resolution",
+    "GenerationInputGptImage2Medium": ".generation_input_gpt_image2medium",
+    "GenerationInputGptImage2MediumAspectRatio": ".generation_input_gpt_image2medium_aspect_ratio",
+    "GenerationInputGptImage2MediumImage": ".generation_input_gpt_image2medium_image",
+    "GenerationInputGptImage2MediumImageAsset": ".generation_input_gpt_image2medium_image_asset",
+    "GenerationInputGptImage2MediumImageUrl": ".generation_input_gpt_image2medium_image_url",
+    "GenerationInputGptImage2MediumImage_Asset": ".generation_input_gpt_image2medium_image",
+    "GenerationInputGptImage2MediumImage_Url": ".generation_input_gpt_image2medium_image",
+    "GenerationInputGptImage2MediumResolution": ".generation_input_gpt_image2medium_resolution",
+    "GenerationInputGrokImagine": ".generation_input_grok_imagine",
+    "GenerationInputGrokImagineAspectRatio": ".generation_input_grok_imagine_aspect_ratio",
+    "GenerationInputGrokImagineImage": ".generation_input_grok_imagine_image",
+    "GenerationInputGrokImagineImageAsset": ".generation_input_grok_imagine_image_asset",
+    "GenerationInputGrokImagineImageUrl": ".generation_input_grok_imagine_image_url",
+    "GenerationInputGrokImagineImage_Asset": ".generation_input_grok_imagine_image",
+    "GenerationInputGrokImagineImage_Url": ".generation_input_grok_imagine_image",
+    "GenerationInputGrokVideo": ".generation_input_grok_video",
+    "GenerationInputGrokVideoAspectRatio": ".generation_input_grok_video_aspect_ratio",
+    "GenerationInputGrokVideoImage": ".generation_input_grok_video_image",
+    "GenerationInputGrokVideoImageAsset": ".generation_input_grok_video_image_asset",
+    "GenerationInputGrokVideoImageUrl": ".generation_input_grok_video_image_url",
+    "GenerationInputGrokVideoImage_Asset": ".generation_input_grok_video_image",
+    "GenerationInputGrokVideoImage_Url": ".generation_input_grok_video_image",
+    "GenerationInputGrokVideoResolution": ".generation_input_grok_video_resolution",
+    "GenerationInputHappyHorse": ".generation_input_happy_horse",
+    "GenerationInputHappyHorseAspectRatio": ".generation_input_happy_horse_aspect_ratio",
+    "GenerationInputHappyHorseImage": ".generation_input_happy_horse_image",
+    "GenerationInputHappyHorseImageAsset": ".generation_input_happy_horse_image_asset",
+    "GenerationInputHappyHorseImageUrl": ".generation_input_happy_horse_image_url",
+    "GenerationInputHappyHorseImage_Asset": ".generation_input_happy_horse_image",
+    "GenerationInputHappyHorseImage_Url": ".generation_input_happy_horse_image",
+    "GenerationInputHappyHorseImagesItem": ".generation_input_happy_horse_images_item",
+    "GenerationInputHappyHorseImagesItemAsset": ".generation_input_happy_horse_images_item_asset",
+    "GenerationInputHappyHorseImagesItemUrl": ".generation_input_happy_horse_images_item_url",
+    "GenerationInputHappyHorseImagesItem_Asset": ".generation_input_happy_horse_images_item",
+    "GenerationInputHappyHorseImagesItem_Url": ".generation_input_happy_horse_images_item",
+    "GenerationInputHappyHorseResolution": ".generation_input_happy_horse_resolution",
+    "GenerationInputHedraAvatar": ".generation_input_hedra_avatar",
+    "GenerationInputHedraAvatarAspectRatio": ".generation_input_hedra_avatar_aspect_ratio",
+    "GenerationInputHedraAvatarAudio": ".generation_input_hedra_avatar_audio",
+    "GenerationInputHedraAvatarAudioAsset": ".generation_input_hedra_avatar_audio_asset",
+    "GenerationInputHedraAvatarAudioUrl": ".generation_input_hedra_avatar_audio_url",
+    "GenerationInputHedraAvatarAudio_Asset": ".generation_input_hedra_avatar_audio",
+    "GenerationInputHedraAvatarAudio_Url": ".generation_input_hedra_avatar_audio",
+    "GenerationInputHedraAvatarImage": ".generation_input_hedra_avatar_image",
+    "GenerationInputHedraAvatarImageAsset": ".generation_input_hedra_avatar_image_asset",
+    "GenerationInputHedraAvatarImageUrl": ".generation_input_hedra_avatar_image_url",
+    "GenerationInputHedraAvatarImage_Asset": ".generation_input_hedra_avatar_image",
+    "GenerationInputHedraAvatarImage_Url": ".generation_input_hedra_avatar_image",
+    "GenerationInputHedraAvatarResolution": ".generation_input_hedra_avatar_resolution",
+    "GenerationInputHedraAvatarStaging": ".generation_input_hedra_avatar_staging",
+    "GenerationInputHedraAvatarStagingAspectRatio": ".generation_input_hedra_avatar_staging_aspect_ratio",
+    "GenerationInputHedraAvatarStagingAudio": ".generation_input_hedra_avatar_staging_audio",
+    "GenerationInputHedraAvatarStagingAudioAsset": ".generation_input_hedra_avatar_staging_audio_asset",
+    "GenerationInputHedraAvatarStagingAudioUrl": ".generation_input_hedra_avatar_staging_audio_url",
+    "GenerationInputHedraAvatarStagingAudio_Asset": ".generation_input_hedra_avatar_staging_audio",
+    "GenerationInputHedraAvatarStagingAudio_Url": ".generation_input_hedra_avatar_staging_audio",
+    "GenerationInputHedraAvatarStagingImage": ".generation_input_hedra_avatar_staging_image",
+    "GenerationInputHedraAvatarStagingImageAsset": ".generation_input_hedra_avatar_staging_image_asset",
+    "GenerationInputHedraAvatarStagingImageUrl": ".generation_input_hedra_avatar_staging_image_url",
+    "GenerationInputHedraAvatarStagingImage_Asset": ".generation_input_hedra_avatar_staging_image",
+    "GenerationInputHedraAvatarStagingImage_Url": ".generation_input_hedra_avatar_staging_image",
+    "GenerationInputHedraAvatarStagingResolution": ".generation_input_hedra_avatar_staging_resolution",
+    "GenerationInputHedraCharacter3": ".generation_input_hedra_character3",
+    "GenerationInputHedraCharacter3AspectRatio": ".generation_input_hedra_character3aspect_ratio",
+    "GenerationInputHedraCharacter3Audio": ".generation_input_hedra_character3audio",
+    "GenerationInputHedraCharacter3AudioAsset": ".generation_input_hedra_character3audio_asset",
+    "GenerationInputHedraCharacter3AudioUrl": ".generation_input_hedra_character3audio_url",
+    "GenerationInputHedraCharacter3Audio_Asset": ".generation_input_hedra_character3audio",
+    "GenerationInputHedraCharacter3Audio_Url": ".generation_input_hedra_character3audio",
+    "GenerationInputHedraCharacter3Image": ".generation_input_hedra_character3image",
+    "GenerationInputHedraCharacter3ImageAsset": ".generation_input_hedra_character3image_asset",
+    "GenerationInputHedraCharacter3ImageUrl": ".generation_input_hedra_character3image_url",
+    "GenerationInputHedraCharacter3Image_Asset": ".generation_input_hedra_character3image",
+    "GenerationInputHedraCharacter3Image_Url": ".generation_input_hedra_character3image",
+    "GenerationInputHedraCharacter3Resolution": ".generation_input_hedra_character3resolution",
+    "GenerationInputHedraOmnia": ".generation_input_hedra_omnia",
+    "GenerationInputHedraOmniaAspectRatio": ".generation_input_hedra_omnia_aspect_ratio",
+    "GenerationInputHedraOmniaAudio": ".generation_input_hedra_omnia_audio",
+    "GenerationInputHedraOmniaAudioAsset": ".generation_input_hedra_omnia_audio_asset",
+    "GenerationInputHedraOmniaAudioUrl": ".generation_input_hedra_omnia_audio_url",
+    "GenerationInputHedraOmniaAudio_Asset": ".generation_input_hedra_omnia_audio",
+    "GenerationInputHedraOmniaAudio_Url": ".generation_input_hedra_omnia_audio",
+    "GenerationInputHedraOmniaImage": ".generation_input_hedra_omnia_image",
+    "GenerationInputHedraOmniaImageAsset": ".generation_input_hedra_omnia_image_asset",
+    "GenerationInputHedraOmniaImageUrl": ".generation_input_hedra_omnia_image_url",
+    "GenerationInputHedraOmniaImage_Asset": ".generation_input_hedra_omnia_image",
+    "GenerationInputHedraOmniaImage_Url": ".generation_input_hedra_omnia_image",
+    "GenerationInputHedraOmniaResolution": ".generation_input_hedra_omnia_resolution",
+    "GenerationInputIdeogramV2": ".generation_input_ideogram_v2",
+    "GenerationInputIdeogramV2AspectRatio": ".generation_input_ideogram_v2aspect_ratio",
+    "GenerationInputIdeogramV2Resolution": ".generation_input_ideogram_v2resolution",
+    "GenerationInputImagen3": ".generation_input_imagen3",
+    "GenerationInputImagen3AspectRatio": ".generation_input_imagen3aspect_ratio",
+    "GenerationInputImagen3Resolution": ".generation_input_imagen3resolution",
+    "GenerationInputImagen4": ".generation_input_imagen4",
+    "GenerationInputImagen4AspectRatio": ".generation_input_imagen4aspect_ratio",
+    "GenerationInputImagen4Resolution": ".generation_input_imagen4resolution",
+    "GenerationInputKling16": ".generation_input_kling16",
+    "GenerationInputKling16AspectRatio": ".generation_input_kling16aspect_ratio",
+    "GenerationInputKling16Image": ".generation_input_kling16image",
+    "GenerationInputKling16ImageAsset": ".generation_input_kling16image_asset",
+    "GenerationInputKling16ImageUrl": ".generation_input_kling16image_url",
+    "GenerationInputKling16Image_Asset": ".generation_input_kling16image",
+    "GenerationInputKling16Image_Url": ".generation_input_kling16image",
+    "GenerationInputKling16Resolution": ".generation_input_kling16resolution",
+    "GenerationInputKling21Master": ".generation_input_kling21master",
+    "GenerationInputKling21MasterAspectRatio": ".generation_input_kling21master_aspect_ratio",
+    "GenerationInputKling21MasterImage": ".generation_input_kling21master_image",
+    "GenerationInputKling21MasterImageAsset": ".generation_input_kling21master_image_asset",
+    "GenerationInputKling21MasterImageUrl": ".generation_input_kling21master_image_url",
+    "GenerationInputKling21MasterImage_Asset": ".generation_input_kling21master_image",
+    "GenerationInputKling21MasterImage_Url": ".generation_input_kling21master_image",
+    "GenerationInputKling21MasterResolution": ".generation_input_kling21master_resolution",
+    "GenerationInputKling21Pro": ".generation_input_kling21pro",
+    "GenerationInputKling21ProAspectRatio": ".generation_input_kling21pro_aspect_ratio",
+    "GenerationInputKling21ProImage": ".generation_input_kling21pro_image",
+    "GenerationInputKling21ProImageAsset": ".generation_input_kling21pro_image_asset",
+    "GenerationInputKling21ProImageUrl": ".generation_input_kling21pro_image_url",
+    "GenerationInputKling21ProImage_Asset": ".generation_input_kling21pro_image",
+    "GenerationInputKling21ProImage_Url": ".generation_input_kling21pro_image",
+    "GenerationInputKling21ProResolution": ".generation_input_kling21pro_resolution",
+    "GenerationInputKling25Turbo": ".generation_input_kling25turbo",
+    "GenerationInputKling25TurboAspectRatio": ".generation_input_kling25turbo_aspect_ratio",
+    "GenerationInputKling25TurboImage": ".generation_input_kling25turbo_image",
+    "GenerationInputKling25TurboImageAsset": ".generation_input_kling25turbo_image_asset",
+    "GenerationInputKling25TurboImageUrl": ".generation_input_kling25turbo_image_url",
+    "GenerationInputKling25TurboImage_Asset": ".generation_input_kling25turbo_image",
+    "GenerationInputKling25TurboImage_Url": ".generation_input_kling25turbo_image",
+    "GenerationInputKling25TurboResolution": ".generation_input_kling25turbo_resolution",
+    "GenerationInputKling26Pro": ".generation_input_kling26pro",
+    "GenerationInputKling26ProAspectRatio": ".generation_input_kling26pro_aspect_ratio",
+    "GenerationInputKling26ProImage": ".generation_input_kling26pro_image",
+    "GenerationInputKling26ProImageAsset": ".generation_input_kling26pro_image_asset",
+    "GenerationInputKling26ProImageUrl": ".generation_input_kling26pro_image_url",
+    "GenerationInputKling26ProImage_Asset": ".generation_input_kling26pro_image",
+    "GenerationInputKling26ProImage_Url": ".generation_input_kling26pro_image",
+    "GenerationInputKling26ProResolution": ".generation_input_kling26pro_resolution",
+    "GenerationInputKlingAiAvatarV2Pro": ".generation_input_kling_ai_avatar_v2pro",
+    "GenerationInputKlingAiAvatarV2ProAspectRatio": ".generation_input_kling_ai_avatar_v2pro_aspect_ratio",
+    "GenerationInputKlingAiAvatarV2ProAudio": ".generation_input_kling_ai_avatar_v2pro_audio",
+    "GenerationInputKlingAiAvatarV2ProAudioAsset": ".generation_input_kling_ai_avatar_v2pro_audio_asset",
+    "GenerationInputKlingAiAvatarV2ProAudioUrl": ".generation_input_kling_ai_avatar_v2pro_audio_url",
+    "GenerationInputKlingAiAvatarV2ProAudio_Asset": ".generation_input_kling_ai_avatar_v2pro_audio",
+    "GenerationInputKlingAiAvatarV2ProAudio_Url": ".generation_input_kling_ai_avatar_v2pro_audio",
+    "GenerationInputKlingAiAvatarV2ProImage": ".generation_input_kling_ai_avatar_v2pro_image",
+    "GenerationInputKlingAiAvatarV2ProImageAsset": ".generation_input_kling_ai_avatar_v2pro_image_asset",
+    "GenerationInputKlingAiAvatarV2ProImageUrl": ".generation_input_kling_ai_avatar_v2pro_image_url",
+    "GenerationInputKlingAiAvatarV2ProImage_Asset": ".generation_input_kling_ai_avatar_v2pro_image",
+    "GenerationInputKlingAiAvatarV2ProImage_Url": ".generation_input_kling_ai_avatar_v2pro_image",
+    "GenerationInputKlingAiAvatarV2ProResolution": ".generation_input_kling_ai_avatar_v2pro_resolution",
+    "GenerationInputKlingAiAvatarV2Standard": ".generation_input_kling_ai_avatar_v2standard",
+    "GenerationInputKlingAiAvatarV2StandardAspectRatio": ".generation_input_kling_ai_avatar_v2standard_aspect_ratio",
+    "GenerationInputKlingAiAvatarV2StandardAudio": ".generation_input_kling_ai_avatar_v2standard_audio",
+    "GenerationInputKlingAiAvatarV2StandardAudioAsset": ".generation_input_kling_ai_avatar_v2standard_audio_asset",
+    "GenerationInputKlingAiAvatarV2StandardAudioUrl": ".generation_input_kling_ai_avatar_v2standard_audio_url",
+    "GenerationInputKlingAiAvatarV2StandardAudio_Asset": ".generation_input_kling_ai_avatar_v2standard_audio",
+    "GenerationInputKlingAiAvatarV2StandardAudio_Url": ".generation_input_kling_ai_avatar_v2standard_audio",
+    "GenerationInputKlingAiAvatarV2StandardImage": ".generation_input_kling_ai_avatar_v2standard_image",
+    "GenerationInputKlingAiAvatarV2StandardImageAsset": ".generation_input_kling_ai_avatar_v2standard_image_asset",
+    "GenerationInputKlingAiAvatarV2StandardImageUrl": ".generation_input_kling_ai_avatar_v2standard_image_url",
+    "GenerationInputKlingAiAvatarV2StandardImage_Asset": ".generation_input_kling_ai_avatar_v2standard_image",
+    "GenerationInputKlingAiAvatarV2StandardImage_Url": ".generation_input_kling_ai_avatar_v2standard_image",
+    "GenerationInputKlingAiAvatarV2StandardResolution": ".generation_input_kling_ai_avatar_v2standard_resolution",
+    "GenerationInputKlingO1": ".generation_input_kling_o1",
+    "GenerationInputKlingO1AspectRatio": ".generation_input_kling_o1aspect_ratio",
+    "GenerationInputKlingO1EndImage": ".generation_input_kling_o1end_image",
+    "GenerationInputKlingO1EndImageAsset": ".generation_input_kling_o1end_image_asset",
+    "GenerationInputKlingO1EndImageUrl": ".generation_input_kling_o1end_image_url",
+    "GenerationInputKlingO1EndImage_Asset": ".generation_input_kling_o1end_image",
+    "GenerationInputKlingO1EndImage_Url": ".generation_input_kling_o1end_image",
+    "GenerationInputKlingO1Image": ".generation_input_kling_o1image",
+    "GenerationInputKlingO1ImageAsset": ".generation_input_kling_o1image_asset",
+    "GenerationInputKlingO1ImageUrl": ".generation_input_kling_o1image_url",
+    "GenerationInputKlingO1Image_Asset": ".generation_input_kling_o1image",
+    "GenerationInputKlingO1Image_Url": ".generation_input_kling_o1image",
+    "GenerationInputKlingO1ImagesItem": ".generation_input_kling_o1images_item",
+    "GenerationInputKlingO1ImagesItemAsset": ".generation_input_kling_o1images_item_asset",
+    "GenerationInputKlingO1ImagesItemUrl": ".generation_input_kling_o1images_item_url",
+    "GenerationInputKlingO1ImagesItem_Asset": ".generation_input_kling_o1images_item",
+    "GenerationInputKlingO1ImagesItem_Url": ".generation_input_kling_o1images_item",
+    "GenerationInputKlingO1Resolution": ".generation_input_kling_o1resolution",
+    "GenerationInputKlingO3Pro": ".generation_input_kling_o3pro",
+    "GenerationInputKlingO3ProAspectRatio": ".generation_input_kling_o3pro_aspect_ratio",
+    "GenerationInputKlingO3ProEndImage": ".generation_input_kling_o3pro_end_image",
+    "GenerationInputKlingO3ProEndImageAsset": ".generation_input_kling_o3pro_end_image_asset",
+    "GenerationInputKlingO3ProEndImageUrl": ".generation_input_kling_o3pro_end_image_url",
+    "GenerationInputKlingO3ProEndImage_Asset": ".generation_input_kling_o3pro_end_image",
+    "GenerationInputKlingO3ProEndImage_Url": ".generation_input_kling_o3pro_end_image",
+    "GenerationInputKlingO3ProImage": ".generation_input_kling_o3pro_image",
+    "GenerationInputKlingO3ProImageAsset": ".generation_input_kling_o3pro_image_asset",
+    "GenerationInputKlingO3ProImageUrl": ".generation_input_kling_o3pro_image_url",
+    "GenerationInputKlingO3ProImage_Asset": ".generation_input_kling_o3pro_image",
+    "GenerationInputKlingO3ProImage_Url": ".generation_input_kling_o3pro_image",
+    "GenerationInputKlingO3ProImagesItem": ".generation_input_kling_o3pro_images_item",
+    "GenerationInputKlingO3ProImagesItemAsset": ".generation_input_kling_o3pro_images_item_asset",
+    "GenerationInputKlingO3ProImagesItemUrl": ".generation_input_kling_o3pro_images_item_url",
+    "GenerationInputKlingO3ProImagesItem_Asset": ".generation_input_kling_o3pro_images_item",
+    "GenerationInputKlingO3ProImagesItem_Url": ".generation_input_kling_o3pro_images_item",
+    "GenerationInputKlingO3ProResolution": ".generation_input_kling_o3pro_resolution",
+    "GenerationInputKlingO3Standard": ".generation_input_kling_o3standard",
+    "GenerationInputKlingO3StandardAspectRatio": ".generation_input_kling_o3standard_aspect_ratio",
+    "GenerationInputKlingO3StandardEndImage": ".generation_input_kling_o3standard_end_image",
+    "GenerationInputKlingO3StandardEndImageAsset": ".generation_input_kling_o3standard_end_image_asset",
+    "GenerationInputKlingO3StandardEndImageUrl": ".generation_input_kling_o3standard_end_image_url",
+    "GenerationInputKlingO3StandardEndImage_Asset": ".generation_input_kling_o3standard_end_image",
+    "GenerationInputKlingO3StandardEndImage_Url": ".generation_input_kling_o3standard_end_image",
+    "GenerationInputKlingO3StandardImage": ".generation_input_kling_o3standard_image",
+    "GenerationInputKlingO3StandardImageAsset": ".generation_input_kling_o3standard_image_asset",
+    "GenerationInputKlingO3StandardImageUrl": ".generation_input_kling_o3standard_image_url",
+    "GenerationInputKlingO3StandardImage_Asset": ".generation_input_kling_o3standard_image",
+    "GenerationInputKlingO3StandardImage_Url": ".generation_input_kling_o3standard_image",
+    "GenerationInputKlingO3StandardImagesItem": ".generation_input_kling_o3standard_images_item",
+    "GenerationInputKlingO3StandardImagesItemAsset": ".generation_input_kling_o3standard_images_item_asset",
+    "GenerationInputKlingO3StandardImagesItemUrl": ".generation_input_kling_o3standard_images_item_url",
+    "GenerationInputKlingO3StandardImagesItem_Asset": ".generation_input_kling_o3standard_images_item",
+    "GenerationInputKlingO3StandardImagesItem_Url": ".generation_input_kling_o3standard_images_item",
+    "GenerationInputKlingO3StandardResolution": ".generation_input_kling_o3standard_resolution",
+    "GenerationInputKlingV3Pro": ".generation_input_kling_v3pro",
+    "GenerationInputKlingV3ProAspectRatio": ".generation_input_kling_v3pro_aspect_ratio",
+    "GenerationInputKlingV3ProEndImage": ".generation_input_kling_v3pro_end_image",
+    "GenerationInputKlingV3ProEndImageAsset": ".generation_input_kling_v3pro_end_image_asset",
+    "GenerationInputKlingV3ProEndImageUrl": ".generation_input_kling_v3pro_end_image_url",
+    "GenerationInputKlingV3ProEndImage_Asset": ".generation_input_kling_v3pro_end_image",
+    "GenerationInputKlingV3ProEndImage_Url": ".generation_input_kling_v3pro_end_image",
+    "GenerationInputKlingV3ProImage": ".generation_input_kling_v3pro_image",
+    "GenerationInputKlingV3ProImageAsset": ".generation_input_kling_v3pro_image_asset",
+    "GenerationInputKlingV3ProImageUrl": ".generation_input_kling_v3pro_image_url",
+    "GenerationInputKlingV3ProImage_Asset": ".generation_input_kling_v3pro_image",
+    "GenerationInputKlingV3ProImage_Url": ".generation_input_kling_v3pro_image",
+    "GenerationInputKlingV3ProResolution": ".generation_input_kling_v3pro_resolution",
+    "GenerationInputKlingV3Standard": ".generation_input_kling_v3standard",
+    "GenerationInputKlingV3StandardAspectRatio": ".generation_input_kling_v3standard_aspect_ratio",
+    "GenerationInputKlingV3StandardEndImage": ".generation_input_kling_v3standard_end_image",
+    "GenerationInputKlingV3StandardEndImageAsset": ".generation_input_kling_v3standard_end_image_asset",
+    "GenerationInputKlingV3StandardEndImageUrl": ".generation_input_kling_v3standard_end_image_url",
+    "GenerationInputKlingV3StandardEndImage_Asset": ".generation_input_kling_v3standard_end_image",
+    "GenerationInputKlingV3StandardEndImage_Url": ".generation_input_kling_v3standard_end_image",
+    "GenerationInputKlingV3StandardImage": ".generation_input_kling_v3standard_image",
+    "GenerationInputKlingV3StandardImageAsset": ".generation_input_kling_v3standard_image_asset",
+    "GenerationInputKlingV3StandardImageUrl": ".generation_input_kling_v3standard_image_url",
+    "GenerationInputKlingV3StandardImage_Asset": ".generation_input_kling_v3standard_image",
+    "GenerationInputKlingV3StandardImage_Url": ".generation_input_kling_v3standard_image",
+    "GenerationInputKlingV3StandardResolution": ".generation_input_kling_v3standard_resolution",
+    "GenerationInputMinimaxHailuo02Pro": ".generation_input_minimax_hailuo02pro",
+    "GenerationInputMinimaxHailuo02ProAspectRatio": ".generation_input_minimax_hailuo02pro_aspect_ratio",
+    "GenerationInputMinimaxHailuo02ProImage": ".generation_input_minimax_hailuo02pro_image",
+    "GenerationInputMinimaxHailuo02ProImageAsset": ".generation_input_minimax_hailuo02pro_image_asset",
+    "GenerationInputMinimaxHailuo02ProImageUrl": ".generation_input_minimax_hailuo02pro_image_url",
+    "GenerationInputMinimaxHailuo02ProImage_Asset": ".generation_input_minimax_hailuo02pro_image",
+    "GenerationInputMinimaxHailuo02ProImage_Url": ".generation_input_minimax_hailuo02pro_image",
+    "GenerationInputMinimaxHailuo02ProResolution": ".generation_input_minimax_hailuo02pro_resolution",
+    "GenerationInputMinimaxHailuo02Standard": ".generation_input_minimax_hailuo02standard",
+    "GenerationInputMinimaxHailuo02StandardAspectRatio": ".generation_input_minimax_hailuo02standard_aspect_ratio",
+    "GenerationInputMinimaxHailuo02StandardImage": ".generation_input_minimax_hailuo02standard_image",
+    "GenerationInputMinimaxHailuo02StandardImageAsset": ".generation_input_minimax_hailuo02standard_image_asset",
+    "GenerationInputMinimaxHailuo02StandardImageUrl": ".generation_input_minimax_hailuo02standard_image_url",
+    "GenerationInputMinimaxHailuo02StandardImage_Asset": ".generation_input_minimax_hailuo02standard_image",
+    "GenerationInputMinimaxHailuo02StandardImage_Url": ".generation_input_minimax_hailuo02standard_image",
+    "GenerationInputMinimaxHailuo02StandardResolution": ".generation_input_minimax_hailuo02standard_resolution",
+    "GenerationInputMinimaxHailuo23FastPro": ".generation_input_minimax_hailuo23fast_pro",
+    "GenerationInputMinimaxHailuo23FastProAspectRatio": ".generation_input_minimax_hailuo23fast_pro_aspect_ratio",
+    "GenerationInputMinimaxHailuo23FastProImage": ".generation_input_minimax_hailuo23fast_pro_image",
+    "GenerationInputMinimaxHailuo23FastProImageAsset": ".generation_input_minimax_hailuo23fast_pro_image_asset",
+    "GenerationInputMinimaxHailuo23FastProImageUrl": ".generation_input_minimax_hailuo23fast_pro_image_url",
+    "GenerationInputMinimaxHailuo23FastProImage_Asset": ".generation_input_minimax_hailuo23fast_pro_image",
+    "GenerationInputMinimaxHailuo23FastProImage_Url": ".generation_input_minimax_hailuo23fast_pro_image",
+    "GenerationInputMinimaxHailuo23FastProResolution": ".generation_input_minimax_hailuo23fast_pro_resolution",
+    "GenerationInputMinimaxHailuo23FastStandard": ".generation_input_minimax_hailuo23fast_standard",
+    "GenerationInputMinimaxHailuo23FastStandardAspectRatio": ".generation_input_minimax_hailuo23fast_standard_aspect_ratio",
+    "GenerationInputMinimaxHailuo23FastStandardImage": ".generation_input_minimax_hailuo23fast_standard_image",
+    "GenerationInputMinimaxHailuo23FastStandardImageAsset": ".generation_input_minimax_hailuo23fast_standard_image_asset",
+    "GenerationInputMinimaxHailuo23FastStandardImageUrl": ".generation_input_minimax_hailuo23fast_standard_image_url",
+    "GenerationInputMinimaxHailuo23FastStandardImage_Asset": ".generation_input_minimax_hailuo23fast_standard_image",
+    "GenerationInputMinimaxHailuo23FastStandardImage_Url": ".generation_input_minimax_hailuo23fast_standard_image",
+    "GenerationInputMinimaxHailuo23FastStandardResolution": ".generation_input_minimax_hailuo23fast_standard_resolution",
+    "GenerationInputMinimaxHailuo23Pro": ".generation_input_minimax_hailuo23pro",
+    "GenerationInputMinimaxHailuo23ProAspectRatio": ".generation_input_minimax_hailuo23pro_aspect_ratio",
+    "GenerationInputMinimaxHailuo23ProImage": ".generation_input_minimax_hailuo23pro_image",
+    "GenerationInputMinimaxHailuo23ProImageAsset": ".generation_input_minimax_hailuo23pro_image_asset",
+    "GenerationInputMinimaxHailuo23ProImageUrl": ".generation_input_minimax_hailuo23pro_image_url",
+    "GenerationInputMinimaxHailuo23ProImage_Asset": ".generation_input_minimax_hailuo23pro_image",
+    "GenerationInputMinimaxHailuo23ProImage_Url": ".generation_input_minimax_hailuo23pro_image",
+    "GenerationInputMinimaxHailuo23ProResolution": ".generation_input_minimax_hailuo23pro_resolution",
+    "GenerationInputMinimaxHailuo23Standard": ".generation_input_minimax_hailuo23standard",
+    "GenerationInputMinimaxHailuo23StandardAspectRatio": ".generation_input_minimax_hailuo23standard_aspect_ratio",
+    "GenerationInputMinimaxHailuo23StandardImage": ".generation_input_minimax_hailuo23standard_image",
+    "GenerationInputMinimaxHailuo23StandardImageAsset": ".generation_input_minimax_hailuo23standard_image_asset",
+    "GenerationInputMinimaxHailuo23StandardImageUrl": ".generation_input_minimax_hailuo23standard_image_url",
+    "GenerationInputMinimaxHailuo23StandardImage_Asset": ".generation_input_minimax_hailuo23standard_image",
+    "GenerationInputMinimaxHailuo23StandardImage_Url": ".generation_input_minimax_hailuo23standard_image",
+    "GenerationInputMinimaxHailuo23StandardResolution": ".generation_input_minimax_hailuo23standard_resolution",
+    "GenerationInputMinimaxSpeech25HdPreview": ".generation_input_minimax_speech25hd_preview",
+    "GenerationInputMinimaxSpeech25TurboPreview": ".generation_input_minimax_speech25turbo_preview",
+    "GenerationInputNanoBanana": ".generation_input_nano_banana",
+    "GenerationInputNanoBanana2": ".generation_input_nano_banana2",
+    "GenerationInputNanoBanana2AspectRatio": ".generation_input_nano_banana2aspect_ratio",
+    "GenerationInputNanoBanana2Image": ".generation_input_nano_banana2image",
+    "GenerationInputNanoBanana2ImageAsset": ".generation_input_nano_banana2image_asset",
+    "GenerationInputNanoBanana2ImageUrl": ".generation_input_nano_banana2image_url",
+    "GenerationInputNanoBanana2Image_Asset": ".generation_input_nano_banana2image",
+    "GenerationInputNanoBanana2Image_Url": ".generation_input_nano_banana2image",
+    "GenerationInputNanoBanana2Resolution": ".generation_input_nano_banana2resolution",
+    "GenerationInputNanoBananaAspectRatio": ".generation_input_nano_banana_aspect_ratio",
+    "GenerationInputNanoBananaImage": ".generation_input_nano_banana_image",
+    "GenerationInputNanoBananaImageAsset": ".generation_input_nano_banana_image_asset",
+    "GenerationInputNanoBananaImageUrl": ".generation_input_nano_banana_image_url",
+    "GenerationInputNanoBananaImage_Asset": ".generation_input_nano_banana_image",
+    "GenerationInputNanoBananaImage_Url": ".generation_input_nano_banana_image",
+    "GenerationInputNanoBananaPro": ".generation_input_nano_banana_pro",
+    "GenerationInputNanoBananaProAspectRatio": ".generation_input_nano_banana_pro_aspect_ratio",
+    "GenerationInputNanoBananaProImage": ".generation_input_nano_banana_pro_image",
+    "GenerationInputNanoBananaProImageAsset": ".generation_input_nano_banana_pro_image_asset",
+    "GenerationInputNanoBananaProImageUrl": ".generation_input_nano_banana_pro_image_url",
+    "GenerationInputNanoBananaProImage_Asset": ".generation_input_nano_banana_pro_image",
+    "GenerationInputNanoBananaProImage_Url": ".generation_input_nano_banana_pro_image",
+    "GenerationInputNanoBananaProResolution": ".generation_input_nano_banana_pro_resolution",
+    "GenerationInputOmnihuman15": ".generation_input_omnihuman15",
+    "GenerationInputOmnihuman15AspectRatio": ".generation_input_omnihuman15aspect_ratio",
+    "GenerationInputOmnihuman15Audio": ".generation_input_omnihuman15audio",
+    "GenerationInputOmnihuman15AudioAsset": ".generation_input_omnihuman15audio_asset",
+    "GenerationInputOmnihuman15AudioUrl": ".generation_input_omnihuman15audio_url",
+    "GenerationInputOmnihuman15Audio_Asset": ".generation_input_omnihuman15audio",
+    "GenerationInputOmnihuman15Audio_Url": ".generation_input_omnihuman15audio",
+    "GenerationInputOmnihuman15Image": ".generation_input_omnihuman15image",
+    "GenerationInputOmnihuman15ImageAsset": ".generation_input_omnihuman15image_asset",
+    "GenerationInputOmnihuman15ImageUrl": ".generation_input_omnihuman15image_url",
+    "GenerationInputOmnihuman15Image_Asset": ".generation_input_omnihuman15image",
+    "GenerationInputOmnihuman15Image_Url": ".generation_input_omnihuman15image",
+    "GenerationInputOmnihuman15Resolution": ".generation_input_omnihuman15resolution",
+    "GenerationInputRecraftV3": ".generation_input_recraft_v3",
+    "GenerationInputRecraftV3AspectRatio": ".generation_input_recraft_v3aspect_ratio",
+    "GenerationInputRecraftV3Resolution": ".generation_input_recraft_v3resolution",
+    "GenerationInputSana": ".generation_input_sana",
+    "GenerationInputSanaAspectRatio": ".generation_input_sana_aspect_ratio",
+    "GenerationInputSanaResolution": ".generation_input_sana_resolution",
+    "GenerationInputSeedance15Pro": ".generation_input_seedance15pro",
+    "GenerationInputSeedance15ProAspectRatio": ".generation_input_seedance15pro_aspect_ratio",
+    "GenerationInputSeedance15ProEndImage": ".generation_input_seedance15pro_end_image",
+    "GenerationInputSeedance15ProEndImageAsset": ".generation_input_seedance15pro_end_image_asset",
+    "GenerationInputSeedance15ProEndImageUrl": ".generation_input_seedance15pro_end_image_url",
+    "GenerationInputSeedance15ProEndImage_Asset": ".generation_input_seedance15pro_end_image",
+    "GenerationInputSeedance15ProEndImage_Url": ".generation_input_seedance15pro_end_image",
+    "GenerationInputSeedance15ProImage": ".generation_input_seedance15pro_image",
+    "GenerationInputSeedance15ProImageAsset": ".generation_input_seedance15pro_image_asset",
+    "GenerationInputSeedance15ProImageUrl": ".generation_input_seedance15pro_image_url",
+    "GenerationInputSeedance15ProImage_Asset": ".generation_input_seedance15pro_image",
+    "GenerationInputSeedance15ProImage_Url": ".generation_input_seedance15pro_image",
+    "GenerationInputSeedance15ProResolution": ".generation_input_seedance15pro_resolution",
+    "GenerationInputSeedance20": ".generation_input_seedance20",
+    "GenerationInputSeedance20AspectRatio": ".generation_input_seedance20aspect_ratio",
+    "GenerationInputSeedance20AudiosItem": ".generation_input_seedance20audios_item",
+    "GenerationInputSeedance20AudiosItemAsset": ".generation_input_seedance20audios_item_asset",
+    "GenerationInputSeedance20AudiosItemUrl": ".generation_input_seedance20audios_item_url",
+    "GenerationInputSeedance20AudiosItem_Asset": ".generation_input_seedance20audios_item",
+    "GenerationInputSeedance20AudiosItem_Url": ".generation_input_seedance20audios_item",
+    "GenerationInputSeedance20EndImage": ".generation_input_seedance20end_image",
+    "GenerationInputSeedance20EndImageAsset": ".generation_input_seedance20end_image_asset",
+    "GenerationInputSeedance20EndImageUrl": ".generation_input_seedance20end_image_url",
+    "GenerationInputSeedance20EndImage_Asset": ".generation_input_seedance20end_image",
+    "GenerationInputSeedance20EndImage_Url": ".generation_input_seedance20end_image",
+    "GenerationInputSeedance20Fast": ".generation_input_seedance20fast",
+    "GenerationInputSeedance20FastAspectRatio": ".generation_input_seedance20fast_aspect_ratio",
+    "GenerationInputSeedance20FastAudiosItem": ".generation_input_seedance20fast_audios_item",
+    "GenerationInputSeedance20FastAudiosItemAsset": ".generation_input_seedance20fast_audios_item_asset",
+    "GenerationInputSeedance20FastAudiosItemUrl": ".generation_input_seedance20fast_audios_item_url",
+    "GenerationInputSeedance20FastAudiosItem_Asset": ".generation_input_seedance20fast_audios_item",
+    "GenerationInputSeedance20FastAudiosItem_Url": ".generation_input_seedance20fast_audios_item",
+    "GenerationInputSeedance20FastEndImage": ".generation_input_seedance20fast_end_image",
+    "GenerationInputSeedance20FastEndImageAsset": ".generation_input_seedance20fast_end_image_asset",
+    "GenerationInputSeedance20FastEndImageUrl": ".generation_input_seedance20fast_end_image_url",
+    "GenerationInputSeedance20FastEndImage_Asset": ".generation_input_seedance20fast_end_image",
+    "GenerationInputSeedance20FastEndImage_Url": ".generation_input_seedance20fast_end_image",
+    "GenerationInputSeedance20FastImage": ".generation_input_seedance20fast_image",
+    "GenerationInputSeedance20FastImageAsset": ".generation_input_seedance20fast_image_asset",
+    "GenerationInputSeedance20FastImageUrl": ".generation_input_seedance20fast_image_url",
+    "GenerationInputSeedance20FastImage_Asset": ".generation_input_seedance20fast_image",
+    "GenerationInputSeedance20FastImage_Url": ".generation_input_seedance20fast_image",
+    "GenerationInputSeedance20FastImagesItem": ".generation_input_seedance20fast_images_item",
+    "GenerationInputSeedance20FastImagesItemAsset": ".generation_input_seedance20fast_images_item_asset",
+    "GenerationInputSeedance20FastImagesItemUrl": ".generation_input_seedance20fast_images_item_url",
+    "GenerationInputSeedance20FastImagesItem_Asset": ".generation_input_seedance20fast_images_item",
+    "GenerationInputSeedance20FastImagesItem_Url": ".generation_input_seedance20fast_images_item",
+    "GenerationInputSeedance20FastResolution": ".generation_input_seedance20fast_resolution",
+    "GenerationInputSeedance20FastVideosItem": ".generation_input_seedance20fast_videos_item",
+    "GenerationInputSeedance20FastVideosItemAsset": ".generation_input_seedance20fast_videos_item_asset",
+    "GenerationInputSeedance20FastVideosItemUrl": ".generation_input_seedance20fast_videos_item_url",
+    "GenerationInputSeedance20FastVideosItem_Asset": ".generation_input_seedance20fast_videos_item",
+    "GenerationInputSeedance20FastVideosItem_Url": ".generation_input_seedance20fast_videos_item",
+    "GenerationInputSeedance20Image": ".generation_input_seedance20image",
+    "GenerationInputSeedance20ImageAsset": ".generation_input_seedance20image_asset",
+    "GenerationInputSeedance20ImageUrl": ".generation_input_seedance20image_url",
+    "GenerationInputSeedance20Image_Asset": ".generation_input_seedance20image",
+    "GenerationInputSeedance20Image_Url": ".generation_input_seedance20image",
+    "GenerationInputSeedance20ImagesItem": ".generation_input_seedance20images_item",
+    "GenerationInputSeedance20ImagesItemAsset": ".generation_input_seedance20images_item_asset",
+    "GenerationInputSeedance20ImagesItemUrl": ".generation_input_seedance20images_item_url",
+    "GenerationInputSeedance20ImagesItem_Asset": ".generation_input_seedance20images_item",
+    "GenerationInputSeedance20ImagesItem_Url": ".generation_input_seedance20images_item",
+    "GenerationInputSeedance20Mini": ".generation_input_seedance20mini",
+    "GenerationInputSeedance20MiniAspectRatio": ".generation_input_seedance20mini_aspect_ratio",
+    "GenerationInputSeedance20MiniAudiosItem": ".generation_input_seedance20mini_audios_item",
+    "GenerationInputSeedance20MiniAudiosItemAsset": ".generation_input_seedance20mini_audios_item_asset",
+    "GenerationInputSeedance20MiniAudiosItemUrl": ".generation_input_seedance20mini_audios_item_url",
+    "GenerationInputSeedance20MiniAudiosItem_Asset": ".generation_input_seedance20mini_audios_item",
+    "GenerationInputSeedance20MiniAudiosItem_Url": ".generation_input_seedance20mini_audios_item",
+    "GenerationInputSeedance20MiniEndImage": ".generation_input_seedance20mini_end_image",
+    "GenerationInputSeedance20MiniEndImageAsset": ".generation_input_seedance20mini_end_image_asset",
+    "GenerationInputSeedance20MiniEndImageUrl": ".generation_input_seedance20mini_end_image_url",
+    "GenerationInputSeedance20MiniEndImage_Asset": ".generation_input_seedance20mini_end_image",
+    "GenerationInputSeedance20MiniEndImage_Url": ".generation_input_seedance20mini_end_image",
+    "GenerationInputSeedance20MiniImage": ".generation_input_seedance20mini_image",
+    "GenerationInputSeedance20MiniImageAsset": ".generation_input_seedance20mini_image_asset",
+    "GenerationInputSeedance20MiniImageUrl": ".generation_input_seedance20mini_image_url",
+    "GenerationInputSeedance20MiniImage_Asset": ".generation_input_seedance20mini_image",
+    "GenerationInputSeedance20MiniImage_Url": ".generation_input_seedance20mini_image",
+    "GenerationInputSeedance20MiniImagesItem": ".generation_input_seedance20mini_images_item",
+    "GenerationInputSeedance20MiniImagesItemAsset": ".generation_input_seedance20mini_images_item_asset",
+    "GenerationInputSeedance20MiniImagesItemUrl": ".generation_input_seedance20mini_images_item_url",
+    "GenerationInputSeedance20MiniImagesItem_Asset": ".generation_input_seedance20mini_images_item",
+    "GenerationInputSeedance20MiniImagesItem_Url": ".generation_input_seedance20mini_images_item",
+    "GenerationInputSeedance20MiniResolution": ".generation_input_seedance20mini_resolution",
+    "GenerationInputSeedance20MiniVideosItem": ".generation_input_seedance20mini_videos_item",
+    "GenerationInputSeedance20MiniVideosItemAsset": ".generation_input_seedance20mini_videos_item_asset",
+    "GenerationInputSeedance20MiniVideosItemUrl": ".generation_input_seedance20mini_videos_item_url",
+    "GenerationInputSeedance20MiniVideosItem_Asset": ".generation_input_seedance20mini_videos_item",
+    "GenerationInputSeedance20MiniVideosItem_Url": ".generation_input_seedance20mini_videos_item",
+    "GenerationInputSeedance20Resolution": ".generation_input_seedance20resolution",
+    "GenerationInputSeedance20VideosItem": ".generation_input_seedance20videos_item",
+    "GenerationInputSeedance20VideosItemAsset": ".generation_input_seedance20videos_item_asset",
+    "GenerationInputSeedance20VideosItemUrl": ".generation_input_seedance20videos_item_url",
+    "GenerationInputSeedance20VideosItem_Asset": ".generation_input_seedance20videos_item",
+    "GenerationInputSeedance20VideosItem_Url": ".generation_input_seedance20videos_item",
+    "GenerationInputSeedream40": ".generation_input_seedream40",
+    "GenerationInputSeedream40AspectRatio": ".generation_input_seedream40aspect_ratio",
+    "GenerationInputSeedream40Image": ".generation_input_seedream40image",
+    "GenerationInputSeedream40ImageAsset": ".generation_input_seedream40image_asset",
+    "GenerationInputSeedream40ImageUrl": ".generation_input_seedream40image_url",
+    "GenerationInputSeedream40Image_Asset": ".generation_input_seedream40image",
+    "GenerationInputSeedream40Image_Url": ".generation_input_seedream40image",
+    "GenerationInputSeedream40Resolution": ".generation_input_seedream40resolution",
+    "GenerationInputSeedream45": ".generation_input_seedream45",
+    "GenerationInputSeedream45AspectRatio": ".generation_input_seedream45aspect_ratio",
+    "GenerationInputSeedream45Image": ".generation_input_seedream45image",
+    "GenerationInputSeedream45ImageAsset": ".generation_input_seedream45image_asset",
+    "GenerationInputSeedream45ImageUrl": ".generation_input_seedream45image_url",
+    "GenerationInputSeedream45Image_Asset": ".generation_input_seedream45image",
+    "GenerationInputSeedream45Image_Url": ".generation_input_seedream45image",
+    "GenerationInputSeedream45Resolution": ".generation_input_seedream45resolution",
+    "GenerationInputSeedream50Lite": ".generation_input_seedream50lite",
+    "GenerationInputSeedream50LiteAspectRatio": ".generation_input_seedream50lite_aspect_ratio",
+    "GenerationInputSeedream50LiteImage": ".generation_input_seedream50lite_image",
+    "GenerationInputSeedream50LiteImageAsset": ".generation_input_seedream50lite_image_asset",
+    "GenerationInputSeedream50LiteImageUrl": ".generation_input_seedream50lite_image_url",
+    "GenerationInputSeedream50LiteImage_Asset": ".generation_input_seedream50lite_image",
+    "GenerationInputSeedream50LiteImage_Url": ".generation_input_seedream50lite_image",
+    "GenerationInputSeedream50LiteResolution": ".generation_input_seedream50lite_resolution",
+    "GenerationInputSonic": ".generation_input_sonic",
+    "GenerationInputSora2Pro": ".generation_input_sora2pro",
+    "GenerationInputSora2ProAspectRatio": ".generation_input_sora2pro_aspect_ratio",
+    "GenerationInputSora2ProImage": ".generation_input_sora2pro_image",
+    "GenerationInputSora2ProImageAsset": ".generation_input_sora2pro_image_asset",
+    "GenerationInputSora2ProImageUrl": ".generation_input_sora2pro_image_url",
+    "GenerationInputSora2ProImage_Asset": ".generation_input_sora2pro_image",
+    "GenerationInputSora2ProImage_Url": ".generation_input_sora2pro_image",
+    "GenerationInputSora2ProResolution": ".generation_input_sora2pro_resolution",
+    "GenerationInputVeedFabric10": ".generation_input_veed_fabric10",
+    "GenerationInputVeedFabric10AspectRatio": ".generation_input_veed_fabric10aspect_ratio",
+    "GenerationInputVeedFabric10Audio": ".generation_input_veed_fabric10audio",
+    "GenerationInputVeedFabric10AudioAsset": ".generation_input_veed_fabric10audio_asset",
+    "GenerationInputVeedFabric10AudioUrl": ".generation_input_veed_fabric10audio_url",
+    "GenerationInputVeedFabric10Audio_Asset": ".generation_input_veed_fabric10audio",
+    "GenerationInputVeedFabric10Audio_Url": ".generation_input_veed_fabric10audio",
+    "GenerationInputVeedFabric10Fast": ".generation_input_veed_fabric10fast",
+    "GenerationInputVeedFabric10FastAspectRatio": ".generation_input_veed_fabric10fast_aspect_ratio",
+    "GenerationInputVeedFabric10FastAudio": ".generation_input_veed_fabric10fast_audio",
+    "GenerationInputVeedFabric10FastAudioAsset": ".generation_input_veed_fabric10fast_audio_asset",
+    "GenerationInputVeedFabric10FastAudioUrl": ".generation_input_veed_fabric10fast_audio_url",
+    "GenerationInputVeedFabric10FastAudio_Asset": ".generation_input_veed_fabric10fast_audio",
+    "GenerationInputVeedFabric10FastAudio_Url": ".generation_input_veed_fabric10fast_audio",
+    "GenerationInputVeedFabric10FastImage": ".generation_input_veed_fabric10fast_image",
+    "GenerationInputVeedFabric10FastImageAsset": ".generation_input_veed_fabric10fast_image_asset",
+    "GenerationInputVeedFabric10FastImageUrl": ".generation_input_veed_fabric10fast_image_url",
+    "GenerationInputVeedFabric10FastImage_Asset": ".generation_input_veed_fabric10fast_image",
+    "GenerationInputVeedFabric10FastImage_Url": ".generation_input_veed_fabric10fast_image",
+    "GenerationInputVeedFabric10FastResolution": ".generation_input_veed_fabric10fast_resolution",
+    "GenerationInputVeedFabric10Image": ".generation_input_veed_fabric10image",
+    "GenerationInputVeedFabric10ImageAsset": ".generation_input_veed_fabric10image_asset",
+    "GenerationInputVeedFabric10ImageUrl": ".generation_input_veed_fabric10image_url",
+    "GenerationInputVeedFabric10Image_Asset": ".generation_input_veed_fabric10image",
+    "GenerationInputVeedFabric10Image_Url": ".generation_input_veed_fabric10image",
+    "GenerationInputVeedFabric10Resolution": ".generation_input_veed_fabric10resolution",
+    "GenerationInputVeo2": ".generation_input_veo2",
+    "GenerationInputVeo2AspectRatio": ".generation_input_veo2aspect_ratio",
+    "GenerationInputVeo2Image": ".generation_input_veo2image",
+    "GenerationInputVeo2ImageAsset": ".generation_input_veo2image_asset",
+    "GenerationInputVeo2ImageUrl": ".generation_input_veo2image_url",
+    "GenerationInputVeo2Image_Asset": ".generation_input_veo2image",
+    "GenerationInputVeo2Image_Url": ".generation_input_veo2image",
+    "GenerationInputVeo2Resolution": ".generation_input_veo2resolution",
+    "GenerationInputVeo3": ".generation_input_veo3",
+    "GenerationInputVeo31": ".generation_input_veo31",
+    "GenerationInputVeo31AspectRatio": ".generation_input_veo31aspect_ratio",
+    "GenerationInputVeo31EndImage": ".generation_input_veo31end_image",
+    "GenerationInputVeo31EndImageAsset": ".generation_input_veo31end_image_asset",
+    "GenerationInputVeo31EndImageUrl": ".generation_input_veo31end_image_url",
+    "GenerationInputVeo31EndImage_Asset": ".generation_input_veo31end_image",
+    "GenerationInputVeo31EndImage_Url": ".generation_input_veo31end_image",
+    "GenerationInputVeo31Fast": ".generation_input_veo31fast",
+    "GenerationInputVeo31FastAspectRatio": ".generation_input_veo31fast_aspect_ratio",
+    "GenerationInputVeo31FastEndImage": ".generation_input_veo31fast_end_image",
+    "GenerationInputVeo31FastEndImageAsset": ".generation_input_veo31fast_end_image_asset",
+    "GenerationInputVeo31FastEndImageUrl": ".generation_input_veo31fast_end_image_url",
+    "GenerationInputVeo31FastEndImage_Asset": ".generation_input_veo31fast_end_image",
+    "GenerationInputVeo31FastEndImage_Url": ".generation_input_veo31fast_end_image",
+    "GenerationInputVeo31FastImage": ".generation_input_veo31fast_image",
+    "GenerationInputVeo31FastImageAsset": ".generation_input_veo31fast_image_asset",
+    "GenerationInputVeo31FastImageUrl": ".generation_input_veo31fast_image_url",
+    "GenerationInputVeo31FastImage_Asset": ".generation_input_veo31fast_image",
+    "GenerationInputVeo31FastImage_Url": ".generation_input_veo31fast_image",
+    "GenerationInputVeo31FastResolution": ".generation_input_veo31fast_resolution",
+    "GenerationInputVeo31FastVideo": ".generation_input_veo31fast_video",
+    "GenerationInputVeo31FastVideoAsset": ".generation_input_veo31fast_video_asset",
+    "GenerationInputVeo31FastVideoUrl": ".generation_input_veo31fast_video_url",
+    "GenerationInputVeo31FastVideo_Asset": ".generation_input_veo31fast_video",
+    "GenerationInputVeo31FastVideo_Url": ".generation_input_veo31fast_video",
+    "GenerationInputVeo31Image": ".generation_input_veo31image",
+    "GenerationInputVeo31ImageAsset": ".generation_input_veo31image_asset",
+    "GenerationInputVeo31ImageUrl": ".generation_input_veo31image_url",
+    "GenerationInputVeo31Image_Asset": ".generation_input_veo31image",
+    "GenerationInputVeo31Image_Url": ".generation_input_veo31image",
+    "GenerationInputVeo31ImagesItem": ".generation_input_veo31images_item",
+    "GenerationInputVeo31ImagesItemAsset": ".generation_input_veo31images_item_asset",
+    "GenerationInputVeo31ImagesItemUrl": ".generation_input_veo31images_item_url",
+    "GenerationInputVeo31ImagesItem_Asset": ".generation_input_veo31images_item",
+    "GenerationInputVeo31ImagesItem_Url": ".generation_input_veo31images_item",
+    "GenerationInputVeo31Resolution": ".generation_input_veo31resolution",
+    "GenerationInputVeo31Video": ".generation_input_veo31video",
+    "GenerationInputVeo31VideoAsset": ".generation_input_veo31video_asset",
+    "GenerationInputVeo31VideoUrl": ".generation_input_veo31video_url",
+    "GenerationInputVeo31Video_Asset": ".generation_input_veo31video",
+    "GenerationInputVeo31Video_Url": ".generation_input_veo31video",
+    "GenerationInputVeo3AspectRatio": ".generation_input_veo3aspect_ratio",
+    "GenerationInputVeo3Fast": ".generation_input_veo3fast",
+    "GenerationInputVeo3FastAspectRatio": ".generation_input_veo3fast_aspect_ratio",
+    "GenerationInputVeo3FastImage": ".generation_input_veo3fast_image",
+    "GenerationInputVeo3FastImageAsset": ".generation_input_veo3fast_image_asset",
+    "GenerationInputVeo3FastImageUrl": ".generation_input_veo3fast_image_url",
+    "GenerationInputVeo3FastImage_Asset": ".generation_input_veo3fast_image",
+    "GenerationInputVeo3FastImage_Url": ".generation_input_veo3fast_image",
+    "GenerationInputVeo3FastResolution": ".generation_input_veo3fast_resolution",
+    "GenerationInputVeo3Image": ".generation_input_veo3image",
+    "GenerationInputVeo3ImageAsset": ".generation_input_veo3image_asset",
+    "GenerationInputVeo3ImageUrl": ".generation_input_veo3image_url",
+    "GenerationInputVeo3Image_Asset": ".generation_input_veo3image",
+    "GenerationInputVeo3Image_Url": ".generation_input_veo3image",
+    "GenerationInputVeo3Resolution": ".generation_input_veo3resolution",
     "HttpValidationError": ".http_validation_error",
     "KeyCreateResponse": ".key_create_response",
     "KeyListResponse": ".key_list_response",
     "KeyRotateResponse": ".key_rotate_response",
     "KeyStatus": ".key_status",
     "KeySummary": ".key_summary",
+    "LogDrainConfig": ".log_drain_config",
+    "LogDrainFormat": ".log_drain_format",
+    "LogDrainListResponse": ".log_drain_list_response",
+    "LogDrainTestResponse": ".log_drain_test_response",
     "Metrics": ".metrics",
     "ModelDetail": ".model_detail",
     "ModelListResponse": ".model_list_response",
@@ -61,6 +1566,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelVariant": ".model_variant",
     "OutputItem": ".output_item",
     "RequestListResponse": ".request_list_response",
+    "RequestLogEmitter": ".request_log_emitter",
+    "RequestLogEvent": ".request_log_event",
+    "RequestLogItem": ".request_log_item",
+    "RequestLogLevel": ".request_log_level",
+    "RequestLogListResponse": ".request_log_list_response",
     "RequestStatus": ".request_status",
     "RequestSummary": ".request_summary",
     "ResultResponse": ".result_response",
@@ -68,11 +1578,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StatusResponse": ".status_response",
     "SubmitResponse": ".submit_response",
     "TokenCreateResponse": ".token_create_response",
+    "UsageBucket": ".usage_bucket",
+    "UsageGroupBy": ".usage_group_by",
+    "UsageResponse": ".usage_response",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
     "VoiceListResponse": ".voice_list_response",
     "VoiceSummary": ".voice_summary",
+    "WebhookDefaultConfig": ".webhook_default_config",
+    "WebhookDeliveryListResponse": ".webhook_delivery_list_response",
+    "WebhookDeliveryStatus": ".webhook_delivery_status",
+    "WebhookDeliverySummary": ".webhook_delivery_summary",
     "WebhookPublicKey": ".webhook_public_key",
+    "WebhookTestResponse": ".webhook_test_response",
 }
 
 
@@ -100,17 +1618,664 @@ def __dir__():
 __all__ = [
     "ApiKeyKind",
     "ApiKeyScope",
+    "BalanceResponse",
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",
     "EstimateResponse",
+    "FieldError",
     "FileUploadResponse",
+    "GenerationInputDreamina31",
+    "GenerationInputDreamina31AspectRatio",
+    "GenerationInputDreamina31Resolution",
+    "GenerationInputElevenlabsFlashMultilingualV2",
+    "GenerationInputElevenlabsFlashV2",
+    "GenerationInputElevenlabsMultilingualV2",
+    "GenerationInputElevenlabsV3",
+    "GenerationInputElevenlabsV3331",
+    "GenerationInputFlux11Pro",
+    "GenerationInputFlux11ProAspectRatio",
+    "GenerationInputFlux11ProResolution",
+    "GenerationInputFlux11Ultra",
+    "GenerationInputFlux11UltraAspectRatio",
+    "GenerationInputFlux11UltraResolution",
+    "GenerationInputFlux2Flex",
+    "GenerationInputFlux2FlexAspectRatio",
+    "GenerationInputFlux2FlexImage",
+    "GenerationInputFlux2FlexImageAsset",
+    "GenerationInputFlux2FlexImageUrl",
+    "GenerationInputFlux2FlexImage_Asset",
+    "GenerationInputFlux2FlexImage_Url",
+    "GenerationInputFlux2Klein9B",
+    "GenerationInputFlux2Klein9BAspectRatio",
+    "GenerationInputFlux2Klein9BImage",
+    "GenerationInputFlux2Klein9BImageAsset",
+    "GenerationInputFlux2Klein9BImageUrl",
+    "GenerationInputFlux2Klein9BImage_Asset",
+    "GenerationInputFlux2Klein9BImage_Url",
+    "GenerationInputFlux2Max",
+    "GenerationInputFlux2MaxAspectRatio",
+    "GenerationInputFlux2MaxImage",
+    "GenerationInputFlux2MaxImageAsset",
+    "GenerationInputFlux2MaxImageUrl",
+    "GenerationInputFlux2MaxImage_Asset",
+    "GenerationInputFlux2MaxImage_Url",
+    "GenerationInputFlux2Pro",
+    "GenerationInputFlux2ProAspectRatio",
+    "GenerationInputFlux2ProImage",
+    "GenerationInputFlux2ProImageAsset",
+    "GenerationInputFlux2ProImageUrl",
+    "GenerationInputFlux2ProImage_Asset",
+    "GenerationInputFlux2ProImage_Url",
+    "GenerationInputFluxDev",
+    "GenerationInputFluxDevAspectRatio",
+    "GenerationInputFluxDevResolution",
+    "GenerationInputFluxKontextMax",
+    "GenerationInputFluxKontextMaxAspectRatio",
+    "GenerationInputFluxKontextMaxImage",
+    "GenerationInputFluxKontextMaxImageAsset",
+    "GenerationInputFluxKontextMaxImageUrl",
+    "GenerationInputFluxKontextMaxImage_Asset",
+    "GenerationInputFluxKontextMaxImage_Url",
+    "GenerationInputFluxKontextMaxResolution",
+    "GenerationInputFluxKontextPro",
+    "GenerationInputFluxKontextProAspectRatio",
+    "GenerationInputFluxKontextProImage",
+    "GenerationInputFluxKontextProImageAsset",
+    "GenerationInputFluxKontextProImageUrl",
+    "GenerationInputFluxKontextProImage_Asset",
+    "GenerationInputFluxKontextProImage_Url",
+    "GenerationInputFluxKontextProResolution",
+    "GenerationInputGptImage15",
+    "GenerationInputGptImage15AspectRatio",
+    "GenerationInputGptImage15Image",
+    "GenerationInputGptImage15ImageAsset",
+    "GenerationInputGptImage15ImageUrl",
+    "GenerationInputGptImage15Image_Asset",
+    "GenerationInputGptImage15Image_Url",
+    "GenerationInputGptImage15Resolution",
+    "GenerationInputGptImage2High",
+    "GenerationInputGptImage2HighAspectRatio",
+    "GenerationInputGptImage2HighImage",
+    "GenerationInputGptImage2HighImageAsset",
+    "GenerationInputGptImage2HighImageUrl",
+    "GenerationInputGptImage2HighImage_Asset",
+    "GenerationInputGptImage2HighImage_Url",
+    "GenerationInputGptImage2HighResolution",
+    "GenerationInputGptImage2Low",
+    "GenerationInputGptImage2LowAspectRatio",
+    "GenerationInputGptImage2LowImage",
+    "GenerationInputGptImage2LowImageAsset",
+    "GenerationInputGptImage2LowImageUrl",
+    "GenerationInputGptImage2LowImage_Asset",
+    "GenerationInputGptImage2LowImage_Url",
+    "GenerationInputGptImage2LowResolution",
+    "GenerationInputGptImage2Medium",
+    "GenerationInputGptImage2MediumAspectRatio",
+    "GenerationInputGptImage2MediumImage",
+    "GenerationInputGptImage2MediumImageAsset",
+    "GenerationInputGptImage2MediumImageUrl",
+    "GenerationInputGptImage2MediumImage_Asset",
+    "GenerationInputGptImage2MediumImage_Url",
+    "GenerationInputGptImage2MediumResolution",
+    "GenerationInputGrokImagine",
+    "GenerationInputGrokImagineAspectRatio",
+    "GenerationInputGrokImagineImage",
+    "GenerationInputGrokImagineImageAsset",
+    "GenerationInputGrokImagineImageUrl",
+    "GenerationInputGrokImagineImage_Asset",
+    "GenerationInputGrokImagineImage_Url",
+    "GenerationInputGrokVideo",
+    "GenerationInputGrokVideoAspectRatio",
+    "GenerationInputGrokVideoImage",
+    "GenerationInputGrokVideoImageAsset",
+    "GenerationInputGrokVideoImageUrl",
+    "GenerationInputGrokVideoImage_Asset",
+    "GenerationInputGrokVideoImage_Url",
+    "GenerationInputGrokVideoResolution",
+    "GenerationInputHappyHorse",
+    "GenerationInputHappyHorseAspectRatio",
+    "GenerationInputHappyHorseImage",
+    "GenerationInputHappyHorseImageAsset",
+    "GenerationInputHappyHorseImageUrl",
+    "GenerationInputHappyHorseImage_Asset",
+    "GenerationInputHappyHorseImage_Url",
+    "GenerationInputHappyHorseImagesItem",
+    "GenerationInputHappyHorseImagesItemAsset",
+    "GenerationInputHappyHorseImagesItemUrl",
+    "GenerationInputHappyHorseImagesItem_Asset",
+    "GenerationInputHappyHorseImagesItem_Url",
+    "GenerationInputHappyHorseResolution",
+    "GenerationInputHedraAvatar",
+    "GenerationInputHedraAvatarAspectRatio",
+    "GenerationInputHedraAvatarAudio",
+    "GenerationInputHedraAvatarAudioAsset",
+    "GenerationInputHedraAvatarAudioUrl",
+    "GenerationInputHedraAvatarAudio_Asset",
+    "GenerationInputHedraAvatarAudio_Url",
+    "GenerationInputHedraAvatarImage",
+    "GenerationInputHedraAvatarImageAsset",
+    "GenerationInputHedraAvatarImageUrl",
+    "GenerationInputHedraAvatarImage_Asset",
+    "GenerationInputHedraAvatarImage_Url",
+    "GenerationInputHedraAvatarResolution",
+    "GenerationInputHedraAvatarStaging",
+    "GenerationInputHedraAvatarStagingAspectRatio",
+    "GenerationInputHedraAvatarStagingAudio",
+    "GenerationInputHedraAvatarStagingAudioAsset",
+    "GenerationInputHedraAvatarStagingAudioUrl",
+    "GenerationInputHedraAvatarStagingAudio_Asset",
+    "GenerationInputHedraAvatarStagingAudio_Url",
+    "GenerationInputHedraAvatarStagingImage",
+    "GenerationInputHedraAvatarStagingImageAsset",
+    "GenerationInputHedraAvatarStagingImageUrl",
+    "GenerationInputHedraAvatarStagingImage_Asset",
+    "GenerationInputHedraAvatarStagingImage_Url",
+    "GenerationInputHedraAvatarStagingResolution",
+    "GenerationInputHedraCharacter3",
+    "GenerationInputHedraCharacter3AspectRatio",
+    "GenerationInputHedraCharacter3Audio",
+    "GenerationInputHedraCharacter3AudioAsset",
+    "GenerationInputHedraCharacter3AudioUrl",
+    "GenerationInputHedraCharacter3Audio_Asset",
+    "GenerationInputHedraCharacter3Audio_Url",
+    "GenerationInputHedraCharacter3Image",
+    "GenerationInputHedraCharacter3ImageAsset",
+    "GenerationInputHedraCharacter3ImageUrl",
+    "GenerationInputHedraCharacter3Image_Asset",
+    "GenerationInputHedraCharacter3Image_Url",
+    "GenerationInputHedraCharacter3Resolution",
+    "GenerationInputHedraOmnia",
+    "GenerationInputHedraOmniaAspectRatio",
+    "GenerationInputHedraOmniaAudio",
+    "GenerationInputHedraOmniaAudioAsset",
+    "GenerationInputHedraOmniaAudioUrl",
+    "GenerationInputHedraOmniaAudio_Asset",
+    "GenerationInputHedraOmniaAudio_Url",
+    "GenerationInputHedraOmniaImage",
+    "GenerationInputHedraOmniaImageAsset",
+    "GenerationInputHedraOmniaImageUrl",
+    "GenerationInputHedraOmniaImage_Asset",
+    "GenerationInputHedraOmniaImage_Url",
+    "GenerationInputHedraOmniaResolution",
+    "GenerationInputIdeogramV2",
+    "GenerationInputIdeogramV2AspectRatio",
+    "GenerationInputIdeogramV2Resolution",
+    "GenerationInputImagen3",
+    "GenerationInputImagen3AspectRatio",
+    "GenerationInputImagen3Resolution",
+    "GenerationInputImagen4",
+    "GenerationInputImagen4AspectRatio",
+    "GenerationInputImagen4Resolution",
+    "GenerationInputKling16",
+    "GenerationInputKling16AspectRatio",
+    "GenerationInputKling16Image",
+    "GenerationInputKling16ImageAsset",
+    "GenerationInputKling16ImageUrl",
+    "GenerationInputKling16Image_Asset",
+    "GenerationInputKling16Image_Url",
+    "GenerationInputKling16Resolution",
+    "GenerationInputKling21Master",
+    "GenerationInputKling21MasterAspectRatio",
+    "GenerationInputKling21MasterImage",
+    "GenerationInputKling21MasterImageAsset",
+    "GenerationInputKling21MasterImageUrl",
+    "GenerationInputKling21MasterImage_Asset",
+    "GenerationInputKling21MasterImage_Url",
+    "GenerationInputKling21MasterResolution",
+    "GenerationInputKling21Pro",
+    "GenerationInputKling21ProAspectRatio",
+    "GenerationInputKling21ProImage",
+    "GenerationInputKling21ProImageAsset",
+    "GenerationInputKling21ProImageUrl",
+    "GenerationInputKling21ProImage_Asset",
+    "GenerationInputKling21ProImage_Url",
+    "GenerationInputKling21ProResolution",
+    "GenerationInputKling25Turbo",
+    "GenerationInputKling25TurboAspectRatio",
+    "GenerationInputKling25TurboImage",
+    "GenerationInputKling25TurboImageAsset",
+    "GenerationInputKling25TurboImageUrl",
+    "GenerationInputKling25TurboImage_Asset",
+    "GenerationInputKling25TurboImage_Url",
+    "GenerationInputKling25TurboResolution",
+    "GenerationInputKling26Pro",
+    "GenerationInputKling26ProAspectRatio",
+    "GenerationInputKling26ProImage",
+    "GenerationInputKling26ProImageAsset",
+    "GenerationInputKling26ProImageUrl",
+    "GenerationInputKling26ProImage_Asset",
+    "GenerationInputKling26ProImage_Url",
+    "GenerationInputKling26ProResolution",
+    "GenerationInputKlingAiAvatarV2Pro",
+    "GenerationInputKlingAiAvatarV2ProAspectRatio",
+    "GenerationInputKlingAiAvatarV2ProAudio",
+    "GenerationInputKlingAiAvatarV2ProAudioAsset",
+    "GenerationInputKlingAiAvatarV2ProAudioUrl",
+    "GenerationInputKlingAiAvatarV2ProAudio_Asset",
+    "GenerationInputKlingAiAvatarV2ProAudio_Url",
+    "GenerationInputKlingAiAvatarV2ProImage",
+    "GenerationInputKlingAiAvatarV2ProImageAsset",
+    "GenerationInputKlingAiAvatarV2ProImageUrl",
+    "GenerationInputKlingAiAvatarV2ProImage_Asset",
+    "GenerationInputKlingAiAvatarV2ProImage_Url",
+    "GenerationInputKlingAiAvatarV2ProResolution",
+    "GenerationInputKlingAiAvatarV2Standard",
+    "GenerationInputKlingAiAvatarV2StandardAspectRatio",
+    "GenerationInputKlingAiAvatarV2StandardAudio",
+    "GenerationInputKlingAiAvatarV2StandardAudioAsset",
+    "GenerationInputKlingAiAvatarV2StandardAudioUrl",
+    "GenerationInputKlingAiAvatarV2StandardAudio_Asset",
+    "GenerationInputKlingAiAvatarV2StandardAudio_Url",
+    "GenerationInputKlingAiAvatarV2StandardImage",
+    "GenerationInputKlingAiAvatarV2StandardImageAsset",
+    "GenerationInputKlingAiAvatarV2StandardImageUrl",
+    "GenerationInputKlingAiAvatarV2StandardImage_Asset",
+    "GenerationInputKlingAiAvatarV2StandardImage_Url",
+    "GenerationInputKlingAiAvatarV2StandardResolution",
+    "GenerationInputKlingO1",
+    "GenerationInputKlingO1AspectRatio",
+    "GenerationInputKlingO1EndImage",
+    "GenerationInputKlingO1EndImageAsset",
+    "GenerationInputKlingO1EndImageUrl",
+    "GenerationInputKlingO1EndImage_Asset",
+    "GenerationInputKlingO1EndImage_Url",
+    "GenerationInputKlingO1Image",
+    "GenerationInputKlingO1ImageAsset",
+    "GenerationInputKlingO1ImageUrl",
+    "GenerationInputKlingO1Image_Asset",
+    "GenerationInputKlingO1Image_Url",
+    "GenerationInputKlingO1ImagesItem",
+    "GenerationInputKlingO1ImagesItemAsset",
+    "GenerationInputKlingO1ImagesItemUrl",
+    "GenerationInputKlingO1ImagesItem_Asset",
+    "GenerationInputKlingO1ImagesItem_Url",
+    "GenerationInputKlingO1Resolution",
+    "GenerationInputKlingO3Pro",
+    "GenerationInputKlingO3ProAspectRatio",
+    "GenerationInputKlingO3ProEndImage",
+    "GenerationInputKlingO3ProEndImageAsset",
+    "GenerationInputKlingO3ProEndImageUrl",
+    "GenerationInputKlingO3ProEndImage_Asset",
+    "GenerationInputKlingO3ProEndImage_Url",
+    "GenerationInputKlingO3ProImage",
+    "GenerationInputKlingO3ProImageAsset",
+    "GenerationInputKlingO3ProImageUrl",
+    "GenerationInputKlingO3ProImage_Asset",
+    "GenerationInputKlingO3ProImage_Url",
+    "GenerationInputKlingO3ProImagesItem",
+    "GenerationInputKlingO3ProImagesItemAsset",
+    "GenerationInputKlingO3ProImagesItemUrl",
+    "GenerationInputKlingO3ProImagesItem_Asset",
+    "GenerationInputKlingO3ProImagesItem_Url",
+    "GenerationInputKlingO3ProResolution",
+    "GenerationInputKlingO3Standard",
+    "GenerationInputKlingO3StandardAspectRatio",
+    "GenerationInputKlingO3StandardEndImage",
+    "GenerationInputKlingO3StandardEndImageAsset",
+    "GenerationInputKlingO3StandardEndImageUrl",
+    "GenerationInputKlingO3StandardEndImage_Asset",
+    "GenerationInputKlingO3StandardEndImage_Url",
+    "GenerationInputKlingO3StandardImage",
+    "GenerationInputKlingO3StandardImageAsset",
+    "GenerationInputKlingO3StandardImageUrl",
+    "GenerationInputKlingO3StandardImage_Asset",
+    "GenerationInputKlingO3StandardImage_Url",
+    "GenerationInputKlingO3StandardImagesItem",
+    "GenerationInputKlingO3StandardImagesItemAsset",
+    "GenerationInputKlingO3StandardImagesItemUrl",
+    "GenerationInputKlingO3StandardImagesItem_Asset",
+    "GenerationInputKlingO3StandardImagesItem_Url",
+    "GenerationInputKlingO3StandardResolution",
+    "GenerationInputKlingV3Pro",
+    "GenerationInputKlingV3ProAspectRatio",
+    "GenerationInputKlingV3ProEndImage",
+    "GenerationInputKlingV3ProEndImageAsset",
+    "GenerationInputKlingV3ProEndImageUrl",
+    "GenerationInputKlingV3ProEndImage_Asset",
+    "GenerationInputKlingV3ProEndImage_Url",
+    "GenerationInputKlingV3ProImage",
+    "GenerationInputKlingV3ProImageAsset",
+    "GenerationInputKlingV3ProImageUrl",
+    "GenerationInputKlingV3ProImage_Asset",
+    "GenerationInputKlingV3ProImage_Url",
+    "GenerationInputKlingV3ProResolution",
+    "GenerationInputKlingV3Standard",
+    "GenerationInputKlingV3StandardAspectRatio",
+    "GenerationInputKlingV3StandardEndImage",
+    "GenerationInputKlingV3StandardEndImageAsset",
+    "GenerationInputKlingV3StandardEndImageUrl",
+    "GenerationInputKlingV3StandardEndImage_Asset",
+    "GenerationInputKlingV3StandardEndImage_Url",
+    "GenerationInputKlingV3StandardImage",
+    "GenerationInputKlingV3StandardImageAsset",
+    "GenerationInputKlingV3StandardImageUrl",
+    "GenerationInputKlingV3StandardImage_Asset",
+    "GenerationInputKlingV3StandardImage_Url",
+    "GenerationInputKlingV3StandardResolution",
+    "GenerationInputMinimaxHailuo02Pro",
+    "GenerationInputMinimaxHailuo02ProAspectRatio",
+    "GenerationInputMinimaxHailuo02ProImage",
+    "GenerationInputMinimaxHailuo02ProImageAsset",
+    "GenerationInputMinimaxHailuo02ProImageUrl",
+    "GenerationInputMinimaxHailuo02ProImage_Asset",
+    "GenerationInputMinimaxHailuo02ProImage_Url",
+    "GenerationInputMinimaxHailuo02ProResolution",
+    "GenerationInputMinimaxHailuo02Standard",
+    "GenerationInputMinimaxHailuo02StandardAspectRatio",
+    "GenerationInputMinimaxHailuo02StandardImage",
+    "GenerationInputMinimaxHailuo02StandardImageAsset",
+    "GenerationInputMinimaxHailuo02StandardImageUrl",
+    "GenerationInputMinimaxHailuo02StandardImage_Asset",
+    "GenerationInputMinimaxHailuo02StandardImage_Url",
+    "GenerationInputMinimaxHailuo02StandardResolution",
+    "GenerationInputMinimaxHailuo23FastPro",
+    "GenerationInputMinimaxHailuo23FastProAspectRatio",
+    "GenerationInputMinimaxHailuo23FastProImage",
+    "GenerationInputMinimaxHailuo23FastProImageAsset",
+    "GenerationInputMinimaxHailuo23FastProImageUrl",
+    "GenerationInputMinimaxHailuo23FastProImage_Asset",
+    "GenerationInputMinimaxHailuo23FastProImage_Url",
+    "GenerationInputMinimaxHailuo23FastProResolution",
+    "GenerationInputMinimaxHailuo23FastStandard",
+    "GenerationInputMinimaxHailuo23FastStandardAspectRatio",
+    "GenerationInputMinimaxHailuo23FastStandardImage",
+    "GenerationInputMinimaxHailuo23FastStandardImageAsset",
+    "GenerationInputMinimaxHailuo23FastStandardImageUrl",
+    "GenerationInputMinimaxHailuo23FastStandardImage_Asset",
+    "GenerationInputMinimaxHailuo23FastStandardImage_Url",
+    "GenerationInputMinimaxHailuo23FastStandardResolution",
+    "GenerationInputMinimaxHailuo23Pro",
+    "GenerationInputMinimaxHailuo23ProAspectRatio",
+    "GenerationInputMinimaxHailuo23ProImage",
+    "GenerationInputMinimaxHailuo23ProImageAsset",
+    "GenerationInputMinimaxHailuo23ProImageUrl",
+    "GenerationInputMinimaxHailuo23ProImage_Asset",
+    "GenerationInputMinimaxHailuo23ProImage_Url",
+    "GenerationInputMinimaxHailuo23ProResolution",
+    "GenerationInputMinimaxHailuo23Standard",
+    "GenerationInputMinimaxHailuo23StandardAspectRatio",
+    "GenerationInputMinimaxHailuo23StandardImage",
+    "GenerationInputMinimaxHailuo23StandardImageAsset",
+    "GenerationInputMinimaxHailuo23StandardImageUrl",
+    "GenerationInputMinimaxHailuo23StandardImage_Asset",
+    "GenerationInputMinimaxHailuo23StandardImage_Url",
+    "GenerationInputMinimaxHailuo23StandardResolution",
+    "GenerationInputMinimaxSpeech25HdPreview",
+    "GenerationInputMinimaxSpeech25TurboPreview",
+    "GenerationInputNanoBanana",
+    "GenerationInputNanoBanana2",
+    "GenerationInputNanoBanana2AspectRatio",
+    "GenerationInputNanoBanana2Image",
+    "GenerationInputNanoBanana2ImageAsset",
+    "GenerationInputNanoBanana2ImageUrl",
+    "GenerationInputNanoBanana2Image_Asset",
+    "GenerationInputNanoBanana2Image_Url",
+    "GenerationInputNanoBanana2Resolution",
+    "GenerationInputNanoBananaAspectRatio",
+    "GenerationInputNanoBananaImage",
+    "GenerationInputNanoBananaImageAsset",
+    "GenerationInputNanoBananaImageUrl",
+    "GenerationInputNanoBananaImage_Asset",
+    "GenerationInputNanoBananaImage_Url",
+    "GenerationInputNanoBananaPro",
+    "GenerationInputNanoBananaProAspectRatio",
+    "GenerationInputNanoBananaProImage",
+    "GenerationInputNanoBananaProImageAsset",
+    "GenerationInputNanoBananaProImageUrl",
+    "GenerationInputNanoBananaProImage_Asset",
+    "GenerationInputNanoBananaProImage_Url",
+    "GenerationInputNanoBananaProResolution",
+    "GenerationInputOmnihuman15",
+    "GenerationInputOmnihuman15AspectRatio",
+    "GenerationInputOmnihuman15Audio",
+    "GenerationInputOmnihuman15AudioAsset",
+    "GenerationInputOmnihuman15AudioUrl",
+    "GenerationInputOmnihuman15Audio_Asset",
+    "GenerationInputOmnihuman15Audio_Url",
+    "GenerationInputOmnihuman15Image",
+    "GenerationInputOmnihuman15ImageAsset",
+    "GenerationInputOmnihuman15ImageUrl",
+    "GenerationInputOmnihuman15Image_Asset",
+    "GenerationInputOmnihuman15Image_Url",
+    "GenerationInputOmnihuman15Resolution",
+    "GenerationInputRecraftV3",
+    "GenerationInputRecraftV3AspectRatio",
+    "GenerationInputRecraftV3Resolution",
+    "GenerationInputSana",
+    "GenerationInputSanaAspectRatio",
+    "GenerationInputSanaResolution",
+    "GenerationInputSeedance15Pro",
+    "GenerationInputSeedance15ProAspectRatio",
+    "GenerationInputSeedance15ProEndImage",
+    "GenerationInputSeedance15ProEndImageAsset",
+    "GenerationInputSeedance15ProEndImageUrl",
+    "GenerationInputSeedance15ProEndImage_Asset",
+    "GenerationInputSeedance15ProEndImage_Url",
+    "GenerationInputSeedance15ProImage",
+    "GenerationInputSeedance15ProImageAsset",
+    "GenerationInputSeedance15ProImageUrl",
+    "GenerationInputSeedance15ProImage_Asset",
+    "GenerationInputSeedance15ProImage_Url",
+    "GenerationInputSeedance15ProResolution",
+    "GenerationInputSeedance20",
+    "GenerationInputSeedance20AspectRatio",
+    "GenerationInputSeedance20AudiosItem",
+    "GenerationInputSeedance20AudiosItemAsset",
+    "GenerationInputSeedance20AudiosItemUrl",
+    "GenerationInputSeedance20AudiosItem_Asset",
+    "GenerationInputSeedance20AudiosItem_Url",
+    "GenerationInputSeedance20EndImage",
+    "GenerationInputSeedance20EndImageAsset",
+    "GenerationInputSeedance20EndImageUrl",
+    "GenerationInputSeedance20EndImage_Asset",
+    "GenerationInputSeedance20EndImage_Url",
+    "GenerationInputSeedance20Fast",
+    "GenerationInputSeedance20FastAspectRatio",
+    "GenerationInputSeedance20FastAudiosItem",
+    "GenerationInputSeedance20FastAudiosItemAsset",
+    "GenerationInputSeedance20FastAudiosItemUrl",
+    "GenerationInputSeedance20FastAudiosItem_Asset",
+    "GenerationInputSeedance20FastAudiosItem_Url",
+    "GenerationInputSeedance20FastEndImage",
+    "GenerationInputSeedance20FastEndImageAsset",
+    "GenerationInputSeedance20FastEndImageUrl",
+    "GenerationInputSeedance20FastEndImage_Asset",
+    "GenerationInputSeedance20FastEndImage_Url",
+    "GenerationInputSeedance20FastImage",
+    "GenerationInputSeedance20FastImageAsset",
+    "GenerationInputSeedance20FastImageUrl",
+    "GenerationInputSeedance20FastImage_Asset",
+    "GenerationInputSeedance20FastImage_Url",
+    "GenerationInputSeedance20FastImagesItem",
+    "GenerationInputSeedance20FastImagesItemAsset",
+    "GenerationInputSeedance20FastImagesItemUrl",
+    "GenerationInputSeedance20FastImagesItem_Asset",
+    "GenerationInputSeedance20FastImagesItem_Url",
+    "GenerationInputSeedance20FastResolution",
+    "GenerationInputSeedance20FastVideosItem",
+    "GenerationInputSeedance20FastVideosItemAsset",
+    "GenerationInputSeedance20FastVideosItemUrl",
+    "GenerationInputSeedance20FastVideosItem_Asset",
+    "GenerationInputSeedance20FastVideosItem_Url",
+    "GenerationInputSeedance20Image",
+    "GenerationInputSeedance20ImageAsset",
+    "GenerationInputSeedance20ImageUrl",
+    "GenerationInputSeedance20Image_Asset",
+    "GenerationInputSeedance20Image_Url",
+    "GenerationInputSeedance20ImagesItem",
+    "GenerationInputSeedance20ImagesItemAsset",
+    "GenerationInputSeedance20ImagesItemUrl",
+    "GenerationInputSeedance20ImagesItem_Asset",
+    "GenerationInputSeedance20ImagesItem_Url",
+    "GenerationInputSeedance20Mini",
+    "GenerationInputSeedance20MiniAspectRatio",
+    "GenerationInputSeedance20MiniAudiosItem",
+    "GenerationInputSeedance20MiniAudiosItemAsset",
+    "GenerationInputSeedance20MiniAudiosItemUrl",
+    "GenerationInputSeedance20MiniAudiosItem_Asset",
+    "GenerationInputSeedance20MiniAudiosItem_Url",
+    "GenerationInputSeedance20MiniEndImage",
+    "GenerationInputSeedance20MiniEndImageAsset",
+    "GenerationInputSeedance20MiniEndImageUrl",
+    "GenerationInputSeedance20MiniEndImage_Asset",
+    "GenerationInputSeedance20MiniEndImage_Url",
+    "GenerationInputSeedance20MiniImage",
+    "GenerationInputSeedance20MiniImageAsset",
+    "GenerationInputSeedance20MiniImageUrl",
+    "GenerationInputSeedance20MiniImage_Asset",
+    "GenerationInputSeedance20MiniImage_Url",
+    "GenerationInputSeedance20MiniImagesItem",
+    "GenerationInputSeedance20MiniImagesItemAsset",
+    "GenerationInputSeedance20MiniImagesItemUrl",
+    "GenerationInputSeedance20MiniImagesItem_Asset",
+    "GenerationInputSeedance20MiniImagesItem_Url",
+    "GenerationInputSeedance20MiniResolution",
+    "GenerationInputSeedance20MiniVideosItem",
+    "GenerationInputSeedance20MiniVideosItemAsset",
+    "GenerationInputSeedance20MiniVideosItemUrl",
+    "GenerationInputSeedance20MiniVideosItem_Asset",
+    "GenerationInputSeedance20MiniVideosItem_Url",
+    "GenerationInputSeedance20Resolution",
+    "GenerationInputSeedance20VideosItem",
+    "GenerationInputSeedance20VideosItemAsset",
+    "GenerationInputSeedance20VideosItemUrl",
+    "GenerationInputSeedance20VideosItem_Asset",
+    "GenerationInputSeedance20VideosItem_Url",
+    "GenerationInputSeedream40",
+    "GenerationInputSeedream40AspectRatio",
+    "GenerationInputSeedream40Image",
+    "GenerationInputSeedream40ImageAsset",
+    "GenerationInputSeedream40ImageUrl",
+    "GenerationInputSeedream40Image_Asset",
+    "GenerationInputSeedream40Image_Url",
+    "GenerationInputSeedream40Resolution",
+    "GenerationInputSeedream45",
+    "GenerationInputSeedream45AspectRatio",
+    "GenerationInputSeedream45Image",
+    "GenerationInputSeedream45ImageAsset",
+    "GenerationInputSeedream45ImageUrl",
+    "GenerationInputSeedream45Image_Asset",
+    "GenerationInputSeedream45Image_Url",
+    "GenerationInputSeedream45Resolution",
+    "GenerationInputSeedream50Lite",
+    "GenerationInputSeedream50LiteAspectRatio",
+    "GenerationInputSeedream50LiteImage",
+    "GenerationInputSeedream50LiteImageAsset",
+    "GenerationInputSeedream50LiteImageUrl",
+    "GenerationInputSeedream50LiteImage_Asset",
+    "GenerationInputSeedream50LiteImage_Url",
+    "GenerationInputSeedream50LiteResolution",
+    "GenerationInputSonic",
+    "GenerationInputSora2Pro",
+    "GenerationInputSora2ProAspectRatio",
+    "GenerationInputSora2ProImage",
+    "GenerationInputSora2ProImageAsset",
+    "GenerationInputSora2ProImageUrl",
+    "GenerationInputSora2ProImage_Asset",
+    "GenerationInputSora2ProImage_Url",
+    "GenerationInputSora2ProResolution",
+    "GenerationInputVeedFabric10",
+    "GenerationInputVeedFabric10AspectRatio",
+    "GenerationInputVeedFabric10Audio",
+    "GenerationInputVeedFabric10AudioAsset",
+    "GenerationInputVeedFabric10AudioUrl",
+    "GenerationInputVeedFabric10Audio_Asset",
+    "GenerationInputVeedFabric10Audio_Url",
+    "GenerationInputVeedFabric10Fast",
+    "GenerationInputVeedFabric10FastAspectRatio",
+    "GenerationInputVeedFabric10FastAudio",
+    "GenerationInputVeedFabric10FastAudioAsset",
+    "GenerationInputVeedFabric10FastAudioUrl",
+    "GenerationInputVeedFabric10FastAudio_Asset",
+    "GenerationInputVeedFabric10FastAudio_Url",
+    "GenerationInputVeedFabric10FastImage",
+    "GenerationInputVeedFabric10FastImageAsset",
+    "GenerationInputVeedFabric10FastImageUrl",
+    "GenerationInputVeedFabric10FastImage_Asset",
+    "GenerationInputVeedFabric10FastImage_Url",
+    "GenerationInputVeedFabric10FastResolution",
+    "GenerationInputVeedFabric10Image",
+    "GenerationInputVeedFabric10ImageAsset",
+    "GenerationInputVeedFabric10ImageUrl",
+    "GenerationInputVeedFabric10Image_Asset",
+    "GenerationInputVeedFabric10Image_Url",
+    "GenerationInputVeedFabric10Resolution",
+    "GenerationInputVeo2",
+    "GenerationInputVeo2AspectRatio",
+    "GenerationInputVeo2Image",
+    "GenerationInputVeo2ImageAsset",
+    "GenerationInputVeo2ImageUrl",
+    "GenerationInputVeo2Image_Asset",
+    "GenerationInputVeo2Image_Url",
+    "GenerationInputVeo2Resolution",
+    "GenerationInputVeo3",
+    "GenerationInputVeo31",
+    "GenerationInputVeo31AspectRatio",
+    "GenerationInputVeo31EndImage",
+    "GenerationInputVeo31EndImageAsset",
+    "GenerationInputVeo31EndImageUrl",
+    "GenerationInputVeo31EndImage_Asset",
+    "GenerationInputVeo31EndImage_Url",
+    "GenerationInputVeo31Fast",
+    "GenerationInputVeo31FastAspectRatio",
+    "GenerationInputVeo31FastEndImage",
+    "GenerationInputVeo31FastEndImageAsset",
+    "GenerationInputVeo31FastEndImageUrl",
+    "GenerationInputVeo31FastEndImage_Asset",
+    "GenerationInputVeo31FastEndImage_Url",
+    "GenerationInputVeo31FastImage",
+    "GenerationInputVeo31FastImageAsset",
+    "GenerationInputVeo31FastImageUrl",
+    "GenerationInputVeo31FastImage_Asset",
+    "GenerationInputVeo31FastImage_Url",
+    "GenerationInputVeo31FastResolution",
+    "GenerationInputVeo31FastVideo",
+    "GenerationInputVeo31FastVideoAsset",
+    "GenerationInputVeo31FastVideoUrl",
+    "GenerationInputVeo31FastVideo_Asset",
+    "GenerationInputVeo31FastVideo_Url",
+    "GenerationInputVeo31Image",
+    "GenerationInputVeo31ImageAsset",
+    "GenerationInputVeo31ImageUrl",
+    "GenerationInputVeo31Image_Asset",
+    "GenerationInputVeo31Image_Url",
+    "GenerationInputVeo31ImagesItem",
+    "GenerationInputVeo31ImagesItemAsset",
+    "GenerationInputVeo31ImagesItemUrl",
+    "GenerationInputVeo31ImagesItem_Asset",
+    "GenerationInputVeo31ImagesItem_Url",
+    "GenerationInputVeo31Resolution",
+    "GenerationInputVeo31Video",
+    "GenerationInputVeo31VideoAsset",
+    "GenerationInputVeo31VideoUrl",
+    "GenerationInputVeo31Video_Asset",
+    "GenerationInputVeo31Video_Url",
+    "GenerationInputVeo3AspectRatio",
+    "GenerationInputVeo3Fast",
+    "GenerationInputVeo3FastAspectRatio",
+    "GenerationInputVeo3FastImage",
+    "GenerationInputVeo3FastImageAsset",
+    "GenerationInputVeo3FastImageUrl",
+    "GenerationInputVeo3FastImage_Asset",
+    "GenerationInputVeo3FastImage_Url",
+    "GenerationInputVeo3FastResolution",
+    "GenerationInputVeo3Image",
+    "GenerationInputVeo3ImageAsset",
+    "GenerationInputVeo3ImageUrl",
+    "GenerationInputVeo3Image_Asset",
+    "GenerationInputVeo3Image_Url",
+    "GenerationInputVeo3Resolution",
     "HttpValidationError",
     "KeyCreateResponse",
     "KeyListResponse",
     "KeyRotateResponse",
     "KeyStatus",
     "KeySummary",
+    "LogDrainConfig",
+    "LogDrainFormat",
+    "LogDrainListResponse",
+    "LogDrainTestResponse",
     "Metrics",
     "ModelDetail",
     "ModelListResponse",
@@ -119,6 +2284,11 @@ __all__ = [
     "ModelVariant",
     "OutputItem",
     "RequestListResponse",
+    "RequestLogEmitter",
+    "RequestLogEvent",
+    "RequestLogItem",
+    "RequestLogLevel",
+    "RequestLogListResponse",
     "RequestStatus",
     "RequestSummary",
     "ResultResponse",
@@ -126,9 +2296,17 @@ __all__ = [
     "StatusResponse",
     "SubmitResponse",
     "TokenCreateResponse",
+    "UsageBucket",
+    "UsageGroupBy",
+    "UsageResponse",
     "ValidationError",
     "ValidationErrorLocItem",
     "VoiceListResponse",
     "VoiceSummary",
+    "WebhookDefaultConfig",
+    "WebhookDeliveryListResponse",
+    "WebhookDeliveryStatus",
+    "WebhookDeliverySummary",
     "WebhookPublicKey",
+    "WebhookTestResponse",
 ]

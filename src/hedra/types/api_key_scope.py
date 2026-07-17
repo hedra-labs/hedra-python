@@ -9,6 +9,7 @@ ApiKeyScope = typing.Union[
         "models:read",
         "files:write",
         "webhooks:manage",
+        "log_drains:manage",
         "usage:read",
         "keys:manage",
     ],
