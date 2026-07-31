@@ -12,6 +12,7 @@ import httpx
 import pytest
 
 from hedra import Hedra
+from hedra.types import InputFluxDev
 
 
 def _client_with_capture(captured: dict, body: dict, *, api_key: str = "test-key") -> Hedra:
@@ -33,31 +34,33 @@ def test_bearer_auth_header_and_base_url() -> None:
     assert str(request.url) == "https://api.hedra.com/v3/models"
 
 
-def test_queue_submit_posts_to_model_path() -> None:
+def test_job_submit_posts_to_model_path() -> None:
     captured: dict = {}
     client = _client_with_capture(
         captured,
         {
-            "request_id": "req_123",
-            "model": "kling-o3-pro-i2v",
+            "job_id": "job_123",
+            "model": "flux-dev",
             "status": "IN_QUEUE",
-            "status_url": "https://api.hedra.com/v3/requests/req_123/status",
-            "response_url": "https://api.hedra.com/v3/requests/req_123",
+            "status_url": "https://api.hedra.com/v3/jobs/job_123/status",
+            "result_url": "https://api.hedra.com/v3/jobs/job_123",
         },
     )
 
-    client.queue.submit(model="kling-o3-pro", input={"prompt": "a fox"})
+    client.jobs.submit_flux_dev(
+        input=InputFluxDev(prompt="a fox", aspect_ratio="1:1", resolution="1080p")
+    )
 
     request = captured["request"]
     assert request.method == "POST"
-    assert str(request.url) == "https://api.hedra.com/v3/queue/kling-o3-pro"
+    assert str(request.url) == "https://api.hedra.com/v3/models/flux-dev"
 
 
-def test_requests_list_sends_cursor_pagination_params() -> None:
+def test_jobs_list_sends_cursor_pagination_params() -> None:
     captured: dict = {}
     client = _client_with_capture(captured, {"data": [], "next_cursor": None})
 
-    pager = client.requests.list(limit=5)
+    pager = client.jobs.list(limit=5)
     list(pager)  # drain the pager so the first page request fires
 
     url = captured["request"].url
