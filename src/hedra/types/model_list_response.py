@@ -8,8 +8,11 @@ from .model_summary import ModelSummary
 
 
 class ModelListResponse(UniversalBaseModel):
-    data: typing.Optional[typing.List[ModelSummary]] = None
-    next_cursor: typing.Optional[str] = None
+    data: typing.List[ModelSummary]
+    next_cursor: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Opaque cursor for the next page, or null when this response completes the list. Always present. Endpoints that serve the whole collection at once always return null.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,8 +7,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class EstimateResponse(UniversalBaseModel):
+    """
+    Price of a would-be submit, in US dollars.
+    """
+
     model: str
-    credits: int
+    cost: float = pydantic.Field()
+    """
+    Price of a would-be submit.
+    """
+
+    currency: str = pydantic.Field()
+    """
+    ISO-4217 currency code for `cost`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

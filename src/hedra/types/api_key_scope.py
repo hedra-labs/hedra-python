@@ -4,11 +4,12 @@ import typing
 
 ApiKeyScope = typing.Union[
     typing.Literal[
-        "generations:write",
-        "requests:read",
+        "jobs:read",
+        "jobs:write",
         "models:read",
         "files:write",
         "webhooks:manage",
+        "log_drains:manage",
         "usage:read",
         "keys:manage",
     ],

@@ -7,7 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Metrics(UniversalBaseModel):
-    inference_time_ms: typing.Optional[int] = None
+    """
+    Timing measured for a completed job.
+    """
+
+    processing_time_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Wall-clock milliseconds between this job's `started` and `completed` lifecycle events. It brackets provider queueing, generation, output download, and any failed attempts with their retry backoff, so it measures the whole job rather than the model's own inference time, and it is not a provider-reported figure. Read from the job's durable lifecycle records, so polled results and webhook deliveries report the same value. Null when the job did not record both events.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

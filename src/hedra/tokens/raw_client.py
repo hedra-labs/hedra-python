@@ -15,10 +15,8 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.api_key_scope import ApiKeyScope
 from ..types.error_response import ErrorResponse
-from ..types.http_validation_error import HttpValidationError
 from ..types.token_create_response import TokenCreateResponse
 from pydantic import ValidationError
 
@@ -115,17 +113,6 @@ class RawTokensClient:
                         ErrorResponse,
                         parse_obj_as(
                             type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -251,17 +238,6 @@ class AsyncRawTokensClient:
                         ErrorResponse,
                         parse_obj_as(
                             type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        parse_obj_as(
-                            type_=HttpValidationError,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

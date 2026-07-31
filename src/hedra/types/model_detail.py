@@ -4,20 +4,17 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .model_route import ModelRoute
-from .model_variant import ModelVariant
+from .modality import Modality
 
 
 class ModelDetail(UniversalBaseModel):
     id: str
-    kind: str
-    modality: str
+    modality: Modality
     name: typing.Optional[str] = None
     description: typing.Optional[str] = None
+    logo_url: typing.Optional[str] = None
     input_schema: typing.Optional[typing.Dict[str, typing.Any]] = None
     output_schema: typing.Optional[typing.Dict[str, typing.Any]] = None
-    routing: typing.Optional[typing.List[ModelRoute]] = None
-    variants: typing.Optional[typing.List[ModelVariant]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

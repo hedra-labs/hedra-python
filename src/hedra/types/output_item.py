@@ -5,15 +5,21 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_envelope import ErrorEnvelope
-from .request_status import RequestStatus
+from .output_status import OutputStatus
 
 
 class OutputItem(UniversalBaseModel):
     """
-    One per-modality output. `outputs` is always an array, even for one.
+    One item of a job's `outputs[]` (`GET /v3/jobs/{job_id}`). `outputs` is
+    always an array, even for a single output.
+
+    Every key is always present. The ones a modality carries no value for
+    serialize as null — an image output reports `duration_ms: null` and
+    `fps: null`, an audio output `width: null` — so the shape is one object
+    rather than one per modality.
     """
 
-    status: typing.Optional[RequestStatus] = None
+    status: typing.Optional[OutputStatus] = None
     url: typing.Optional[str] = None
     content_type: typing.Optional[str] = None
     width: typing.Optional[int] = None
