@@ -3,8 +3,12 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.estimate_response import EstimateResponse
+from ..types.job_list_response import JobListResponse
+from ..types.job_summary import JobSummary
+from ..types.modality import Modality
 from ..types.model_detail import ModelDetail
 from ..types.model_list_response import ModelListResponse
 from ..types.voice_list_response import VoiceListResponse
@@ -30,12 +34,13 @@ class ModelsClient:
         return self._raw_client
 
     def list(
-        self, *, type: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, modality: typing.Optional[Modality] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> ModelListResponse:
         """
         Parameters
         ----------
-        type : typing.Optional[str]
+        modality : typing.Optional[Modality]
+            Only models with this modality, matching `modality` on each returned model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -54,7 +59,7 @@ class ModelsClient:
         )
         client.models.list()
         """
-        _response = self._raw_client.list(type=type, request_options=request_options)
+        _response = self._raw_client.list(modality=modality, request_options=request_options)
         return _response.data
 
     def get(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelDetail:
@@ -84,6 +89,49 @@ class ModelsClient:
         """
         _response = self._raw_client.get(model, request_options=request_options)
         return _response.data
+
+    def list_model_jobs(
+        self,
+        model: str,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[JobSummary, JobListResponse]:
+        """
+        Parameters
+        ----------
+        model : str
+
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[JobSummary, JobListResponse]
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        response = client.models.list_model_jobs(
+            model="model",
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_model_jobs(model, limit=limit, cursor=cursor, request_options=request_options)
 
     def list_voices(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceListResponse:
         """
@@ -200,12 +248,13 @@ class AsyncModelsClient:
         return self._raw_client
 
     async def list(
-        self, *, type: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, modality: typing.Optional[Modality] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> ModelListResponse:
         """
         Parameters
         ----------
-        type : typing.Optional[str]
+        modality : typing.Optional[Modality]
+            Only models with this modality, matching `modality` on each returned model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -232,7 +281,7 @@ class AsyncModelsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(type=type, request_options=request_options)
+        _response = await self._raw_client.list(modality=modality, request_options=request_options)
         return _response.data
 
     async def get(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelDetail:
@@ -270,6 +319,60 @@ class AsyncModelsClient:
         """
         _response = await self._raw_client.get(model, request_options=request_options)
         return _response.data
+
+    async def list_model_jobs(
+        self,
+        model: str,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[JobSummary, JobListResponse]:
+        """
+        Parameters
+        ----------
+        model : str
+
+        limit : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[JobSummary, JobListResponse]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            response = await client.models.list_model_jobs(
+                model="model",
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_model_jobs(
+            model, limit=limit, cursor=cursor, request_options=request_options
+        )
 
     async def list_voices(
         self, model: str, *, request_options: typing.Optional[RequestOptions] = None

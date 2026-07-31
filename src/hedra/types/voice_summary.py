@@ -11,7 +11,11 @@ class VoiceSummary(UniversalBaseModel):
     One voice a model accepts; `id` goes into ``input.voice_id`` on submit.
     """
 
-    id: str
+    id: str = pydantic.Field()
+    """
+    The voice's id (`voice_<uuid>`); pass it as `input.voice_id` on submit.
+    """
+
     name: typing.Optional[str] = None
     preview_url: typing.Optional[str] = None
     labels: typing.Optional[typing.Dict[str, str]] = None

@@ -5,20 +5,47 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_envelope import ErrorEnvelope
+from .job_log_item import JobLogItem
+from .job_status import JobStatus
 from .metrics import Metrics
 from .output_item import OutputItem
-from .request_status import RequestStatus
-from .status_log import StatusLog
 
 
 class ResultResponse(UniversalBaseModel):
-    request_id: str
+    job_id: str
     model: str
-    status: RequestStatus
+    quality: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The quality level this job ran at; present only for models that offer quality levels.
+    """
+
+    status: JobStatus
+    prompt: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The prompt this job ran with. When `enhance_prompt` was set, this is the rewritten prompt the model received rather than the one submitted. Absent on models that take no prompt.
+    """
+
     outputs: typing.Optional[typing.List[OutputItem]] = None
-    metrics: typing.Optional[Metrics] = None
+    metrics: typing.Optional[Metrics] = pydantic.Field(default=None)
+    """
+    Timing for this job; present on completed jobs only.
+    """
+
     error: typing.Optional[ErrorEnvelope] = None
-    logs: typing.Optional[typing.List[StatusLog]] = None
+    logs: typing.Optional[typing.List[JobLogItem]] = pydantic.Field(default=None)
+    """
+    The most recent lifecycle events for this job, oldest first. Capped; GET /v3/jobs/{job_id}/logs serves the full paginated history. Absent from webhook payloads.
+    """
+
+    cost: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Net cost of this job; 0 when fully refunded; absent until charged. Absent from webhook payloads.
+    """
+
+    currency: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ISO-4217 currency code for `cost`. Present exactly when `cost` is.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

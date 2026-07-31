@@ -36,6 +36,8 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
+            "X-Fern-SDK-Name": "hedra",
+            "X-Fern-SDK-Version": "0.1.3",
             **(self.get_custom_headers() or {}),
         }
         api_key = self._get_api_key()

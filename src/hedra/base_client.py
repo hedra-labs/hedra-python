@@ -11,11 +11,12 @@ from .core.logging import LogConfig, Logger
 from .environment import HedraEnvironment
 
 if typing.TYPE_CHECKING:
+    from .billing.client import AsyncBillingClient, BillingClient
     from .files.client import AsyncFilesClient, FilesClient
+    from .jobs.client import AsyncJobsClient, JobsClient
     from .keys.client import AsyncKeysClient, KeysClient
+    from .log_drains.client import AsyncLogDrainsClient, LogDrainsClient
     from .models.client import AsyncModelsClient, ModelsClient
-    from .queue.client import AsyncQueueClient, QueueClient
-    from .requests.client import AsyncRequestsClient, RequestsClient
     from .tokens.client import AsyncTokensClient, TokensClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 
@@ -106,29 +107,22 @@ class BaseHedra:
             max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
-        self._queue: typing.Optional[QueueClient] = None
-        self._requests: typing.Optional[RequestsClient] = None
+        self._jobs: typing.Optional[JobsClient] = None
         self._models: typing.Optional[ModelsClient] = None
         self._keys: typing.Optional[KeysClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._files: typing.Optional[FilesClient] = None
+        self._billing: typing.Optional[BillingClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
+        self._log_drains: typing.Optional[LogDrainsClient] = None
 
     @property
-    def queue(self):
-        if self._queue is None:
-            from .queue.client import QueueClient  # noqa: E402
+    def jobs(self):
+        if self._jobs is None:
+            from .jobs.client import JobsClient  # noqa: E402
 
-            self._queue = QueueClient(client_wrapper=self._client_wrapper)
-        return self._queue
-
-    @property
-    def requests(self):
-        if self._requests is None:
-            from .requests.client import RequestsClient  # noqa: E402
-
-            self._requests = RequestsClient(client_wrapper=self._client_wrapper)
-        return self._requests
+            self._jobs = JobsClient(client_wrapper=self._client_wrapper)
+        return self._jobs
 
     @property
     def models(self):
@@ -163,12 +157,28 @@ class BaseHedra:
         return self._files
 
     @property
+    def billing(self):
+        if self._billing is None:
+            from .billing.client import BillingClient  # noqa: E402
+
+            self._billing = BillingClient(client_wrapper=self._client_wrapper)
+        return self._billing
+
+    @property
     def webhooks(self):
         if self._webhooks is None:
             from .webhooks.client import WebhooksClient  # noqa: E402
 
             self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def log_drains(self):
+        if self._log_drains is None:
+            from .log_drains.client import LogDrainsClient  # noqa: E402
+
+            self._log_drains = LogDrainsClient(client_wrapper=self._client_wrapper)
+        return self._log_drains
 
 
 def _make_default_async_client(
@@ -278,29 +288,22 @@ class AsyncBaseHedra:
             max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
-        self._queue: typing.Optional[AsyncQueueClient] = None
-        self._requests: typing.Optional[AsyncRequestsClient] = None
+        self._jobs: typing.Optional[AsyncJobsClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
         self._keys: typing.Optional[AsyncKeysClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
+        self._billing: typing.Optional[AsyncBillingClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
+        self._log_drains: typing.Optional[AsyncLogDrainsClient] = None
 
     @property
-    def queue(self):
-        if self._queue is None:
-            from .queue.client import AsyncQueueClient  # noqa: E402
+    def jobs(self):
+        if self._jobs is None:
+            from .jobs.client import AsyncJobsClient  # noqa: E402
 
-            self._queue = AsyncQueueClient(client_wrapper=self._client_wrapper)
-        return self._queue
-
-    @property
-    def requests(self):
-        if self._requests is None:
-            from .requests.client import AsyncRequestsClient  # noqa: E402
-
-            self._requests = AsyncRequestsClient(client_wrapper=self._client_wrapper)
-        return self._requests
+            self._jobs = AsyncJobsClient(client_wrapper=self._client_wrapper)
+        return self._jobs
 
     @property
     def models(self):
@@ -335,12 +338,28 @@ class AsyncBaseHedra:
         return self._files
 
     @property
+    def billing(self):
+        if self._billing is None:
+            from .billing.client import AsyncBillingClient  # noqa: E402
+
+            self._billing = AsyncBillingClient(client_wrapper=self._client_wrapper)
+        return self._billing
+
+    @property
     def webhooks(self):
         if self._webhooks is None:
             from .webhooks.client import AsyncWebhooksClient  # noqa: E402
 
             self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def log_drains(self):
+        if self._log_drains is None:
+            from .log_drains.client import AsyncLogDrainsClient  # noqa: E402
+
+            self._log_drains = AsyncLogDrainsClient(client_wrapper=self._client_wrapper)
+        return self._log_drains
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: HedraEnvironment) -> str:
