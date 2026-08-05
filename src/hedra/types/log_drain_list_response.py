@@ -8,7 +8,11 @@ from .log_drain_config import LogDrainConfig
 
 
 class LogDrainListResponse(UniversalBaseModel):
-    data: typing.List[LogDrainConfig]
+    data: typing.List[LogDrainConfig] = pydantic.Field()
+    """
+    This page of items.
+    """
+
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
     Opaque cursor for the next page, or null when this response completes the list. Always present. Endpoints that serve the whole collection at once always return null.

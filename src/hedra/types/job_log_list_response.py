@@ -8,7 +8,11 @@ from .job_log_item import JobLogItem
 
 
 class JobLogListResponse(UniversalBaseModel):
-    data: typing.List[JobLogItem]
+    data: typing.List[JobLogItem] = pydantic.Field()
+    """
+    This page of items.
+    """
+
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
     Opaque cursor for the next page, or null when this response completes the list. Always present. Endpoints that serve the whole collection at once always return null.

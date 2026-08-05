@@ -62,10 +62,13 @@ class BillingClient:
         Parameters
         ----------
         start : typing.Optional[dt.datetime]
+            Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job-creation time.
 
         end : typing.Optional[dt.datetime]
+            Window end (exclusive, ISO-8601); defaults to now. The window is capped at 90 days.
 
         group_by : typing.Optional[UsageGroupBy]
+            One summary row (`total`), one per UTC day (`day`), or one per model (`model`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -147,10 +150,13 @@ class AsyncBillingClient:
         Parameters
         ----------
         start : typing.Optional[dt.datetime]
+            Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job-creation time.
 
         end : typing.Optional[dt.datetime]
+            Window end (exclusive, ISO-8601); defaults to now. The window is capped at 90 days.
 
         group_by : typing.Optional[UsageGroupBy]
+            One summary row (`total`), one per UTC day (`day`), or one per model (`model`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

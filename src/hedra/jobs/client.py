@@ -14,6 +14,7 @@ from ..types.input_flux2flex import InputFlux2Flex
 from ..types.input_flux2klein9b import InputFlux2Klein9B
 from ..types.input_flux2max import InputFlux2Max
 from ..types.input_flux2pro import InputFlux2Pro
+from ..types.input_flux3 import InputFlux3
 from ..types.input_flux11pro import InputFlux11Pro
 from ..types.input_flux11ultra import InputFlux11Ultra
 from ..types.input_flux_dev import InputFluxDev
@@ -43,6 +44,7 @@ from ..types.input_kling_v3 import InputKlingV3
 from ..types.input_ltx23 import InputLtx23
 from ..types.input_luma_ray32 import InputLumaRay32
 from ..types.input_mai_image25 import InputMaiImage25
+from ..types.input_minimax_h3 import InputMinimaxH3
 from ..types.input_minimax_hailuo02 import InputMinimaxHailuo02
 from ..types.input_minimax_hailuo23 import InputMinimaxHailuo23
 from ..types.input_minimax_speech25hd_preview import InputMinimaxSpeech25HdPreview
@@ -112,8 +114,10 @@ class JobsClient:
         Parameters
         ----------
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,6 +148,7 @@ class JobsClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,6 +183,7 @@ class JobsClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         logs_after : typing.Optional[str]
             Tail this job's lifecycle events incrementally: returns only events newer than this cursor, plus `logs_next_cursor` to send on the next poll. Pass `start` to begin from the job's first event. Omit it and the response carries no events at all — the default polling shape is unchanged.
@@ -216,10 +222,13 @@ class JobsClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -253,20 +262,22 @@ class JobsClient:
         *,
         last_event_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> typing.Iterator[typing.Any]:
         """
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         last_event_id : typing.Optional[str]
+            Resume after this event id — the standard SSE reconnect header; browsers' EventSource sends it automatically.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        typing.Any
+        Yields
+        ------
+        typing.Iterator[typing.Any]
             Successful Response
 
         Examples
@@ -276,12 +287,14 @@ class JobsClient:
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.jobs.stream(
+        response = client.jobs.stream(
             job_id="job_id",
         )
+        for chunk in response:
+            yield chunk
         """
-        _response = self._raw_client.stream(job_id, last_event_id=last_event_id, request_options=request_options)
-        return _response.data
+        with self._raw_client.stream(job_id, last_event_id=last_event_id, request_options=request_options) as r:
+            yield from r.data
 
     def submit_dreamina31(
         self,
@@ -625,6 +638,58 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_flux11ultra(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux3(
+        self,
+        *,
+        input: InputFlux3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Black Forest Labs FLUX.3 text-to-video with native audio.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFlux3
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux3(
+            input=InputFlux3(
+                prompt="prompt",
+                aspect_ratio="auto",
+                resolution="720p",
+                duration_ms=1,
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux3(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -1319,7 +1384,7 @@ class JobsClient:
         from hedra import (
             Hedra,
             InputHedraAvatar,
-            InputHedraAvatarAudio_Url,
+            InputHedraAvatarAudioZero_Url,
             InputHedraAvatarStartImage_Url,
         )
 
@@ -1334,7 +1399,7 @@ class JobsClient:
                 start_image=InputHedraAvatarStartImage_Url(
                     url="url",
                 ),
-                audio=InputHedraAvatarAudio_Url(
+                audio=InputHedraAvatarAudioZero_Url(
                     url="url",
                 ),
             ),
@@ -1381,7 +1446,7 @@ class JobsClient:
         from hedra import (
             Hedra,
             InputHedraCharacter3,
-            InputHedraCharacter3Audio_Url,
+            InputHedraCharacter3AudioZero_Url,
             InputHedraCharacter3StartImage_Url,
         )
 
@@ -1396,7 +1461,7 @@ class JobsClient:
                 start_image=InputHedraCharacter3StartImage_Url(
                     url="url",
                 ),
-                audio=InputHedraCharacter3Audio_Url(
+                audio=InputHedraCharacter3AudioZero_Url(
                     url="url",
                 ),
             ),
@@ -1449,7 +1514,6 @@ class JobsClient:
             input=InputHidreamO1Image(
                 prompt="prompt",
                 aspect_ratio="16:9",
-                resolution="540p",
                 quality="standard",
             ),
         )
@@ -1518,7 +1582,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ideogram V4 at its middle render setting; poster-ready text and layout at everyday cost.
+        Ideogram V4 renders poster-ready text and layout; the required quality parameter picks turbo, balanced or quality, which sets both the render effort and the price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2230,6 +2294,57 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_mai_image25(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_minimax_h3(
+        self,
+        *,
+        input: InputMinimaxH3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        MiniMax H3 video generation from text, frames, or references.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputMinimaxH3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputMinimaxH3
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_minimax_h3(
+            input=InputMinimaxH3(
+                prompt="prompt",
+                resolution="768p",
+                duration_ms=1,
+            ),
+        )
+        """
+        _response = self._raw_client.submit_minimax_h3(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -3651,7 +3766,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Vidu Q3 text-to-video with native dialogue and sound, up to 16 seconds
+        Vidu Q3 video with native dialogue and sound, up to 16 seconds — from a text prompt, from a start frame, or between a start and end frame
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3683,7 +3798,7 @@ class JobsClient:
         client.jobs.submit_vidu_q3(
             input=InputViduQ3(
                 prompt="prompt",
-                resolution="360p",
+                resolution="540p",
                 duration_ms=1,
                 quality="standard",
             ),
@@ -3740,7 +3855,7 @@ class JobsClient:
             input=InputViduQ3Reference(
                 prompt="prompt",
                 aspect_ratio="16:9",
-                resolution="360p",
+                resolution="540p",
                 duration_ms=1,
                 images=[
                     InputViduQ3ReferenceImagesItem_Url(
@@ -3764,7 +3879,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Wan 2.7 text-to-video with native audio and up to 15-second generations
+        Wan 2.7 video with native audio — from a text prompt, from a first frame with an optional last frame, or from reference images that keep subjects consistent
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3833,8 +3948,10 @@ class AsyncJobsClient:
         Parameters
         ----------
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3874,6 +3991,7 @@ class AsyncJobsClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3916,6 +4034,7 @@ class AsyncJobsClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         logs_after : typing.Optional[str]
             Tail this job's lifecycle events incrementally: returns only events newer than this cursor, plus `logs_next_cursor` to send on the next poll. Pass `start` to begin from the job's first event. Omit it and the response carries no events at all — the default polling shape is unchanged.
@@ -3962,10 +4081,13 @@ class AsyncJobsClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4008,20 +4130,22 @@ class AsyncJobsClient:
         *,
         last_event_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> typing.AsyncIterator[typing.Any]:
         """
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         last_event_id : typing.Optional[str]
+            Resume after this event id — the standard SSE reconnect header; browsers' EventSource sends it automatically.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        typing.Any
+        Yields
+        ------
+        typing.AsyncIterator[typing.Any]
             Successful Response
 
         Examples
@@ -4036,15 +4160,18 @@ class AsyncJobsClient:
 
 
         async def main() -> None:
-            await client.jobs.stream(
+            response = await client.jobs.stream(
                 job_id="job_id",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.stream(job_id, last_event_id=last_event_id, request_options=request_options)
-        return _response.data
+        async with self._raw_client.stream(job_id, last_event_id=last_event_id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def submit_dreamina31(
         self,
@@ -4444,6 +4571,66 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_flux11ultra(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux3(
+        self,
+        *,
+        input: InputFlux3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Black Forest Labs FLUX.3 text-to-video with native audio.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFlux3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux3(
+                input=InputFlux3(
+                    prompt="prompt",
+                    aspect_ratio="auto",
+                    resolution="720p",
+                    duration_ms=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux3(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -5244,7 +5431,7 @@ class AsyncJobsClient:
         from hedra import (
             AsyncHedra,
             InputHedraAvatar,
-            InputHedraAvatarAudio_Url,
+            InputHedraAvatarAudioZero_Url,
             InputHedraAvatarStartImage_Url,
         )
 
@@ -5262,7 +5449,7 @@ class AsyncJobsClient:
                     start_image=InputHedraAvatarStartImage_Url(
                         url="url",
                     ),
-                    audio=InputHedraAvatarAudio_Url(
+                    audio=InputHedraAvatarAudioZero_Url(
                         url="url",
                     ),
                 ),
@@ -5314,7 +5501,7 @@ class AsyncJobsClient:
         from hedra import (
             AsyncHedra,
             InputHedraCharacter3,
-            InputHedraCharacter3Audio_Url,
+            InputHedraCharacter3AudioZero_Url,
             InputHedraCharacter3StartImage_Url,
         )
 
@@ -5332,7 +5519,7 @@ class AsyncJobsClient:
                     start_image=InputHedraCharacter3StartImage_Url(
                         url="url",
                     ),
-                    audio=InputHedraCharacter3Audio_Url(
+                    audio=InputHedraCharacter3AudioZero_Url(
                         url="url",
                     ),
                 ),
@@ -5393,7 +5580,6 @@ class AsyncJobsClient:
                 input=InputHidreamO1Image(
                     prompt="prompt",
                     aspect_ratio="16:9",
-                    resolution="540p",
                     quality="standard",
                 ),
             )
@@ -5473,7 +5659,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ideogram V4 at its middle render setting; poster-ready text and layout at everyday cost.
+        Ideogram V4 renders poster-ready text and layout; the required quality parameter picks turbo, balanced or quality, which sets both the render effort and the price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6297,6 +6483,65 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_mai_image25(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_minimax_h3(
+        self,
+        *,
+        input: InputMinimaxH3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        MiniMax H3 video generation from text, frames, or references.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputMinimaxH3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputMinimaxH3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_minimax_h3(
+                input=InputMinimaxH3(
+                    prompt="prompt",
+                    resolution="768p",
+                    duration_ms=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_minimax_h3(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -7934,7 +8179,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Vidu Q3 text-to-video with native dialogue and sound, up to 16 seconds
+        Vidu Q3 video with native dialogue and sound, up to 16 seconds — from a text prompt, from a start frame, or between a start and end frame
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -7971,7 +8216,7 @@ class AsyncJobsClient:
             await client.jobs.submit_vidu_q3(
                 input=InputViduQ3(
                     prompt="prompt",
-                    resolution="360p",
+                    resolution="540p",
                     duration_ms=1,
                     quality="standard",
                 ),
@@ -8036,7 +8281,7 @@ class AsyncJobsClient:
                 input=InputViduQ3Reference(
                     prompt="prompt",
                     aspect_ratio="16:9",
-                    resolution="360p",
+                    resolution="540p",
                     duration_ms=1,
                     images=[
                         InputViduQ3ReferenceImagesItem_Url(
@@ -8063,7 +8308,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Wan 2.7 text-to-video with native audio and up to 15-second generations
+        Wan 2.7 video with native audio — from a text prompt, from a first frame with an optional last frame, or from reference images that keep subjects consistent
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 

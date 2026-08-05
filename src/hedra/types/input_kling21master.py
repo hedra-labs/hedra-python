@@ -12,9 +12,17 @@ from .input_kling21master_start_image import InputKling21MasterStartImage
 class InputKling21Master(UniversalBaseModel):
     """
     Model-specific inputs for `kling-21-master`.
+
+    Accepted field combinations (one per input mode):
+    (1) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
+    (2) requires: aspect_ratio, duration_ms, prompt, start_image
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

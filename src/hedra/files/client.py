@@ -29,6 +29,12 @@ class FilesClient:
 
     def upload(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> FileUploadResponse:
         """
+        Store a file and return a short-lived URL to pass in a model's `input`.
+
+        Free, and available on an empty API wallet — funding is enforced when you
+        submit a generation, not when you upload its inputs. `GET /v3/balance`
+        reports what the wallet holds.
+
         Parameters
         ----------
         file : core.File
@@ -74,6 +80,12 @@ class AsyncFilesClient:
         self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> FileUploadResponse:
         """
+        Store a file and return a short-lived URL to pass in a model's `input`.
+
+        Free, and available on an empty API wallet — funding is enforced when you
+        submit a generation, not when you upload its inputs. `GET /v3/balance`
+        reports what the wallet holds.
+
         Parameters
         ----------
         file : core.File

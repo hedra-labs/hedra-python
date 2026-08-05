@@ -241,8 +241,10 @@ class RawWebhooksClient:
         Parameters
         ----------
         url : str
+            HTTPS endpoint to receive terminal webhooks for every job that names no per-job `webhook` on submit.
 
         enabled : typing.Optional[bool]
+            Whether the default endpoint receives deliveries; false pauses it without discarding the URL.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -559,8 +561,10 @@ class RawWebhooksClient:
         Parameters
         ----------
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -692,6 +696,7 @@ class RawWebhooksClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1004,8 +1009,10 @@ class AsyncRawWebhooksClient:
         Parameters
         ----------
         url : str
+            HTTPS endpoint to receive terminal webhooks for every job that names no per-job `webhook` on submit.
 
         enabled : typing.Optional[bool]
+            Whether the default endpoint receives deliveries; false pauses it without discarding the URL.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1324,8 +1331,10 @@ class AsyncRawWebhooksClient:
         Parameters
         ----------
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1460,6 +1469,7 @@ class AsyncRawWebhooksClient:
         Parameters
         ----------
         job_id : str
+            The job's id (`job_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

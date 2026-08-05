@@ -24,14 +24,22 @@ class StatusResponse(UniversalBaseModel):
     inside this one (ENG-9694), and MCP progress notifications stay status-only.
     """
 
-    job_id: str
+    job_id: str = pydantic.Field()
+    """
+    The job this status describes.
+    """
+
     status: JobStatus
     progress: typing.Optional[float] = pydantic.Field(default=None)
     """
     Fraction of the job completed, from 0 to 1 (not a percentage). Null when the job has not reported progress yet.
     """
 
-    estimated_completion_at: typing.Optional[dt.datetime] = None
+    estimated_completion_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant this job is estimated to finish; null when no estimate exists for the model yet. Refreshed on every poll.
+    """
+
     logs: typing.Optional[typing.List[JobLogItem]] = pydantic.Field(default=None)
     """
     Lifecycle events newer than the `logs_after` cursor, oldest first. Present only when `logs_after` is supplied; absent from SSE status frames and MCP progress notifications.

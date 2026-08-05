@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputHedraCharacter3AudioUrl(UniversalBaseModel):
+class InputMinimaxH3StartImageUrl(UniversalBaseModel):
     """
     A file uploaded via POST /v3/files, referenced by the returned url.
     """

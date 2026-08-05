@@ -15,8 +15,16 @@ class WebhookPayload(UniversalBaseModel):
     Body of a webhook delivery: the `GET /jobs/{job_id}` result envelope without its poll-only fields (`logs`, `cost`, `currency`) — poll the job to read those.
     """
 
-    job_id: str
-    model: str
+    job_id: str = pydantic.Field()
+    """
+    The job this envelope describes.
+    """
+
+    model: str = pydantic.Field()
+    """
+    The resolved model id this job ran on.
+    """
+
     quality: typing.Optional[str] = pydantic.Field(default=None)
     """
     The quality level this job ran at; present only for models that offer quality levels.
@@ -28,13 +36,20 @@ class WebhookPayload(UniversalBaseModel):
     The prompt this job ran with. When `enhance_prompt` was set, this is the rewritten prompt the model received rather than the one submitted. Absent on models that take no prompt.
     """
 
-    outputs: typing.Optional[typing.List[OutputItem]] = None
+    outputs: typing.Optional[typing.List[OutputItem]] = pydantic.Field(default=None)
+    """
+    The job's outputs — always an array, even for a single output; empty until the job completes.
+    """
+
     metrics: typing.Optional[Metrics] = pydantic.Field(default=None)
     """
     Timing for this job; present on completed jobs only.
     """
 
-    error: typing.Optional[ErrorEnvelope] = None
+    error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
+    """
+    Why the job failed; null unless `status` is `FAILED`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

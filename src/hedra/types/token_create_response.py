@@ -8,8 +8,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TokenCreateResponse(UniversalBaseModel):
-    token: str
-    expires_at: typing.Optional[dt.datetime] = None
+    token: str = pydantic.Field()
+    """
+    The ephemeral token — a valid Bearer credential until it expires. Shown exactly once.
+    """
+
+    expires_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the token stops authenticating.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

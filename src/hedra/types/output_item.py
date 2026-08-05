@@ -16,17 +16,50 @@ class OutputItem(UniversalBaseModel):
     Every key is always present. The ones a modality carries no value for
     serialize as null — an image output reports `duration_ms: null` and
     `fps: null`, an audio output `width: null` — so the shape is one object
-    rather than one per modality.
+    rather than one per modality. `url` and `asset_id` go null on an expired
+    output, which has metadata but no retrievable bytes.
     """
 
     status: typing.Optional[OutputStatus] = None
-    url: typing.Optional[str] = None
-    content_type: typing.Optional[str] = None
-    width: typing.Optional[int] = None
-    height: typing.Optional[int] = None
-    duration_ms: typing.Optional[int] = None
-    fps: typing.Optional[int] = None
-    error: typing.Optional[ErrorEnvelope] = None
+    asset_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This output's asset id — server-issued, and opaque. Pass it as `{"source": "asset", "asset_id": ...}` in a later submit's media inputs to reuse this output as a reference. Null once the output has expired, since its bytes are no longer retrievable.
+    """
+
+    url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Presigned download URL for the output bytes. Null once the output has expired.
+    """
+
+    content_type: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    MIME type of the output bytes.
+    """
+
+    width: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Width in pixels; null for an output with no frame (audio).
+    """
+
+    height: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Height in pixels; null for an output with no frame (audio).
+    """
+
+    duration_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Duration in milliseconds; null for a still image.
+    """
+
+    fps: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The video's measured frame rate; null for a non-video output and for a video that has not been probed yet.
+    """
+
+    error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
+    """
+    Why this item failed — present on a failed item within an otherwise-completed batch.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

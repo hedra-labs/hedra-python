@@ -8,10 +8,25 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class WebhookDefaultConfig(UniversalBaseModel):
-    url: typing.Optional[str] = None
-    enabled: typing.Optional[bool] = None
-    updated_at: typing.Optional[dt.datetime] = None
-    updated_by_key_id: typing.Optional[str] = None
+    url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The stored default endpoint; null when none is configured.
+    """
+
+    enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the default endpoint is active.
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the config last changed.
+    """
+
+    updated_by_key_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The API key that last changed the config.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

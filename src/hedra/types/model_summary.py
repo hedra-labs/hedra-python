@@ -8,11 +8,26 @@ from .modality import Modality
 
 
 class ModelSummary(UniversalBaseModel):
-    id: str
+    id: str = pydantic.Field()
+    """
+    The model's public id — the value POST /v3/models/{model} takes.
+    """
+
     modality: Modality
-    name: typing.Optional[str] = None
-    description: typing.Optional[str] = None
-    logo_url: typing.Optional[str] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable name.
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    One-line summary of what the model does.
+    """
+
+    logo_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL of the provider's logo.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

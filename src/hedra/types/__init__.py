@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .api_key_kind import ApiKeyKind
     from .api_key_scope import ApiKeyScope
     from .balance_response import BalanceResponse
+    from .billing_error import BillingError
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
@@ -70,6 +71,15 @@ if typing.TYPE_CHECKING:
     from .input_flux2pro_images_item_asset import InputFlux2ProImagesItemAsset
     from .input_flux2pro_images_item_url import InputFlux2ProImagesItemUrl
     from .input_flux2pro_output_format import InputFlux2ProOutputFormat
+    from .input_flux3 import InputFlux3
+    from .input_flux3aspect_ratio import InputFlux3AspectRatio
+    from .input_flux3end_image import InputFlux3EndImage, InputFlux3EndImage_Asset, InputFlux3EndImage_Url
+    from .input_flux3end_image_asset import InputFlux3EndImageAsset
+    from .input_flux3end_image_url import InputFlux3EndImageUrl
+    from .input_flux3resolution import InputFlux3Resolution
+    from .input_flux3start_image import InputFlux3StartImage, InputFlux3StartImage_Asset, InputFlux3StartImage_Url
+    from .input_flux3start_image_asset import InputFlux3StartImageAsset
+    from .input_flux3start_image_url import InputFlux3StartImageUrl
     from .input_flux_dev import InputFluxDev
     from .input_flux_dev_aspect_ratio import InputFluxDevAspectRatio
     from .input_flux_dev_output_format import InputFluxDevOutputFormat
@@ -189,9 +199,22 @@ if typing.TYPE_CHECKING:
     from .input_happy_horse_start_image_url import InputHappyHorseStartImageUrl
     from .input_hedra_avatar import InputHedraAvatar
     from .input_hedra_avatar_aspect_ratio import InputHedraAvatarAspectRatio
-    from .input_hedra_avatar_audio import InputHedraAvatarAudio, InputHedraAvatarAudio_Asset, InputHedraAvatarAudio_Url
-    from .input_hedra_avatar_audio_asset import InputHedraAvatarAudioAsset
-    from .input_hedra_avatar_audio_url import InputHedraAvatarAudioUrl
+    from .input_hedra_avatar_audio import InputHedraAvatarAudio
+    from .input_hedra_avatar_audio_one_item import (
+        InputHedraAvatarAudioOneItem,
+        InputHedraAvatarAudioOneItem_Asset,
+        InputHedraAvatarAudioOneItem_Url,
+    )
+    from .input_hedra_avatar_audio_one_item_asset import InputHedraAvatarAudioOneItemAsset
+    from .input_hedra_avatar_audio_one_item_url import InputHedraAvatarAudioOneItemUrl
+    from .input_hedra_avatar_audio_zero import (
+        InputHedraAvatarAudioZero,
+        InputHedraAvatarAudioZero_Asset,
+        InputHedraAvatarAudioZero_Url,
+    )
+    from .input_hedra_avatar_audio_zero_asset import InputHedraAvatarAudioZeroAsset
+    from .input_hedra_avatar_audio_zero_url import InputHedraAvatarAudioZeroUrl
+    from .input_hedra_avatar_bounding_box_target import InputHedraAvatarBoundingBoxTarget
     from .input_hedra_avatar_resolution import InputHedraAvatarResolution
     from .input_hedra_avatar_start_image import (
         InputHedraAvatarStartImage,
@@ -202,13 +225,22 @@ if typing.TYPE_CHECKING:
     from .input_hedra_avatar_start_image_url import InputHedraAvatarStartImageUrl
     from .input_hedra_character3 import InputHedraCharacter3
     from .input_hedra_character3aspect_ratio import InputHedraCharacter3AspectRatio
-    from .input_hedra_character3audio import (
-        InputHedraCharacter3Audio,
-        InputHedraCharacter3Audio_Asset,
-        InputHedraCharacter3Audio_Url,
+    from .input_hedra_character3audio import InputHedraCharacter3Audio
+    from .input_hedra_character3audio_one_item import (
+        InputHedraCharacter3AudioOneItem,
+        InputHedraCharacter3AudioOneItem_Asset,
+        InputHedraCharacter3AudioOneItem_Url,
     )
-    from .input_hedra_character3audio_asset import InputHedraCharacter3AudioAsset
-    from .input_hedra_character3audio_url import InputHedraCharacter3AudioUrl
+    from .input_hedra_character3audio_one_item_asset import InputHedraCharacter3AudioOneItemAsset
+    from .input_hedra_character3audio_one_item_url import InputHedraCharacter3AudioOneItemUrl
+    from .input_hedra_character3audio_zero import (
+        InputHedraCharacter3AudioZero,
+        InputHedraCharacter3AudioZero_Asset,
+        InputHedraCharacter3AudioZero_Url,
+    )
+    from .input_hedra_character3audio_zero_asset import InputHedraCharacter3AudioZeroAsset
+    from .input_hedra_character3audio_zero_url import InputHedraCharacter3AudioZeroUrl
+    from .input_hedra_character3bounding_box_target import InputHedraCharacter3BoundingBoxTarget
     from .input_hedra_character3resolution import InputHedraCharacter3Resolution
     from .input_hedra_character3start_image import (
         InputHedraCharacter3StartImage,
@@ -380,6 +412,44 @@ if typing.TYPE_CHECKING:
     from .input_mai_image25images_item_url import InputMaiImage25ImagesItemUrl
     from .input_mai_image25output_format import InputMaiImage25OutputFormat
     from .input_mai_image25quality import InputMaiImage25Quality
+    from .input_minimax_h3 import InputMinimaxH3
+    from .input_minimax_h3aspect_ratio import InputMinimaxH3AspectRatio
+    from .input_minimax_h3audios_item import (
+        InputMinimaxH3AudiosItem,
+        InputMinimaxH3AudiosItem_Asset,
+        InputMinimaxH3AudiosItem_Url,
+    )
+    from .input_minimax_h3audios_item_asset import InputMinimaxH3AudiosItemAsset
+    from .input_minimax_h3audios_item_url import InputMinimaxH3AudiosItemUrl
+    from .input_minimax_h3end_image import (
+        InputMinimaxH3EndImage,
+        InputMinimaxH3EndImage_Asset,
+        InputMinimaxH3EndImage_Url,
+    )
+    from .input_minimax_h3end_image_asset import InputMinimaxH3EndImageAsset
+    from .input_minimax_h3end_image_url import InputMinimaxH3EndImageUrl
+    from .input_minimax_h3images_item import (
+        InputMinimaxH3ImagesItem,
+        InputMinimaxH3ImagesItem_Asset,
+        InputMinimaxH3ImagesItem_Url,
+    )
+    from .input_minimax_h3images_item_asset import InputMinimaxH3ImagesItemAsset
+    from .input_minimax_h3images_item_url import InputMinimaxH3ImagesItemUrl
+    from .input_minimax_h3resolution import InputMinimaxH3Resolution
+    from .input_minimax_h3start_image import (
+        InputMinimaxH3StartImage,
+        InputMinimaxH3StartImage_Asset,
+        InputMinimaxH3StartImage_Url,
+    )
+    from .input_minimax_h3start_image_asset import InputMinimaxH3StartImageAsset
+    from .input_minimax_h3start_image_url import InputMinimaxH3StartImageUrl
+    from .input_minimax_h3videos_item import (
+        InputMinimaxH3VideosItem,
+        InputMinimaxH3VideosItem_Asset,
+        InputMinimaxH3VideosItem_Url,
+    )
+    from .input_minimax_h3videos_item_asset import InputMinimaxH3VideosItemAsset
+    from .input_minimax_h3videos_item_url import InputMinimaxH3VideosItemUrl
     from .input_minimax_hailuo02 import InputMinimaxHailuo02
     from .input_minimax_hailuo02aspect_ratio import InputMinimaxHailuo02AspectRatio
     from .input_minimax_hailuo02end_image import (
@@ -775,6 +845,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiKeyKind": ".api_key_kind",
     "ApiKeyScope": ".api_key_scope",
     "BalanceResponse": ".balance_response",
+    "BillingError": ".billing_error",
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
@@ -828,6 +899,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFlux2ProImagesItem_Asset": ".input_flux2pro_images_item",
     "InputFlux2ProImagesItem_Url": ".input_flux2pro_images_item",
     "InputFlux2ProOutputFormat": ".input_flux2pro_output_format",
+    "InputFlux3": ".input_flux3",
+    "InputFlux3AspectRatio": ".input_flux3aspect_ratio",
+    "InputFlux3EndImage": ".input_flux3end_image",
+    "InputFlux3EndImageAsset": ".input_flux3end_image_asset",
+    "InputFlux3EndImageUrl": ".input_flux3end_image_url",
+    "InputFlux3EndImage_Asset": ".input_flux3end_image",
+    "InputFlux3EndImage_Url": ".input_flux3end_image",
+    "InputFlux3Resolution": ".input_flux3resolution",
+    "InputFlux3StartImage": ".input_flux3start_image",
+    "InputFlux3StartImageAsset": ".input_flux3start_image_asset",
+    "InputFlux3StartImageUrl": ".input_flux3start_image_url",
+    "InputFlux3StartImage_Asset": ".input_flux3start_image",
+    "InputFlux3StartImage_Url": ".input_flux3start_image",
     "InputFluxDev": ".input_flux_dev",
     "InputFluxDevAspectRatio": ".input_flux_dev_aspect_ratio",
     "InputFluxDevOutputFormat": ".input_flux_dev_output_format",
@@ -924,10 +1008,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputHedraAvatar": ".input_hedra_avatar",
     "InputHedraAvatarAspectRatio": ".input_hedra_avatar_aspect_ratio",
     "InputHedraAvatarAudio": ".input_hedra_avatar_audio",
-    "InputHedraAvatarAudioAsset": ".input_hedra_avatar_audio_asset",
-    "InputHedraAvatarAudioUrl": ".input_hedra_avatar_audio_url",
-    "InputHedraAvatarAudio_Asset": ".input_hedra_avatar_audio",
-    "InputHedraAvatarAudio_Url": ".input_hedra_avatar_audio",
+    "InputHedraAvatarAudioOneItem": ".input_hedra_avatar_audio_one_item",
+    "InputHedraAvatarAudioOneItemAsset": ".input_hedra_avatar_audio_one_item_asset",
+    "InputHedraAvatarAudioOneItemUrl": ".input_hedra_avatar_audio_one_item_url",
+    "InputHedraAvatarAudioOneItem_Asset": ".input_hedra_avatar_audio_one_item",
+    "InputHedraAvatarAudioOneItem_Url": ".input_hedra_avatar_audio_one_item",
+    "InputHedraAvatarAudioZero": ".input_hedra_avatar_audio_zero",
+    "InputHedraAvatarAudioZeroAsset": ".input_hedra_avatar_audio_zero_asset",
+    "InputHedraAvatarAudioZeroUrl": ".input_hedra_avatar_audio_zero_url",
+    "InputHedraAvatarAudioZero_Asset": ".input_hedra_avatar_audio_zero",
+    "InputHedraAvatarAudioZero_Url": ".input_hedra_avatar_audio_zero",
+    "InputHedraAvatarBoundingBoxTarget": ".input_hedra_avatar_bounding_box_target",
     "InputHedraAvatarResolution": ".input_hedra_avatar_resolution",
     "InputHedraAvatarStartImage": ".input_hedra_avatar_start_image",
     "InputHedraAvatarStartImageAsset": ".input_hedra_avatar_start_image_asset",
@@ -937,10 +1028,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputHedraCharacter3": ".input_hedra_character3",
     "InputHedraCharacter3AspectRatio": ".input_hedra_character3aspect_ratio",
     "InputHedraCharacter3Audio": ".input_hedra_character3audio",
-    "InputHedraCharacter3AudioAsset": ".input_hedra_character3audio_asset",
-    "InputHedraCharacter3AudioUrl": ".input_hedra_character3audio_url",
-    "InputHedraCharacter3Audio_Asset": ".input_hedra_character3audio",
-    "InputHedraCharacter3Audio_Url": ".input_hedra_character3audio",
+    "InputHedraCharacter3AudioOneItem": ".input_hedra_character3audio_one_item",
+    "InputHedraCharacter3AudioOneItemAsset": ".input_hedra_character3audio_one_item_asset",
+    "InputHedraCharacter3AudioOneItemUrl": ".input_hedra_character3audio_one_item_url",
+    "InputHedraCharacter3AudioOneItem_Asset": ".input_hedra_character3audio_one_item",
+    "InputHedraCharacter3AudioOneItem_Url": ".input_hedra_character3audio_one_item",
+    "InputHedraCharacter3AudioZero": ".input_hedra_character3audio_zero",
+    "InputHedraCharacter3AudioZeroAsset": ".input_hedra_character3audio_zero_asset",
+    "InputHedraCharacter3AudioZeroUrl": ".input_hedra_character3audio_zero_url",
+    "InputHedraCharacter3AudioZero_Asset": ".input_hedra_character3audio_zero",
+    "InputHedraCharacter3AudioZero_Url": ".input_hedra_character3audio_zero",
+    "InputHedraCharacter3BoundingBoxTarget": ".input_hedra_character3bounding_box_target",
     "InputHedraCharacter3Resolution": ".input_hedra_character3resolution",
     "InputHedraCharacter3StartImage": ".input_hedra_character3start_image",
     "InputHedraCharacter3StartImageAsset": ".input_hedra_character3start_image_asset",
@@ -1094,6 +1192,34 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMaiImage25ImagesItem_Url": ".input_mai_image25images_item",
     "InputMaiImage25OutputFormat": ".input_mai_image25output_format",
     "InputMaiImage25Quality": ".input_mai_image25quality",
+    "InputMinimaxH3": ".input_minimax_h3",
+    "InputMinimaxH3AspectRatio": ".input_minimax_h3aspect_ratio",
+    "InputMinimaxH3AudiosItem": ".input_minimax_h3audios_item",
+    "InputMinimaxH3AudiosItemAsset": ".input_minimax_h3audios_item_asset",
+    "InputMinimaxH3AudiosItemUrl": ".input_minimax_h3audios_item_url",
+    "InputMinimaxH3AudiosItem_Asset": ".input_minimax_h3audios_item",
+    "InputMinimaxH3AudiosItem_Url": ".input_minimax_h3audios_item",
+    "InputMinimaxH3EndImage": ".input_minimax_h3end_image",
+    "InputMinimaxH3EndImageAsset": ".input_minimax_h3end_image_asset",
+    "InputMinimaxH3EndImageUrl": ".input_minimax_h3end_image_url",
+    "InputMinimaxH3EndImage_Asset": ".input_minimax_h3end_image",
+    "InputMinimaxH3EndImage_Url": ".input_minimax_h3end_image",
+    "InputMinimaxH3ImagesItem": ".input_minimax_h3images_item",
+    "InputMinimaxH3ImagesItemAsset": ".input_minimax_h3images_item_asset",
+    "InputMinimaxH3ImagesItemUrl": ".input_minimax_h3images_item_url",
+    "InputMinimaxH3ImagesItem_Asset": ".input_minimax_h3images_item",
+    "InputMinimaxH3ImagesItem_Url": ".input_minimax_h3images_item",
+    "InputMinimaxH3Resolution": ".input_minimax_h3resolution",
+    "InputMinimaxH3StartImage": ".input_minimax_h3start_image",
+    "InputMinimaxH3StartImageAsset": ".input_minimax_h3start_image_asset",
+    "InputMinimaxH3StartImageUrl": ".input_minimax_h3start_image_url",
+    "InputMinimaxH3StartImage_Asset": ".input_minimax_h3start_image",
+    "InputMinimaxH3StartImage_Url": ".input_minimax_h3start_image",
+    "InputMinimaxH3VideosItem": ".input_minimax_h3videos_item",
+    "InputMinimaxH3VideosItemAsset": ".input_minimax_h3videos_item_asset",
+    "InputMinimaxH3VideosItemUrl": ".input_minimax_h3videos_item_url",
+    "InputMinimaxH3VideosItem_Asset": ".input_minimax_h3videos_item",
+    "InputMinimaxH3VideosItem_Url": ".input_minimax_h3videos_item",
     "InputMinimaxHailuo02": ".input_minimax_hailuo02",
     "InputMinimaxHailuo02AspectRatio": ".input_minimax_hailuo02aspect_ratio",
     "InputMinimaxHailuo02EndImage": ".input_minimax_hailuo02end_image",
@@ -1475,6 +1601,7 @@ __all__ = [
     "ApiKeyKind",
     "ApiKeyScope",
     "BalanceResponse",
+    "BillingError",
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",
@@ -1528,6 +1655,19 @@ __all__ = [
     "InputFlux2ProImagesItem_Asset",
     "InputFlux2ProImagesItem_Url",
     "InputFlux2ProOutputFormat",
+    "InputFlux3",
+    "InputFlux3AspectRatio",
+    "InputFlux3EndImage",
+    "InputFlux3EndImageAsset",
+    "InputFlux3EndImageUrl",
+    "InputFlux3EndImage_Asset",
+    "InputFlux3EndImage_Url",
+    "InputFlux3Resolution",
+    "InputFlux3StartImage",
+    "InputFlux3StartImageAsset",
+    "InputFlux3StartImageUrl",
+    "InputFlux3StartImage_Asset",
+    "InputFlux3StartImage_Url",
     "InputFluxDev",
     "InputFluxDevAspectRatio",
     "InputFluxDevOutputFormat",
@@ -1624,10 +1764,17 @@ __all__ = [
     "InputHedraAvatar",
     "InputHedraAvatarAspectRatio",
     "InputHedraAvatarAudio",
-    "InputHedraAvatarAudioAsset",
-    "InputHedraAvatarAudioUrl",
-    "InputHedraAvatarAudio_Asset",
-    "InputHedraAvatarAudio_Url",
+    "InputHedraAvatarAudioOneItem",
+    "InputHedraAvatarAudioOneItemAsset",
+    "InputHedraAvatarAudioOneItemUrl",
+    "InputHedraAvatarAudioOneItem_Asset",
+    "InputHedraAvatarAudioOneItem_Url",
+    "InputHedraAvatarAudioZero",
+    "InputHedraAvatarAudioZeroAsset",
+    "InputHedraAvatarAudioZeroUrl",
+    "InputHedraAvatarAudioZero_Asset",
+    "InputHedraAvatarAudioZero_Url",
+    "InputHedraAvatarBoundingBoxTarget",
     "InputHedraAvatarResolution",
     "InputHedraAvatarStartImage",
     "InputHedraAvatarStartImageAsset",
@@ -1637,10 +1784,17 @@ __all__ = [
     "InputHedraCharacter3",
     "InputHedraCharacter3AspectRatio",
     "InputHedraCharacter3Audio",
-    "InputHedraCharacter3AudioAsset",
-    "InputHedraCharacter3AudioUrl",
-    "InputHedraCharacter3Audio_Asset",
-    "InputHedraCharacter3Audio_Url",
+    "InputHedraCharacter3AudioOneItem",
+    "InputHedraCharacter3AudioOneItemAsset",
+    "InputHedraCharacter3AudioOneItemUrl",
+    "InputHedraCharacter3AudioOneItem_Asset",
+    "InputHedraCharacter3AudioOneItem_Url",
+    "InputHedraCharacter3AudioZero",
+    "InputHedraCharacter3AudioZeroAsset",
+    "InputHedraCharacter3AudioZeroUrl",
+    "InputHedraCharacter3AudioZero_Asset",
+    "InputHedraCharacter3AudioZero_Url",
+    "InputHedraCharacter3BoundingBoxTarget",
     "InputHedraCharacter3Resolution",
     "InputHedraCharacter3StartImage",
     "InputHedraCharacter3StartImageAsset",
@@ -1794,6 +1948,34 @@ __all__ = [
     "InputMaiImage25ImagesItem_Url",
     "InputMaiImage25OutputFormat",
     "InputMaiImage25Quality",
+    "InputMinimaxH3",
+    "InputMinimaxH3AspectRatio",
+    "InputMinimaxH3AudiosItem",
+    "InputMinimaxH3AudiosItemAsset",
+    "InputMinimaxH3AudiosItemUrl",
+    "InputMinimaxH3AudiosItem_Asset",
+    "InputMinimaxH3AudiosItem_Url",
+    "InputMinimaxH3EndImage",
+    "InputMinimaxH3EndImageAsset",
+    "InputMinimaxH3EndImageUrl",
+    "InputMinimaxH3EndImage_Asset",
+    "InputMinimaxH3EndImage_Url",
+    "InputMinimaxH3ImagesItem",
+    "InputMinimaxH3ImagesItemAsset",
+    "InputMinimaxH3ImagesItemUrl",
+    "InputMinimaxH3ImagesItem_Asset",
+    "InputMinimaxH3ImagesItem_Url",
+    "InputMinimaxH3Resolution",
+    "InputMinimaxH3StartImage",
+    "InputMinimaxH3StartImageAsset",
+    "InputMinimaxH3StartImageUrl",
+    "InputMinimaxH3StartImage_Asset",
+    "InputMinimaxH3StartImage_Url",
+    "InputMinimaxH3VideosItem",
+    "InputMinimaxH3VideosItemAsset",
+    "InputMinimaxH3VideosItemUrl",
+    "InputMinimaxH3VideosItem_Asset",
+    "InputMinimaxH3VideosItem_Url",
     "InputMinimaxHailuo02",
     "InputMinimaxHailuo02AspectRatio",
     "InputMinimaxHailuo02EndImage",

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_hedra_character3aspect_ratio import InputHedraCharacter3AspectRatio
 from .input_hedra_character3audio import InputHedraCharacter3Audio
+from .input_hedra_character3bounding_box_target import InputHedraCharacter3BoundingBoxTarget
 from .input_hedra_character3resolution import InputHedraCharacter3Resolution
 from .input_hedra_character3start_image import InputHedraCharacter3StartImage
 
@@ -15,7 +16,11 @@ class InputHedraCharacter3(UniversalBaseModel):
     Model-specific inputs for `hedra-character-3`.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.
@@ -43,7 +48,12 @@ class InputHedraCharacter3(UniversalBaseModel):
 
     audio: InputHedraCharacter3Audio = pydantic.Field()
     """
-    Driving audio.
+    Driving audio: a single reference, or a list of up to 4 references for multi-speaker generation — one audio per speaker, played in list order.
+    """
+
+    bounding_box_target: typing.Optional[InputHedraCharacter3BoundingBoxTarget] = pydantic.Field(default=None)
+    """
+    Speaker position(s) in the start frame, as normalized [x, y] image coordinates (0-1 from the top-left).
     """
 
     if IS_PYDANTIC_V2:

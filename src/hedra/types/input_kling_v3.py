@@ -14,9 +14,21 @@ from .input_kling_v3start_image import InputKlingV3StartImage
 class InputKlingV3(UniversalBaseModel):
     """
     Model-specific inputs for `kling-v3`.
+
+    Accepted field combinations (one per input mode):
+    (1) requires: aspect_ratio, duration_ms, end_image, prompt, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (2) requires: aspect_ratio, duration_ms, end_image, prompt, start_image; accepts quality: standard; resolution: 720p
+    (3) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, start_image; accepts quality: standard; resolution: 720p
+    (4) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (5) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; must omit: end_image; accepts quality: pro; resolution: 1080p | 4K
+    (6) requires: aspect_ratio, duration_ms, prompt, start_image; must omit: end_image; accepts quality: standard; resolution: 720p
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

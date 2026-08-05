@@ -16,16 +16,31 @@ class WebhookRedelivery(UniversalBaseModel):
     replayed, so `status` is always terminal (`DELIVERED` / `FAILED`).
     """
 
-    requested_at: dt.datetime
+    requested_at: dt.datetime = pydantic.Field()
+    """
+    ISO-8601 instant the redelivery was requested.
+    """
+
     status: WebhookDeliveryStatus
-    attempts: int
-    last_response_status: typing.Optional[int] = None
+    attempts: int = pydantic.Field()
+    """
+    Cumulative attempt count as it stood when this replay was requested.
+    """
+
+    last_response_status: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    HTTP status of the superseded cycle's last attempt; null when it never got a response.
+    """
+
     last_error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
     """
     Why the most recent delivery attempt failed, in the same error envelope `GET /jobs/{job_id}` returns for a failed job: a stable `code` from the shared error vocabulary, a fixed operator-facing `message`, and `retryable`. Null while no attempt has failed. Destination URLs, addresses, headers, credentials, response bodies, and internal exception text are never included — those stay in Hedra's own logs. `retryable` describes the condition, not what Hedra did: every non-2xx response is retried on the published ladder, so it answers whether replaying this delivery is likely to help. Deliveries that failed before this field became structured report `UNKNOWN`.
     """
 
-    last_attempt_at: typing.Optional[dt.datetime] = None
+    last_attempt_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant of the superseded cycle's last attempt.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -6,14 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputHedraCharacter3AudioAsset(UniversalBaseModel):
+class InputMinimaxH3StartImageAsset(UniversalBaseModel):
     """
     An existing asset you own, referenced by its id.
     """
 
     asset_id: str = pydantic.Field()
     """
-    The asset's id (`asset_<uuid>`). A completed job's output asset carries the job's UUID: replace the `job_` prefix with `asset_`.
+    The asset's id (`asset_<uuid>`), as issued by the server — a completed generation publishes one per output as `outputs[].asset_id`. Do not construct one or derive it from any other id.
     """
 
     if IS_PYDANTIC_V2:

@@ -11,10 +11,14 @@ from .job_status import JobStatus
 class SubmitResponse(UniversalBaseModel):
     job_id: str = pydantic.Field()
     """
-    This job's id (`job_<uuid>`). The job's output asset carries the same UUID, so once the job completes, replacing the `job_` prefix with `asset_` yields the `asset_id` to reference its output in a later submit's media inputs.
+    This job's id — server-issued, and opaque.
     """
 
-    model: str
+    model: str = pydantic.Field()
+    """
+    The resolved model id this job runs on.
+    """
+
     status: JobStatus
     status_url: str = pydantic.Field()
     """

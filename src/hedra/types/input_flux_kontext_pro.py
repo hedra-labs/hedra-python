@@ -15,8 +15,8 @@ class InputFluxKontextPro(UniversalBaseModel):
     Model-specific inputs for `flux-kontext-pro`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, prompt
-    (2) requires: images, prompt
+    (1) requires: aspect_ratio, prompt; must omit: images
+    (2) requires: images, prompt; must omit: aspect_ratio, resolution
     """
 
     prompt: str = pydantic.Field()
@@ -24,7 +24,11 @@ class InputFluxKontextPro(UniversalBaseModel):
     Generation prompt.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     enhance_prompt: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
@@ -52,7 +56,7 @@ class InputFluxKontextPro(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputFluxKontextProImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    The single source image to edit.
     """
 
     if IS_PYDANTIC_V2:

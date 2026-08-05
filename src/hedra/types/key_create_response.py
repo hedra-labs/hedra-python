@@ -9,14 +9,41 @@ from .api_key_kind import ApiKeyKind
 
 
 class KeyCreateResponse(UniversalBaseModel):
-    key_id: str
-    credential: str
+    key_id: str = pydantic.Field()
+    """
+    The key's public identifier.
+    """
+
+    credential: str = pydantic.Field()
+    """
+    The full `<key_id>:<secret>` pair — a valid Bearer credential. Returned exactly once, at creation; store it now.
+    """
+
     kind: ApiKeyKind
-    name: typing.Optional[str] = None
-    scopes: typing.Optional[typing.List[str]] = None
-    workspace_id: typing.Optional[str] = None
-    expires_at: typing.Optional[dt.datetime] = None
-    created_at: typing.Optional[dt.datetime] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable label for the key.
+    """
+
+    scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Scopes granted to the key; null means full access (a legacy key predating scopes).
+    """
+
+    workspace_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The workspace the key bills and acts in.
+    """
+
+    expires_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the key stops authenticating; null means it never expires.
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the key was created.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .forbidden_error import ForbiddenError
     from .internal_server_error import InternalServerError
     from .not_found_error import NotFoundError
+    from .payment_required_error import PaymentRequiredError
     from .too_many_requests_error import TooManyRequestsError
     from .unauthorized_error import UnauthorizedError
     from .unprocessable_entity_error import UnprocessableEntityError
@@ -18,6 +19,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForbiddenError": ".forbidden_error",
     "InternalServerError": ".internal_server_error",
     "NotFoundError": ".not_found_error",
+    "PaymentRequiredError": ".payment_required_error",
     "TooManyRequestsError": ".too_many_requests_error",
     "UnauthorizedError": ".unauthorized_error",
     "UnprocessableEntityError": ".unprocessable_entity_error",
@@ -50,6 +52,7 @@ __all__ = [
     "ForbiddenError",
     "InternalServerError",
     "NotFoundError",
+    "PaymentRequiredError",
     "TooManyRequestsError",
     "UnauthorizedError",
     "UnprocessableEntityError",

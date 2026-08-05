@@ -32,3 +32,6 @@ LICENSE
 
 # Hand-written tests
 tests/custom/
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

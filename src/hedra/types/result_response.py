@@ -12,8 +12,16 @@ from .output_item import OutputItem
 
 
 class ResultResponse(UniversalBaseModel):
-    job_id: str
-    model: str
+    job_id: str = pydantic.Field()
+    """
+    The job this envelope describes.
+    """
+
+    model: str = pydantic.Field()
+    """
+    The resolved model id this job ran on.
+    """
+
     quality: typing.Optional[str] = pydantic.Field(default=None)
     """
     The quality level this job ran at; present only for models that offer quality levels.
@@ -25,13 +33,21 @@ class ResultResponse(UniversalBaseModel):
     The prompt this job ran with. When `enhance_prompt` was set, this is the rewritten prompt the model received rather than the one submitted. Absent on models that take no prompt.
     """
 
-    outputs: typing.Optional[typing.List[OutputItem]] = None
+    outputs: typing.Optional[typing.List[OutputItem]] = pydantic.Field(default=None)
+    """
+    The job's outputs — always an array, even for a single output; empty until the job completes.
+    """
+
     metrics: typing.Optional[Metrics] = pydantic.Field(default=None)
     """
     Timing for this job; present on completed jobs only.
     """
 
-    error: typing.Optional[ErrorEnvelope] = None
+    error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
+    """
+    Why the job failed; null unless `status` is `FAILED`.
+    """
+
     logs: typing.Optional[typing.List[JobLogItem]] = pydantic.Field(default=None)
     """
     The most recent lifecycle events for this job, oldest first. Capped; GET /v3/jobs/{job_id}/logs serves the full paginated history. Absent from webhook payloads.

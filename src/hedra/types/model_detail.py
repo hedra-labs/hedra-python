@@ -8,13 +8,36 @@ from .modality import Modality
 
 
 class ModelDetail(UniversalBaseModel):
-    id: str
+    id: str = pydantic.Field()
+    """
+    The model's public id — the value POST /v3/models/{model} takes.
+    """
+
     modality: Modality
-    name: typing.Optional[str] = None
-    description: typing.Optional[str] = None
-    logo_url: typing.Optional[str] = None
-    input_schema: typing.Optional[typing.Dict[str, typing.Any]] = None
-    output_schema: typing.Optional[typing.Dict[str, typing.Any]] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable name.
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    One-line summary of what the model does.
+    """
+
+    logo_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL of the provider's logo.
+    """
+
+    input_schema: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    JSON Schema for this model's `input` object on submit — the same schema `GET /v3/models/{model}/openapi.json` embeds.
+    """
+
+    output_schema: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    JSON Schema of one item of a completed job's `outputs[]`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

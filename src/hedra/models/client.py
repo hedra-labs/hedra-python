@@ -67,6 +67,7 @@ class ModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -102,10 +103,13 @@ class ModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -140,6 +144,7 @@ class ModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -172,6 +177,7 @@ class ModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,8 +212,10 @@ class ModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         input : typing.Optional[typing.Dict[str, typing.Any]]
+            The same model-specific inputs a submit would carry; the estimate prices exactly this body.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,6 +297,7 @@ class AsyncModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -332,10 +341,13 @@ class AsyncModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         limit : typing.Optional[int]
+            Maximum items per page.
 
         cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -383,6 +395,7 @@ class AsyncModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -423,6 +436,7 @@ class AsyncModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -465,8 +479,10 @@ class AsyncModelsClient:
         Parameters
         ----------
         model : str
+            The model's public id (`GET /v3/models`).
 
         input : typing.Optional[typing.Dict[str, typing.Any]]
+            The same model-specific inputs a submit would carry; the estimate prices exactly this body.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

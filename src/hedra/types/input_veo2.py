@@ -12,9 +12,17 @@ from .input_veo2start_image import InputVeo2StartImage
 class InputVeo2(UniversalBaseModel):
     """
     Model-specific inputs for `veo-2`.
+
+    Accepted field combinations (one per input mode):
+    (1) requires: prompt; must omit: start_image
+    (2) requires: prompt, start_image; must omit: negative_prompt, seed
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

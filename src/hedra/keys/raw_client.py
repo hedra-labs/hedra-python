@@ -40,6 +40,7 @@ class RawKeysClient:
         Parameters
         ----------
         workspace_id : typing.Optional[str]
+            List keys of this workspace; omitted means the authenticating key's workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,14 +157,19 @@ class RawKeysClient:
         Parameters
         ----------
         name : typing.Optional[str]
+            Human-readable label for the key.
 
         scopes : typing.Optional[typing.Sequence[ApiKeyScope]]
+            Scopes granted to the key; omitted means full access.
 
         kind : typing.Optional[ApiKeyKind]
+            `personal` (default) dies with the member; `service` is workspace-shared, OWNER/ADMIN-managed, and survives member removal.
 
         workspace_id : typing.Optional[str]
+            Target workspace; omitted means the authenticating key's workspace.
 
         expires_at : typing.Optional[dt.datetime]
+            ISO-8601 instant the key stops authenticating; omitted means it never expires.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -285,8 +291,10 @@ class RawKeysClient:
         Parameters
         ----------
         key_id : str
+            The key's public identifier.
 
         grace_period_seconds : typing.Optional[int]
+            Seconds the old secret keeps authenticating after the rotation; omitted means the service default (24h).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -398,6 +406,7 @@ class RawKeysClient:
         Parameters
         ----------
         key_id : str
+            The key's public identifier.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -501,6 +510,7 @@ class AsyncRawKeysClient:
         Parameters
         ----------
         workspace_id : typing.Optional[str]
+            List keys of this workspace; omitted means the authenticating key's workspace.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -617,14 +627,19 @@ class AsyncRawKeysClient:
         Parameters
         ----------
         name : typing.Optional[str]
+            Human-readable label for the key.
 
         scopes : typing.Optional[typing.Sequence[ApiKeyScope]]
+            Scopes granted to the key; omitted means full access.
 
         kind : typing.Optional[ApiKeyKind]
+            `personal` (default) dies with the member; `service` is workspace-shared, OWNER/ADMIN-managed, and survives member removal.
 
         workspace_id : typing.Optional[str]
+            Target workspace; omitted means the authenticating key's workspace.
 
         expires_at : typing.Optional[dt.datetime]
+            ISO-8601 instant the key stops authenticating; omitted means it never expires.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -746,8 +761,10 @@ class AsyncRawKeysClient:
         Parameters
         ----------
         key_id : str
+            The key's public identifier.
 
         grace_period_seconds : typing.Optional[int]
+            Seconds the old secret keeps authenticating after the rotation; omitted means the service default (24h).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -861,6 +878,7 @@ class AsyncRawKeysClient:
         Parameters
         ----------
         key_id : str
+            The key's public identifier.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
