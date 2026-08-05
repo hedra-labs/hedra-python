@@ -16,9 +16,20 @@ class VoiceSummary(UniversalBaseModel):
     The voice's id (`voice_<uuid>`); pass it as `input.voice_id` on submit.
     """
 
-    name: typing.Optional[str] = None
-    preview_url: typing.Optional[str] = None
-    labels: typing.Optional[typing.Dict[str, str]] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable name.
+    """
+
+    preview_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL of a short audio sample of this voice.
+    """
+
+    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Curation metadata (language, gender, accent, ...).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

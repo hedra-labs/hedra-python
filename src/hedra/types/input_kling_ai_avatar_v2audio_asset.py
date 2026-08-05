@@ -13,7 +13,7 @@ class InputKlingAiAvatarV2AudioAsset(UniversalBaseModel):
 
     asset_id: str = pydantic.Field()
     """
-    The asset's id (`asset_<uuid>`). A completed job's output asset carries the job's UUID: replace the `job_` prefix with `asset_`.
+    The asset's id (`asset_<uuid>`), as issued by the server — a completed generation publishes one per output as `outputs[].asset_id`. Do not construct one or derive it from any other id.
     """
 
     if IS_PYDANTIC_V2:

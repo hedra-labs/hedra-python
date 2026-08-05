@@ -11,7 +11,11 @@ class EstimateResponse(UniversalBaseModel):
     Price of a would-be submit, in US dollars.
     """
 
-    model: str
+    model: str = pydantic.Field()
+    """
+    The resolved model id this estimate prices.
+    """
+
     cost: float = pydantic.Field()
     """
     Price of a would-be submit.

@@ -37,7 +37,7 @@ client.jobs.list()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum items per page.
     
 </dd>
 </dl>
@@ -45,7 +45,7 @@ client.jobs.list()
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` 
+**cursor:** `typing.Optional[str]` — Opaque cursor from the previous page's `next_cursor`; omit for the first page.
     
 </dd>
 </dl>
@@ -104,7 +104,7 @@ client.jobs.get(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**job_id:** `str` — The job's id (`job_<uuid>`).
     
 </dd>
 </dl>
@@ -163,7 +163,7 @@ client.jobs.get_status(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**job_id:** `str` — The job's id (`job_<uuid>`).
     
 </dd>
 </dl>
@@ -230,7 +230,7 @@ client.jobs.list_job_logs(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**job_id:** `str` — The job's id (`job_<uuid>`).
     
 </dd>
 </dl>
@@ -238,7 +238,7 @@ client.jobs.list_job_logs(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum items per page.
     
 </dd>
 </dl>
@@ -246,7 +246,7 @@ client.jobs.list_job_logs(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` 
+**cursor:** `typing.Optional[str]` — Opaque cursor from the previous page's `next_cursor`; omit for the first page.
     
 </dd>
 </dl>
@@ -266,7 +266,7 @@ client.jobs.list_job_logs(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">stream</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -305,7 +305,7 @@ client.jobs.stream(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**job_id:** `str` — The job's id (`job_<uuid>`).
     
 </dd>
 </dl>
@@ -313,7 +313,7 @@ client.jobs.stream(
 <dl>
 <dd>
 
-**last_event_id:** `typing.Optional[str]` 
+**last_event_id:** `typing.Optional[str]` — Resume after this event id — the standard SSE reconnect header; browsers' EventSource sends it automatically.
     
 </dd>
 </dl>
@@ -952,6 +952,102 @@ client.jobs.submit_flux11ultra(
 <dd>
 
 **input:** `InputFlux11Ultra` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux3</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Black Forest Labs FLUX.3 text-to-video with native audio.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux3
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux3(
+    input=InputFlux3(
+        prompt="prompt",
+        aspect_ratio="auto",
+        resolution="720p",
+        duration_ms=1,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux3` 
     
 </dd>
 </dl>
@@ -2242,7 +2338,7 @@ Submits an asynchronous job and returns `202` with a job id. Fetch the result at
 <dd>
 
 ```python
-from hedra import Hedra, InputHedraAvatar, InputHedraAvatarStartImage_Url, InputHedraAvatarAudio_Url
+from hedra import Hedra, InputHedraAvatar, InputHedraAvatarStartImage_Url, InputHedraAvatarAudioZero_Url
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
@@ -2258,7 +2354,7 @@ client.jobs.submit_hedra_avatar(
         start_image=InputHedraAvatarStartImage_Url(
             url="url",
         ),
-        audio=InputHedraAvatarAudio_Url(
+        audio=InputHedraAvatarAudioZero_Url(
             url="url",
         ),
     ),
@@ -2343,7 +2439,7 @@ Submits an asynchronous job and returns `202` with a job id. Fetch the result at
 <dd>
 
 ```python
-from hedra import Hedra, InputHedraCharacter3, InputHedraCharacter3StartImage_Url, InputHedraCharacter3Audio_Url
+from hedra import Hedra, InputHedraCharacter3, InputHedraCharacter3StartImage_Url, InputHedraCharacter3AudioZero_Url
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
@@ -2359,7 +2455,7 @@ client.jobs.submit_hedra_character3(
         start_image=InputHedraCharacter3StartImage_Url(
             url="url",
         ),
-        audio=InputHedraCharacter3Audio_Url(
+        audio=InputHedraCharacter3AudioZero_Url(
             url="url",
         ),
     ),
@@ -2456,7 +2552,6 @@ client.jobs.submit_hidream_o1image(
     input=InputHidreamO1Image(
         prompt="prompt",
         aspect_ratio="16:9",
-        resolution="540p",
         quality="standard",
     ),
 )
@@ -2617,7 +2712,7 @@ client.jobs.submit_ideogram_v2(
 <dl>
 <dd>
 
-Ideogram V4 at its middle render setting; poster-ready text and layout at everyday cost.
+Ideogram V4 renders poster-ready text and layout; the required quality parameter picks turbo, balanced or quality, which sets both the render effort and the price.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -3906,6 +4001,101 @@ client.jobs.submit_mai_image25(
 <dd>
 
 **input:** `InputMaiImage25` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_minimax_h3</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+MiniMax H3 video generation from text, frames, or references.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputMinimaxH3
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_minimax_h3(
+    input=InputMinimaxH3(
+        prompt="prompt",
+        resolution="768p",
+        duration_ms=1,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputMinimaxH3` 
     
 </dd>
 </dl>
@@ -6539,7 +6729,7 @@ client.jobs.submit_veo31(
 <dl>
 <dd>
 
-Vidu Q3 text-to-video with native dialogue and sound, up to 16 seconds
+Vidu Q3 video with native dialogue and sound, up to 16 seconds — from a text prompt, from a start frame, or between a start and end frame
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -6567,7 +6757,7 @@ client = Hedra(
 client.jobs.submit_vidu_q3(
     input=InputViduQ3(
         prompt="prompt",
-        resolution="360p",
+        resolution="540p",
         duration_ms=1,
         quality="standard",
     ),
@@ -6664,7 +6854,7 @@ client.jobs.submit_vidu_q3reference(
     input=InputViduQ3Reference(
         prompt="prompt",
         aspect_ratio="16:9",
-        resolution="360p",
+        resolution="540p",
         duration_ms=1,
         images=[
             InputViduQ3ReferenceImagesItem_Url(
@@ -6736,7 +6926,7 @@ client.jobs.submit_vidu_q3reference(
 <dl>
 <dd>
 
-Wan 2.7 text-to-video with native audio and up to 15-second generations
+Wan 2.7 video with native audio — from a text prompt, from a first frame with an optional last frame, or from reference images that keep subjects consistent
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -6916,7 +7106,7 @@ client.models.get(
 <dl>
 <dd>
 
-**model:** `str` 
+**model:** `str` — The model's public id (`GET /v3/models`).
     
 </dd>
 </dl>
@@ -6975,7 +7165,7 @@ client.models.list_model_jobs(
 <dl>
 <dd>
 
-**model:** `str` 
+**model:** `str` — The model's public id (`GET /v3/models`).
     
 </dd>
 </dl>
@@ -6983,7 +7173,7 @@ client.models.list_model_jobs(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum items per page.
     
 </dd>
 </dl>
@@ -6991,7 +7181,7 @@ client.models.list_model_jobs(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` 
+**cursor:** `typing.Optional[str]` — Opaque cursor from the previous page's `next_cursor`; omit for the first page.
     
 </dd>
 </dl>
@@ -7064,7 +7254,7 @@ client.models.list_voices(
 <dl>
 <dd>
 
-**model:** `str` 
+**model:** `str` — The model's public id (`GET /v3/models`).
     
 </dd>
 </dl>
@@ -7137,7 +7327,7 @@ client.models.get_openapi(
 <dl>
 <dd>
 
-**model:** `str` 
+**model:** `str` — The model's public id (`GET /v3/models`).
     
 </dd>
 </dl>
@@ -7196,7 +7386,7 @@ client.models.estimate(
 <dl>
 <dd>
 
-**model:** `str` 
+**model:** `str` — The model's public id (`GET /v3/models`).
     
 </dd>
 </dl>
@@ -7204,7 +7394,7 @@ client.models.estimate(
 <dl>
 <dd>
 
-**input:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+**input:** `typing.Optional[typing.Dict[str, typing.Any]]` — The same model-specific inputs a submit would carry; the estimate prices exactly this body.
     
 </dd>
 </dl>
@@ -7262,7 +7452,7 @@ client.keys.list()
 <dl>
 <dd>
 
-**workspace_id:** `typing.Optional[str]` 
+**workspace_id:** `typing.Optional[str]` — List keys of this workspace; omitted means the authenticating key's workspace.
     
 </dd>
 </dl>
@@ -7319,7 +7509,7 @@ client.keys.create()
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — Human-readable label for the key.
     
 </dd>
 </dl>
@@ -7327,7 +7517,7 @@ client.keys.create()
 <dl>
 <dd>
 
-**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` 
+**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` — Scopes granted to the key; omitted means full access.
     
 </dd>
 </dl>
@@ -7335,7 +7525,7 @@ client.keys.create()
 <dl>
 <dd>
 
-**kind:** `typing.Optional[ApiKeyKind]` 
+**kind:** `typing.Optional[ApiKeyKind]` — `personal` (default) dies with the member; `service` is workspace-shared, OWNER/ADMIN-managed, and survives member removal.
     
 </dd>
 </dl>
@@ -7343,7 +7533,7 @@ client.keys.create()
 <dl>
 <dd>
 
-**workspace_id:** `typing.Optional[str]` 
+**workspace_id:** `typing.Optional[str]` — Target workspace; omitted means the authenticating key's workspace.
     
 </dd>
 </dl>
@@ -7351,7 +7541,7 @@ client.keys.create()
 <dl>
 <dd>
 
-**expires_at:** `typing.Optional[datetime.datetime]` 
+**expires_at:** `typing.Optional[datetime.datetime]` — ISO-8601 instant the key stops authenticating; omitted means it never expires.
     
 </dd>
 </dl>
@@ -7410,7 +7600,7 @@ client.keys.rotate(
 <dl>
 <dd>
 
-**key_id:** `str` 
+**key_id:** `str` — The key's public identifier.
     
 </dd>
 </dl>
@@ -7418,7 +7608,7 @@ client.keys.rotate(
 <dl>
 <dd>
 
-**grace_period_seconds:** `typing.Optional[int]` 
+**grace_period_seconds:** `typing.Optional[int]` — Seconds the old secret keeps authenticating after the rotation; omitted means the service default (24h).
     
 </dd>
 </dl>
@@ -7477,7 +7667,7 @@ client.keys.revoke(
 <dl>
 <dd>
 
-**key_id:** `str` 
+**key_id:** `str` — The key's public identifier.
     
 </dd>
 </dl>
@@ -7535,7 +7725,7 @@ client.tokens.create()
 <dl>
 <dd>
 
-**ttl_seconds:** `typing.Optional[int]` 
+**ttl_seconds:** `typing.Optional[int]` — Seconds until the token expires; omitted means the service default.
     
 </dd>
 </dl>
@@ -7543,7 +7733,7 @@ client.tokens.create()
 <dl>
 <dd>
 
-**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` 
+**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` — Scopes granted to the token. Omitted means every scope of the minting key; an explicit subset narrows the grant, and requesting beyond the key's scopes is a 403.
     
 </dd>
 </dl>
@@ -7567,6 +7757,24 @@ client.tokens.create()
 <details><summary><code>client.files.<a href="src/hedra/files/client.py">upload</a>(...) -> FileUploadResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Store a file and return a short-lived URL to pass in a model's `input`.
+
+Free, and available on an empty API wallet — funding is enforced when you
+submit a generation, not when you upload its inputs. `GET /v3/balance`
+reports what the wallet holds.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7710,7 +7918,7 @@ client.billing.get_usage()
 <dl>
 <dd>
 
-**start:** `typing.Optional[datetime.datetime]` 
+**start:** `typing.Optional[datetime.datetime]` — Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job-creation time.
     
 </dd>
 </dl>
@@ -7718,7 +7926,7 @@ client.billing.get_usage()
 <dl>
 <dd>
 
-**end:** `typing.Optional[datetime.datetime]` 
+**end:** `typing.Optional[datetime.datetime]` — Window end (exclusive, ISO-8601); defaults to now. The window is capped at 90 days.
     
 </dd>
 </dl>
@@ -7726,7 +7934,7 @@ client.billing.get_usage()
 <dl>
 <dd>
 
-**group_by:** `typing.Optional[UsageGroupBy]` 
+**group_by:** `typing.Optional[UsageGroupBy]` — One summary row (`total`), one per UTC day (`day`), or one per model (`model`).
     
 </dd>
 </dl>
@@ -7884,7 +8092,7 @@ client.webhooks.put_default(
 <dl>
 <dd>
 
-**url:** `str` 
+**url:** `str` — HTTPS endpoint to receive terminal webhooks for every job that names no per-job `webhook` on submit.
     
 </dd>
 </dl>
@@ -7892,7 +8100,7 @@ client.webhooks.put_default(
 <dl>
 <dd>
 
-**enabled:** `typing.Optional[bool]` 
+**enabled:** `typing.Optional[bool]` — Whether the default endpoint receives deliveries; false pauses it without discarding the URL.
     
 </dd>
 </dl>
@@ -8047,7 +8255,7 @@ client.webhooks.list_deliveries()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**limit:** `typing.Optional[int]` — Maximum items per page.
     
 </dd>
 </dl>
@@ -8055,7 +8263,7 @@ client.webhooks.list_deliveries()
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` 
+**cursor:** `typing.Optional[str]` — Opaque cursor from the previous page's `next_cursor`; omit for the first page.
     
 </dd>
 </dl>
@@ -8139,7 +8347,7 @@ client.webhooks.redeliver(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**job_id:** `str` — The job's id (`job_<uuid>`).
     
 </dd>
 </dl>
@@ -8249,7 +8457,7 @@ client.log_drains.create_log_drain(
 <dl>
 <dd>
 
-**name:** `str` 
+**name:** `str` — Human-readable label.
     
 </dd>
 </dl>
@@ -8257,7 +8465,7 @@ client.log_drains.create_log_drain(
 <dl>
 <dd>
 
-**url:** `str` 
+**url:** `str` — HTTPS endpoint job-log batches are posted to.
     
 </dd>
 </dl>
@@ -8281,7 +8489,7 @@ client.log_drains.create_log_drain(
 <dl>
 <dd>
 
-**headers:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
+**headers:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Extra headers sent with every post — typically the receiver's authentication. Stored values are never echoed back; reads expose `header_names` only.
     
 </dd>
 </dl>
@@ -8289,7 +8497,7 @@ client.log_drains.create_log_drain(
 <dl>
 <dd>
 
-**enabled:** `typing.Optional[bool]` 
+**enabled:** `typing.Optional[bool]` — Whether the drain receives batches.
     
 </dd>
 </dl>
@@ -8297,7 +8505,7 @@ client.log_drains.create_log_drain(
 <dl>
 <dd>
 
-**batch_size:** `typing.Optional[int]` 
+**batch_size:** `typing.Optional[int]` — Maximum log lines per post.
     
 </dd>
 </dl>
@@ -8356,7 +8564,7 @@ client.log_drains.get_log_drain(
 <dl>
 <dd>
 
-**drain_id:** `str` 
+**drain_id:** `str` — The drain's id (`drain_<uuid>`).
     
 </dd>
 </dl>
@@ -8415,7 +8623,7 @@ client.log_drains.delete_log_drain(
 <dl>
 <dd>
 
-**drain_id:** `str` 
+**drain_id:** `str` — The drain's id (`drain_<uuid>`).
     
 </dd>
 </dl>
@@ -8474,7 +8682,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**drain_id:** `str` 
+**drain_id:** `str` — The drain's id (`drain_<uuid>`).
     
 </dd>
 </dl>
@@ -8482,7 +8690,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
+**name:** `typing.Optional[str]` — New label; omitted means unchanged.
     
 </dd>
 </dl>
@@ -8490,7 +8698,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` 
+**url:** `typing.Optional[str]` — New destination; omitted means unchanged.
     
 </dd>
 </dl>
@@ -8498,7 +8706,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**format:** `typing.Optional[LogDrainFormat]` 
+**format:** `typing.Optional[LogDrainFormat]` — New wire format; omitted means unchanged.
     
 </dd>
 </dl>
@@ -8514,7 +8722,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**headers:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
+**headers:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Replaces the full header set; `{}` clears it. Omitted means unchanged.
     
 </dd>
 </dl>
@@ -8522,7 +8730,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**enabled:** `typing.Optional[bool]` 
+**enabled:** `typing.Optional[bool]` — Pause (false) or resume (true) the drain; omitted means unchanged. Re-enabling clears the auto-disable failure count.
     
 </dd>
 </dl>
@@ -8530,7 +8738,7 @@ client.log_drains.update_log_drain(
 <dl>
 <dd>
 
-**batch_size:** `typing.Optional[int]` 
+**batch_size:** `typing.Optional[int]` — New maximum log lines per post; omitted means unchanged.
     
 </dd>
 </dl>
@@ -8589,7 +8797,7 @@ client.log_drains.test_log_drain(
 <dl>
 <dd>
 
-**drain_id:** `str` 
+**drain_id:** `str` — The drain's id (`drain_<uuid>`).
     
 </dd>
 </dl>

@@ -13,7 +13,10 @@ class ErrorResponse(UniversalBaseModel):
     """
 
     error: ErrorEnvelope
-    trace_id: typing.Optional[str] = None
+    trace_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Debug id to quote to support (32-char hex trace id), also emitted as the `X-Trace-Id` response header.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

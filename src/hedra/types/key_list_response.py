@@ -8,7 +8,11 @@ from .key_summary import KeySummary
 
 
 class KeyListResponse(UniversalBaseModel):
-    data: typing.List[KeySummary]
+    data: typing.List[KeySummary] = pydantic.Field()
+    """
+    This page of items.
+    """
+
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
     Opaque cursor for the next page, or null when this response completes the list. Always present. Endpoints that serve the whole collection at once always return null.

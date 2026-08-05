@@ -10,16 +10,47 @@ from .key_status import KeyStatus
 
 
 class KeySummary(UniversalBaseModel):
-    key_id: typing.Optional[str] = None
+    key_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The key's public identifier; null only for legacy rows predating public key ids.
+    """
+
     kind: ApiKeyKind
-    name: typing.Optional[str] = None
-    scopes: typing.Optional[typing.List[str]] = None
-    workspace_id: typing.Optional[str] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable label for the key.
+    """
+
+    scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Scopes granted to the key; null means full access (a legacy key predating scopes).
+    """
+
+    workspace_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The workspace the key bills and acts in.
+    """
+
     status: KeyStatus
-    created_at: typing.Optional[dt.datetime] = None
-    expires_at: typing.Optional[dt.datetime] = None
-    revoked_at: typing.Optional[dt.datetime] = None
-    last_used_at: typing.Optional[dt.datetime] = None
+    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the key was created.
+    """
+
+    expires_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the key stops authenticating; null means it never expires.
+    """
+
+    revoked_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the key was revoked; null unless `status` is `revoked`.
+    """
+
+    last_used_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant the key last authenticated a request; null when unused.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

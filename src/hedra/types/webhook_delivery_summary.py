@@ -13,24 +13,67 @@ from .webhook_redelivery import WebhookRedelivery
 
 
 class WebhookDeliverySummary(UniversalBaseModel):
-    job_id: str
-    job_accessible: bool
-    model: str
-    event_type: typing.Optional[WebhookEventType] = None
+    job_id: str = pydantic.Field()
+    """
+    The job whose terminal event this delivers.
+    """
+
+    job_accessible: bool = pydantic.Field()
+    """
+    Whether GET /v3/jobs/{job_id} works for the caller — false when the job belongs to a different owner than the authenticating key.
+    """
+
+    model: str = pydantic.Field()
+    """
+    The resolved model id the job ran on.
+    """
+
+    event_type: typing.Optional[WebhookEventType] = pydantic.Field(default=None)
+    """
+    The terminal event this delivery announces; null until the delivery fires — a row registered at submit has no outcome to announce while its job is still running.
+    """
+
     status: WebhookDeliveryStatus
     source: WebhookDeliverySource
-    attempts: int
-    redelivery_count: typing.Optional[int] = None
-    redeliveries: typing.Optional[typing.List[WebhookRedelivery]] = None
-    last_response_status: typing.Optional[int] = None
+    attempts: int = pydantic.Field()
+    """
+    Delivery attempts so far, cumulative across replays.
+    """
+
+    redelivery_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    How many operator replays this delivery has had; 0 means every attempt was automatic.
+    """
+
+    redeliveries: typing.Optional[typing.List[WebhookRedelivery]] = pydantic.Field(default=None)
+    """
+    One entry per operator replay, oldest first — each holds the delivery's fields as they stood when the replay was requested. Replays recorded before this history existed appear only in `redelivery_count`, so the list can be shorter.
+    """
+
+    last_response_status: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    HTTP status of the most recent attempt; null when it never got a response.
+    """
+
     last_error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
     """
     Why the most recent delivery attempt failed, in the same error envelope `GET /jobs/{job_id}` returns for a failed job: a stable `code` from the shared error vocabulary, a fixed operator-facing `message`, and `retryable`. Null while no attempt has failed. Destination URLs, addresses, headers, credentials, response bodies, and internal exception text are never included — those stay in Hedra's own logs. `retryable` describes the condition, not what Hedra did: every non-2xx response is retried on the published ladder, so it answers whether replaying this delivery is likely to help. Deliveries that failed before this field became structured report `UNKNOWN`.
     """
 
-    webhook_url: str
-    created_at: dt.datetime
-    last_attempt_at: typing.Optional[dt.datetime] = None
+    webhook_url: str = pydantic.Field()
+    """
+    The destination endpoint.
+    """
+
+    created_at: dt.datetime = pydantic.Field()
+    """
+    ISO-8601 instant the delivery was registered.
+    """
+
+    last_attempt_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant of the most recent attempt; null before the first one.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

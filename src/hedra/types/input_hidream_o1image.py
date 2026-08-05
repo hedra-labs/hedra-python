@@ -14,6 +14,10 @@ from .input_hidream_o1image_resolution import InputHidreamO1ImageResolution
 class InputHidreamO1Image(UniversalBaseModel):
     """
     Model-specific inputs for `hidream-o1-image`.
+
+    Accepted field combinations (one per input mode):
+    (1) requires: aspect_ratio, images, prompt; must omit: resolution
+    (2) requires: aspect_ratio, prompt, resolution; must omit: images
     """
 
     prompt: str = pydantic.Field()
@@ -21,7 +25,11 @@ class InputHidreamO1Image(UniversalBaseModel):
     Generation prompt.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     enhance_prompt: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
@@ -30,11 +38,6 @@ class InputHidreamO1Image(UniversalBaseModel):
     aspect_ratio: InputHidreamO1ImageAspectRatio = pydantic.Field()
     """
     Output aspect ratio.
-    """
-
-    resolution: InputHidreamO1ImageResolution = pydantic.Field()
-    """
-    Output resolution.
     """
 
     images: typing.Optional[typing.List[InputHidreamO1ImageImagesItem]] = pydantic.Field(default=None)
@@ -60,6 +63,11 @@ class InputHidreamO1Image(UniversalBaseModel):
     num_inference_steps: typing.Optional[int] = pydantic.Field(default=None)
     """
     Denoising steps to run.
+    """
+
+    resolution: typing.Optional[InputHidreamO1ImageResolution] = pydantic.Field(default=None)
+    """
+    Output resolution.
     """
 
     quality: InputHidreamO1ImageQuality = pydantic.Field()

@@ -9,15 +9,26 @@ from .job_status import JobStatus
 
 
 class JobSummary(UniversalBaseModel):
-    job_id: str
-    model: str
+    job_id: str = pydantic.Field()
+    """
+    The job's id — server-issued, and opaque.
+    """
+
+    model: str = pydantic.Field()
+    """
+    The resolved model id this job ran on.
+    """
+
     quality: typing.Optional[str] = pydantic.Field(default=None)
     """
     The quality level this job ran at; present only for models that offer quality levels.
     """
 
     status: JobStatus
-    created_at: dt.datetime
+    created_at: dt.datetime = pydantic.Field()
+    """
+    ISO-8601 instant the job was submitted.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

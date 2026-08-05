@@ -10,10 +10,22 @@ from .usage_group_by import UsageGroupBy
 
 
 class UsageResponse(UniversalBaseModel):
-    start: dt.datetime
-    end: dt.datetime
+    start: dt.datetime = pydantic.Field()
+    """
+    Window start (inclusive).
+    """
+
+    end: dt.datetime = pydantic.Field()
+    """
+    Window end (exclusive).
+    """
+
     group_by: UsageGroupBy
-    total_jobs: int
+    total_jobs: int = pydantic.Field()
+    """
+    Jobs submitted across the whole window.
+    """
+
     total_spent: float = pydantic.Field()
     """
     Net amount spent across the whole window.
@@ -24,7 +36,10 @@ class UsageResponse(UniversalBaseModel):
     ISO-4217 currency code for every amount in this response.
     """
 
-    data: typing.Optional[typing.List[UsageBucket]] = None
+    data: typing.Optional[typing.List[UsageBucket]] = pydantic.Field(default=None)
+    """
+    One bucket per `group_by` group.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

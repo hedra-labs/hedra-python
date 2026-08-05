@@ -12,9 +12,17 @@ from .input_kling25turbo_start_image import InputKling25TurboStartImage
 class InputKling25Turbo(UniversalBaseModel):
     """
     Model-specific inputs for `kling-25-turbo`.
+
+    Accepted field combinations (one per input mode):
+    (1) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
+    (2) requires: aspect_ratio, duration_ms, prompt, start_image
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

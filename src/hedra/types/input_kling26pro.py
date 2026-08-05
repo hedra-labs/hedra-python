@@ -12,9 +12,17 @@ from .input_kling26pro_start_image import InputKling26ProStartImage
 class InputKling26Pro(UniversalBaseModel):
     """
     Model-specific inputs for `kling-26-pro`.
+
+    Accepted field combinations (one per input mode):
+    (1) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
+    (2) requires: aspect_ratio, duration_ms, prompt, start_image; must omit: cfg_scale
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

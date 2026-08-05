@@ -4,18 +4,47 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .billing_error import BillingError
 from .error_code import ErrorCode
 from .field_error import FieldError
 
 
 class ErrorEnvelope(UniversalBaseModel):
     code: ErrorCode
-    message: str
-    retryable: typing.Optional[bool] = None
-    retry_after: typing.Optional[int] = None
-    param: typing.Optional[str] = None
-    details: typing.Optional[typing.List[FieldError]] = None
-    replaced_by: typing.Optional[str] = None
+    message: str = pydantic.Field()
+    """
+    Human-readable summary of the error. Fixed per condition — match on `code`, not on this text.
+    """
+
+    retryable: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether retrying the same request can succeed. Describes the condition, not a promise — pair with `retry_after` when present.
+    """
+
+    retry_after: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Seconds to wait before retrying; set when the error is retryable. Mirrors the `Retry-After` response header.
+    """
+
+    param: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The primary offending input field, when the error is about one specific field.
+    """
+
+    details: typing.Optional[typing.List[FieldError]] = pydantic.Field(default=None)
+    """
+    Every field-level problem, when the error is a validation failure — all of them at once, not just the first.
+    """
+
+    replaced_by: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The id of a successor model, set when the requested model has been retired (code `GONE`) and replaced; null otherwise. Lets a client programmatically migrate off a retired model.
+    """
+
+    billing: typing.Optional[BillingError] = pydantic.Field(default=None)
+    """
+    Balance, price, and where to add funds — set when the request was refused for funds (code `INSUFFICIENT_BALANCE`); null otherwise.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

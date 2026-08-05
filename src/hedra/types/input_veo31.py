@@ -18,7 +18,11 @@ class InputVeo31(UniversalBaseModel):
     Model-specific inputs for `veo-31`.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

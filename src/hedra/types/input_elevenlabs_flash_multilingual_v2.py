@@ -16,8 +16,16 @@ class InputElevenlabsFlashMultilingualV2(UniversalBaseModel):
     Generation prompt.
     """
 
-    stability: typing.Optional[float] = None
-    speed: typing.Optional[float] = None
+    stability: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Voice stability, from 0 to 1. Higher values give a steadier, more consistent delivery; lower values allow more expressive variation between generations.
+    """
+
+    speed: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Speech rate multiplier; 1.0 is the voice's natural pace.
+    """
+
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
     Language code; 'auto' by default.

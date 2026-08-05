@@ -39,8 +39,10 @@ class RawTokensClient:
         Parameters
         ----------
         ttl_seconds : typing.Optional[int]
+            Seconds until the token expires; omitted means the service default.
 
         scopes : typing.Optional[typing.Sequence[ApiKeyScope]]
+            Scopes granted to the token. Omitted means every scope of the minting key; an explicit subset narrows the grant, and requesting beyond the key's scopes is a 403.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -164,8 +166,10 @@ class AsyncRawTokensClient:
         Parameters
         ----------
         ttl_seconds : typing.Optional[int]
+            Seconds until the token expires; omitted means the service default.
 
         scopes : typing.Optional[typing.Sequence[ApiKeyScope]]
+            Scopes granted to the token. Omitted means every scope of the minting key; an explicit subset narrows the grant, and requesting beyond the key's scopes is a 403.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -15,10 +15,25 @@ class FieldError(UniversalBaseModel):
     can fix it without re-fetching the model schema.
     """
 
-    field: str
-    message: str
-    reason: typing.Optional[str] = None
-    allowed: typing.Optional[typing.List[str]] = None
+    field: str = pydantic.Field()
+    """
+    Dotted path to the offending input (e.g. `input.resolution`).
+    """
+
+    message: str = pydantic.Field()
+    """
+    What is wrong with this field's value.
+    """
+
+    reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Machine-readable hint for which constraint failed ("required", "enum", "type", …).
+    """
+
+    allowed: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The accepted values, when the field is an enum — so the request can be fixed without re-fetching the model schema.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

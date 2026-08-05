@@ -16,7 +16,11 @@ class InputKlingAiAvatarV2(UniversalBaseModel):
     Model-specific inputs for `kling-ai-avatar-v2`.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
     Generation prompt.

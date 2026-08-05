@@ -151,8 +151,10 @@ class RawLogDrainsClient:
         Parameters
         ----------
         name : str
+            Human-readable label.
 
         url : str
+            HTTPS endpoint job-log batches are posted to.
 
         format : typing.Optional[LogDrainFormat]
 
@@ -160,10 +162,13 @@ class RawLogDrainsClient:
             Signs every NDJSON post. Required when `format` is `ndjson` (the default); optional for `otlp` drains, whose receivers authenticate with `headers` instead.
 
         headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Extra headers sent with every post — typically the receiver's authentication. Stored values are never echoed back; reads expose `header_names` only.
 
         enabled : typing.Optional[bool]
+            Whether the drain receives batches.
 
         batch_size : typing.Optional[int]
+            Maximum log lines per post.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,6 +288,7 @@ class RawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -389,6 +395,7 @@ class RawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -497,21 +504,28 @@ class RawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         name : typing.Optional[str]
+            New label; omitted means unchanged.
 
         url : typing.Optional[str]
+            New destination; omitted means unchanged.
 
         format : typing.Optional[LogDrainFormat]
+            New wire format; omitted means unchanged.
 
         secret : typing.Optional[str]
             Rotates the signing secret. No conditional applies here: the drain may already hold one. Switching `format` to `ndjson` on a drain with no stored secret requires supplying one in the same request.
 
         headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Replaces the full header set; `{}` clears it. Omitted means unchanged.
 
         enabled : typing.Optional[bool]
+            Pause (false) or resume (true) the drain; omitted means unchanged. Re-enabling clears the auto-disable failure count.
 
         batch_size : typing.Optional[int]
+            New maximum log lines per post; omitted means unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -631,6 +645,7 @@ class RawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -855,8 +870,10 @@ class AsyncRawLogDrainsClient:
         Parameters
         ----------
         name : str
+            Human-readable label.
 
         url : str
+            HTTPS endpoint job-log batches are posted to.
 
         format : typing.Optional[LogDrainFormat]
 
@@ -864,10 +881,13 @@ class AsyncRawLogDrainsClient:
             Signs every NDJSON post. Required when `format` is `ndjson` (the default); optional for `otlp` drains, whose receivers authenticate with `headers` instead.
 
         headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Extra headers sent with every post — typically the receiver's authentication. Stored values are never echoed back; reads expose `header_names` only.
 
         enabled : typing.Optional[bool]
+            Whether the drain receives batches.
 
         batch_size : typing.Optional[int]
+            Maximum log lines per post.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -987,6 +1007,7 @@ class AsyncRawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1093,6 +1114,7 @@ class AsyncRawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1201,21 +1223,28 @@ class AsyncRawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         name : typing.Optional[str]
+            New label; omitted means unchanged.
 
         url : typing.Optional[str]
+            New destination; omitted means unchanged.
 
         format : typing.Optional[LogDrainFormat]
+            New wire format; omitted means unchanged.
 
         secret : typing.Optional[str]
             Rotates the signing secret. No conditional applies here: the drain may already hold one. Switching `format` to `ndjson` on a drain with no stored secret requires supplying one in the same request.
 
         headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Replaces the full header set; `{}` clears it. Omitted means unchanged.
 
         enabled : typing.Optional[bool]
+            Pause (false) or resume (true) the drain; omitted means unchanged. Re-enabling clears the auto-disable failure count.
 
         batch_size : typing.Optional[int]
+            New maximum log lines per post; omitted means unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1335,6 +1364,7 @@ class AsyncRawLogDrainsClient:
         Parameters
         ----------
         drain_id : str
+            The drain's id (`drain_<uuid>`).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

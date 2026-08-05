@@ -11,8 +11,15 @@ class WebhookPublicKey(UniversalBaseModel):
     The ed25519 public key callers verify outbound webhook signatures with.
     """
 
-    algorithm: typing.Optional[str] = None
-    public_key: str
+    algorithm: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Signature algorithm; always `ed25519`.
+    """
+
+    public_key: str = pydantic.Field()
+    """
+    Base64-encoded ed25519 public key. Verify each delivery's signature header with it before trusting the payload.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

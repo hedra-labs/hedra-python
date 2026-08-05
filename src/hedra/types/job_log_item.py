@@ -15,13 +15,28 @@ class JobLogItem(UniversalBaseModel):
     One customer-visible lifecycle event for a v3 job.
     """
 
-    id: int
-    timestamp: dt.datetime
+    id: int = pydantic.Field()
+    """
+    Monotonically increasing id of this event within the job's log. Cursors are separate opaque values (`next_cursor` / `logs_next_cursor`); do not send this id as one.
+    """
+
+    timestamp: dt.datetime = pydantic.Field()
+    """
+    ISO-8601 instant the event was recorded.
+    """
+
     level: JobLogLevel
     event: JobLogEvent
-    message: str
+    message: str = pydantic.Field()
+    """
+    Human-readable summary of the event.
+    """
+
     source: JobLogSource
-    data: typing.Optional[typing.Dict[str, typing.Any]] = None
+    data: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Structured detail specific to this event type; empty when the event carries none.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

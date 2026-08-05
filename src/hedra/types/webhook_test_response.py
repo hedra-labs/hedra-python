@@ -7,9 +7,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class WebhookTestResponse(UniversalBaseModel):
-    ok: bool
-    response_status: typing.Optional[int] = None
-    error: typing.Optional[str] = None
+    ok: bool = pydantic.Field()
+    """
+    Whether the test delivery got a 2xx from the endpoint.
+    """
+
+    response_status: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    HTTP status the endpoint returned; null when the request never got a response.
+    """
+
+    error: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Why the test failed; null on success.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

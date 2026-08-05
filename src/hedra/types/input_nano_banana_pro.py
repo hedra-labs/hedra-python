@@ -19,7 +19,11 @@ class InputNanoBananaPro(UniversalBaseModel):
     Generation prompt.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     enhance_prompt: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.

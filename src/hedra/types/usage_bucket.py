@@ -13,8 +13,16 @@ class UsageBucket(UniversalBaseModel):
     ``group_by=model``.
     """
 
-    key: str
-    jobs: int
+    key: str = pydantic.Field()
+    """
+    What this bucket rolls up: `"total"`, an ISO date (`YYYY-MM-DD`, UTC), or a public model id — per `group_by`.
+    """
+
+    jobs: int = pydantic.Field()
+    """
+    Jobs submitted in this bucket.
+    """
+
     spent: float = pydantic.Field()
     """
     Net amount spent in this bucket.

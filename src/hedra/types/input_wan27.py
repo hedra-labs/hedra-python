@@ -16,12 +16,16 @@ class InputWan27(UniversalBaseModel):
     Model-specific inputs for `wan-2-7`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, images, prompt, resolution
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution
-    (3) requires: duration_ms, prompt, resolution, start_image
+    (1) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image; accepts duration_ms: 2000 | 3000 | 4000 | 5000 | 6000 | 7000 | 8000 | 9000 | 10000
+    (2) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, images, start_image
+    (3) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, images
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.

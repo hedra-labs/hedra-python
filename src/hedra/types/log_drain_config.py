@@ -10,26 +10,81 @@ from .log_drain_format import LogDrainFormat
 
 
 class LogDrainConfig(UniversalBaseModel):
-    id: str
-    name: str
-    url: str
+    id: str = pydantic.Field()
+    """
+    The drain's id (`drain_<uuid>`).
+    """
+
+    name: str = pydantic.Field()
+    """
+    Human-readable label.
+    """
+
+    url: str = pydantic.Field()
+    """
+    The destination endpoint.
+    """
+
     format: LogDrainFormat
-    header_names: typing.Optional[typing.List[str]] = None
-    enabled: bool
-    batch_size: int
-    consecutive_failures: int
-    last_success_at: typing.Optional[dt.datetime] = None
-    last_failure_at: typing.Optional[dt.datetime] = None
-    last_failure_status: typing.Optional[int] = None
+    header_names: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Names of the configured extra headers. Values are write-only and never echoed back.
+    """
+
+    enabled: bool = pydantic.Field()
+    """
+    Whether the drain receives batches.
+    """
+
+    batch_size: int = pydantic.Field()
+    """
+    Maximum log lines per post.
+    """
+
+    consecutive_failures: int = pydantic.Field()
+    """
+    Failed batches since the last success; the drain auto-disables when it crosses the failure threshold.
+    """
+
+    last_success_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant of the last delivered batch.
+    """
+
+    last_failure_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    ISO-8601 instant of the last failed batch.
+    """
+
+    last_failure_status: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    HTTP status of the last failed batch; null when it never got a response.
+    """
+
     last_error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
     """
     Why the most recent batch delivery failed, in the same error envelope `GET /jobs/{job_id}` returns for a failed job: a stable `code` from the shared error vocabulary, a fixed operator-facing `message`, and `retryable`. Null while no batch has failed, and cleared on the next success. Destination URLs, headers, credentials, response bodies, and internal exception text are never included. Nor is your drain URL written to Hedra's own logs, since it may carry authentication in its query string. `retryable` describes the condition, not what Hedra did: every failed batch is requeued until the drain auto-disables, so it answers whether fixing the destination and re-enabling is likely to help. Drains that last failed before this field became structured report `UNKNOWN`.
     """
 
-    disabled_reason: typing.Optional[str] = None
-    created_at: dt.datetime
-    updated_at: dt.datetime
-    updated_by_key_id: typing.Optional[str] = None
+    disabled_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Why the drain is off (`consecutive_failures` for auto-disable, `disabled_by_user`); null while enabled.
+    """
+
+    created_at: dt.datetime = pydantic.Field()
+    """
+    ISO-8601 instant the drain was created.
+    """
+
+    updated_at: dt.datetime = pydantic.Field()
+    """
+    ISO-8601 instant the config last changed.
+    """
+
+    updated_by_key_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The API key that last changed the config.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

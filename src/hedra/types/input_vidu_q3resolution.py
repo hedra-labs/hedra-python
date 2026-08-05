@@ -2,4 +2,4 @@
 
 import typing
 
-InputViduQ3Resolution = typing.Union[typing.Literal["360p", "540p", "720p", "1080p"], typing.Any]
+InputViduQ3Resolution = typing.Union[typing.Literal["540p", "720p", "1080p"], typing.Any]

@@ -6,14 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputHedraAvatarAudioAsset(UniversalBaseModel):
+class InputMinimaxH3EndImageUrl(UniversalBaseModel):
     """
-    An existing asset you own, referenced by its id.
+    A file uploaded via POST /v3/files, referenced by the returned url.
     """
 
-    asset_id: str = pydantic.Field()
+    url: str = pydantic.Field()
     """
-    The asset's id (`asset_<uuid>`). A completed job's output asset carries the job's UUID: replace the `job_` prefix with `asset_`.
+    A URL returned by POST /v3/files.
     """
 
     if IS_PYDANTIC_V2:

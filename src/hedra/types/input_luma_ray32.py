@@ -13,7 +13,11 @@ class InputLumaRay32(UniversalBaseModel):
     Model-specific inputs for `luma-ray-32`.
     """
 
-    num_outputs: typing.Optional[int] = None
+    num_outputs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of outputs generated per job. Only 1 is supported.
+    """
+
     prompt: str = pydantic.Field()
     """
     Generation prompt.
