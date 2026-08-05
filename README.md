@@ -10,6 +10,7 @@ The Hedra Python library provides convenient access to the Hedra APIs from Pytho
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Submitting to any model](#submitting-to-any-model)
 - [Custom base URL](#custom-base-url)
 - [Pagination](#pagination)
 - [Async Client](#async-client)
@@ -70,6 +71,31 @@ from hedra import Hedra
 # Reads HEDRA_API_KEY from the environment
 client = Hedra()
 ```
+
+## Submitting to any model
+
+Each model has a generated, fully typed method — `client.jobs.submit_gpt_image2(...)`,
+`client.jobs.submit_flux_dev(...)`, and so on. Those only cover the models that
+existed when your installed version was built, so `client.jobs.submit()` takes the
+model id as a string and its inputs as a plain dict:
+
+```python
+from hedra import Hedra
+
+client = Hedra()
+
+ack = client.jobs.submit(
+    "gpt-image-2",
+    input={"prompt": "a fox sprinting across fresh snow", "aspect_ratio": "16:9"},
+)
+print(ack.job_id, ack.status)
+```
+
+It is identical on the wire to `submit_<model>()` and returns the same
+`SubmitResponse`, with the same typed exceptions, retries and timeouts. The only
+thing you give up is validation of `input` before the request goes out — fetch a
+model's input schema at runtime with `client.models.get_openapi(model)`, or list
+what is available with `client.models.list()`.
 
 ## Custom base URL
 
