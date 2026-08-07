@@ -111,3 +111,63 @@ def test_parse_retry_after_ms_header() -> None:
     assert _parse_retry_after(httpx.Headers({"retry-after-ms": "2500"})) == 2.5
     assert _parse_retry_after(httpx.Headers({"retry-after-ms": "0"})) == 0
     assert _parse_retry_after(httpx.Headers({"retry-after": "3"})) == 3
+
+
+def _client_capturing_timeout(captured: dict, **client_kwargs: object) -> Hedra:
+    def handler(request: httpx.Request) -> httpx.Response:
+        # httpx records the timeout it resolved for the request here.
+        captured["timeout"] = request.extensions.get("timeout")
+        return httpx.Response(200, json={"data": [], "next_cursor": None})
+
+    transport = httpx.MockTransport(handler)
+    return Hedra(api_key="test-key", httpx_client=httpx.Client(transport=transport, **client_kwargs))  # type: ignore[arg-type]
+
+
+def test_request_options_timeout_is_honoured() -> None:
+    # Regression: `request_options={"timeout": N}` is the documented, preferred
+    # option. src/hedra/core/http_client.py is .fernignore'd, and the frozen
+    # 5.15.0 copy never read this key -- it type-checked, was documented, and was
+    # silently dropped at runtime (the request went out on httpx's own default).
+    captured: dict = {}
+    client = _client_capturing_timeout(captured)
+
+    client.models.list(request_options={"timeout": 30})
+
+    assert captured["timeout"]["read"] == 30
+
+
+def test_request_options_timeout_takes_precedence_over_timeout_in_seconds() -> None:
+    # Both are in seconds; `timeout` wins. Mirrors the generated
+    # tests/utils/test_http_client.py assertions so this stays pinned on main
+    # even before the tree regenerates.
+    captured: dict = {}
+    client = _client_capturing_timeout(captured)
+
+    client.models.list(request_options={"timeout": 30, "timeout_in_seconds": 45})
+
+    assert captured["timeout"]["read"] == 30
+
+
+def test_deprecated_timeout_in_seconds_still_works() -> None:
+    captured: dict = {}
+    client = _client_capturing_timeout(captured)
+
+    client.models.list(request_options={"timeout_in_seconds": 45})
+
+    assert captured["timeout"]["read"] == 45
+
+
+def test_caller_supplied_httpx_client_timeout_is_not_discarded() -> None:
+    # Cross-generator invariant. When the caller brings their own httpx_client and
+    # sets no explicit timeout, their configured timeout must reach httpx.
+    # base_client.py reaches this result two different ways depending on the
+    # generator -- 5.15.0 passes httpx_client.timeout.read through, while 5.26.0+
+    # passes None and relies on http_client.py mapping it to
+    # httpx.USE_CLIENT_DEFAULT. Pin the observable behaviour so the regeneration
+    # cannot silently turn this into "no timeout at all".
+    captured: dict = {}
+    client = _client_capturing_timeout(captured, timeout=12.5)
+
+    client.models.list()
+
+    assert captured["timeout"]["read"] == 12.5
