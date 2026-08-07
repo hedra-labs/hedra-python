@@ -18,8 +18,14 @@ src/hedra/version.py
 # BaseHedra/AsyncBaseHedra (base_client.py) regenerate normally.
 src/hedra/client.py
 
-# Fix for retry-after-ms parsing (upstream Fern emits a str-vs-int comparison)
-src/hedra/core/http_client.py
+# NOTE: src/hedra/core/http_client.py is deliberately NOT listed here.
+# It used to be, to hold a one-line fix for `retry-after-ms` parsing (upstream Fern
+# compares the header string to an int; the TypeError is swallowed by a bare `except`,
+# so upstream just ignores the header and falls through to `retry-after`). Freezing the
+# file to keep that fix meant hand-porting it on every generator bump, and it had already
+# drifted far enough to fail the generated tests. The Hedra API does not send
+# `retry-after-ms`, so the fix was not worth the recurring cost. Do not re-add this entry
+# to restore it — fix it upstream in fern-python-sdk instead.
 
 
 # Hand-maintained docs / history

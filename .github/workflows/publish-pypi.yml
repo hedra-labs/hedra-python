@@ -1,10 +1,17 @@
 name: publish-pypi
-# Builds the hedra-python distribution from the committed SDK and publishes to PyPI.
-# Triggered when a GitHub Release is published. Requires the PYPI_TOKEN secret.
+# Builds the hedra-python distribution from the committed SDK and publishes to PyPI
+# at the version of the release that triggered it (NOT the version in pyproject.toml,
+# which Fern cannot write because the file is .fernignore'd). Requires the PYPI_TOKEN
+# secret.
 on:
   release:
     types: [published]
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish, e.g. 1.0.0. Required for manual runs; release runs take it from the tag."
+        required: true
+        type: string
 
 jobs:
   publish:
@@ -21,8 +28,48 @@ jobs:
       - name: Bootstrap poetry
         run: curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
 
+      # pyproject.toml is .fernignore'd, so `fern generate --version X` in fern-config
+      # cannot write [tool.poetry] version — it is stale by construction. Derive the
+      # published version from the release tag instead, so the artifact on PyPI always
+      # matches the release that triggered it. Not committed; the checkout is discarded.
+      - name: Set version from release tag
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [ -n "${RELEASE_TAG}" ]; then
+            VERSION="${RELEASE_TAG#v}"
+            echo "Resolved version ${VERSION} from release tag ${RELEASE_TAG}."
+          elif [ -n "${INPUT_VERSION}" ]; then
+            VERSION="${INPUT_VERSION#v}"
+            echo "Resolved version ${VERSION} from the workflow_dispatch input."
+          else
+            echo "::error::No version to publish. A release run supplies it via the tag; a manual run must set the 'version' input. Refusing to fall back to the stale version in pyproject.toml."
+            exit 1
+          fi
+          if ! printf '%s' "${VERSION}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([._-]?(a|b|rc|alpha|beta|post|dev)[0-9.]*)?$'; then
+            echo "::error::Refusing to publish '${VERSION}': not a PEP 440 release version."
+            exit 1
+          fi
+          poetry version "${VERSION}"
+
       - name: Build
         run: poetry build
+
+      # Guards against publishing a differently-numbered artifact than the release.
+      - name: Verify built artifacts carry that version
+        run: |
+          set -euo pipefail
+          VERSION="$(poetry version --short)"
+          echo "Built artifacts:"
+          ls -1 dist/
+          # Wheels/sdists normalise the version (e.g. 1.0.0-rc1 -> 1.0.0rc1), so compare
+          # against what poetry itself reports rather than the raw tag.
+          if ! ls dist/ | grep -q -- "-${VERSION}"; then
+            echo "::error::No artifact in dist/ carries version ${VERSION}."
+            exit 1
+          fi
 
       - name: Publish to PyPI
         env:

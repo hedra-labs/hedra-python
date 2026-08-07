@@ -40,6 +40,10 @@ Repository = 'https://github.com/hedra-labs/hedra-python'
 [tool.poetry.dependencies]
 python = "^3.10"
 aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+# Imported directly by src/hedra/core/http_sse/_api.py (anyio.sleep, anyio.CancelScope)
+# as of fern-python-sdk 5.16.1+. It resolves transitively via httpx today, but that is
+# not a contract httpx owes us — declare it explicitly.
+anyio = ">=3.0.0"
 httpx = ">=0.21.2"
 httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
 pydantic = ">= 1.9.2"
