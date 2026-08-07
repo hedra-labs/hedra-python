@@ -18,23 +18,14 @@ src/hedra/version.py
 # BaseHedra/AsyncBaseHedra (base_client.py) regenerate normally.
 src/hedra/client.py
 
-# Fix for retry-after-ms parsing (upstream Fern emits a str-vs-int comparison,
-# swallowed by a bare `except`, so upstream silently ignores the header).
-# Still unfixed upstream as of fern-python-sdk 5.26.0 — verified by diffing this
-# file against /assets/core_utilities/http_client.py in the 5.26.0 generator image.
-# Guarded by tests/custom/test_client.py::test_parse_retry_after_ms_header.
-#
-# BECAUSE THIS FILE IS FROZEN, IT MUST BE HAND-PORTED ON EVERY GENERATOR BUMP.
-# It is currently hand-ported to 5.26.0 and is byte-identical to that generator's
-# output except for the one deviation marked "LOCAL DEVIATION" in the file.
-# To re-port after a bump:
-#   cid=$(docker create fernapi/fern-python-sdk:<version>)
-#   docker cp "$cid:/assets/core_utilities/http_client.py" /tmp/upstream.py
-#   docker rm -f "$cid"
-#   diff -u /tmp/upstream.py src/hedra/core/http_client.py
-# Drop this entry once upstream fixes retry-after-ms; then the file regenerates
-# normally and the freeze/drift cycle ends.
-src/hedra/core/http_client.py
+# NOTE: src/hedra/core/http_client.py is deliberately NOT listed here.
+# It used to be, to hold a one-line fix for `retry-after-ms` parsing (upstream Fern
+# compares the header string to an int; the TypeError is swallowed by a bare `except`,
+# so upstream just ignores the header and falls through to `retry-after`). Freezing the
+# file to keep that fix meant hand-porting it on every generator bump, and it had already
+# drifted far enough to fail the generated tests. The Hedra API does not send
+# `retry-after-ms`, so the fix was not worth the recurring cost. Do not re-add this entry
+# to restore it — fix it upstream in fern-python-sdk instead.
 
 
 # Hand-maintained docs / history

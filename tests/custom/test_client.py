@@ -104,13 +104,18 @@ def test_hedra_api_key_env_read_at_construction_not_import(monkeypatch: pytest.M
     assert client._client_wrapper._get_api_key() == "set-after-import"
 
 
-def test_parse_retry_after_ms_header() -> None:
-    # Regression: retry-after-ms is a string; it must not be compared to int 0.
+def test_parse_retry_after_header() -> None:
+    # Only the `retry-after` header is asserted here. `retry-after-ms` is knowingly
+    # broken upstream in fern-python-sdk: it compares the header string to an int,
+    # and the resulting TypeError is swallowed by a bare `except`, so the header is
+    # ignored and parsing falls through to `retry-after` below. We used to carry a
+    # one-line fix for that by freezing http_client.py in .fernignore, but the freeze
+    # cost a hand-port on every generator bump and the Hedra API does not send
+    # `retry-after-ms`. If that changes, fix it upstream rather than re-freezing.
     from hedra.core.http_client import _parse_retry_after
 
-    assert _parse_retry_after(httpx.Headers({"retry-after-ms": "2500"})) == 2.5
-    assert _parse_retry_after(httpx.Headers({"retry-after-ms": "0"})) == 0
     assert _parse_retry_after(httpx.Headers({"retry-after": "3"})) == 3
+    assert _parse_retry_after(httpx.Headers({})) is None
 
 
 def _client_capturing_timeout(captured: dict, **client_kwargs: object) -> Hedra:
