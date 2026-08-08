@@ -31,12 +31,22 @@ jobs:
     # Gates every publish -- release-triggered and manual alike -- behind an
     # explicit human approval.
     #
-    # NOTE: this key alone protects nothing. GitHub creates the environment
-    # implicitly on first run with no rules attached. It only becomes a gate
-    # once `pypi` carries required reviewers:
-    #   Settings -> Environments -> pypi -> Required reviewers
-    # Moving HEDRA_PYPI_TOKEN to be an environment secret there is the stronger
-    # form: the credential then does not exist outside an approved run.
+    # The `pypi` environment is configured GitHub-side (Settings -> Environments)
+    # and none of it is expressible in this file, so it is recorded here for the
+    # next reader. As configured:
+    #
+    #   required reviewers    mtoader
+    #   deployment policy     custom, exactly one entry: tag `v*`
+    #
+    # Tags rather than branches, deliberately. A `release: published` run deploys
+    # with github.ref = refs/tags/vX.Y.Z, so a branches-only policy (including the
+    # tempting "protected branches only") would reject the primary publish path.
+    # And with no branch permitted at all, a publish cannot be dispatched off a
+    # feature branch; a manual re-run selects the tag in the ref picker instead.
+    #
+    # Still open: HEDRA_PYPI_TOKEN is a *repository* secret, so it resolves for
+    # any workflow here, gate or no gate. Moving it to an environment secret on
+    # `pypi` would confine the credential to approved runs.
     environment: pypi
     steps:
       - name: Checkout repo
