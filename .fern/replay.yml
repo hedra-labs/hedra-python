@@ -1,0 +1,30 @@
+# Fern Replay configuration. Companion to .fernignore, but the opposite lever:
+#
+#   .fernignore  — "generator, do not WRITE this file"        (freezes the file)
+#   exclude here — "replay, do not RE-APPLY customizations"   (frees the file)
+#
+# Replay records every non-.fernignore'd commit since the last generation as a
+# "customization" and replays it onto each new generation. Entries here tell it
+# not to, so the listed files always land as pure generated output.
+
+exclude:
+  # ENG-10113 deliberately abandoned this file's only local deviation (a fix to
+  # `retry-after-ms` parsing) and removed its .fernignore entry, so the file
+  # should now always be pure generated output. Replay did not get the message:
+  # it kept re-deriving that commit as a customization and re-applying it, which
+  # is what ENG-10135 is about.
+  #
+  # Two properties of Replay make this recur rather than settle on its own:
+  #
+  #   - The `patches:` ledger is additive, not recomputed. `detectPatchesInRange`
+  #     appends newly-detected commits and skips ones already tracked, so once a
+  #     patch is recorded it is replayed onto every future generation.
+  #   - The deviation was added by one commit and removed by another. Replayed as
+  #     a pair they cancel out, but the removal is the one that conflicts, so in
+  #     practice only the addition lands and the abandoned code comes back.
+  #
+  # Excluding the file stops both: `applyPatches` skips any patch touching it.
+  # Do NOT "fix" this by re-adding the file to .fernignore — that re-freezes it
+  # and brings back the hand-porting cost ENG-10113 removed. If the generated
+  # output is wrong, fix it upstream in fern-python-sdk.
+  - src/hedra/core/http_client.py
