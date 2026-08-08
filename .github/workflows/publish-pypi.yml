@@ -13,9 +13,31 @@ on:
         required: true
         type: string
 
+# A PyPI upload is irreversible: a version number, once taken, can never be
+# reused even after deletion. Two releases racing would also interleave their
+# `poetry version` writes over one checkout.
+concurrency:
+  group: publish-pypi
+  cancel-in-progress: false
+
+# The job needs to read the checkout and nothing else. It authenticates to PyPI
+# with POETRY_PYPI_TOKEN_PYPI, not with the workflow token.
+permissions:
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Gates every publish -- release-triggered and manual alike -- behind an
+    # explicit human approval.
+    #
+    # NOTE: this key alone protects nothing. GitHub creates the environment
+    # implicitly on first run with no rules attached. It only becomes a gate
+    # once `pypi` carries required reviewers:
+    #   Settings -> Environments -> pypi -> Required reviewers
+    # Moving HEDRA_PYPI_TOKEN to be an environment secret there is the stronger
+    # form: the credential then does not exist outside an approved run.
+    environment: pypi
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
