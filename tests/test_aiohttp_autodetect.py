@@ -95,7 +95,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 hedra._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install hedra[aiohttp]", str(ctx.exception))
+            self.assertIn("pip install hedra-python[aiohttp]", str(ctx.exception))
 
         importlib.reload(hedra._default_clients)
 
