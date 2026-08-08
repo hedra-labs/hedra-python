@@ -66,6 +66,12 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
     retry_after_ms = response_headers.get("retry-after-ms")
     if retry_after_ms is not None:
         try:
+            # LOCAL DEVIATION from the generated output (the only one in this file;
+            # see .fernignore). Upstream fern-python-sdk emits `if retry_after_ms > 0`,
+            # comparing the header *string* to an int. That raises TypeError, which the
+            # `except` below swallows, so upstream silently ignores `retry-after-ms`
+            # entirely. Cast before comparing. Guarded by
+            # tests/custom/test_client.py::test_parse_retry_after_ms_header.
             return int(retry_after_ms) / 1000 if retry_after_ms > 0 else 0
         except Exception:
             pass
