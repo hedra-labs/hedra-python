@@ -83,6 +83,7 @@ from ..types.result_response import ResultResponse
 from ..types.status_response import StatusResponse
 from ..types.submit_response import SubmitResponse
 from .raw_client import AsyncRawJobsClient, RawJobsClient
+from .types.jobs_stream_response import JobsStreamResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -262,7 +263,7 @@ class JobsClient:
         *,
         last_event_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[typing.Any]:
+    ) -> typing.Iterator[JobsStreamResponse]:
         """
         Parameters
         ----------
@@ -277,8 +278,8 @@ class JobsClient:
 
         Yields
         ------
-        typing.Iterator[typing.Any]
-            Successful Response
+        typing.Iterator[JobsStreamResponse]
+            Server-Sent Events. Each frame's `event:` names its type and its `data:` line is one JSON payload: `status` carries a `StatusResponse`, `log` a `JobLogItem` (the same row `GET /jobs/{job_id}/logs` serves). The stream opens with a `status` snapshot and closes once a terminal status is sent. Frames also carry an `id:` to send back as `Last-Event-Id` on reconnect; comment lines (`: keep-alive`) and `retry:` lines are protocol-level and carry no payload.
 
         Examples
         --------
@@ -3921,6 +3922,61 @@ class JobsClient:
         )
         return _response.data
 
+    def submit(
+        self,
+        model: str,
+        *,
+        input: typing.Dict[str, typing.Any],
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Runs any model in the catalog by its public id, with `input` passed through untyped — the same call the typed operations below make, minus the compile-time schema.
+
+        Reach for it when the model is not known ahead of time: a client generated before a model shipped can still run it, and an id read from `GET /v3/models` at runtime needs no regeneration. Prefer the typed operation whenever your client already has one — `input` here is validated against the same published schema (`GET /v3/models/{model}`), so a bad field is a `400` at submit rather than an error before the call.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        input : typing.Dict[str, typing.Any]
+            Model-specific inputs, validated at submit against the model's published input schema (`GET /v3/models/{model}`).
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit(
+            model="model",
+            input={"key": "value"},
+        )
+        """
+        _response = self._raw_client.submit(
+            model, input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncJobsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -4130,7 +4186,7 @@ class AsyncJobsClient:
         *,
         last_event_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[typing.Any]:
+    ) -> typing.AsyncIterator[JobsStreamResponse]:
         """
         Parameters
         ----------
@@ -4145,8 +4201,8 @@ class AsyncJobsClient:
 
         Yields
         ------
-        typing.AsyncIterator[typing.Any]
-            Successful Response
+        typing.AsyncIterator[JobsStreamResponse]
+            Server-Sent Events. Each frame's `event:` names its type and its `data:` line is one JSON payload: `status` carries a `StatusResponse`, `log` a `JobLogItem` (the same row `GET /jobs/{job_id}/logs` serves). The stream opens with a `status` snapshot and closes once a terminal status is sent. Frames also carry an `id:` to send back as `Last-Event-Id` on reconnect; comment lines (`: keep-alive`) and `retry:` lines are protocol-level and carry no payload.
 
         Examples
         --------
@@ -8355,5 +8411,68 @@ class AsyncJobsClient:
         """
         _response = await self._raw_client.submit_wan27(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit(
+        self,
+        model: str,
+        *,
+        input: typing.Dict[str, typing.Any],
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Runs any model in the catalog by its public id, with `input` passed through untyped — the same call the typed operations below make, minus the compile-time schema.
+
+        Reach for it when the model is not known ahead of time: a client generated before a model shipped can still run it, and an id read from `GET /v3/models` at runtime needs no regeneration. Prefer the typed operation whenever your client already has one — `input` here is validated against the same published schema (`GET /v3/models/{model}`), so a bad field is a `400` at submit rather than an error before the call.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        input : typing.Dict[str, typing.Any]
+            Model-specific inputs, validated at submit against the model's published input schema (`GET /v3/models/{model}`).
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit(
+                model="model",
+                input={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit(
+            model, input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data

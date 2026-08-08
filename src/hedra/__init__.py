@@ -753,6 +753,7 @@ if typing.TYPE_CHECKING:
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncHedra, Hedra
     from .environment import HedraEnvironment
+    from .jobs import JobsStreamResponse
     from .version import __version__
     from .webhooks import (
         WebhookJobCompletedPayloadXHedraWebhookEvent,
@@ -1465,6 +1466,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "JobLogSource": ".types",
     "JobStatus": ".types",
     "JobSummary": ".types",
+    "JobsStreamResponse": ".jobs",
     "KeyCreateResponse": ".types",
     "KeyListResponse": ".types",
     "KeyRotateResponse": ".types",
@@ -2247,6 +2249,7 @@ __all__ = [
     "JobLogSource",
     "JobStatus",
     "JobSummary",
+    "JobsStreamResponse",
     "KeyCreateResponse",
     "KeyListResponse",
     "KeyRotateResponse",
