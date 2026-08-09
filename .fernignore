@@ -1,9 +1,7 @@
 # Files Fern must NOT overwrite when it regenerates this SDK (via PR from the
 # hedra-labs/fern-config repo). See https://buildwithfern.com/learn/sdks/capabilities/customize-files
 
-# PyPI distribution name (hedra-python) + project metadata; import name is `hedra`
-pyproject.toml
-# ...and the lockfile resolved against it (Fern's lock targets its own pyproject)
+# Lockfile is hand-resolved (Fern's lock targets its own pyproject)
 poetry.lock
 
 # Local-dev ignores are hand-maintained
