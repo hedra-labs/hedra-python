@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import JobsStreamResponse
-_dynamic_imports: typing.Dict[str, str] = {"JobsStreamResponse": ".types"}
+    from .jobs_stream_response import JobsStreamResponse
+_dynamic_imports: typing.Dict[str, str] = {"JobsStreamResponse": ".jobs_stream_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
