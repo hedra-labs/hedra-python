@@ -19,6 +19,7 @@ class BaseClientWrapper:
         stream_reconnection_enabled: typing.Optional[bool] = None,
         max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        spec_version: typing.Optional[str] = None,
     ):
         self._api_key = api_key
         self._headers = headers
@@ -28,21 +29,24 @@ class BaseClientWrapper:
         self._stream_reconnection_enabled = stream_reconnection_enabled
         self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
         self._logging = logging
+        self._spec_version = spec_version
 
     def get_headers(self) -> typing.Dict[str, str]:
         import platform
 
         headers: typing.Dict[str, str] = {
+            "User-Agent": "hedra-python/1.0.0",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "hedra",
-            "X-Fern-SDK-Version": "0.1.3",
+            "X-Fern-SDK-Name": "hedra-python",
+            "X-Fern-SDK-Version": "1.0.0",
             **(self.get_custom_headers() or {}),
         }
         api_key = self._get_api_key()
         if api_key is not None:
             headers["Authorization"] = f"Bearer {api_key}"
+        headers["X-Hedra-Spec-Version"] = self._spec_version if self._spec_version is not None else "3.0.0"
         return headers
 
     def _get_api_key(self) -> typing.Optional[str]:
@@ -82,6 +86,7 @@ class SyncClientWrapper(BaseClientWrapper):
         stream_reconnection_enabled: typing.Optional[bool] = None,
         max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        spec_version: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
         super().__init__(
@@ -93,6 +98,7 @@ class SyncClientWrapper(BaseClientWrapper):
             stream_reconnection_enabled=stream_reconnection_enabled,
             max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
+            spec_version=spec_version,
         )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
@@ -116,6 +122,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         stream_reconnection_enabled: typing.Optional[bool] = None,
         max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        spec_version: typing.Optional[str] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
@@ -128,6 +135,7 @@ class AsyncClientWrapper(BaseClientWrapper):
             stream_reconnection_enabled=stream_reconnection_enabled,
             max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
+            spec_version=spec_version,
         )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
