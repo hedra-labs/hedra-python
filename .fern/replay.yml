@@ -28,3 +28,22 @@ exclude:
   # and brings back the hand-porting cost ENG-10113 removed. If the generated
   # output is wrong, fix it upstream in fern-python-sdk.
   - src/hedra/core/http_client.py
+
+  # Machine-owned end to end since ENG-10146 (un-ignored, so the generator
+  # stamps `version` from the release pin) and fern-config#43 (the generator
+  # emits description/authors/homepage and the anyio dependency). Replay must
+  # never put old hand edits back on top of that (ENG-10135):
+  #
+  #   - Version stamps: the ledger tracks pre-migration hand bumps (e.g. the
+  #     1.0.0 bump, commit d24f814f) as customizations. Replaying one collides
+  #     with the generator's own stamp whenever the version moves — a test
+  #     regeneration stamping 1.1.0 (PR #44) drew "unresolved customization
+  #     conflicts: pyproject.toml" from exactly this.
+  #   - Dependency edits: the hand-added anyio declaration (commit 36a6777a)
+  #     is emitted by the generator itself since fern-config#43.
+  #
+  # Note the exclude acts at *apply* time, not detection: pyproject-touching
+  # commits are still recorded in replay.lock's `patches:` ledger, but any
+  # patch whose files match an entry here is skipped whole on every
+  # generation, so those ledger entries are inert.
+  - pyproject.toml
