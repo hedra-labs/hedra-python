@@ -14,8 +14,8 @@ class InputKling25Turbo(UniversalBaseModel):
     Model-specific inputs for `kling-25-turbo`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
-    (2) requires: aspect_ratio, duration_ms, prompt, start_image
+    (1) requires: aspect_ratio, duration_ms, prompt, start_image
+    (2) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

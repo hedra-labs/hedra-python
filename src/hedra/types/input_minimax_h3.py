@@ -18,10 +18,10 @@ class InputMinimaxH3(UniversalBaseModel):
     Model-specific inputs for `minimax-h3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: audios, end_image, images, start_image, videos; accepts aspect_ratio: 1:1 | 3:4 | 4:3 | 16:9 | 21:9 | 9:16
-    (3) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio, audios, images, videos
-    (4) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, audios, end_image, images, videos
+    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, audios, end_image, images, videos
+    (2) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio, audios, images, videos
+    (3) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image
+    (4) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: audios, end_image, images, start_image, videos; accepts aspect_ratio: 1:1 | 3:4 | 4:3 | 16:9 | 21:9 | 9:16
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -44,6 +44,16 @@ class InputMinimaxH3(UniversalBaseModel):
     Duration in ms.
     """
 
+    start_image: typing.Optional[InputMinimaxH3StartImage] = pydantic.Field(default=None)
+    """
+    Start frame (image-to-video).
+    """
+
+    end_image: typing.Optional[InputMinimaxH3EndImage] = pydantic.Field(default=None)
+    """
+    End frame (first-last-frame-to-video).
+    """
+
     aspect_ratio: typing.Optional[InputMinimaxH3AspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
@@ -62,16 +72,6 @@ class InputMinimaxH3(UniversalBaseModel):
     audios: typing.Optional[typing.List[InputMinimaxH3AudiosItem]] = pydantic.Field(default=None)
     """
     Reference audios.
-    """
-
-    start_image: typing.Optional[InputMinimaxH3StartImage] = pydantic.Field(default=None)
-    """
-    Start frame (image-to-video).
-    """
-
-    end_image: typing.Optional[InputMinimaxH3EndImage] = pydantic.Field(default=None)
-    """
-    End frame (first-last-frame-to-video).
     """
 
     if IS_PYDANTIC_V2:

@@ -30,7 +30,7 @@ class InputOmnihuman15(UniversalBaseModel):
     Output aspect ratio.
     """
 
-    resolution: typing.Optional[InputOmnihuman15Resolution] = pydantic.Field(default=None)
+    resolution: InputOmnihuman15Resolution = pydantic.Field()
     """
     Output resolution.
     """

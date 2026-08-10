@@ -16,9 +16,9 @@ class InputWan27(UniversalBaseModel):
     Model-specific inputs for `wan-2-7`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image; accepts duration_ms: 2000 | 3000 | 4000 | 5000 | 6000 | 7000 | 8000 | 9000 | 10000
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, images, start_image
-    (3) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, images
+    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, images
+    (2) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image; accepts duration_ms: 2000 | 3000 | 4000 | 5000 | 6000 | 7000 | 8000 | 9000 | 10000
+    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, images, start_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -41,11 +41,6 @@ class InputWan27(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
-    aspect_ratio: typing.Optional[InputWan27AspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio.
-    """
-
     resolution: InputWan27Resolution = pydantic.Field()
     """
     Output resolution.
@@ -56,11 +51,6 @@ class InputWan27(UniversalBaseModel):
     Duration in ms.
     """
 
-    images: typing.Optional[typing.List[InputWan27ImagesItem]] = pydantic.Field(default=None)
-    """
-    Reference images.
-    """
-
     start_image: typing.Optional[InputWan27StartImage] = pydantic.Field(default=None)
     """
     Start frame (image-to-video).
@@ -69,6 +59,16 @@ class InputWan27(UniversalBaseModel):
     end_image: typing.Optional[InputWan27EndImage] = pydantic.Field(default=None)
     """
     End frame (first-last-frame-to-video).
+    """
+
+    aspect_ratio: typing.Optional[InputWan27AspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio.
+    """
+
+    images: typing.Optional[typing.List[InputWan27ImagesItem]] = pydantic.Field(default=None)
+    """
+    Reference images.
     """
 
     if IS_PYDANTIC_V2:

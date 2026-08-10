@@ -14,8 +14,8 @@ class InputSora2Pro(UniversalBaseModel):
     Model-specific inputs for `sora-2-pro`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: start_image
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution, start_image
+    (1) requires: aspect_ratio, duration_ms, prompt, resolution, start_image
+    (2) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: start_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
