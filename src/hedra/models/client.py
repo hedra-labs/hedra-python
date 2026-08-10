@@ -139,7 +139,7 @@ class ModelsClient:
 
     def list_voices(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceListResponse:
         """
-        Voices this model accepts — scoped to the model's voice provider.
+        Voices this model accepts — scoped to the model's voice provider. fern-config end-to-end regeneration probe 20260810-011748.
 
         Parameters
         ----------
@@ -390,7 +390,7 @@ class AsyncModelsClient:
         self, model: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> VoiceListResponse:
         """
-        Voices this model accepts — scoped to the model's voice provider.
+        Voices this model accepts — scoped to the model's voice provider. fern-config end-to-end regeneration probe 20260810-011748.
 
         Parameters
         ----------
