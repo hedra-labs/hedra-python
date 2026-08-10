@@ -36,11 +36,15 @@ from ..types.input_imagen4 import InputImagen4
 from ..types.input_kling16 import InputKling16
 from ..types.input_kling21master import InputKling21Master
 from ..types.input_kling25turbo import InputKling25Turbo
+from ..types.input_kling26motion_control import InputKling26MotionControl
 from ..types.input_kling26pro import InputKling26Pro
 from ..types.input_kling_ai_avatar_v2 import InputKlingAiAvatarV2
 from ..types.input_kling_o1 import InputKlingO1
 from ..types.input_kling_o3 import InputKlingO3
+from ..types.input_kling_o3edit import InputKlingO3Edit
+from ..types.input_kling_o3reference import InputKlingO3Reference
 from ..types.input_kling_v3 import InputKlingV3
+from ..types.input_kling_v3motion_control import InputKlingV3MotionControl
 from ..types.input_ltx23 import InputLtx23
 from ..types.input_luma_ray32 import InputLumaRay32
 from ..types.input_mai_image25 import InputMaiImage25
@@ -63,6 +67,7 @@ from ..types.input_sana import InputSana
 from ..types.input_seedance15pro import InputSeedance15Pro
 from ..types.input_seedance20 import InputSeedance20
 from ..types.input_seedance20mini import InputSeedance20Mini
+from ..types.input_seedance25 import InputSeedance25
 from ..types.input_seedream40 import InputSeedream40
 from ..types.input_seedream45 import InputSeedream45
 from ..types.input_seedream50lite import InputSeedream50Lite
@@ -83,6 +88,7 @@ from ..types.result_response import ResultResponse
 from ..types.status_response import StatusResponse
 from ..types.submit_response import SubmitResponse
 from .raw_client import AsyncRawJobsClient, RawJobsClient
+from .types.jobs_stream_response import JobsStreamResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -262,7 +268,7 @@ class JobsClient:
         *,
         last_event_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[typing.Any]:
+    ) -> typing.Iterator[JobsStreamResponse]:
         """
         Parameters
         ----------
@@ -277,8 +283,8 @@ class JobsClient:
 
         Yields
         ------
-        typing.Iterator[typing.Any]
-            Successful Response
+        typing.Iterator[JobsStreamResponse]
+            Server-Sent Events. Each frame's `event:` names its type. The `data:` line of a `status` frame is a `StatusResponse` and of a `log` frame a `JobLogItem` (the same row `GET /jobs/{job_id}/logs` serves), both JSON. The stream opens with a `status` snapshot and ends with a `done` frame, sent after the terminal `status` frame: reaching it means the job finished (`COMPLETED` or `FAILED`) and there is nothing more to read. A stream that ends without it was cut short; reconnect with `Last-Event-Id`. Closes the server initiates instead (drain, max connection duration) send a `retry:` line and no `done`. **The `done` frame's `data:` line is the literal token `[STREAM_DONE]` — not JSON, and not a member of the `JobStreamFrame` schema below.** It is a fixed end-of-stream sentinel, matched verbatim; switch on `event:` and skip `done` before parsing a `data:` line, or the parse fails on the last frame of every stream. It repeats no state: which job ended and how was just delivered by the terminal `status` frame. `status` and `log` frames carry an `id:` to send back as `Last-Event-Id`; `done` does not, since it is not a new stream position. Comment lines (`: keep-alive`) and `retry:` lines are protocol-level and carry no payload.
 
         Examples
         --------
@@ -1285,7 +1291,7 @@ class JobsClient:
         client.jobs.submit_grok_video(
             input=InputGrokVideo(
                 prompt="prompt",
-                aspect_ratio="1:1",
+                aspect_ratio="auto",
                 resolution="480p",
                 duration_ms=1,
             ),
@@ -1337,7 +1343,7 @@ class JobsClient:
         client.jobs.submit_happy_horse(
             input=InputHappyHorse(
                 prompt="prompt",
-                aspect_ratio="16:9",
+                aspect_ratio="21:9",
                 resolution="720p",
                 duration_ms=1,
             ),
@@ -1875,6 +1881,66 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_kling26motion_control(
+        self,
+        *,
+        input: InputKling26MotionControl,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Transfer movements from a reference video to any character image. Cost-effective mode for motion transfer, perfect for portraits and simple animations.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKling26MotionControl
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputKling26MotionControl,
+            InputKling26MotionControlSourceVideo_Url,
+            InputKling26MotionControlStartImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_kling26motion_control(
+            input=InputKling26MotionControl(
+                start_image=InputKling26MotionControlStartImage_Url(
+                    url="url",
+                ),
+                source_video=InputKling26MotionControlSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="720p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling26motion_control(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_kling26pro(
         self,
         *,
@@ -2090,6 +2156,116 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_kling_o3edit(
+        self,
+        *,
+        input: InputKlingO3Edit,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Edit videos using natural language.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKlingO3Edit
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputKlingO3Edit, InputKlingO3EditSourceVideo_Url
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_kling_o3edit(
+            input=InputKlingO3Edit(
+                prompt="prompt",
+                source_video=InputKlingO3EditSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="720p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_o3edit(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_kling_o3reference(
+        self,
+        *,
+        input: InputKlingO3Reference,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Input a reference video and preserve motion and camera style.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKlingO3Reference
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputKlingO3Reference,
+            InputKlingO3ReferenceSourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_kling_o3reference(
+            input=InputKlingO3Reference(
+                prompt="prompt",
+                source_video=InputKlingO3ReferenceSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="720p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_o3reference(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_kling_v3(
         self,
         *,
@@ -2142,6 +2318,66 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_kling_v3motion_control(
+        self,
+        *,
+        input: InputKlingV3MotionControl,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Animate a character image to match the motion of a reference video. Standard tier for cost-effective generation.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKlingV3MotionControl
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputKlingV3MotionControl,
+            InputKlingV3MotionControlSourceVideo_Url,
+            InputKlingV3MotionControlStartImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_kling_v3motion_control(
+            input=InputKlingV3MotionControl(
+                start_image=InputKlingV3MotionControlStartImage_Url(
+                    url="url",
+                ),
+                source_video=InputKlingV3MotionControlSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="720p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_kling_v3motion_control(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_ltx23(
         self,
         *,
@@ -2185,7 +2421,7 @@ class JobsClient:
                 prompt="prompt",
                 resolution="1080p",
                 duration_ms=1,
-                aspect_ratio="16:9",
+                aspect_ratio="auto",
                 quality="fast",
             ),
         )
@@ -2749,6 +2985,7 @@ class JobsClient:
         )
         client.jobs.submit_omnihuman15(
             input=InputOmnihuman15(
+                resolution="720p",
                 start_image=InputOmnihuman15StartImage_Url(
                     url="url",
                 ),
@@ -3222,7 +3459,7 @@ class JobsClient:
             input=InputSeedance20(
                 prompt="prompt",
                 aspect_ratio="1:1",
-                resolution="480p",
+                resolution="4K",
                 duration_ms=1,
                 quality="standard",
             ),
@@ -3281,6 +3518,58 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_seedance20mini(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_seedance25(
+        self,
+        *,
+        input: InputSeedance25,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        ByteDance Seedance 2.5 video generation model
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputSeedance25
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputSeedance25
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_seedance25(
+            input=InputSeedance25(
+                prompt="prompt",
+                aspect_ratio="1:1",
+                resolution="480p",
+                duration_ms=1,
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedance25(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -3921,6 +4210,61 @@ class JobsClient:
         )
         return _response.data
 
+    def submit(
+        self,
+        model: str,
+        *,
+        input: typing.Dict[str, typing.Any],
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Runs any model in the catalog by its public id, with `input` passed through untyped — the same call the typed operations below make, minus the compile-time schema.
+
+        Reach for it when the model is not known ahead of time: a client generated before a model shipped can still run it, and an id read from `GET /v3/models` at runtime needs no regeneration. Prefer the typed operation whenever your client already has one — `input` here is validated against the same published schema (`GET /v3/models/{model}`), so a bad field is a `400` at submit rather than an error before the call.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        input : typing.Dict[str, typing.Any]
+            Model-specific inputs, validated at submit against the model's published input schema (`GET /v3/models/{model}`).
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit(
+            model="model",
+            input={"key": "value"},
+        )
+        """
+        _response = self._raw_client.submit(
+            model, input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncJobsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -4130,7 +4474,7 @@ class AsyncJobsClient:
         *,
         last_event_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[typing.Any]:
+    ) -> typing.AsyncIterator[JobsStreamResponse]:
         """
         Parameters
         ----------
@@ -4145,8 +4489,8 @@ class AsyncJobsClient:
 
         Yields
         ------
-        typing.AsyncIterator[typing.Any]
-            Successful Response
+        typing.AsyncIterator[JobsStreamResponse]
+            Server-Sent Events. Each frame's `event:` names its type. The `data:` line of a `status` frame is a `StatusResponse` and of a `log` frame a `JobLogItem` (the same row `GET /jobs/{job_id}/logs` serves), both JSON. The stream opens with a `status` snapshot and ends with a `done` frame, sent after the terminal `status` frame: reaching it means the job finished (`COMPLETED` or `FAILED`) and there is nothing more to read. A stream that ends without it was cut short; reconnect with `Last-Event-Id`. Closes the server initiates instead (drain, max connection duration) send a `retry:` line and no `done`. **The `done` frame's `data:` line is the literal token `[STREAM_DONE]` — not JSON, and not a member of the `JobStreamFrame` schema below.** It is a fixed end-of-stream sentinel, matched verbatim; switch on `event:` and skip `done` before parsing a `data:` line, or the parse fails on the last frame of every stream. It repeats no state: which job ended and how was just delivered by the terminal `status` frame. `status` and `log` frames carry an `id:` to send back as `Last-Event-Id`; `done` does not, since it is not a new stream position. Comment lines (`: keep-alive`) and `retry:` lines are protocol-level and carry no payload.
 
         Examples
         --------
@@ -5319,7 +5663,7 @@ class AsyncJobsClient:
             await client.jobs.submit_grok_video(
                 input=InputGrokVideo(
                     prompt="prompt",
-                    aspect_ratio="1:1",
+                    aspect_ratio="auto",
                     resolution="480p",
                     duration_ms=1,
                 ),
@@ -5379,7 +5723,7 @@ class AsyncJobsClient:
             await client.jobs.submit_happy_horse(
                 input=InputHappyHorse(
                     prompt="prompt",
-                    aspect_ratio="16:9",
+                    aspect_ratio="21:9",
                     resolution="720p",
                     duration_ms=1,
                 ),
@@ -6000,6 +6344,74 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_kling26motion_control(
+        self,
+        *,
+        input: InputKling26MotionControl,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Transfer movements from a reference video to any character image. Cost-effective mode for motion transfer, perfect for portraits and simple animations.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKling26MotionControl
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputKling26MotionControl,
+            InputKling26MotionControlSourceVideo_Url,
+            InputKling26MotionControlStartImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_kling26motion_control(
+                input=InputKling26MotionControl(
+                    start_image=InputKling26MotionControlStartImage_Url(
+                        url="url",
+                    ),
+                    source_video=InputKling26MotionControlSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="720p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling26motion_control(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_kling26pro(
         self,
         *,
@@ -6247,6 +6659,132 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_kling_o3edit(
+        self,
+        *,
+        input: InputKlingO3Edit,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Edit videos using natural language.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKlingO3Edit
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputKlingO3Edit, InputKlingO3EditSourceVideo_Url
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_kling_o3edit(
+                input=InputKlingO3Edit(
+                    prompt="prompt",
+                    source_video=InputKlingO3EditSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="720p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_o3edit(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_kling_o3reference(
+        self,
+        *,
+        input: InputKlingO3Reference,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Input a reference video and preserve motion and camera style.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKlingO3Reference
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputKlingO3Reference,
+            InputKlingO3ReferenceSourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_kling_o3reference(
+                input=InputKlingO3Reference(
+                    prompt="prompt",
+                    source_video=InputKlingO3ReferenceSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="720p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_o3reference(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_kling_v3(
         self,
         *,
@@ -6307,6 +6845,74 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_kling_v3motion_control(
+        self,
+        *,
+        input: InputKlingV3MotionControl,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Animate a character image to match the motion of a reference video. Standard tier for cost-effective generation.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKlingV3MotionControl
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputKlingV3MotionControl,
+            InputKlingV3MotionControlSourceVideo_Url,
+            InputKlingV3MotionControlStartImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_kling_v3motion_control(
+                input=InputKlingV3MotionControl(
+                    start_image=InputKlingV3MotionControlStartImage_Url(
+                        url="url",
+                    ),
+                    source_video=InputKlingV3MotionControlSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="720p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_kling_v3motion_control(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_ltx23(
         self,
         *,
@@ -6355,7 +6961,7 @@ class AsyncJobsClient:
                     prompt="prompt",
                     resolution="1080p",
                     duration_ms=1,
-                    aspect_ratio="16:9",
+                    aspect_ratio="auto",
                     quality="fast",
                 ),
             )
@@ -7007,6 +7613,7 @@ class AsyncJobsClient:
         async def main() -> None:
             await client.jobs.submit_omnihuman15(
                 input=InputOmnihuman15(
+                    resolution="720p",
                     start_image=InputOmnihuman15StartImage_Url(
                         url="url",
                     ),
@@ -7552,7 +8159,7 @@ class AsyncJobsClient:
                 input=InputSeedance20(
                     prompt="prompt",
                     aspect_ratio="1:1",
-                    resolution="480p",
+                    resolution="4K",
                     duration_ms=1,
                     quality="standard",
                 ),
@@ -7622,6 +8229,66 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_seedance20mini(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_seedance25(
+        self,
+        *,
+        input: InputSeedance25,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        ByteDance Seedance 2.5 video generation model
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputSeedance25
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputSeedance25
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_seedance25(
+                input=InputSeedance25(
+                    prompt="prompt",
+                    aspect_ratio="1:1",
+                    resolution="480p",
+                    duration_ms=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedance25(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -8355,5 +9022,68 @@ class AsyncJobsClient:
         """
         _response = await self._raw_client.submit_wan27(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit(
+        self,
+        model: str,
+        *,
+        input: typing.Dict[str, typing.Any],
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Runs any model in the catalog by its public id, with `input` passed through untyped — the same call the typed operations below make, minus the compile-time schema.
+
+        Reach for it when the model is not known ahead of time: a client generated before a model shipped can still run it, and an id read from `GET /v3/models` at runtime needs no regeneration. Prefer the typed operation whenever your client already has one — `input` here is validated against the same published schema (`GET /v3/models/{model}`), so a bad field is a `400` at submit rather than an error before the call.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        input : typing.Dict[str, typing.Any]
+            Model-specific inputs, validated at submit against the model's published input schema (`GET /v3/models/{model}`).
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit(
+                model="model",
+                input={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit(
+            model, input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data

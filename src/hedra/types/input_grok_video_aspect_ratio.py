@@ -3,5 +3,5 @@
 import typing
 
 InputGrokVideoAspectRatio = typing.Union[
-    typing.Literal["1:1", "4:3", "3:4", "16:9", "9:16", "3:2", "2:3", "auto"], typing.Any
+    typing.Literal["auto", "16:9", "4:3", "3:2", "1:1", "2:3", "3:4", "9:16"], typing.Any
 ]

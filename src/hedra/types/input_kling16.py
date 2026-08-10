@@ -14,8 +14,8 @@ class InputKling16(UniversalBaseModel):
     Model-specific inputs for `kling-16`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: prompt; must omit: start_image; accepts resolution: 720p
-    (2) requires: prompt, start_image; accepts resolution: 1080p
+    (1) requires: prompt, start_image; accepts resolution: 1080p
+    (2) requires: prompt; must omit: start_image; accepts resolution: 720p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

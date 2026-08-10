@@ -19,8 +19,8 @@ class InputSeedance20(UniversalBaseModel):
     Model-specific inputs for `seedance-20`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution; accepts quality: fast; resolution: 480p | 720p
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution; accepts quality: standard
+    (1) requires: aspect_ratio, duration_ms, prompt, resolution; accepts quality: standard
+    (2) requires: aspect_ratio, duration_ms, prompt, resolution; accepts quality: fast; resolution: 480p | 720p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

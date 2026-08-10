@@ -16,9 +16,9 @@ class InputViduQ3(UniversalBaseModel):
     Model-specific inputs for `vidu-q3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image
+    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, end_image
     (2) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio
-    (3) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, end_image
+    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -34,11 +34,6 @@ class InputViduQ3(UniversalBaseModel):
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
     Seed for reproducible output; omit for a random seed.
-    """
-
-    aspect_ratio: typing.Optional[InputViduQ3AspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio.
     """
 
     resolution: InputViduQ3Resolution = pydantic.Field()
@@ -59,6 +54,11 @@ class InputViduQ3(UniversalBaseModel):
     end_image: typing.Optional[InputViduQ3EndImage] = pydantic.Field(default=None)
     """
     End frame (first-last-frame-to-video).
+    """
+
+    aspect_ratio: typing.Optional[InputViduQ3AspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio.
     """
 
     quality: InputViduQ3Quality = pydantic.Field()

@@ -2,4 +2,4 @@
 
 import typing
 
-InputSeedance20Resolution = typing.Union[typing.Literal["480p", "720p", "4K", "1080p"], typing.Any]
+InputSeedance20Resolution = typing.Union[typing.Literal["4K", "480p", "720p", "1080p"], typing.Any]

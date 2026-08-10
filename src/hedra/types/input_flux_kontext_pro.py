@@ -15,8 +15,8 @@ class InputFluxKontextPro(UniversalBaseModel):
     Model-specific inputs for `flux-kontext-pro`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, prompt; must omit: images
-    (2) requires: images, prompt; must omit: aspect_ratio, resolution
+    (1) requires: images, prompt; must omit: aspect_ratio, resolution
+    (2) requires: aspect_ratio, prompt; must omit: images
     """
 
     prompt: str = pydantic.Field()
@@ -34,14 +34,9 @@ class InputFluxKontextPro(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
-    aspect_ratio: typing.Optional[InputFluxKontextProAspectRatio] = pydantic.Field(default=None)
+    images: typing.Optional[typing.List[InputFluxKontextProImagesItem]] = pydantic.Field(default=None)
     """
-    Output aspect ratio.
-    """
-
-    resolution: typing.Optional[InputFluxKontextProResolution] = pydantic.Field(default=None)
-    """
-    Output resolution.
+    The single source image to edit.
     """
 
     output_format: typing.Optional[InputFluxKontextProOutputFormat] = pydantic.Field(default=None)
@@ -54,9 +49,14 @@ class InputFluxKontextPro(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
-    images: typing.Optional[typing.List[InputFluxKontextProImagesItem]] = pydantic.Field(default=None)
+    aspect_ratio: typing.Optional[InputFluxKontextProAspectRatio] = pydantic.Field(default=None)
     """
-    The single source image to edit.
+    Output aspect ratio.
+    """
+
+    resolution: typing.Optional[InputFluxKontextProResolution] = pydantic.Field(default=None)
+    """
+    Output resolution.
     """
 
     if IS_PYDANTIC_V2:
