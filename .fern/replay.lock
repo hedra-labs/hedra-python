@@ -12,5 +12,2563 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-python-sdk: 5.15.0
-current_generation: cb535c22d1c56f4fcb0ba28d243f4f21da146dbc
-patches: []
+  - commit_sha: d5f414c19c14a00d233a13fbbc812a7b15ca9f7c
+    tree_hash: e3d8179ff26bbca45e1be0a14c181e006d8a8ea1
+    timestamp: 2026-08-10T22:02:25.838Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-python-sdk: 5.26.0
+current_generation: d5f414c19c14a00d233a13fbbc812a7b15ca9f7c
+patches:
+  - id: patch-36a6777a
+    content_hash: sha256:1e8726cee1d1f5988593928fdeaca46e661bb1da12ed8011bc7259a55d51b2e2
+    original_commit: 36a6777a9786500ab8c779636e69de053bf4e4ef
+    original_message: "fix(core): read request_options timeout; publish the released version"
+    original_author: Mihai Toader <mihai@hedra.com>
+    base_generation: 55347ea4921a33412e8847854cae6ac07c0735e6
+    files:
+      - pyproject.toml
+      - src/hedra/core/http_client.py
+      - src/hedra/core/request_options.py
+    patch_content: |
+      diff --git a/pyproject.toml b/pyproject.toml
+      index 6658176..f370db2 100644
+      --- a/pyproject.toml
+      +++ b/pyproject.toml
+      @@ -40,6 +40,10 @@ Repository = 'https://github.com/hedra-labs/hedra-python'
+       [tool.poetry.dependencies]
+       python = "^3.10"
+       aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+      +# Imported directly by src/hedra/core/http_sse/_api.py (anyio.sleep, anyio.CancelScope)
+      +# as of fern-python-sdk 5.16.1+. It resolves transitively via httpx today, but that is
+      +# not a contract httpx owes us — declare it explicitly.
+      +anyio = ">=3.0.0"
+       httpx = ">=0.21.2"
+       httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
+       pydantic = ">= 1.9.2"
+      diff --git a/src/hedra/core/http_client.py b/src/hedra/core/http_client.py
+      index beebb84..1e1df03 100644
+      --- a/src/hedra/core/http_client.py
+      +++ b/src/hedra/core/http_client.py
+      @@ -3,6 +3,7 @@
+       import asyncio
+       import email.utils
+       import re
+      +import socket
+       import time
+       import typing
+       from contextlib import asynccontextmanager, contextmanager
+      @@ -23,6 +24,39 @@ MAX_RETRY_DELAY_SECONDS = 60.0
+       JITTER_FACTOR = 0.2  # 20% random jitter
+       
+       
+      +def get_keepalive_socket_options(
+      +    idle: int = 60,
+      +    intvl: int = 30,
+      +    cnt: int = 5,
+      +) -> typing.List[typing.Tuple[int, int, int]]:
+      +    """
+      +    Build TCP keepalive socket options for the current platform.
+      +
+      +    Keepalive probes keep otherwise-idle connections alive so that long,
+      +    non-streaming requests survive idle-connection reaping by a firewall,
+      +    load balancer, or NAT. The available socket constants are OS-dependent,
+      +    so each option is guarded and only emitted when the platform defines it:
+      +
+      +    - ``SO_KEEPALIVE`` is portable (Linux/macOS/Windows).
+      +    - The idle-before-first-probe knob is ``TCP_KEEPIDLE`` on Linux and modern
+      +      Windows, but ``TCP_KEEPALIVE`` on macOS.
+      +    - ``TCP_KEEPINTVL`` / ``TCP_KEEPCNT`` exist on Linux/macOS/modern Windows.
+      +
+      +    Passing these tuples to ``httpx.HTTPTransport(socket_options=...)`` /
+      +    ``httpx.AsyncHTTPTransport(socket_options=...)`` applies them to every
+      +    connection the transport opens.
+      +    """
+      +    opts: typing.List[typing.Tuple[int, int, int]] = [(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)]
+      +    idle_const = getattr(socket, "TCP_KEEPIDLE", None) or getattr(socket, "TCP_KEEPALIVE", None)
+      +    if idle_const:
+      +        opts.append((socket.IPPROTO_TCP, idle_const, idle))
+      +    if hasattr(socket, "TCP_KEEPINTVL"):
+      +        opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl))
+      +    if hasattr(socket, "TCP_KEEPCNT"):
+      +        opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt))
+      +    return opts
+      +
+      +
+       def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
+           """
+           This function parses the `Retry-After` header in a HTTP response and returns the number of seconds to wait.
+      @@ -32,6 +66,12 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
+           retry_after_ms = response_headers.get("retry-after-ms")
+           if retry_after_ms is not None:
+               try:
+      +            # LOCAL DEVIATION from the generated output (the only one in this file;
+      +            # see .fernignore). Upstream fern-python-sdk emits `if retry_after_ms > 0`,
+      +            # comparing the header *string* to an int. That raises TypeError, which the
+      +            # `except` below swallows, so upstream silently ignores `retry-after-ms`
+      +            # entirely. Cast before comparing. Guarded by
+      +            # tests/custom/test_client.py::test_parse_retry_after_ms_header.
+                   return int(retry_after_ms) / 1000 if int(retry_after_ms) > 0 else 0
+               except Exception:
+                   pass
+      @@ -312,11 +352,14 @@ class HttpClient:
+               force_multipart: typing.Optional[bool] = None,
+           ) -> httpx.Response:
+               base_url = self.get_base_url(base_url)
+      -        timeout = (
+      -            request_options.get("timeout_in_seconds")
+      +        _timeout = (
+      +            request_options.get("timeout")
+      +            if request_options is not None and request_options.get("timeout") is not None
+      +            else request_options.get("timeout_in_seconds")
+                   if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                   else self.base_timeout()
+               )
+      +        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+       
+               json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+       
+      @@ -472,11 +515,14 @@ class HttpClient:
+               force_multipart: typing.Optional[bool] = None,
+           ) -> typing.Iterator[httpx.Response]:
+               base_url = self.get_base_url(base_url)
+      -        timeout = (
+      -            request_options.get("timeout_in_seconds")
+      +        _timeout = (
+      +            request_options.get("timeout")
+      +            if request_options is not None and request_options.get("timeout") is not None
+      +            else request_options.get("timeout_in_seconds")
+                   if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                   else self.base_timeout()
+               )
+      +        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+       
+               request_files: typing.Optional[RequestFiles] = (
+                   convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+      @@ -601,11 +647,14 @@ class AsyncHttpClient:
+               force_multipart: typing.Optional[bool] = None,
+           ) -> httpx.Response:
+               base_url = self.get_base_url(base_url)
+      -        timeout = (
+      -            request_options.get("timeout_in_seconds")
+      +        _timeout = (
+      +            request_options.get("timeout")
+      +            if request_options is not None and request_options.get("timeout") is not None
+      +            else request_options.get("timeout_in_seconds")
+                   if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                   else self.base_timeout()
+               )
+      +        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+       
+               request_files: typing.Optional[RequestFiles] = (
+                   convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+      @@ -764,11 +813,14 @@ class AsyncHttpClient:
+               force_multipart: typing.Optional[bool] = None,
+           ) -> typing.AsyncIterator[httpx.Response]:
+               base_url = self.get_base_url(base_url)
+      -        timeout = (
+      -            request_options.get("timeout_in_seconds")
+      +        _timeout = (
+      +            request_options.get("timeout")
+      +            if request_options is not None and request_options.get("timeout") is not None
+      +            else request_options.get("timeout_in_seconds")
+                   if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                   else self.base_timeout()
+               )
+      +        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+       
+               request_files: typing.Optional[RequestFiles] = (
+                   convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+      diff --git a/src/hedra/core/request_options.py b/src/hedra/core/request_options.py
+      index ebf17bc..caa6f66 100644
+      --- a/src/hedra/core/request_options.py
+      +++ b/src/hedra/core/request_options.py
+      @@ -14,7 +14,9 @@ class RequestOptions(typing.TypedDict, total=False):
+           This is used primarily as an optional final parameter for service functions.
+       
+           Attributes:
+      -        - timeout_in_seconds: int. The number of seconds to await an API call before timing out.
+      +        - timeout: float. The number of seconds to await an API call before timing out.
+      +
+      +        - timeout_in_seconds: int. Deprecated alias for `timeout`; both are in seconds. Prefer `timeout`.
+       
+               - max_retries: int. The max number of retries to attempt if the API call fails.
+       
+      @@ -27,6 +29,7 @@ class RequestOptions(typing.TypedDict, total=False):
+               - chunk_size: int. The size, in bytes, to process each chunk of data being streamed back within the response. This equates to leveraging `chunk_size` within `requests` or `httpx`, and is only leveraged for file downloads.
+           """
+       
+      +    timeout: NotRequired[float]
+           timeout_in_seconds: NotRequired[int]
+           max_retries: NotRequired[int]
+           additional_headers: NotRequired[typing.Dict[str, typing.Any]]
+    theirs_snapshot:
+      pyproject.toml: |
+        [project]
+        name = "hedra-python"
+        dynamic = ["version"]
+
+        [tool.poetry]
+        name = "hedra-python"
+        version = "0.3.0"
+        description = "The official Python library for the Hedra API"
+        license = "Apache-2.0"
+        readme = "README.md"
+        authors = ["Hedra <support@hedra.com>"]
+        keywords = []
+
+        classifiers = [
+            "Intended Audience :: Developers",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
+            "Programming Language :: Python :: 3.15",
+            "Operating System :: OS Independent",
+            "Operating System :: POSIX",
+            "Operating System :: MacOS",
+            "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Typing :: Typed"
+        ]
+        packages = [
+            { include = "hedra", from = "src"}
+        ]
+
+        [tool.poetry.urls]
+        Homepage = 'https://github.com/hedra-labs/hedra-python'
+        Repository = 'https://github.com/hedra-labs/hedra-python'
+
+        [tool.poetry.dependencies]
+        python = "^3.10"
+        aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+        # Imported directly by src/hedra/core/http_sse/_api.py (anyio.sleep, anyio.CancelScope)
+        # as of fern-python-sdk 5.16.1+. It resolves transitively via httpx today, but that is
+        # not a contract httpx owes us — declare it explicitly.
+        anyio = ">=3.0.0"
+        httpx = ">=0.21.2"
+        httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
+        pydantic = ">= 1.9.2"
+        pydantic-core = ">=2.18.2,<3.0.0"
+        typing_extensions = ">= 4.0.0"
+
+        [tool.poetry.group.dev.dependencies]
+        mypy = "==1.13.0"
+        pytest = "^9.0.3"
+        pytest-asyncio = "^1.0.0"
+        pytest-xdist = "^3.6.1"
+        python-dateutil = "^2.9.0"
+        types-python-dateutil = "^2.9.0.20240316"
+        urllib3 = ">=2.6.3,<3.0.0"
+        ruff = "==0.11.5"
+
+        [tool.pytest.ini_options]
+        testpaths = [ "tests" ]
+        asyncio_mode = "auto"
+        norecursedirs = [ "src" ]
+        markers = [
+            "aiohttp: tests that require httpx_aiohttp to be installed",
+        ]
+
+        [tool.mypy]
+        plugins = ["pydantic.mypy"]
+
+        [tool.ruff]
+        line-length = 120
+
+        [tool.ruff.lint]
+        select = [
+            "E",  # pycodestyle errors
+            "F",  # pyflakes
+            "I",  # isort
+        ]
+        ignore = [
+            "E402",  # Module level import not at top of file
+            "E501",  # Line too long
+            "E711",  # Comparison to `None` should be `cond is not None`
+            "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+            "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+            "E722",  # Do not use bare `except`
+            "E731",  # Do not assign a `lambda` expression, use a `def`
+            "F821",  # Undefined name
+            "F841"   # Local variable ... is assigned to but never used
+        ]
+
+        [tool.ruff.lint.isort]
+        section-order = ["future", "standard-library", "third-party", "first-party"]
+
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+
+        [tool.poetry.extras]
+        aiohttp=["aiohttp", "httpx-aiohttp"]
+      src/hedra/core/http_client.py: |
+        # This file was auto-generated by Fern from our API Definition.
+
+        import asyncio
+        import email.utils
+        import re
+        import socket
+        import time
+        import typing
+        from contextlib import asynccontextmanager, contextmanager
+        from random import random
+
+        import httpx
+        from .file import File, convert_file_dict_to_httpx_tuples
+        from .force_multipart import FORCE_MULTIPART
+        from .jsonable_encoder import jsonable_encoder
+        from .logging import LogConfig, Logger, create_logger
+        from .query_encoder import encode_query
+        from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
+        from .request_options import RequestOptions
+        from httpx._types import RequestFiles
+
+        INITIAL_RETRY_DELAY_SECONDS = 1.0
+        MAX_RETRY_DELAY_SECONDS = 60.0
+        JITTER_FACTOR = 0.2  # 20% random jitter
+
+
+        def get_keepalive_socket_options(
+            idle: int = 60,
+            intvl: int = 30,
+            cnt: int = 5,
+        ) -> typing.List[typing.Tuple[int, int, int]]:
+            """
+            Build TCP keepalive socket options for the current platform.
+
+            Keepalive probes keep otherwise-idle connections alive so that long,
+            non-streaming requests survive idle-connection reaping by a firewall,
+            load balancer, or NAT. The available socket constants are OS-dependent,
+            so each option is guarded and only emitted when the platform defines it:
+
+            - ``SO_KEEPALIVE`` is portable (Linux/macOS/Windows).
+            - The idle-before-first-probe knob is ``TCP_KEEPIDLE`` on Linux and modern
+              Windows, but ``TCP_KEEPALIVE`` on macOS.
+            - ``TCP_KEEPINTVL`` / ``TCP_KEEPCNT`` exist on Linux/macOS/modern Windows.
+
+            Passing these tuples to ``httpx.HTTPTransport(socket_options=...)`` /
+            ``httpx.AsyncHTTPTransport(socket_options=...)`` applies them to every
+            connection the transport opens.
+            """
+            opts: typing.List[typing.Tuple[int, int, int]] = [(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)]
+            idle_const = getattr(socket, "TCP_KEEPIDLE", None) or getattr(socket, "TCP_KEEPALIVE", None)
+            if idle_const:
+                opts.append((socket.IPPROTO_TCP, idle_const, idle))
+            if hasattr(socket, "TCP_KEEPINTVL"):
+                opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl))
+            if hasattr(socket, "TCP_KEEPCNT"):
+                opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt))
+            return opts
+
+
+        def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
+            """
+            This function parses the `Retry-After` header in a HTTP response and returns the number of seconds to wait.
+
+            Inspired by the urllib3 retry implementation.
+            """
+            retry_after_ms = response_headers.get("retry-after-ms")
+            if retry_after_ms is not None:
+                try:
+                    # LOCAL DEVIATION from the generated output (the only one in this file;
+                    # see .fernignore). Upstream fern-python-sdk emits `if retry_after_ms > 0`,
+                    # comparing the header *string* to an int. That raises TypeError, which the
+                    # `except` below swallows, so upstream silently ignores `retry-after-ms`
+                    # entirely. Cast before comparing. Guarded by
+                    # tests/custom/test_client.py::test_parse_retry_after_ms_header.
+                    return int(retry_after_ms) / 1000 if int(retry_after_ms) > 0 else 0
+                except Exception:
+                    pass
+
+            retry_after = response_headers.get("retry-after")
+            if retry_after is None:
+                return None
+
+            # Attempt to parse the header as an int.
+            if re.match(r"^\s*[0-9]+\s*$", retry_after):
+                seconds = float(retry_after)
+            # Fallback to parsing it as a date.
+            else:
+                retry_date_tuple = email.utils.parsedate_tz(retry_after)
+                if retry_date_tuple is None:
+                    return None
+                if retry_date_tuple[9] is None:  # Python 2
+                    # Assume UTC if no timezone was specified
+                    # On Python2.7, parsedate_tz returns None for a timezone offset
+                    # instead of 0 if no timezone is given, where mktime_tz treats
+                    # a None timezone offset as local time.
+                    retry_date_tuple = retry_date_tuple[:9] + (0,) + retry_date_tuple[10:]
+
+                retry_date = email.utils.mktime_tz(retry_date_tuple)
+                seconds = retry_date - time.time()
+
+            if seconds < 0:
+                seconds = 0
+
+            return seconds
+
+
+        def _add_positive_jitter(delay: float) -> float:
+            """Add positive jitter (0-20%) to prevent thundering herd."""
+            jitter_multiplier = 1 + random() * JITTER_FACTOR
+            return delay * jitter_multiplier
+
+
+        def _add_symmetric_jitter(delay: float) -> float:
+            """Add symmetric jitter (±10%) for exponential backoff."""
+            jitter_multiplier = 1 + (random() - 0.5) * JITTER_FACTOR
+            return delay * jitter_multiplier
+
+
+        def _parse_x_ratelimit_reset(response_headers: httpx.Headers) -> typing.Optional[float]:
+            """
+            Parse the X-RateLimit-Reset header (Unix timestamp in seconds).
+            Returns seconds to wait, or None if header is missing/invalid.
+            """
+            reset_time_str = response_headers.get("x-ratelimit-reset")
+            if reset_time_str is None:
+                return None
+
+            try:
+                reset_time = int(reset_time_str)
+                delay = reset_time - time.time()
+                if delay > 0:
+                    return delay
+            except (ValueError, TypeError):
+                pass
+
+            return None
+
+
+        def _retry_timeout(response: httpx.Response, retries: int) -> float:
+            """
+            Determine the amount of time to wait before retrying a request.
+            This function begins by trying to parse a retry-after header from the response, and then proceeds to use exponential backoff
+            with a jitter to determine the number of seconds to wait.
+            """
+
+            # 1. Check Retry-After header first
+            retry_after = _parse_retry_after(response.headers)
+            if retry_after is not None and retry_after > 0:
+                return min(retry_after, MAX_RETRY_DELAY_SECONDS)
+
+            # 2. Check X-RateLimit-Reset header (with positive jitter)
+            ratelimit_reset = _parse_x_ratelimit_reset(response.headers)
+            if ratelimit_reset is not None:
+                return _add_positive_jitter(min(ratelimit_reset, MAX_RETRY_DELAY_SECONDS))
+
+            # 3. Fall back to exponential backoff (with symmetric jitter)
+            backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+            return _add_symmetric_jitter(backoff)
+
+
+        def _retry_timeout_from_retries(retries: int) -> float:
+            """Determine retry timeout using exponential backoff when no response is available."""
+            backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+            return _add_symmetric_jitter(backoff)
+
+
+        def _should_retry(response: httpx.Response) -> bool:
+            return response.status_code >= 500 or response.status_code in [429, 408, 409]
+
+
+        _SENSITIVE_HEADERS = frozenset(
+            {
+                "authorization",
+                "www-authenticate",
+                "x-api-key",
+                "api-key",
+                "apikey",
+                "x-api-token",
+                "x-auth-token",
+                "auth-token",
+                "cookie",
+                "set-cookie",
+                "proxy-authorization",
+                "proxy-authenticate",
+                "x-csrf-token",
+                "x-xsrf-token",
+                "x-session-token",
+                "x-access-token",
+            }
+        )
+
+
+        def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
+            return {k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS else v) for k, v in headers.items()}
+
+
+        def _build_url(base_url: str, path: typing.Optional[str]) -> str:
+            """
+            Build a full URL by joining a base URL with a path.
+
+            This function correctly handles base URLs that contain path prefixes (e.g., tenant-based URLs)
+            by using string concatenation instead of urllib.parse.urljoin(), which would incorrectly
+            strip path components when the path starts with '/'.
+
+            Example:
+                >>> _build_url("https://cloud.example.com/org/tenant/api", "/users")
+                'https://cloud.example.com/org/tenant/api/users'
+
+            Args:
+                base_url: The base URL, which may contain path prefixes.
+                path: The path to append. Can be None or empty string.
+
+            Returns:
+                The full URL with base_url and path properly joined.
+            """
+            if not path:
+                return base_url
+            return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+
+
+        def _maybe_filter_none_from_multipart_data(
+            data: typing.Optional[typing.Any],
+            request_files: typing.Optional[RequestFiles],
+            force_multipart: typing.Optional[bool],
+        ) -> typing.Optional[typing.Any]:
+            """
+            Filter None values from data body for multipart/form requests.
+            This prevents httpx from converting None to empty strings in multipart encoding.
+            Only applies when files are present or force_multipart is True.
+            """
+            if data is not None and isinstance(data, typing.Mapping) and (request_files or force_multipart):
+                return remove_none_from_dict(data)
+            return data
+
+
+        def remove_omit_from_dict(
+            original: typing.Dict[str, typing.Optional[typing.Any]],
+            omit: typing.Optional[typing.Any],
+        ) -> typing.Dict[str, typing.Any]:
+            if omit is None:
+                return original
+            new: typing.Dict[str, typing.Any] = {}
+            for key, value in original.items():
+                if value is not omit:
+                    new[key] = value
+            return new
+
+
+        def maybe_filter_request_body(
+            data: typing.Optional[typing.Any],
+            request_options: typing.Optional[RequestOptions],
+            omit: typing.Optional[typing.Any],
+        ) -> typing.Optional[typing.Any]:
+            if data is None:
+                return (
+                    jsonable_encoder(request_options.get("additional_body_parameters", {})) or {}
+                    if request_options is not None
+                    else None
+                )
+            elif not isinstance(data, typing.Mapping):
+                data_content = jsonable_encoder(data)
+            else:
+                data_content = {
+                    **(jsonable_encoder(remove_omit_from_dict(data, omit))),  # type: ignore
+                    **(
+                        jsonable_encoder(request_options.get("additional_body_parameters", {})) or {}
+                        if request_options is not None
+                        else {}
+                    ),
+                }
+            return data_content
+
+
+        # Abstracted out for testing purposes
+        def get_request_body(
+            *,
+            json: typing.Optional[typing.Any],
+            data: typing.Optional[typing.Any],
+            request_options: typing.Optional[RequestOptions],
+            omit: typing.Optional[typing.Any],
+        ) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
+            json_body = None
+            data_body = None
+            if data is not None:
+                data_body = maybe_filter_request_body(data, request_options, omit)
+            else:
+                # If both data and json are None, we send json data in the event extra properties are specified
+                json_body = maybe_filter_request_body(json, request_options, omit)
+
+            has_additional_body_parameters = bool(
+                request_options is not None and request_options.get("additional_body_parameters")
+            )
+
+            # Only collapse empty dict to None when the body was not explicitly provided
+            # and there are no additional body parameters. This preserves explicit empty
+            # bodies (e.g., when an endpoint has a request body type but all fields are optional).
+            if json_body == {} and json is None and not has_additional_body_parameters:
+                json_body = None
+            if data_body == {} and data is None and not has_additional_body_parameters:
+                data_body = None
+
+            return json_body, data_body
+
+
+        class HttpClient:
+            def __init__(
+                self,
+                *,
+                httpx_client: httpx.Client,
+                base_timeout: typing.Callable[[], typing.Optional[float]],
+                base_headers: typing.Callable[[], typing.Dict[str, str]],
+                base_url: typing.Optional[typing.Callable[[], str]] = None,
+                base_max_retries: int = 2,
+                logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+            ):
+                self.base_url = base_url
+                self.base_timeout = base_timeout
+                self.base_headers = base_headers
+                self.base_max_retries = base_max_retries
+                self.httpx_client = httpx_client
+                self.logger = create_logger(logging_config)
+
+            def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
+                base_url = maybe_base_url
+                if self.base_url is not None and base_url is None:
+                    base_url = self.base_url()
+
+                if base_url is None:
+                    raise ValueError("A base_url is required to make this request, please provide one and try again.")
+                return base_url
+
+            def request(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> httpx.Response:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {}) or {}
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self.base_headers(),
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                        has_body=json_body is not None or data_body is not None,
+                    )
+
+                max_retries: int = (
+                    request_options.get("max_retries", self.base_max_retries)
+                    if request_options is not None
+                    else self.base_max_retries
+                )
+
+                try:
+                    response = self.httpx_client.request(
+                        method=method,
+                        url=_request_url,
+                        headers=_request_headers,
+                        params=_encoded_params if _encoded_params else None,
+                        json=json_body,
+                        data=data_body,
+                        content=content,
+                        files=request_files,
+                        timeout=timeout,
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries:
+                        time.sleep(_retry_timeout_from_retries(retries=retries))
+                        return self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+                    raise
+
+                if _should_retry(response=response):
+                    if retries < max_retries:
+                        time.sleep(_retry_timeout(response=response, retries=retries))
+                        return self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+
+                if self.logger.is_debug():
+                    if 200 <= response.status_code < 400:
+                        self.logger.debug(
+                            "HTTP request succeeded",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                if self.logger.is_error():
+                    if response.status_code >= 400:
+                        self.logger.error(
+                            "HTTP request failed with error status",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                return response
+
+            @contextmanager
+            def stream(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> typing.Iterator[httpx.Response]:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {})
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self.base_headers(),
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making streaming HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                    )
+
+                with self.httpx_client.stream(
+                    method=method,
+                    url=_request_url,
+                    headers=_request_headers,
+                    params=_encoded_params if _encoded_params else None,
+                    json=json_body,
+                    data=data_body,
+                    content=content,
+                    files=request_files,
+                    timeout=timeout,
+                ) as stream:
+                    yield stream
+
+
+        class AsyncHttpClient:
+            def __init__(
+                self,
+                *,
+                httpx_client: httpx.AsyncClient,
+                base_timeout: typing.Callable[[], typing.Optional[float]],
+                base_headers: typing.Callable[[], typing.Dict[str, str]],
+                base_url: typing.Optional[typing.Callable[[], str]] = None,
+                base_max_retries: int = 2,
+                async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
+                logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+            ):
+                self.base_url = base_url
+                self.base_timeout = base_timeout
+                self.base_headers = base_headers
+                self.base_max_retries = base_max_retries
+                self.async_base_headers = async_base_headers
+                self.httpx_client = httpx_client
+                self.logger = create_logger(logging_config)
+
+            async def _get_headers(self) -> typing.Dict[str, str]:
+                if self.async_base_headers is not None:
+                    return await self.async_base_headers()
+                return self.base_headers()
+
+            def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
+                base_url = maybe_base_url
+                if self.base_url is not None and base_url is None:
+                    base_url = self.base_url()
+
+                if base_url is None:
+                    raise ValueError("A base_url is required to make this request, please provide one and try again.")
+                return base_url
+
+            async def request(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> httpx.Response:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Get headers (supports async token providers)
+                _headers = await self._get_headers()
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {}) or {}
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **_headers,
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                        has_body=json_body is not None or data_body is not None,
+                    )
+
+                max_retries: int = (
+                    request_options.get("max_retries", self.base_max_retries)
+                    if request_options is not None
+                    else self.base_max_retries
+                )
+
+                try:
+                    response = await self.httpx_client.request(
+                        method=method,
+                        url=_request_url,
+                        headers=_request_headers,
+                        params=_encoded_params if _encoded_params else None,
+                        json=json_body,
+                        data=data_body,
+                        content=content,
+                        files=request_files,
+                        timeout=timeout,
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries:
+                        await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                        return await self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+                    raise
+
+                if _should_retry(response=response):
+                    if retries < max_retries:
+                        await asyncio.sleep(_retry_timeout(response=response, retries=retries))
+                        return await self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+
+                if self.logger.is_debug():
+                    if 200 <= response.status_code < 400:
+                        self.logger.debug(
+                            "HTTP request succeeded",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                if self.logger.is_error():
+                    if response.status_code >= 400:
+                        self.logger.error(
+                            "HTTP request failed with error status",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                return response
+
+            @asynccontextmanager
+            async def stream(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> typing.AsyncIterator[httpx.Response]:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Get headers (supports async token providers)
+                _headers = await self._get_headers()
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {})
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit=omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **_headers,
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making streaming HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                    )
+
+                async with self.httpx_client.stream(
+                    method=method,
+                    url=_request_url,
+                    headers=_request_headers,
+                    params=_encoded_params if _encoded_params else None,
+                    json=json_body,
+                    data=data_body,
+                    content=content,
+                    files=request_files,
+                    timeout=timeout,
+                ) as stream:
+                    yield stream
+      src/hedra/core/request_options.py: |
+        # This file was auto-generated by Fern from our API Definition.
+
+        import typing
+
+        try:
+            from typing import NotRequired  # type: ignore
+        except ImportError:
+            from typing_extensions import NotRequired
+
+
+        class RequestOptions(typing.TypedDict, total=False):
+            """
+            Additional options for request-specific configuration when calling APIs via the SDK.
+            This is used primarily as an optional final parameter for service functions.
+
+            Attributes:
+                - timeout: float. The number of seconds to await an API call before timing out.
+
+                - timeout_in_seconds: int. Deprecated alias for `timeout`; both are in seconds. Prefer `timeout`.
+
+                - max_retries: int. The max number of retries to attempt if the API call fails.
+
+                - additional_headers: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's header dict
+
+                - additional_query_parameters: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's query parameters dict
+
+                - additional_body_parameters: typing.Dict[str, typing.Any]. A dictionary containing additional parameters to spread into the request's body parameters dict
+
+                - chunk_size: int. The size, in bytes, to process each chunk of data being streamed back within the response. This equates to leveraging `chunk_size` within `requests` or `httpx`, and is only leveraged for file downloads.
+            """
+
+            timeout: NotRequired[float]
+            timeout_in_seconds: NotRequired[int]
+            max_retries: NotRequired[int]
+            additional_headers: NotRequired[typing.Dict[str, typing.Any]]
+            additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
+            additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]
+            chunk_size: NotRequired[int]
+            stream_reconnection_enabled: NotRequired[bool]
+            max_stream_reconnection_attempts: NotRequired[int]
+  - id: patch-fdfcb8cb
+    content_hash: sha256:5e261b0573db7f7bb903bbab2e23d6c316b90b328f368be7fc7a45296a0fa0fe
+    original_commit: fdfcb8cb7b0937cf088b114c7f56615e2890cf1f
+    original_message: "fix(core): unfreeze http_client.py instead of hand-porting it"
+    original_author: Mihai Toader <mihai@hedra.com>
+    base_generation: 55347ea4921a33412e8847854cae6ac07c0735e6
+    files:
+      - src/hedra/core/http_client.py
+    patch_content: |+
+      diff --git a/src/hedra/core/http_client.py b/src/hedra/core/http_client.py
+      index 1e1df03..409d267 100644
+      --- a/src/hedra/core/http_client.py
+      +++ b/src/hedra/core/http_client.py
+      @@ -66,13 +66,7 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
+           retry_after_ms = response_headers.get("retry-after-ms")
+           if retry_after_ms is not None:
+               try:
+      -            # LOCAL DEVIATION from the generated output (the only one in this file;
+      -            # see .fernignore). Upstream fern-python-sdk emits `if retry_after_ms > 0`,
+      -            # comparing the header *string* to an int. That raises TypeError, which the
+      -            # `except` below swallows, so upstream silently ignores `retry-after-ms`
+      -            # entirely. Cast before comparing. Guarded by
+      -            # tests/custom/test_client.py::test_parse_retry_after_ms_header.
+      -            return int(retry_after_ms) / 1000 if int(retry_after_ms) > 0 else 0
+      +            return int(retry_after_ms) / 1000 if retry_after_ms > 0 else 0
+               except Exception:
+                   pass
+       
+    theirs_snapshot:
+      src/hedra/core/http_client.py: |
+        # This file was auto-generated by Fern from our API Definition.
+
+        import asyncio
+        import email.utils
+        import re
+        import socket
+        import time
+        import typing
+        from contextlib import asynccontextmanager, contextmanager
+        from random import random
+
+        import httpx
+        from .file import File, convert_file_dict_to_httpx_tuples
+        from .force_multipart import FORCE_MULTIPART
+        from .jsonable_encoder import jsonable_encoder
+        from .logging import LogConfig, Logger, create_logger
+        from .query_encoder import encode_query
+        from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
+        from .request_options import RequestOptions
+        from httpx._types import RequestFiles
+
+        INITIAL_RETRY_DELAY_SECONDS = 1.0
+        MAX_RETRY_DELAY_SECONDS = 60.0
+        JITTER_FACTOR = 0.2  # 20% random jitter
+
+
+        def get_keepalive_socket_options(
+            idle: int = 60,
+            intvl: int = 30,
+            cnt: int = 5,
+        ) -> typing.List[typing.Tuple[int, int, int]]:
+            """
+            Build TCP keepalive socket options for the current platform.
+
+            Keepalive probes keep otherwise-idle connections alive so that long,
+            non-streaming requests survive idle-connection reaping by a firewall,
+            load balancer, or NAT. The available socket constants are OS-dependent,
+            so each option is guarded and only emitted when the platform defines it:
+
+            - ``SO_KEEPALIVE`` is portable (Linux/macOS/Windows).
+            - The idle-before-first-probe knob is ``TCP_KEEPIDLE`` on Linux and modern
+              Windows, but ``TCP_KEEPALIVE`` on macOS.
+            - ``TCP_KEEPINTVL`` / ``TCP_KEEPCNT`` exist on Linux/macOS/modern Windows.
+
+            Passing these tuples to ``httpx.HTTPTransport(socket_options=...)`` /
+            ``httpx.AsyncHTTPTransport(socket_options=...)`` applies them to every
+            connection the transport opens.
+            """
+            opts: typing.List[typing.Tuple[int, int, int]] = [(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)]
+            idle_const = getattr(socket, "TCP_KEEPIDLE", None) or getattr(socket, "TCP_KEEPALIVE", None)
+            if idle_const:
+                opts.append((socket.IPPROTO_TCP, idle_const, idle))
+            if hasattr(socket, "TCP_KEEPINTVL"):
+                opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl))
+            if hasattr(socket, "TCP_KEEPCNT"):
+                opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt))
+            return opts
+
+
+        def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
+            """
+            This function parses the `Retry-After` header in a HTTP response and returns the number of seconds to wait.
+
+            Inspired by the urllib3 retry implementation.
+            """
+            retry_after_ms = response_headers.get("retry-after-ms")
+            if retry_after_ms is not None:
+                try:
+                    return int(retry_after_ms) / 1000 if retry_after_ms > 0 else 0
+                except Exception:
+                    pass
+
+            retry_after = response_headers.get("retry-after")
+            if retry_after is None:
+                return None
+
+            # Attempt to parse the header as an int.
+            if re.match(r"^\s*[0-9]+\s*$", retry_after):
+                seconds = float(retry_after)
+            # Fallback to parsing it as a date.
+            else:
+                retry_date_tuple = email.utils.parsedate_tz(retry_after)
+                if retry_date_tuple is None:
+                    return None
+                if retry_date_tuple[9] is None:  # Python 2
+                    # Assume UTC if no timezone was specified
+                    # On Python2.7, parsedate_tz returns None for a timezone offset
+                    # instead of 0 if no timezone is given, where mktime_tz treats
+                    # a None timezone offset as local time.
+                    retry_date_tuple = retry_date_tuple[:9] + (0,) + retry_date_tuple[10:]
+
+                retry_date = email.utils.mktime_tz(retry_date_tuple)
+                seconds = retry_date - time.time()
+
+            if seconds < 0:
+                seconds = 0
+
+            return seconds
+
+
+        def _add_positive_jitter(delay: float) -> float:
+            """Add positive jitter (0-20%) to prevent thundering herd."""
+            jitter_multiplier = 1 + random() * JITTER_FACTOR
+            return delay * jitter_multiplier
+
+
+        def _add_symmetric_jitter(delay: float) -> float:
+            """Add symmetric jitter (±10%) for exponential backoff."""
+            jitter_multiplier = 1 + (random() - 0.5) * JITTER_FACTOR
+            return delay * jitter_multiplier
+
+
+        def _parse_x_ratelimit_reset(response_headers: httpx.Headers) -> typing.Optional[float]:
+            """
+            Parse the X-RateLimit-Reset header (Unix timestamp in seconds).
+            Returns seconds to wait, or None if header is missing/invalid.
+            """
+            reset_time_str = response_headers.get("x-ratelimit-reset")
+            if reset_time_str is None:
+                return None
+
+            try:
+                reset_time = int(reset_time_str)
+                delay = reset_time - time.time()
+                if delay > 0:
+                    return delay
+            except (ValueError, TypeError):
+                pass
+
+            return None
+
+
+        def _retry_timeout(response: httpx.Response, retries: int) -> float:
+            """
+            Determine the amount of time to wait before retrying a request.
+            This function begins by trying to parse a retry-after header from the response, and then proceeds to use exponential backoff
+            with a jitter to determine the number of seconds to wait.
+            """
+
+            # 1. Check Retry-After header first
+            retry_after = _parse_retry_after(response.headers)
+            if retry_after is not None and retry_after > 0:
+                return min(retry_after, MAX_RETRY_DELAY_SECONDS)
+
+            # 2. Check X-RateLimit-Reset header (with positive jitter)
+            ratelimit_reset = _parse_x_ratelimit_reset(response.headers)
+            if ratelimit_reset is not None:
+                return _add_positive_jitter(min(ratelimit_reset, MAX_RETRY_DELAY_SECONDS))
+
+            # 3. Fall back to exponential backoff (with symmetric jitter)
+            backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+            return _add_symmetric_jitter(backoff)
+
+
+        def _retry_timeout_from_retries(retries: int) -> float:
+            """Determine retry timeout using exponential backoff when no response is available."""
+            backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+            return _add_symmetric_jitter(backoff)
+
+
+        def _should_retry(response: httpx.Response) -> bool:
+            return response.status_code >= 500 or response.status_code in [429, 408, 409]
+
+
+        _SENSITIVE_HEADERS = frozenset(
+            {
+                "authorization",
+                "www-authenticate",
+                "x-api-key",
+                "api-key",
+                "apikey",
+                "x-api-token",
+                "x-auth-token",
+                "auth-token",
+                "cookie",
+                "set-cookie",
+                "proxy-authorization",
+                "proxy-authenticate",
+                "x-csrf-token",
+                "x-xsrf-token",
+                "x-session-token",
+                "x-access-token",
+            }
+        )
+
+
+        def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
+            return {k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS else v) for k, v in headers.items()}
+
+
+        def _build_url(base_url: str, path: typing.Optional[str]) -> str:
+            """
+            Build a full URL by joining a base URL with a path.
+
+            This function correctly handles base URLs that contain path prefixes (e.g., tenant-based URLs)
+            by using string concatenation instead of urllib.parse.urljoin(), which would incorrectly
+            strip path components when the path starts with '/'.
+
+            Example:
+                >>> _build_url("https://cloud.example.com/org/tenant/api", "/users")
+                'https://cloud.example.com/org/tenant/api/users'
+
+            Args:
+                base_url: The base URL, which may contain path prefixes.
+                path: The path to append. Can be None or empty string.
+
+            Returns:
+                The full URL with base_url and path properly joined.
+            """
+            if not path:
+                return base_url
+            return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+
+
+        def _maybe_filter_none_from_multipart_data(
+            data: typing.Optional[typing.Any],
+            request_files: typing.Optional[RequestFiles],
+            force_multipart: typing.Optional[bool],
+        ) -> typing.Optional[typing.Any]:
+            """
+            Filter None values from data body for multipart/form requests.
+            This prevents httpx from converting None to empty strings in multipart encoding.
+            Only applies when files are present or force_multipart is True.
+            """
+            if data is not None and isinstance(data, typing.Mapping) and (request_files or force_multipart):
+                return remove_none_from_dict(data)
+            return data
+
+
+        def remove_omit_from_dict(
+            original: typing.Dict[str, typing.Optional[typing.Any]],
+            omit: typing.Optional[typing.Any],
+        ) -> typing.Dict[str, typing.Any]:
+            if omit is None:
+                return original
+            new: typing.Dict[str, typing.Any] = {}
+            for key, value in original.items():
+                if value is not omit:
+                    new[key] = value
+            return new
+
+
+        def maybe_filter_request_body(
+            data: typing.Optional[typing.Any],
+            request_options: typing.Optional[RequestOptions],
+            omit: typing.Optional[typing.Any],
+        ) -> typing.Optional[typing.Any]:
+            if data is None:
+                return (
+                    jsonable_encoder(request_options.get("additional_body_parameters", {})) or {}
+                    if request_options is not None
+                    else None
+                )
+            elif not isinstance(data, typing.Mapping):
+                data_content = jsonable_encoder(data)
+            else:
+                data_content = {
+                    **(jsonable_encoder(remove_omit_from_dict(data, omit))),  # type: ignore
+                    **(
+                        jsonable_encoder(request_options.get("additional_body_parameters", {})) or {}
+                        if request_options is not None
+                        else {}
+                    ),
+                }
+            return data_content
+
+
+        # Abstracted out for testing purposes
+        def get_request_body(
+            *,
+            json: typing.Optional[typing.Any],
+            data: typing.Optional[typing.Any],
+            request_options: typing.Optional[RequestOptions],
+            omit: typing.Optional[typing.Any],
+        ) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
+            json_body = None
+            data_body = None
+            if data is not None:
+                data_body = maybe_filter_request_body(data, request_options, omit)
+            else:
+                # If both data and json are None, we send json data in the event extra properties are specified
+                json_body = maybe_filter_request_body(json, request_options, omit)
+
+            has_additional_body_parameters = bool(
+                request_options is not None and request_options.get("additional_body_parameters")
+            )
+
+            # Only collapse empty dict to None when the body was not explicitly provided
+            # and there are no additional body parameters. This preserves explicit empty
+            # bodies (e.g., when an endpoint has a request body type but all fields are optional).
+            if json_body == {} and json is None and not has_additional_body_parameters:
+                json_body = None
+            if data_body == {} and data is None and not has_additional_body_parameters:
+                data_body = None
+
+            return json_body, data_body
+
+
+        class HttpClient:
+            def __init__(
+                self,
+                *,
+                httpx_client: httpx.Client,
+                base_timeout: typing.Callable[[], typing.Optional[float]],
+                base_headers: typing.Callable[[], typing.Dict[str, str]],
+                base_url: typing.Optional[typing.Callable[[], str]] = None,
+                base_max_retries: int = 2,
+                logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+            ):
+                self.base_url = base_url
+                self.base_timeout = base_timeout
+                self.base_headers = base_headers
+                self.base_max_retries = base_max_retries
+                self.httpx_client = httpx_client
+                self.logger = create_logger(logging_config)
+
+            def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
+                base_url = maybe_base_url
+                if self.base_url is not None and base_url is None:
+                    base_url = self.base_url()
+
+                if base_url is None:
+                    raise ValueError("A base_url is required to make this request, please provide one and try again.")
+                return base_url
+
+            def request(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> httpx.Response:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {}) or {}
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self.base_headers(),
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                        has_body=json_body is not None or data_body is not None,
+                    )
+
+                max_retries: int = (
+                    request_options.get("max_retries", self.base_max_retries)
+                    if request_options is not None
+                    else self.base_max_retries
+                )
+
+                try:
+                    response = self.httpx_client.request(
+                        method=method,
+                        url=_request_url,
+                        headers=_request_headers,
+                        params=_encoded_params if _encoded_params else None,
+                        json=json_body,
+                        data=data_body,
+                        content=content,
+                        files=request_files,
+                        timeout=timeout,
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries:
+                        time.sleep(_retry_timeout_from_retries(retries=retries))
+                        return self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+                    raise
+
+                if _should_retry(response=response):
+                    if retries < max_retries:
+                        time.sleep(_retry_timeout(response=response, retries=retries))
+                        return self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+
+                if self.logger.is_debug():
+                    if 200 <= response.status_code < 400:
+                        self.logger.debug(
+                            "HTTP request succeeded",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                if self.logger.is_error():
+                    if response.status_code >= 400:
+                        self.logger.error(
+                            "HTTP request failed with error status",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                return response
+
+            @contextmanager
+            def stream(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> typing.Iterator[httpx.Response]:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {})
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self.base_headers(),
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making streaming HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                    )
+
+                with self.httpx_client.stream(
+                    method=method,
+                    url=_request_url,
+                    headers=_request_headers,
+                    params=_encoded_params if _encoded_params else None,
+                    json=json_body,
+                    data=data_body,
+                    content=content,
+                    files=request_files,
+                    timeout=timeout,
+                ) as stream:
+                    yield stream
+
+
+        class AsyncHttpClient:
+            def __init__(
+                self,
+                *,
+                httpx_client: httpx.AsyncClient,
+                base_timeout: typing.Callable[[], typing.Optional[float]],
+                base_headers: typing.Callable[[], typing.Dict[str, str]],
+                base_url: typing.Optional[typing.Callable[[], str]] = None,
+                base_max_retries: int = 2,
+                async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
+                logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+            ):
+                self.base_url = base_url
+                self.base_timeout = base_timeout
+                self.base_headers = base_headers
+                self.base_max_retries = base_max_retries
+                self.async_base_headers = async_base_headers
+                self.httpx_client = httpx_client
+                self.logger = create_logger(logging_config)
+
+            async def _get_headers(self) -> typing.Dict[str, str]:
+                if self.async_base_headers is not None:
+                    return await self.async_base_headers()
+                return self.base_headers()
+
+            def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
+                base_url = maybe_base_url
+                if self.base_url is not None and base_url is None:
+                    base_url = self.base_url()
+
+                if base_url is None:
+                    raise ValueError("A base_url is required to make this request, please provide one and try again.")
+                return base_url
+
+            async def request(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> httpx.Response:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Get headers (supports async token providers)
+                _headers = await self._get_headers()
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {}) or {}
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **_headers,
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                        has_body=json_body is not None or data_body is not None,
+                    )
+
+                max_retries: int = (
+                    request_options.get("max_retries", self.base_max_retries)
+                    if request_options is not None
+                    else self.base_max_retries
+                )
+
+                try:
+                    response = await self.httpx_client.request(
+                        method=method,
+                        url=_request_url,
+                        headers=_request_headers,
+                        params=_encoded_params if _encoded_params else None,
+                        json=json_body,
+                        data=data_body,
+                        content=content,
+                        files=request_files,
+                        timeout=timeout,
+                    )
+                except (httpx.ConnectError, httpx.RemoteProtocolError):
+                    if retries < max_retries:
+                        await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                        return await self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+                    raise
+
+                if _should_retry(response=response):
+                    if retries < max_retries:
+                        await asyncio.sleep(_retry_timeout(response=response, retries=retries))
+                        return await self.request(
+                            path=path,
+                            method=method,
+                            base_url=base_url,
+                            params=params,
+                            json=json,
+                            data=data,
+                            content=content,
+                            files=files,
+                            headers=headers,
+                            request_options=request_options,
+                            retries=retries + 1,
+                            omit=omit,
+                            force_multipart=force_multipart,
+                        )
+
+                if self.logger.is_debug():
+                    if 200 <= response.status_code < 400:
+                        self.logger.debug(
+                            "HTTP request succeeded",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                if self.logger.is_error():
+                    if response.status_code >= 400:
+                        self.logger.error(
+                            "HTTP request failed with error status",
+                            method=method,
+                            url=_request_url,
+                            status_code=response.status_code,
+                        )
+
+                return response
+
+            @asynccontextmanager
+            async def stream(
+                self,
+                path: typing.Optional[str] = None,
+                *,
+                method: str,
+                base_url: typing.Optional[str] = None,
+                params: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                json: typing.Optional[typing.Any] = None,
+                data: typing.Optional[typing.Any] = None,
+                content: typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]] = None,
+                files: typing.Optional[
+                    typing.Union[
+                        typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]],
+                        typing.List[typing.Tuple[str, File]],
+                    ]
+                ] = None,
+                headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
+                request_options: typing.Optional[RequestOptions] = None,
+                retries: int = 0,
+                omit: typing.Optional[typing.Any] = None,
+                force_multipart: typing.Optional[bool] = None,
+            ) -> typing.AsyncIterator[httpx.Response]:
+                base_url = self.get_base_url(base_url)
+                _timeout = (
+                    request_options.get("timeout")
+                    if request_options is not None and request_options.get("timeout") is not None
+                    else request_options.get("timeout_in_seconds")
+                    if request_options is not None and request_options.get("timeout_in_seconds") is not None
+                    else self.base_timeout()
+                )
+                timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
+
+                request_files: typing.Optional[RequestFiles] = (
+                    convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                    if (files is not None and files is not omit and isinstance(files, dict))
+                    else None
+                )
+
+                if (request_files is None or len(request_files) == 0) and force_multipart:
+                    request_files = FORCE_MULTIPART
+
+                json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+                data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+                # Get headers (supports async token providers)
+                _headers = await self._get_headers()
+
+                # Compute encoded params separately to avoid passing empty list to httpx
+                # (httpx strips existing query params from URL when params=[] is passed)
+                _encoded_params = encode_query(
+                    jsonable_encoder(
+                        remove_none_from_dict(
+                            remove_omit_from_dict(
+                                {
+                                    **(params if params is not None else {}),
+                                    **(
+                                        request_options.get("additional_query_parameters", {})
+                                        if request_options is not None
+                                        else {}
+                                    ),
+                                },
+                                omit=omit,
+                            )
+                        )
+                    )
+                )
+
+                _request_url = _build_url(base_url, path)
+                _request_headers = jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **_headers,
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
+                )
+
+                if self.logger.is_debug():
+                    self.logger.debug(
+                        "Making streaming HTTP request",
+                        method=method,
+                        url=_request_url,
+                        headers=_redact_headers(_request_headers),
+                    )
+
+                async with self.httpx_client.stream(
+                    method=method,
+                    url=_request_url,
+                    headers=_request_headers,
+                    params=_encoded_params if _encoded_params else None,
+                    json=json_body,
+                    data=data_body,
+                    content=content,
+                    files=request_files,
+                    timeout=timeout,
+                ) as stream:
+                    yield stream
+  - id: patch-d24f8141
+    content_hash: sha256:81f2532d92f5caaec25a4e71b92a210fa44dd915ab9fcb54895b4cb3b469bcc6
+    original_commit: d24f81412f709ef87db22c431e7fd578cdb85574
+    original_message: "chore(version): bump pyproject.toml to 1.0.0 for the regeneration pin (#38)"
+    original_author: Mihai Claudiu Toader <mihai@hedra.com>
+    base_generation: 55347ea4921a33412e8847854cae6ac07c0735e6
+    files:
+      - pyproject.toml
+    patch_content: |+
+      From d24f81412f709ef87db22c431e7fd578cdb85574 Mon Sep 17 00:00:00 2001
+      From: Mihai Claudiu Toader <mihai@hedra.com>
+      Date: Fri, 7 Aug 2026 20:00:50 -0700
+      Subject: [PATCH] chore(version): bump pyproject.toml to 1.0.0 for the
+       regeneration pin (#38)
+
+      fern-config's generate-sdks.yml resolves 'fern generate --version' for the sdk group by reading this file's line-anchored version, so while it said 0.3.0 every routine regeneration stamped a number below the 1.0.0 reset the release will actually publish. pyproject.toml is .fernignore'd and cannot self-correct. Landing before the reset release is safe: publish-pypi.yml derives the published version from the release tag inside a throwaway checkout and never reads the committed value.
+      ---
+       pyproject.toml | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+      diff --git a/pyproject.toml b/pyproject.toml
+      index f370db2..0145060 100644
+      --- a/pyproject.toml
+      +++ b/pyproject.toml
+      @@ -4,7 +4,7 @@ dynamic = ["version"]
+       
+       [tool.poetry]
+       name = "hedra-python"
+      -version = "0.3.0"
+      +version = "1.0.0"
+       description = "The official Python library for the Hedra API"
+       license = "Apache-2.0"
+       readme = "README.md"
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      pyproject.toml: |
+        [project]
+        name = "hedra-python"
+        dynamic = ["version"]
+
+        [tool.poetry]
+        name = "hedra-python"
+        version = "1.0.0"
+        description = "The official Python library for the Hedra API"
+        license = "Apache-2.0"
+        readme = "README.md"
+        authors = ["Hedra <support@hedra.com>"]
+        keywords = []
+
+        classifiers = [
+            "Intended Audience :: Developers",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
+            "Programming Language :: Python :: 3.15",
+            "Operating System :: OS Independent",
+            "Operating System :: POSIX",
+            "Operating System :: MacOS",
+            "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Typing :: Typed"
+        ]
+        packages = [
+            { include = "hedra", from = "src"}
+        ]
+
+        [tool.poetry.urls]
+        Homepage = 'https://github.com/hedra-labs/hedra-python'
+        Repository = 'https://github.com/hedra-labs/hedra-python'
+
+        [tool.poetry.dependencies]
+        python = "^3.10"
+        aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+        # Imported directly by src/hedra/core/http_sse/_api.py (anyio.sleep, anyio.CancelScope)
+        # as of fern-python-sdk 5.16.1+. It resolves transitively via httpx today, but that is
+        # not a contract httpx owes us — declare it explicitly.
+        anyio = ">=3.0.0"
+        httpx = ">=0.21.2"
+        httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
+        pydantic = ">= 1.9.2"
+        pydantic-core = ">=2.18.2,<3.0.0"
+        typing_extensions = ">= 4.0.0"
+
+        [tool.poetry.group.dev.dependencies]
+        mypy = "==1.13.0"
+        pytest = "^9.0.3"
+        pytest-asyncio = "^1.0.0"
+        pytest-xdist = "^3.6.1"
+        python-dateutil = "^2.9.0"
+        types-python-dateutil = "^2.9.0.20240316"
+        urllib3 = ">=2.6.3,<3.0.0"
+        ruff = "==0.11.5"
+
+        [tool.pytest.ini_options]
+        testpaths = [ "tests" ]
+        asyncio_mode = "auto"
+        norecursedirs = [ "src" ]
+        markers = [
+            "aiohttp: tests that require httpx_aiohttp to be installed",
+        ]
+
+        [tool.mypy]
+        plugins = ["pydantic.mypy"]
+
+        [tool.ruff]
+        line-length = 120
+
+        [tool.ruff.lint]
+        select = [
+            "E",  # pycodestyle errors
+            "F",  # pyflakes
+            "I",  # isort
+        ]
+        ignore = [
+            "E402",  # Module level import not at top of file
+            "E501",  # Line too long
+            "E711",  # Comparison to `None` should be `cond is not None`
+            "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+            "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+            "E722",  # Do not use bare `except`
+            "E731",  # Do not assign a `lambda` expression, use a `def`
+            "F821",  # Undefined name
+            "F841"   # Local variable ... is assigned to but never used
+        ]
+
+        [tool.ruff.lint.isort]
+        section-order = ["future", "standard-library", "third-party", "first-party"]
+
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+
+        [tool.poetry.extras]
+        aiohttp=["aiohttp", "httpx-aiohttp"]
+  - id: patch-7295e309
+    content_hash: sha256:507cf85e25197e4ceae9cbc36512c085255440a89db74f15a8eb61abb819c053
+    original_commit: 7295e309b60d6ae458aac311f345d5824fd90270
+    original_message: "fix(fern): un-ignore pyproject.toml so regeneration stamps the version (#42)"
+    original_author: Mihai Claudiu Toader <mihai@hedra.com>
+    base_generation: 55347ea4921a33412e8847854cae6ac07c0735e6
+    files:
+      - pyproject.toml
+    patch_content: |
+      diff --git a/pyproject.toml b/pyproject.toml
+      index 0145060..0787eaf 100644
+      --- a/pyproject.toml
+      +++ b/pyproject.toml
+      @@ -45,7 +45,7 @@ aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+       # not a contract httpx owes us — declare it explicitly.
+       anyio = ">=3.0.0"
+       httpx = ">=0.21.2"
+      -httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
+      +httpx-aiohttp = { version = "^0.1.8", optional = true, python = ">=3.10"}
+       pydantic = ">= 1.9.2"
+       pydantic-core = ">=2.18.2,<3.0.0"
+       typing_extensions = ">= 4.0.0"
+    theirs_snapshot:
+      pyproject.toml: |
+        [project]
+        name = "hedra-python"
+        dynamic = ["version"]
+
+        [tool.poetry]
+        name = "hedra-python"
+        version = "1.0.0"
+        description = "The official Python library for the Hedra API"
+        license = "Apache-2.0"
+        readme = "README.md"
+        authors = ["Hedra <support@hedra.com>"]
+        keywords = []
+
+        classifiers = [
+            "Intended Audience :: Developers",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
+            "Programming Language :: Python :: 3.15",
+            "Operating System :: OS Independent",
+            "Operating System :: POSIX",
+            "Operating System :: MacOS",
+            "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Typing :: Typed"
+        ]
+        packages = [
+            { include = "hedra", from = "src"}
+        ]
+
+        [tool.poetry.urls]
+        Homepage = 'https://github.com/hedra-labs/hedra-python'
+        Repository = 'https://github.com/hedra-labs/hedra-python'
+
+        [tool.poetry.dependencies]
+        python = "^3.10"
+        aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+        # Imported directly by src/hedra/core/http_sse/_api.py (anyio.sleep, anyio.CancelScope)
+        # as of fern-python-sdk 5.16.1+. It resolves transitively via httpx today, but that is
+        # not a contract httpx owes us — declare it explicitly.
+        anyio = ">=3.0.0"
+        httpx = ">=0.21.2"
+        httpx-aiohttp = { version = "^0.1.8", optional = true, python = ">=3.10"}
+        pydantic = ">= 1.9.2"
+        pydantic-core = ">=2.18.2,<3.0.0"
+        typing_extensions = ">= 4.0.0"
+
+        [tool.poetry.group.dev.dependencies]
+        mypy = "==1.13.0"
+        pytest = "^9.0.3"
+        pytest-asyncio = "^1.0.0"
+        pytest-xdist = "^3.6.1"
+        python-dateutil = "^2.9.0"
+        types-python-dateutil = "^2.9.0.20240316"
+        urllib3 = ">=2.6.3,<3.0.0"
+        ruff = "==0.11.5"
+
+        [tool.pytest.ini_options]
+        testpaths = [ "tests" ]
+        asyncio_mode = "auto"
+        norecursedirs = [ "src" ]
+        markers = [
+            "aiohttp: tests that require httpx_aiohttp to be installed",
+        ]
+
+        [tool.mypy]
+        plugins = ["pydantic.mypy"]
+
+        [tool.ruff]
+        line-length = 120
+
+        [tool.ruff.lint]
+        select = [
+            "E",  # pycodestyle errors
+            "F",  # pyflakes
+            "I",  # isort
+        ]
+        ignore = [
+            "E402",  # Module level import not at top of file
+            "E501",  # Line too long
+            "E711",  # Comparison to `None` should be `cond is not None`
+            "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+            "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+            "E722",  # Do not use bare `except`
+            "E731",  # Do not assign a `lambda` expression, use a `def`
+            "F821",  # Undefined name
+            "F841"   # Local variable ... is assigned to but never used
+        ]
+
+        [tool.ruff.lint.isort]
+        section-order = ["future", "standard-library", "third-party", "first-party"]
+
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+
+        [tool.poetry.extras]
+        aiohttp=["aiohttp", "httpx-aiohttp"]
+  - id: patch-e8e38814
+    content_hash: sha256:2f723166eff73deb2d22b14addb5066a26c3f3a1d994079e00c9315c297b6d14
+    original_commit: e8e3881433d91d1f91a33b7db262ca8030c823cf
+    original_message: "chore: reset manifest version to 0.9.9 as the computed-release baseline (#48)"
+    original_author: Mihai Claudiu Toader <mihai@hedra.com>
+    base_generation: 55347ea4921a33412e8847854cae6ac07c0735e6
+    files:
+      - pyproject.toml
+    patch_content: |+
+      From e8e3881433d91d1f91a33b7db262ca8030c823cf Mon Sep 17 00:00:00 2001
+      From: Mihai Claudiu Toader <mihai@hedra.com>
+      Date: Mon, 10 Aug 2026 13:22:00 -0700
+      Subject: [PATCH] chore: reset manifest version to 0.9.9 as the
+       computed-release baseline (#48)
+      MIME-Version: 1.0
+      Content-Type: text/plain; charset=UTF-8
+      Content-Transfer-Encoding: 8bit
+
+      Under the manifest-sourced versioning model from fern-config#44, this repo's manifest at HEAD is the version source of truth. The accumulated v3 drift diffs as major, and a major bump on 0.9.9 computes exactly 1.0.0 — so the next regeneration stamps 1.0.0-dev and the first release publishes 1.0.0 through the normal computed flow, no force_version bootstrap.
+
+
+      Claude-Session: https://claude.ai/code/session_01QE4vymFP5Jb9VycV4Ttejn
+
+      Co-authored-by: Claude Fable 5 <noreply@anthropic.com>
+      ---
+       pyproject.toml | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+      diff --git a/pyproject.toml b/pyproject.toml
+      index 0787eaf..e2aa273 100644
+      --- a/pyproject.toml
+      +++ b/pyproject.toml
+      @@ -4,7 +4,7 @@ dynamic = ["version"]
+       
+       [tool.poetry]
+       name = "hedra-python"
+      -version = "1.0.0"
+      +version = "0.9.9"
+       description = "The official Python library for the Hedra API"
+       license = "Apache-2.0"
+       readme = "README.md"
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      pyproject.toml: |
+        [project]
+        name = "hedra-python"
+        dynamic = ["version"]
+
+        [tool.poetry]
+        name = "hedra-python"
+        version = "0.9.9"
+        description = "The official Python library for the Hedra API"
+        license = "Apache-2.0"
+        readme = "README.md"
+        authors = ["Hedra <support@hedra.com>"]
+        keywords = []
+
+        classifiers = [
+            "Intended Audience :: Developers",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
+            "Programming Language :: Python :: 3.15",
+            "Operating System :: OS Independent",
+            "Operating System :: POSIX",
+            "Operating System :: MacOS",
+            "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Typing :: Typed"
+        ]
+        packages = [
+            { include = "hedra", from = "src"}
+        ]
+
+        [tool.poetry.urls]
+        Homepage = 'https://github.com/hedra-labs/hedra-python'
+        Repository = 'https://github.com/hedra-labs/hedra-python'
+
+        [tool.poetry.dependencies]
+        python = "^3.10"
+        aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+        # Imported directly by src/hedra/core/http_sse/_api.py (anyio.sleep, anyio.CancelScope)
+        # as of fern-python-sdk 5.16.1+. It resolves transitively via httpx today, but that is
+        # not a contract httpx owes us — declare it explicitly.
+        anyio = ">=3.0.0"
+        httpx = ">=0.21.2"
+        httpx-aiohttp = { version = "^0.1.8", optional = true, python = ">=3.10"}
+        pydantic = ">= 1.9.2"
+        pydantic-core = ">=2.18.2,<3.0.0"
+        typing_extensions = ">= 4.0.0"
+
+        [tool.poetry.group.dev.dependencies]
+        mypy = "==1.13.0"
+        pytest = "^9.0.3"
+        pytest-asyncio = "^1.0.0"
+        pytest-xdist = "^3.6.1"
+        python-dateutil = "^2.9.0"
+        types-python-dateutil = "^2.9.0.20240316"
+        urllib3 = ">=2.6.3,<3.0.0"
+        ruff = "==0.11.5"
+
+        [tool.pytest.ini_options]
+        testpaths = [ "tests" ]
+        asyncio_mode = "auto"
+        norecursedirs = [ "src" ]
+        markers = [
+            "aiohttp: tests that require httpx_aiohttp to be installed",
+        ]
+
+        [tool.mypy]
+        plugins = ["pydantic.mypy"]
+
+        [tool.ruff]
+        line-length = 120
+
+        [tool.ruff.lint]
+        select = [
+            "E",  # pycodestyle errors
+            "F",  # pyflakes
+            "I",  # isort
+        ]
+        ignore = [
+            "E402",  # Module level import not at top of file
+            "E501",  # Line too long
+            "E711",  # Comparison to `None` should be `cond is not None`
+            "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+            "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+            "E722",  # Do not use bare `except`
+            "E731",  # Do not assign a `lambda` expression, use a `def`
+            "F821",  # Undefined name
+            "F841"   # Local variable ... is assigned to but never used
+        ]
+
+        [tool.ruff.lint.isort]
+        section-order = ["future", "standard-library", "third-party", "first-party"]
+
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+
+        [tool.poetry.extras]
+        aiohttp=["aiohttp", "httpx-aiohttp"]
