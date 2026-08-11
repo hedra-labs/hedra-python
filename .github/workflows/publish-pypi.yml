@@ -12,6 +12,10 @@ on:
         description: "Version to publish, e.g. 1.0.0. Required for manual runs; release runs take it from the tag."
         required: true
         type: string
+      dry_run:
+        description: "Build and package, but stop short of uploading to PyPI"
+        type: boolean
+        default: false
 
 # A PyPI upload is irreversible: a version number, once taken, can never be
 # reused even after deletion. Two releases racing would also interleave their
@@ -93,8 +97,22 @@ jobs:
             exit 1
           fi
 
+      # `poetry publish --dry-run` performs every step of a real publish except
+      # the upload, so a dry run still proves the built artifacts are
+      # publishable. A `release: published` run supplies no inputs, so DRY_RUN
+      # is the empty string and the real publish is what happens -- the default
+      # must stay false.
       - name: Publish to PyPI
         env:
           # Accept either secret name (the Stainless workflow used HEDRA_PYPI_TOKEN).
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN || secrets.HEDRA_PYPI_TOKEN }}
-        run: poetry publish
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          if [ "${DRY_RUN}" = "true" ]; then
+            echo "::notice::Dry run - building and packaging only; nothing is uploaded to PyPI."
+            poetry publish --dry-run
+          else
+            echo "::notice::Publishing to PyPI for real."
+            poetry publish
+          fi
