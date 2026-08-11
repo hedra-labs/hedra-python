@@ -2,4 +2,4 @@
 
 import typing
 
-InputMinimaxHailuo23Resolution = typing.Union[typing.Literal["1080p", "768p"], typing.Any]
+InputMinimaxHailuo23Resolution = typing.Union[typing.Literal["768p", "1080p"], typing.Any]

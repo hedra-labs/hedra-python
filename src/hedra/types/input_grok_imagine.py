@@ -14,8 +14,8 @@ class InputGrokImagine(UniversalBaseModel):
     Model-specific inputs for `grok-imagine`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: images, prompt; must omit: aspect_ratio
-    (2) requires: aspect_ratio, prompt; must omit: images
+    (1) requires: aspect_ratio, prompt; must omit: images
+    (2) requires: images, prompt; must omit: aspect_ratio
     """
 
     prompt: str = pydantic.Field()
@@ -33,9 +33,9 @@ class InputGrokImagine(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
-    images: typing.Optional[typing.List[InputGrokImagineImagesItem]] = pydantic.Field(default=None)
+    aspect_ratio: typing.Optional[InputGrokImagineAspectRatio] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Output aspect ratio.
     """
 
     output_format: typing.Optional[InputGrokImagineOutputFormat] = pydantic.Field(default=None)
@@ -43,9 +43,9 @@ class InputGrokImagine(UniversalBaseModel):
     Output image format.
     """
 
-    aspect_ratio: typing.Optional[InputGrokImagineAspectRatio] = pydantic.Field(default=None)
+    images: typing.Optional[typing.List[InputGrokImagineImagesItem]] = pydantic.Field(default=None)
     """
-    Output aspect ratio.
+    Images to edit or blend.
     """
 
     if IS_PYDANTIC_V2:

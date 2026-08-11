@@ -363,7 +363,7 @@ class RawModelsClient:
         self, model: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[VoiceListResponse]:
         """
-        Voices this model accepts — scoped to the model's voice provider.
+        Voices this model accepts — scoped to the model's voice provider. fern-config end-to-end regeneration probe 20260811-000134.
 
         Parameters
         ----------
@@ -1014,7 +1014,7 @@ class AsyncRawModelsClient:
         self, model: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[VoiceListResponse]:
         """
-        Voices this model accepts — scoped to the model's voice provider.
+        Voices this model accepts — scoped to the model's voice provider. fern-config end-to-end regeneration probe 20260811-000134.
 
         Parameters
         ----------

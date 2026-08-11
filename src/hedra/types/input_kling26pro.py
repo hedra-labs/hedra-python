@@ -14,8 +14,8 @@ class InputKling26Pro(UniversalBaseModel):
     Model-specific inputs for `kling-26-pro`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, start_image; must omit: cfg_scale
-    (2) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
+    (1) requires: aspect_ratio, duration_ms, prompt; must omit: start_image
+    (2) requires: aspect_ratio, duration_ms, prompt, start_image; must omit: cfg_scale
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -48,11 +48,6 @@ class InputKling26Pro(UniversalBaseModel):
     Whether to generate native audio for the video.
     """
 
-    start_image: typing.Optional[InputKling26ProStartImage] = pydantic.Field(default=None)
-    """
-    Start frame (image-to-video).
-    """
-
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
     What to avoid in the generated video.
@@ -61,6 +56,11 @@ class InputKling26Pro(UniversalBaseModel):
     cfg_scale: typing.Optional[float] = pydantic.Field(default=None)
     """
     How closely the model follows the prompt.
+    """
+
+    start_image: typing.Optional[InputKling26ProStartImage] = pydantic.Field(default=None)
+    """
+    Start frame (image-to-video).
     """
 
     if IS_PYDANTIC_V2:

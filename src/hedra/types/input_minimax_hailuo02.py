@@ -16,12 +16,12 @@ class InputMinimaxHailuo02(UniversalBaseModel):
     Model-specific inputs for `minimax-hailuo-02`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: prompt, start_image; must omit: aspect_ratio, end_image; accepts duration_ms: 6000; quality: pro; resolution: 1080p
-    (2) requires: end_image, prompt, start_image; must omit: aspect_ratio; accepts duration_ms: 6000; quality: pro; resolution: 1080p
-    (3) requires: prompt; must omit: end_image, start_image; accepts duration_ms: 6000; quality: pro; resolution: 1080p
-    (4) requires: duration_ms, prompt, start_image; must omit: aspect_ratio, end_image; accepts quality: standard; resolution: 768p
-    (5) requires: duration_ms, end_image, prompt, start_image; must omit: aspect_ratio; accepts quality: standard; resolution: 768p
-    (6) requires: duration_ms, prompt; must omit: end_image, start_image; accepts quality: standard; resolution: 768p
+    (1) requires: duration_ms, end_image, prompt, start_image; must omit: aspect_ratio; accepts quality: standard; resolution: 768p
+    (2) requires: duration_ms, prompt; must omit: end_image, start_image; accepts quality: standard; resolution: 768p
+    (3) requires: duration_ms, prompt, start_image; must omit: aspect_ratio, end_image; accepts quality: standard; resolution: 768p
+    (4) requires: end_image, prompt, start_image; must omit: aspect_ratio; accepts duration_ms: 6000; quality: pro; resolution: 1080p
+    (5) requires: prompt; must omit: end_image, start_image; accepts duration_ms: 6000; quality: pro; resolution: 1080p
+    (6) requires: prompt, start_image; must omit: aspect_ratio, end_image; accepts duration_ms: 6000; quality: pro; resolution: 1080p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -32,6 +32,11 @@ class InputMinimaxHailuo02(UniversalBaseModel):
     prompt: str = pydantic.Field()
     """
     Generation prompt.
+    """
+
+    aspect_ratio: typing.Optional[InputMinimaxHailuo02AspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio.
     """
 
     resolution: typing.Optional[InputMinimaxHailuo02Resolution] = pydantic.Field(default=None)
@@ -52,11 +57,6 @@ class InputMinimaxHailuo02(UniversalBaseModel):
     end_image: typing.Optional[InputMinimaxHailuo02EndImage] = pydantic.Field(default=None)
     """
     End frame (first-last-frame-to-video).
-    """
-
-    aspect_ratio: typing.Optional[InputMinimaxHailuo02AspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio.
     """
 
     quality: InputMinimaxHailuo02Quality = pydantic.Field()

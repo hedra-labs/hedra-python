@@ -16,8 +16,8 @@ class InputKlingO1(UniversalBaseModel):
     Model-specific inputs for `kling-o1`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, start_image
-    (2) requires: aspect_ratio, duration_ms, images, prompt
+    (1) requires: aspect_ratio, duration_ms, images, prompt
+    (2) requires: aspect_ratio, duration_ms, prompt, start_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

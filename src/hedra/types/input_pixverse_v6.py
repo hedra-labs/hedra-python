@@ -14,8 +14,8 @@ class InputPixverseV6(UniversalBaseModel):
     Model-specific inputs for `pixverse-v6`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: start_image
+    (1) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: start_image
+    (2) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -53,14 +53,14 @@ class InputPixverseV6(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
-    start_image: typing.Optional[InputPixverseV6StartImage] = pydantic.Field(default=None)
-    """
-    Start frame (image-to-video).
-    """
-
     aspect_ratio: typing.Optional[InputPixverseV6AspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
+    """
+
+    start_image: typing.Optional[InputPixverseV6StartImage] = pydantic.Field(default=None)
+    """
+    Start frame (image-to-video).
     """
 
     if IS_PYDANTIC_V2:

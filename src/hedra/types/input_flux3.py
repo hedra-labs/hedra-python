@@ -15,9 +15,9 @@ class InputFlux3(UniversalBaseModel):
     Model-specific inputs for `flux-3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; must omit: end_image
-    (2) requires: aspect_ratio, duration_ms, end_image, prompt, resolution, start_image
-    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image
+    (1) requires: aspect_ratio, duration_ms, end_image, prompt, resolution, start_image
+    (2) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image
+    (3) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; must omit: end_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

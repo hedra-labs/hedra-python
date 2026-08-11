@@ -35,18 +35,18 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "hedra-python/1.0.0-dev",
+            "User-Agent": "hedra-python/2.0.0-dev",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "hedra-python",
-            "X-Fern-SDK-Version": "1.0.0-dev",
+            "X-Fern-SDK-Version": "2.0.0-dev",
             **(self.get_custom_headers() or {}),
         }
         api_key = self._get_api_key()
         if api_key is not None:
             headers["Authorization"] = f"Bearer {api_key}"
-        headers["X-Hedra-Spec-Version"] = self._spec_version if self._spec_version is not None else "3.2.2"
+        headers["X-Hedra-Spec-Version"] = self._spec_version if self._spec_version is not None else "3.2.3"
         return headers
 
     def _get_api_key(self) -> typing.Optional[str]:

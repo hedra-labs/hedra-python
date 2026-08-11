@@ -2,4 +2,4 @@
 
 import typing
 
-InputMinimaxH3Resolution = typing.Union[typing.Literal["768p", "2K", "4K"], typing.Any]
+InputMinimaxH3Resolution = typing.Union[typing.Literal["768p", "2K"], typing.Any]

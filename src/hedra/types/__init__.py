@@ -305,23 +305,6 @@ if typing.TYPE_CHECKING:
     )
     from .input_kling25turbo_start_image_asset import InputKling25TurboStartImageAsset
     from .input_kling25turbo_start_image_url import InputKling25TurboStartImageUrl
-    from .input_kling26motion_control import InputKling26MotionControl
-    from .input_kling26motion_control_character_orientation import InputKling26MotionControlCharacterOrientation
-    from .input_kling26motion_control_resolution import InputKling26MotionControlResolution
-    from .input_kling26motion_control_source_video import (
-        InputKling26MotionControlSourceVideo,
-        InputKling26MotionControlSourceVideo_Asset,
-        InputKling26MotionControlSourceVideo_Url,
-    )
-    from .input_kling26motion_control_source_video_asset import InputKling26MotionControlSourceVideoAsset
-    from .input_kling26motion_control_source_video_url import InputKling26MotionControlSourceVideoUrl
-    from .input_kling26motion_control_start_image import (
-        InputKling26MotionControlStartImage,
-        InputKling26MotionControlStartImage_Asset,
-        InputKling26MotionControlStartImage_Url,
-    )
-    from .input_kling26motion_control_start_image_asset import InputKling26MotionControlStartImageAsset
-    from .input_kling26motion_control_start_image_url import InputKling26MotionControlStartImageUrl
     from .input_kling26pro import InputKling26Pro
     from .input_kling26pro_aspect_ratio import InputKling26ProAspectRatio
     from .input_kling26pro_resolution import InputKling26ProResolution
@@ -372,22 +355,6 @@ if typing.TYPE_CHECKING:
     from .input_kling_o1start_image_url import InputKlingO1StartImageUrl
     from .input_kling_o3 import InputKlingO3
     from .input_kling_o3aspect_ratio import InputKlingO3AspectRatio
-    from .input_kling_o3edit import InputKlingO3Edit
-    from .input_kling_o3edit_images_item import (
-        InputKlingO3EditImagesItem,
-        InputKlingO3EditImagesItem_Asset,
-        InputKlingO3EditImagesItem_Url,
-    )
-    from .input_kling_o3edit_images_item_asset import InputKlingO3EditImagesItemAsset
-    from .input_kling_o3edit_images_item_url import InputKlingO3EditImagesItemUrl
-    from .input_kling_o3edit_resolution import InputKlingO3EditResolution
-    from .input_kling_o3edit_source_video import (
-        InputKlingO3EditSourceVideo,
-        InputKlingO3EditSourceVideo_Asset,
-        InputKlingO3EditSourceVideo_Url,
-    )
-    from .input_kling_o3edit_source_video_asset import InputKlingO3EditSourceVideoAsset
-    from .input_kling_o3edit_source_video_url import InputKlingO3EditSourceVideoUrl
     from .input_kling_o3end_image import InputKlingO3EndImage, InputKlingO3EndImage_Asset, InputKlingO3EndImage_Url
     from .input_kling_o3end_image_asset import InputKlingO3EndImageAsset
     from .input_kling_o3end_image_url import InputKlingO3EndImageUrl
@@ -399,22 +366,6 @@ if typing.TYPE_CHECKING:
     from .input_kling_o3images_item_asset import InputKlingO3ImagesItemAsset
     from .input_kling_o3images_item_url import InputKlingO3ImagesItemUrl
     from .input_kling_o3quality import InputKlingO3Quality
-    from .input_kling_o3reference import InputKlingO3Reference
-    from .input_kling_o3reference_images_item import (
-        InputKlingO3ReferenceImagesItem,
-        InputKlingO3ReferenceImagesItem_Asset,
-        InputKlingO3ReferenceImagesItem_Url,
-    )
-    from .input_kling_o3reference_images_item_asset import InputKlingO3ReferenceImagesItemAsset
-    from .input_kling_o3reference_images_item_url import InputKlingO3ReferenceImagesItemUrl
-    from .input_kling_o3reference_resolution import InputKlingO3ReferenceResolution
-    from .input_kling_o3reference_source_video import (
-        InputKlingO3ReferenceSourceVideo,
-        InputKlingO3ReferenceSourceVideo_Asset,
-        InputKlingO3ReferenceSourceVideo_Url,
-    )
-    from .input_kling_o3reference_source_video_asset import InputKlingO3ReferenceSourceVideoAsset
-    from .input_kling_o3reference_source_video_url import InputKlingO3ReferenceSourceVideoUrl
     from .input_kling_o3resolution import InputKlingO3Resolution
     from .input_kling_o3start_image import (
         InputKlingO3StartImage,
@@ -428,23 +379,6 @@ if typing.TYPE_CHECKING:
     from .input_kling_v3end_image import InputKlingV3EndImage, InputKlingV3EndImage_Asset, InputKlingV3EndImage_Url
     from .input_kling_v3end_image_asset import InputKlingV3EndImageAsset
     from .input_kling_v3end_image_url import InputKlingV3EndImageUrl
-    from .input_kling_v3motion_control import InputKlingV3MotionControl
-    from .input_kling_v3motion_control_character_orientation import InputKlingV3MotionControlCharacterOrientation
-    from .input_kling_v3motion_control_resolution import InputKlingV3MotionControlResolution
-    from .input_kling_v3motion_control_source_video import (
-        InputKlingV3MotionControlSourceVideo,
-        InputKlingV3MotionControlSourceVideo_Asset,
-        InputKlingV3MotionControlSourceVideo_Url,
-    )
-    from .input_kling_v3motion_control_source_video_asset import InputKlingV3MotionControlSourceVideoAsset
-    from .input_kling_v3motion_control_source_video_url import InputKlingV3MotionControlSourceVideoUrl
-    from .input_kling_v3motion_control_start_image import (
-        InputKlingV3MotionControlStartImage,
-        InputKlingV3MotionControlStartImage_Asset,
-        InputKlingV3MotionControlStartImage_Url,
-    )
-    from .input_kling_v3motion_control_start_image_asset import InputKlingV3MotionControlStartImageAsset
-    from .input_kling_v3motion_control_start_image_url import InputKlingV3MotionControlStartImageUrl
     from .input_kling_v3quality import InputKlingV3Quality
     from .input_kling_v3resolution import InputKlingV3Resolution
     from .input_kling_v3start_image import (
@@ -736,44 +670,6 @@ if typing.TYPE_CHECKING:
     )
     from .input_seedance20videos_item_asset import InputSeedance20VideosItemAsset
     from .input_seedance20videos_item_url import InputSeedance20VideosItemUrl
-    from .input_seedance25 import InputSeedance25
-    from .input_seedance25aspect_ratio import InputSeedance25AspectRatio
-    from .input_seedance25audios_item import (
-        InputSeedance25AudiosItem,
-        InputSeedance25AudiosItem_Asset,
-        InputSeedance25AudiosItem_Url,
-    )
-    from .input_seedance25audios_item_asset import InputSeedance25AudiosItemAsset
-    from .input_seedance25audios_item_url import InputSeedance25AudiosItemUrl
-    from .input_seedance25end_image import (
-        InputSeedance25EndImage,
-        InputSeedance25EndImage_Asset,
-        InputSeedance25EndImage_Url,
-    )
-    from .input_seedance25end_image_asset import InputSeedance25EndImageAsset
-    from .input_seedance25end_image_url import InputSeedance25EndImageUrl
-    from .input_seedance25images_item import (
-        InputSeedance25ImagesItem,
-        InputSeedance25ImagesItem_Asset,
-        InputSeedance25ImagesItem_Url,
-    )
-    from .input_seedance25images_item_asset import InputSeedance25ImagesItemAsset
-    from .input_seedance25images_item_url import InputSeedance25ImagesItemUrl
-    from .input_seedance25resolution import InputSeedance25Resolution
-    from .input_seedance25start_image import (
-        InputSeedance25StartImage,
-        InputSeedance25StartImage_Asset,
-        InputSeedance25StartImage_Url,
-    )
-    from .input_seedance25start_image_asset import InputSeedance25StartImageAsset
-    from .input_seedance25start_image_url import InputSeedance25StartImageUrl
-    from .input_seedance25videos_item import (
-        InputSeedance25VideosItem,
-        InputSeedance25VideosItem_Asset,
-        InputSeedance25VideosItem_Url,
-    )
-    from .input_seedance25videos_item_asset import InputSeedance25VideosItemAsset
-    from .input_seedance25videos_item_url import InputSeedance25VideosItemUrl
     from .input_seedream40 import InputSeedream40
     from .input_seedream40aspect_ratio import InputSeedream40AspectRatio
     from .input_seedream40images_item import (
@@ -1197,19 +1093,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKling25TurboStartImageUrl": ".input_kling25turbo_start_image_url",
     "InputKling25TurboStartImage_Asset": ".input_kling25turbo_start_image",
     "InputKling25TurboStartImage_Url": ".input_kling25turbo_start_image",
-    "InputKling26MotionControl": ".input_kling26motion_control",
-    "InputKling26MotionControlCharacterOrientation": ".input_kling26motion_control_character_orientation",
-    "InputKling26MotionControlResolution": ".input_kling26motion_control_resolution",
-    "InputKling26MotionControlSourceVideo": ".input_kling26motion_control_source_video",
-    "InputKling26MotionControlSourceVideoAsset": ".input_kling26motion_control_source_video_asset",
-    "InputKling26MotionControlSourceVideoUrl": ".input_kling26motion_control_source_video_url",
-    "InputKling26MotionControlSourceVideo_Asset": ".input_kling26motion_control_source_video",
-    "InputKling26MotionControlSourceVideo_Url": ".input_kling26motion_control_source_video",
-    "InputKling26MotionControlStartImage": ".input_kling26motion_control_start_image",
-    "InputKling26MotionControlStartImageAsset": ".input_kling26motion_control_start_image_asset",
-    "InputKling26MotionControlStartImageUrl": ".input_kling26motion_control_start_image_url",
-    "InputKling26MotionControlStartImage_Asset": ".input_kling26motion_control_start_image",
-    "InputKling26MotionControlStartImage_Url": ".input_kling26motion_control_start_image",
     "InputKling26Pro": ".input_kling26pro",
     "InputKling26ProAspectRatio": ".input_kling26pro_aspect_ratio",
     "InputKling26ProResolution": ".input_kling26pro_resolution",
@@ -1252,18 +1135,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingO1StartImage_Url": ".input_kling_o1start_image",
     "InputKlingO3": ".input_kling_o3",
     "InputKlingO3AspectRatio": ".input_kling_o3aspect_ratio",
-    "InputKlingO3Edit": ".input_kling_o3edit",
-    "InputKlingO3EditImagesItem": ".input_kling_o3edit_images_item",
-    "InputKlingO3EditImagesItemAsset": ".input_kling_o3edit_images_item_asset",
-    "InputKlingO3EditImagesItemUrl": ".input_kling_o3edit_images_item_url",
-    "InputKlingO3EditImagesItem_Asset": ".input_kling_o3edit_images_item",
-    "InputKlingO3EditImagesItem_Url": ".input_kling_o3edit_images_item",
-    "InputKlingO3EditResolution": ".input_kling_o3edit_resolution",
-    "InputKlingO3EditSourceVideo": ".input_kling_o3edit_source_video",
-    "InputKlingO3EditSourceVideoAsset": ".input_kling_o3edit_source_video_asset",
-    "InputKlingO3EditSourceVideoUrl": ".input_kling_o3edit_source_video_url",
-    "InputKlingO3EditSourceVideo_Asset": ".input_kling_o3edit_source_video",
-    "InputKlingO3EditSourceVideo_Url": ".input_kling_o3edit_source_video",
     "InputKlingO3EndImage": ".input_kling_o3end_image",
     "InputKlingO3EndImageAsset": ".input_kling_o3end_image_asset",
     "InputKlingO3EndImageUrl": ".input_kling_o3end_image_url",
@@ -1275,18 +1146,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingO3ImagesItem_Asset": ".input_kling_o3images_item",
     "InputKlingO3ImagesItem_Url": ".input_kling_o3images_item",
     "InputKlingO3Quality": ".input_kling_o3quality",
-    "InputKlingO3Reference": ".input_kling_o3reference",
-    "InputKlingO3ReferenceImagesItem": ".input_kling_o3reference_images_item",
-    "InputKlingO3ReferenceImagesItemAsset": ".input_kling_o3reference_images_item_asset",
-    "InputKlingO3ReferenceImagesItemUrl": ".input_kling_o3reference_images_item_url",
-    "InputKlingO3ReferenceImagesItem_Asset": ".input_kling_o3reference_images_item",
-    "InputKlingO3ReferenceImagesItem_Url": ".input_kling_o3reference_images_item",
-    "InputKlingO3ReferenceResolution": ".input_kling_o3reference_resolution",
-    "InputKlingO3ReferenceSourceVideo": ".input_kling_o3reference_source_video",
-    "InputKlingO3ReferenceSourceVideoAsset": ".input_kling_o3reference_source_video_asset",
-    "InputKlingO3ReferenceSourceVideoUrl": ".input_kling_o3reference_source_video_url",
-    "InputKlingO3ReferenceSourceVideo_Asset": ".input_kling_o3reference_source_video",
-    "InputKlingO3ReferenceSourceVideo_Url": ".input_kling_o3reference_source_video",
     "InputKlingO3Resolution": ".input_kling_o3resolution",
     "InputKlingO3StartImage": ".input_kling_o3start_image",
     "InputKlingO3StartImageAsset": ".input_kling_o3start_image_asset",
@@ -1300,19 +1159,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingV3EndImageUrl": ".input_kling_v3end_image_url",
     "InputKlingV3EndImage_Asset": ".input_kling_v3end_image",
     "InputKlingV3EndImage_Url": ".input_kling_v3end_image",
-    "InputKlingV3MotionControl": ".input_kling_v3motion_control",
-    "InputKlingV3MotionControlCharacterOrientation": ".input_kling_v3motion_control_character_orientation",
-    "InputKlingV3MotionControlResolution": ".input_kling_v3motion_control_resolution",
-    "InputKlingV3MotionControlSourceVideo": ".input_kling_v3motion_control_source_video",
-    "InputKlingV3MotionControlSourceVideoAsset": ".input_kling_v3motion_control_source_video_asset",
-    "InputKlingV3MotionControlSourceVideoUrl": ".input_kling_v3motion_control_source_video_url",
-    "InputKlingV3MotionControlSourceVideo_Asset": ".input_kling_v3motion_control_source_video",
-    "InputKlingV3MotionControlSourceVideo_Url": ".input_kling_v3motion_control_source_video",
-    "InputKlingV3MotionControlStartImage": ".input_kling_v3motion_control_start_image",
-    "InputKlingV3MotionControlStartImageAsset": ".input_kling_v3motion_control_start_image_asset",
-    "InputKlingV3MotionControlStartImageUrl": ".input_kling_v3motion_control_start_image_url",
-    "InputKlingV3MotionControlStartImage_Asset": ".input_kling_v3motion_control_start_image",
-    "InputKlingV3MotionControlStartImage_Url": ".input_kling_v3motion_control_start_image",
     "InputKlingV3Quality": ".input_kling_v3quality",
     "InputKlingV3Resolution": ".input_kling_v3resolution",
     "InputKlingV3StartImage": ".input_kling_v3start_image",
@@ -1550,34 +1396,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputSeedance20VideosItemUrl": ".input_seedance20videos_item_url",
     "InputSeedance20VideosItem_Asset": ".input_seedance20videos_item",
     "InputSeedance20VideosItem_Url": ".input_seedance20videos_item",
-    "InputSeedance25": ".input_seedance25",
-    "InputSeedance25AspectRatio": ".input_seedance25aspect_ratio",
-    "InputSeedance25AudiosItem": ".input_seedance25audios_item",
-    "InputSeedance25AudiosItemAsset": ".input_seedance25audios_item_asset",
-    "InputSeedance25AudiosItemUrl": ".input_seedance25audios_item_url",
-    "InputSeedance25AudiosItem_Asset": ".input_seedance25audios_item",
-    "InputSeedance25AudiosItem_Url": ".input_seedance25audios_item",
-    "InputSeedance25EndImage": ".input_seedance25end_image",
-    "InputSeedance25EndImageAsset": ".input_seedance25end_image_asset",
-    "InputSeedance25EndImageUrl": ".input_seedance25end_image_url",
-    "InputSeedance25EndImage_Asset": ".input_seedance25end_image",
-    "InputSeedance25EndImage_Url": ".input_seedance25end_image",
-    "InputSeedance25ImagesItem": ".input_seedance25images_item",
-    "InputSeedance25ImagesItemAsset": ".input_seedance25images_item_asset",
-    "InputSeedance25ImagesItemUrl": ".input_seedance25images_item_url",
-    "InputSeedance25ImagesItem_Asset": ".input_seedance25images_item",
-    "InputSeedance25ImagesItem_Url": ".input_seedance25images_item",
-    "InputSeedance25Resolution": ".input_seedance25resolution",
-    "InputSeedance25StartImage": ".input_seedance25start_image",
-    "InputSeedance25StartImageAsset": ".input_seedance25start_image_asset",
-    "InputSeedance25StartImageUrl": ".input_seedance25start_image_url",
-    "InputSeedance25StartImage_Asset": ".input_seedance25start_image",
-    "InputSeedance25StartImage_Url": ".input_seedance25start_image",
-    "InputSeedance25VideosItem": ".input_seedance25videos_item",
-    "InputSeedance25VideosItemAsset": ".input_seedance25videos_item_asset",
-    "InputSeedance25VideosItemUrl": ".input_seedance25videos_item_url",
-    "InputSeedance25VideosItem_Asset": ".input_seedance25videos_item",
-    "InputSeedance25VideosItem_Url": ".input_seedance25videos_item",
     "InputSeedream40": ".input_seedream40",
     "InputSeedream40AspectRatio": ".input_seedream40aspect_ratio",
     "InputSeedream40ImagesItem": ".input_seedream40images_item",
@@ -2031,19 +1849,6 @@ __all__ = [
     "InputKling25TurboStartImageUrl",
     "InputKling25TurboStartImage_Asset",
     "InputKling25TurboStartImage_Url",
-    "InputKling26MotionControl",
-    "InputKling26MotionControlCharacterOrientation",
-    "InputKling26MotionControlResolution",
-    "InputKling26MotionControlSourceVideo",
-    "InputKling26MotionControlSourceVideoAsset",
-    "InputKling26MotionControlSourceVideoUrl",
-    "InputKling26MotionControlSourceVideo_Asset",
-    "InputKling26MotionControlSourceVideo_Url",
-    "InputKling26MotionControlStartImage",
-    "InputKling26MotionControlStartImageAsset",
-    "InputKling26MotionControlStartImageUrl",
-    "InputKling26MotionControlStartImage_Asset",
-    "InputKling26MotionControlStartImage_Url",
     "InputKling26Pro",
     "InputKling26ProAspectRatio",
     "InputKling26ProResolution",
@@ -2086,18 +1891,6 @@ __all__ = [
     "InputKlingO1StartImage_Url",
     "InputKlingO3",
     "InputKlingO3AspectRatio",
-    "InputKlingO3Edit",
-    "InputKlingO3EditImagesItem",
-    "InputKlingO3EditImagesItemAsset",
-    "InputKlingO3EditImagesItemUrl",
-    "InputKlingO3EditImagesItem_Asset",
-    "InputKlingO3EditImagesItem_Url",
-    "InputKlingO3EditResolution",
-    "InputKlingO3EditSourceVideo",
-    "InputKlingO3EditSourceVideoAsset",
-    "InputKlingO3EditSourceVideoUrl",
-    "InputKlingO3EditSourceVideo_Asset",
-    "InputKlingO3EditSourceVideo_Url",
     "InputKlingO3EndImage",
     "InputKlingO3EndImageAsset",
     "InputKlingO3EndImageUrl",
@@ -2109,18 +1902,6 @@ __all__ = [
     "InputKlingO3ImagesItem_Asset",
     "InputKlingO3ImagesItem_Url",
     "InputKlingO3Quality",
-    "InputKlingO3Reference",
-    "InputKlingO3ReferenceImagesItem",
-    "InputKlingO3ReferenceImagesItemAsset",
-    "InputKlingO3ReferenceImagesItemUrl",
-    "InputKlingO3ReferenceImagesItem_Asset",
-    "InputKlingO3ReferenceImagesItem_Url",
-    "InputKlingO3ReferenceResolution",
-    "InputKlingO3ReferenceSourceVideo",
-    "InputKlingO3ReferenceSourceVideoAsset",
-    "InputKlingO3ReferenceSourceVideoUrl",
-    "InputKlingO3ReferenceSourceVideo_Asset",
-    "InputKlingO3ReferenceSourceVideo_Url",
     "InputKlingO3Resolution",
     "InputKlingO3StartImage",
     "InputKlingO3StartImageAsset",
@@ -2134,19 +1915,6 @@ __all__ = [
     "InputKlingV3EndImageUrl",
     "InputKlingV3EndImage_Asset",
     "InputKlingV3EndImage_Url",
-    "InputKlingV3MotionControl",
-    "InputKlingV3MotionControlCharacterOrientation",
-    "InputKlingV3MotionControlResolution",
-    "InputKlingV3MotionControlSourceVideo",
-    "InputKlingV3MotionControlSourceVideoAsset",
-    "InputKlingV3MotionControlSourceVideoUrl",
-    "InputKlingV3MotionControlSourceVideo_Asset",
-    "InputKlingV3MotionControlSourceVideo_Url",
-    "InputKlingV3MotionControlStartImage",
-    "InputKlingV3MotionControlStartImageAsset",
-    "InputKlingV3MotionControlStartImageUrl",
-    "InputKlingV3MotionControlStartImage_Asset",
-    "InputKlingV3MotionControlStartImage_Url",
     "InputKlingV3Quality",
     "InputKlingV3Resolution",
     "InputKlingV3StartImage",
@@ -2384,34 +2152,6 @@ __all__ = [
     "InputSeedance20VideosItemUrl",
     "InputSeedance20VideosItem_Asset",
     "InputSeedance20VideosItem_Url",
-    "InputSeedance25",
-    "InputSeedance25AspectRatio",
-    "InputSeedance25AudiosItem",
-    "InputSeedance25AudiosItemAsset",
-    "InputSeedance25AudiosItemUrl",
-    "InputSeedance25AudiosItem_Asset",
-    "InputSeedance25AudiosItem_Url",
-    "InputSeedance25EndImage",
-    "InputSeedance25EndImageAsset",
-    "InputSeedance25EndImageUrl",
-    "InputSeedance25EndImage_Asset",
-    "InputSeedance25EndImage_Url",
-    "InputSeedance25ImagesItem",
-    "InputSeedance25ImagesItemAsset",
-    "InputSeedance25ImagesItemUrl",
-    "InputSeedance25ImagesItem_Asset",
-    "InputSeedance25ImagesItem_Url",
-    "InputSeedance25Resolution",
-    "InputSeedance25StartImage",
-    "InputSeedance25StartImageAsset",
-    "InputSeedance25StartImageUrl",
-    "InputSeedance25StartImage_Asset",
-    "InputSeedance25StartImage_Url",
-    "InputSeedance25VideosItem",
-    "InputSeedance25VideosItemAsset",
-    "InputSeedance25VideosItemUrl",
-    "InputSeedance25VideosItem_Asset",
-    "InputSeedance25VideosItem_Url",
     "InputSeedream40",
     "InputSeedream40AspectRatio",
     "InputSeedream40ImagesItem",

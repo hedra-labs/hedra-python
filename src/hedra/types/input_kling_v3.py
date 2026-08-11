@@ -16,12 +16,12 @@ class InputKlingV3(UniversalBaseModel):
     Model-specific inputs for `kling-v3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; must omit: end_image; accepts quality: pro; resolution: 1080p | 4K
-    (2) requires: aspect_ratio, duration_ms, end_image, prompt, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
-    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image; accepts quality: pro; resolution: 1080p | 4K
-    (4) requires: aspect_ratio, duration_ms, prompt, start_image; must omit: end_image; accepts quality: standard; resolution: 720p
-    (5) requires: aspect_ratio, duration_ms, end_image, prompt, start_image; accepts quality: standard; resolution: 720p
-    (6) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, start_image; accepts quality: standard; resolution: 720p
+    (1) requires: aspect_ratio, duration_ms, end_image, prompt, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (2) requires: aspect_ratio, duration_ms, end_image, prompt, start_image; accepts quality: standard; resolution: 720p
+    (3) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, start_image; accepts quality: standard; resolution: 720p
+    (4) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (5) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; must omit: end_image; accepts quality: pro; resolution: 1080p | 4K
+    (6) requires: aspect_ratio, duration_ms, prompt, start_image; must omit: end_image; accepts quality: standard; resolution: 720p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -64,14 +64,14 @@ class InputKlingV3(UniversalBaseModel):
     Start frame (image-to-video).
     """
 
-    cfg_scale: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    How closely the model follows the prompt.
-    """
-
     end_image: typing.Optional[InputKlingV3EndImage] = pydantic.Field(default=None)
     """
     End frame (first-last-frame-to-video).
+    """
+
+    cfg_scale: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How closely the model follows the prompt.
     """
 
     quality: InputKlingV3Quality = pydantic.Field()

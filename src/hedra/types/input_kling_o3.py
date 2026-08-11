@@ -17,12 +17,12 @@ class InputKlingO3(UniversalBaseModel):
     Model-specific inputs for `kling-o3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (1) requires: aspect_ratio, duration_ms, images, prompt; accepts quality: standard; resolution: 720p
     (2) requires: aspect_ratio, duration_ms, images, prompt, resolution; accepts quality: pro; resolution: 1080p | 4K
-    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, images, start_image; accepts quality: pro; resolution: 1080p | 4K
-    (4) requires: aspect_ratio, duration_ms, prompt, start_image; accepts quality: standard; resolution: 720p
-    (5) requires: aspect_ratio, duration_ms, images, prompt; accepts quality: standard; resolution: 720p
-    (6) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, images, start_image; accepts quality: standard; resolution: 720p
+    (3) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, images, start_image; accepts quality: standard; resolution: 720p
+    (4) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, images, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (5) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (6) requires: aspect_ratio, duration_ms, prompt, start_image; accepts quality: standard; resolution: 720p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

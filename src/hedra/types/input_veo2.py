@@ -14,8 +14,8 @@ class InputVeo2(UniversalBaseModel):
     Model-specific inputs for `veo-2`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: prompt, start_image; must omit: negative_prompt, seed
-    (2) requires: prompt; must omit: start_image
+    (1) requires: prompt; must omit: start_image
+    (2) requires: prompt, start_image; must omit: negative_prompt, seed
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -43,11 +43,6 @@ class InputVeo2(UniversalBaseModel):
     Duration in ms.
     """
 
-    start_image: typing.Optional[InputVeo2StartImage] = pydantic.Field(default=None)
-    """
-    Start frame (image-to-video).
-    """
-
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
     What to avoid in the generated video.
@@ -56,6 +51,11 @@ class InputVeo2(UniversalBaseModel):
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
     Seed for reproducible output; omit for a random seed.
+    """
+
+    start_image: typing.Optional[InputVeo2StartImage] = pydantic.Field(default=None)
+    """
+    Start frame (image-to-video).
     """
 
     if IS_PYDANTIC_V2:

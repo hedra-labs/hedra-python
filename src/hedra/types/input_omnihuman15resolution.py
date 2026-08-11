@@ -2,4 +2,4 @@
 
 import typing
 
-InputOmnihuman15Resolution = typing.Union[typing.Literal["720p", "1080p"], typing.Any]
+InputOmnihuman15Resolution = typing.Union[typing.Literal["720p"], typing.Any]

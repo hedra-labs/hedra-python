@@ -2,4 +2,4 @@
 
 import typing
 
-InputLtx23AspectRatio = typing.Union[typing.Literal["auto", "16:9", "9:16"], typing.Any]
+InputLtx23AspectRatio = typing.Union[typing.Literal["16:9", "9:16", "auto"], typing.Any]
