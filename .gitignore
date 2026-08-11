@@ -16,3 +16,4 @@ poetry.toml
 uv.lock
 /.claude/worktrees
 /*.iml
+/.idea
