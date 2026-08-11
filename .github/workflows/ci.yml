@@ -49,3 +49,87 @@ jobs:
 
       - name: Test (aiohttp)
         run: poetry run pytest -rP -n auto -m aiohttp .
+
+  # Contract for what a fern-api[bot] regeneration may change. Required status
+  # check; autoland-regen.yml will not merge a PR without it. Always runs and
+  # no-ops off fern-bot/ branches so it stays satisfiable on human PRs.
+  #
+  # No actions/setup-python step here on purpose: the version rule below uses
+  # tomllib, which needs Python >= 3.11, so the job relies on the runner's own
+  # interpreter (3.12 on ubuntu-latest). The compile/test jobs above pin 3.10;
+  # that pin must not be copied into this job.
+  regen-shape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Validate regeneration diff shape
+        env:
+          EVENT: ${{ github.event_name }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$EVENT" != "pull_request" ]]; then
+            echo "Not a pull_request event — nothing to check."
+            exit 0
+          fi
+          if [[ "$HEAD_REF" != fern-bot/* ]]; then
+            echo "Branch '$HEAD_REF' is not under fern-bot/ — shape check skipped."
+            exit 0
+          fi
+
+          git fetch --no-tags origin main
+          base="$(git merge-base origin/main HEAD)"
+          mapfile -t changed < <(git diff --name-only "$base" HEAD)
+          echo "Changed files (${#changed[@]}):"
+          printf '  %s\n' "${changed[@]}"
+
+          fail=0
+          for f in "${changed[@]}"; do
+            case "$f" in
+              .github/*)
+                echo "FAIL: regeneration must not touch .github/ ($f)"; fail=1 ;;
+              .fernignore)
+                echo "FAIL: regeneration must not edit .fernignore"; fail=1 ;;
+            esac
+          done
+          [[ "$fail" -eq 0 ]]
+
+          # Version rule: whatever the number is, every version-bearing file
+          # must carry the same one. Deliberately NOT a no-change rule --
+          # regeneration is how versions move (fern-config#44), so a rule that
+          # froze the version would park every regeneration PR forever.
+          # compute_version.py owns the number; this owns only its consistent
+          # application.
+          python3 - <<'PY'
+          import pathlib, re, sys, tomllib
+
+          manifest = tomllib.loads(pathlib.Path("pyproject.toml").read_text())["tool"]["poetry"]["version"]
+          wrapper = pathlib.Path("src/hedra/core/client_wrapper.py").read_text()
+
+          problems = []
+
+          m = re.search(r'"X-Fern-SDK-Version":\s*"([^"]+)"', wrapper)
+          if m is None:
+              problems.append("X-Fern-SDK-Version not found in client_wrapper.py")
+          elif m.group(1) != manifest:
+              problems.append(f"X-Fern-SDK-Version is {m.group(1)!r}, pyproject.toml says {manifest!r}")
+
+          # The User-Agent line is emitted by newer generators; check it only
+          # when present so this rule does not depend on a generator version.
+          ua = re.search(r'"User-Agent":\s*"hedra-python/([^"]+)"', wrapper)
+          if ua is not None and ua.group(1) != manifest:
+              problems.append(f"User-Agent version is {ua.group(1)!r}, pyproject.toml says {manifest!r}")
+
+          if problems:
+              for p in problems:
+                  print(f"FAIL: {p}")
+              sys.exit(1)
+          print(f"OK: every version-bearing file agrees on {manifest!r}")
+          PY
+
+          echo "OK: regeneration shape check passed."
