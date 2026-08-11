@@ -1,0 +1,73 @@
+version: 2
+updates:
+  # Free of any Fern interaction: `.github/` is `.fernignore`d, so regeneration
+  # never touches workflows. Same grouped weekly schedule as hedra-cli.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    groups:
+      actions:
+        patterns:
+          - "*"
+    schedule:
+      interval: "weekly"
+
+  # pip (Poetry) version updates are disabled, because the manifests Dependabot
+  # edits are generator-owned:
+  #
+  #   pyproject.toml    Fern     un-ignored by ENG-10146 so regeneration stamps
+  #                              the version; the generator writes the whole
+  #                              [tool.poetry.dependencies] block. Proof in this
+  #                              repo: regeneration #50 deleted a hand-added
+  #                              comment from that block (added in 36a6777).
+  #   requirements.txt  Fern     also absent from .fernignore; written by #50.
+  #   poetry.lock       hand     .fernignore'd -- "Lockfile is hand-resolved".
+  #
+  # So `fern generate` reverts anything Dependabot lands in the first two, the
+  # way it did to hedra-cli's Cargo.toml (hedra-cli#62).
+  #
+  # The hope was that this repo escapes that, because a *security* fix here is
+  # expressible in poetry.lock alone: aiohttp's advisories are fixed in 3.14.3,
+  # which already satisfies the generated constraint `>=3.14.1,<4`. Measured
+  # 2026-08-11 (dependabot-cli v1.92.0 running the real updater against this
+  # repo at b020c20), that is not what Dependabot does -- its security update
+  # rewrote *both* files, raising the floor to `>=3.14.3,<4` even though no
+  # manifest change was needed. Of the 12 version-update PRs the same run
+  # wanted, 7 rewrite pyproject.toml; only transitive-only bumps stay in the
+  # lock. There is no configuration that makes Dependabot emit the lock half
+  # alone.
+  #
+  # Landing the manifest half is worse than noise. On the next regeneration the
+  # constraint reverts while the `.fernignore`d lock keeps the new resolution,
+  # leaving the two inconsistent (`poetry lock --check` fails). CI's pinned
+  # poetry 1.5.1 only warns and installs anyway, so this stays green today --
+  # but any poetry >= 1.6 turns it into a hard `poetry install` failure. See
+  # ENG-10244.
+  #
+  # The durable way to answer a pip advisory here is therefore a hand-rolled
+  #
+  #     poetry update --lock <package>
+  #
+  # committing poetry.lock alone. That needs no manifest edit whenever the
+  # fixed version already satisfies the generated constraint, and it survives
+  # regeneration by construction. aiohttp 3.14.1 -> 3.14.3 was done that way in
+  # the PR that added this file.
+  #
+  # `open-pull-requests-limit: 0` disables *version* updates only. Security
+  # updates are explicitly exempt from this limit, so the entry below is not a
+  # blanket mute -- but note that repo-level "Dependabot security updates" is
+  # currently off, so none open today regardless. If it is ever turned on, read
+  # such a PR as a notification and take only its poetry.lock half; do not
+  # merge it as authored. The scheduled run still executes, so the Dependabot
+  # job logs keep showing the bumps it wanted to make.
+  #
+  # Delete the limit line to restore grouped weekly pip PRs; the `groups` block
+  # below is kept dormant so re-enabling is exactly that one deletion.
+  - package-ecosystem: "pip"
+    directory: "/"
+    open-pull-requests-limit: 0
+    groups:
+      pip:
+        patterns:
+          - "*"
+    schedule:
+      interval: "weekly"
