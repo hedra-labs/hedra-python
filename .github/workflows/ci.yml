@@ -121,7 +121,14 @@ jobs:
 
           # The User-Agent line is emitted by newer generators; check it only
           # when present so this rule does not depend on a generator version.
-          ua = re.search(r'"User-Agent":\s*"hedra-python/([^"]+)"', wrapper)
+          #
+          # Keep this pattern name-agnostic. The `is not None` guard cannot tell
+          # "an old generator did not emit this line" from "the distribution was
+          # renamed and the pattern stopped matching" -- it skips silently either
+          # way. Anchoring it to hedra-python is exactly how this clause went dead
+          # the moment the distribution became hedra-sdk (#70), with nothing
+          # anywhere reporting it. Match any <name>/<version> instead.
+          ua = re.search(r'"User-Agent":\s*"[^"/]+/([^"]+)"', wrapper)
           if ua is not None and ua.group(1) != manifest:
               problems.append(f"User-Agent version is {ua.group(1)!r}, pyproject.toml says {manifest!r}")
 
