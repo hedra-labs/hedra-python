@@ -24,10 +24,11 @@ concurrency:
   group: publish-pypi
   cancel-in-progress: false
 
-# The job needs to read the checkout and nothing else. It authenticates to PyPI
-# with POETRY_PYPI_TOKEN_PYPI, not with the workflow token.
+# `contents: write` is for attaching the built artifacts to the GitHub Release
+# (see the upload step); PyPI itself is authenticated with
+# POETRY_PYPI_TOKEN_PYPI, not with the workflow token.
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   publish:
@@ -96,6 +97,39 @@ jobs:
             echo "::error::No artifact in dist/ carries version ${VERSION}."
             exit 1
           fi
+
+      # Attach the built artifacts to the GitHub Release. PyPI remains the
+      # package's home -- this is for provenance, attestation checks, and
+      # air-gapped installs that cannot reach the registry.
+      #
+      # Ordered BEFORE the publish deliberately. An upload failure here leaves a
+      # fully recoverable state: nothing is on PyPI yet, so re-running the whole
+      # job fixes it. Failing *after* the publish would leave a split state that
+      # a re-run cannot repair, because PyPI rejects a re-upload of a version
+      # that already exists.
+      - name: Attach artifacts to the GitHub Release
+        if: ${{ inputs.dry_run != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          raw="${RELEASE_TAG:-${INPUT_VERSION:-}}"
+          if [ -z "$raw" ]; then
+            echo "::error::No release tag or version input; cannot locate the Release to upload to."
+            exit 1
+          fi
+          case "$raw" in
+            v*) tag="$raw" ;;
+            *)  tag="v${raw}" ;;
+          esac
+          if ! gh release view "$tag" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            echo "::notice::No GitHub Release ${tag} exists; skipping asset upload."
+            exit 0
+          fi
+          gh release upload "$tag" dist/* --repo "${{ github.repository }}" --clobber
+          echo "::notice::Attached $(ls dist/ | tr '\n' ' ')to ${tag}."
 
       # `poetry publish --dry-run` performs every step of a real publish except
       # the upload, so a dry run still proves the built artifacts are
