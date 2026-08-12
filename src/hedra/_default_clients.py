@@ -12,9 +12,7 @@ except ImportError:
 
     class DefaultAioHttpClient(httpx.AsyncClient):  # type: ignore
         def __init__(self, **kwargs: typing.Any) -> None:
-            raise RuntimeError(
-                "To use the aiohttp client, install the aiohttp extra: pip install hedra-python[aiohttp]"
-            )
+            raise RuntimeError("To use the aiohttp client, install the aiohttp extra: pip install hedra-sdk[aiohttp]")
 
 else:
 
