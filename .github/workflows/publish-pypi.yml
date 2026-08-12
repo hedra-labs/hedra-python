@@ -21,7 +21,15 @@ on:
 # reused even after deletion. Two releases racing would also interleave their
 # `poetry version` writes over one checkout.
 concurrency:
-  group: publish-pypi
+  # Keyed on the VERSION, not just the workflow. A publish parked at the `pypi`
+  # environment gate never completes, and with a workflow-wide group plus
+  # cancel-in-progress: false that parks every later publish behind it forever
+  # (measured 2026-08-12: v1.0.0's run sat `pending` behind v2.0.0's held run
+  # and only moved when the held run was cancelled). Scoping by version keeps
+  # the property this group exists for -- two runs for the SAME version cannot
+  # interleave their `poetry version` writes over one checkout -- while letting
+  # distinct versions queue independently.
+  group: publish-pypi-${{ github.event.release.tag_name || inputs.version }}
   cancel-in-progress: false
 
 # `contents: write` is for attaching the built artifacts to the GitHub Release
