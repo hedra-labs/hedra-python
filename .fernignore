@@ -7,10 +7,10 @@ poetry.lock
 # Local-dev ignores are hand-maintained
 .gitignore
 
-# README install/badge + usage use the hedra-python distribution name
+# README install/badge + usage use the hedra-sdk distribution name
 README.md
 
-# version.py looks up the hedra-python distribution
+# version.py looks up the hedra-sdk distribution
 src/hedra/version.py
 # Hand-written client wrapper: reads HEDRA_API_KEY at construction time.
 # BaseHedra/AsyncBaseHedra (base_client.py) regenerate normally.
