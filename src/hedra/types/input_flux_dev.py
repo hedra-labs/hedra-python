@@ -51,12 +51,12 @@ class InputFluxDev(UniversalBaseModel):
 
     guidance_scale: typing.Optional[float] = pydantic.Field(default=None)
     """
-    How closely the model follows the prompt.
+    How closely the model follows the prompt. From 1 to 20.
     """
 
     num_inference_steps: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Denoising steps to run.
+    Denoising steps to run. From 1 to 50.
     """
 
     if IS_PYDANTIC_V2:

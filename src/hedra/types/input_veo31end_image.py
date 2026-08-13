@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputVeo31EndImage_Url(UniversalBaseModel):
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 20 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputVeo31EndImage_Url(UniversalBaseModel):
 
 class InputVeo31EndImage_Asset(UniversalBaseModel):
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 20 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

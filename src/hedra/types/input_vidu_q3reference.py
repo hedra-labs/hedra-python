@@ -21,7 +21,7 @@ class InputViduQ3Reference(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2000 characters.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
@@ -46,7 +46,7 @@ class InputViduQ3Reference(UniversalBaseModel):
 
     images: typing.List[InputViduQ3ReferenceImagesItem] = pydantic.Field()
     """
-    Reference images.
+    Reference images. 1 to 4 images, each at most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

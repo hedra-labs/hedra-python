@@ -22,7 +22,7 @@ class InputGptImage2(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 32000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -47,7 +47,7 @@ class InputGptImage2(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputGptImage2ImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 16 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputGptImage2OutputFormat] = pydantic.Field(default=None)

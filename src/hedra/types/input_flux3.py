@@ -52,12 +52,12 @@ class InputFlux3(UniversalBaseModel):
 
     start_image: typing.Optional[InputFlux3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputFlux3EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

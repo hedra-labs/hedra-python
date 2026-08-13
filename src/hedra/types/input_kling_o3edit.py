@@ -21,17 +21,17 @@ class InputKlingO3Edit(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     source_video: InputKlingO3EditSourceVideo = pydantic.Field()
     """
-    Source video (video-to-video).
+    Source video (video-to-video). From 3s to 15s and at most 524.2 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO3EditImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 4 images, each at least 300px on each side and at most 10.4 MB.
     """
 
     resolution: InputKlingO3EditResolution = pydantic.Field()

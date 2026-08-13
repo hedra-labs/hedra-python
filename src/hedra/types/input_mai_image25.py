@@ -21,7 +21,7 @@ class InputMaiImage25(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. From 3 to 5000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -41,7 +41,7 @@ class InputMaiImage25(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputMaiImage25ImagesItem]] = pydantic.Field(default=None)
     """
-    The single source image to edit.
+    The single source image to edit. Exactly 1 image, at most 30 MB.
     """
 
     output_format: typing.Optional[InputMaiImage25OutputFormat] = pydantic.Field(default=None)

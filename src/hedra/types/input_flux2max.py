@@ -40,7 +40,7 @@ class InputFlux2Max(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputFlux2MaxImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 8 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputFlux2MaxOutputFormat] = pydantic.Field(default=None)

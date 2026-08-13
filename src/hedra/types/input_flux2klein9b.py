@@ -40,7 +40,7 @@ class InputFlux2Klein9B(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputFlux2Klein9BImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 4 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputFlux2Klein9BOutputFormat] = pydantic.Field(default=None)
@@ -60,12 +60,12 @@ class InputFlux2Klein9B(UniversalBaseModel):
 
     guidance_scale: typing.Optional[float] = pydantic.Field(default=None)
     """
-    How closely the model follows the prompt.
+    How closely the model follows the prompt. From 0 to 20.
     """
 
     num_inference_steps: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Denoising steps to run.
+    Denoising steps to run. From 4 to 50.
     """
 
     if IS_PYDANTIC_V2:

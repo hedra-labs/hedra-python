@@ -28,7 +28,7 @@ class InputViduQ3(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2000 characters.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
@@ -48,12 +48,12 @@ class InputViduQ3(UniversalBaseModel):
 
     start_image: typing.Optional[InputViduQ3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputViduQ3EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     aspect_ratio: typing.Optional[InputViduQ3AspectRatio] = pydantic.Field(default=None)

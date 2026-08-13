@@ -22,7 +22,7 @@ class InputHidreamO1Image(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At least 1 character.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -42,7 +42,7 @@ class InputHidreamO1Image(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputHidreamO1ImageImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 10 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputHidreamO1ImageOutputFormat] = pydantic.Field(default=None)
@@ -57,12 +57,12 @@ class InputHidreamO1Image(UniversalBaseModel):
 
     guidance_scale: typing.Optional[float] = pydantic.Field(default=None)
     """
-    How closely the model follows the prompt.
+    How closely the model follows the prompt. From 0 to 20.
     """
 
     num_inference_steps: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Denoising steps to run.
+    Denoising steps to run. From 1 to 50.
     """
 
     resolution: typing.Optional[InputHidreamO1ImageResolution] = pydantic.Field(default=None)

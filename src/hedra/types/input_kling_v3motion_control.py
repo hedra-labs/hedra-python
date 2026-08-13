@@ -22,7 +22,7 @@ class InputKlingV3MotionControl(UniversalBaseModel):
 
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     character_orientation: typing.Optional[InputKlingV3MotionControlCharacterOrientation] = pydantic.Field(default=None)
@@ -32,12 +32,12 @@ class InputKlingV3MotionControl(UniversalBaseModel):
 
     start_image: InputKlingV3MotionControlStartImage = pydantic.Field()
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). From 340px to 3850px on each side and at most 10.4 MB.
     """
 
     source_video: InputKlingV3MotionControlSourceVideo = pydantic.Field()
     """
-    Source video (video-to-video).
+    Source video (video-to-video). From 3s to 30s, from 340px to 3850px on each side, and at most 104.8 MB.
     """
 
     resolution: InputKlingV3MotionControlResolution = pydantic.Field()

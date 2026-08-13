@@ -25,7 +25,7 @@ class InputGrokVideo(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 4096 characters.
     """
 
     aspect_ratio: InputGrokVideoAspectRatio = pydantic.Field()
@@ -45,7 +45,7 @@ class InputGrokVideo(UniversalBaseModel):
 
     start_image: typing.Optional[InputGrokVideoStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

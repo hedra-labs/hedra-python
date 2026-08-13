@@ -29,7 +29,7 @@ class InputLtx23(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. From 1 to 5000 characters.
     """
 
     resolution: InputLtx23Resolution = pydantic.Field()
@@ -54,12 +54,12 @@ class InputLtx23(UniversalBaseModel):
 
     start_image: typing.Optional[InputLtx23StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputLtx23EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     quality: InputLtx23Quality = pydantic.Field()

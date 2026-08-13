@@ -44,22 +44,22 @@ class InputGeminiOmniFlash(UniversalBaseModel):
 
     start_image: typing.Optional[InputGeminiOmniFlashStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     source_video: typing.Optional[InputGeminiOmniFlashSourceVideo] = pydantic.Field(default=None)
     """
-    Source video (video-to-video).
+    Source video (video-to-video). From 1s to 10s and at most 524.2 MB.
     """
 
     images: typing.Optional[typing.List[InputGeminiOmniFlashImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 10 images, each at most 10.4 MB.
     """
 
     videos: typing.Optional[typing.List[InputGeminiOmniFlashVideosItem]] = pydantic.Field(default=None)
     """
-    Reference videos.
+    Reference videos. 1 to 3 videos, each at most 10s and at most 524.2 MB.
     """
 
     if IS_PYDANTIC_V2:

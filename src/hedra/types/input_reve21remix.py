@@ -16,7 +16,7 @@ class InputReve21Remix(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. From 1 to 4000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -36,7 +36,7 @@ class InputReve21Remix(UniversalBaseModel):
 
     images: typing.List[InputReve21RemixImagesItem] = pydantic.Field()
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 8 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputReve21RemixOutputFormat] = pydantic.Field(default=None)

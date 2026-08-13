@@ -41,7 +41,7 @@ class InputNanoBanana2(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputNanoBanana2ImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend, up to 14 in total (10 high-fidelity objects, 4 characters).
+    Images to edit or blend, at most 10 high-fidelity objects and 4 characters. 1 to 14 images, each at most 30 MB.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)

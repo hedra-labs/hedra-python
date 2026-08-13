@@ -15,7 +15,7 @@ class InputReve21(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. From 1 to 4000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

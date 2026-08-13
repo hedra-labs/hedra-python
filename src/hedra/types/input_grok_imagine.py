@@ -20,7 +20,7 @@ class InputGrokImagine(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 8000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -35,7 +35,7 @@ class InputGrokImagine(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputGrokImagineImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 3 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputGrokImagineOutputFormat] = pydantic.Field(default=None)

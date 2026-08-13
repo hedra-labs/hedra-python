@@ -36,7 +36,7 @@ class InputFluxKontextPro(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputFluxKontextProImagesItem]] = pydantic.Field(default=None)
     """
-    The single source image to edit.
+    The single source image to edit. Exactly 1 image, at most 30 MB.
     """
 
     output_format: typing.Optional[InputFluxKontextProOutputFormat] = pydantic.Field(default=None)
