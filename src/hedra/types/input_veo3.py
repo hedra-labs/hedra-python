@@ -26,7 +26,7 @@ class InputVeo3(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 20000 characters.
     """
 
     aspect_ratio: InputVeo3AspectRatio = pydantic.Field()
@@ -51,7 +51,7 @@ class InputVeo3(UniversalBaseModel):
 
     start_image: typing.Optional[InputVeo3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 8 MB.
     """
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)

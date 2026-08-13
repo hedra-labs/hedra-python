@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputSeedance15ProEndImage_Url(UniversalBaseModel):
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). With an aspect ratio from 0.4 to 2.5 and at most 30 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputSeedance15ProEndImage_Url(UniversalBaseModel):
 
 class InputSeedance15ProEndImage_Asset(UniversalBaseModel):
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). With an aspect ratio from 0.4 to 2.5 and at most 30 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

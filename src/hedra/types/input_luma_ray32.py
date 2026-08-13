@@ -20,7 +20,7 @@ class InputLumaRay32(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 6000 characters.
     """
 
     aspect_ratio: InputLumaRay32AspectRatio = pydantic.Field()

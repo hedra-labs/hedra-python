@@ -15,7 +15,7 @@ class InputImagen4(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 5000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

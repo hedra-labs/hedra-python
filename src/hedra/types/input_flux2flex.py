@@ -40,7 +40,7 @@ class InputFlux2Flex(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputFlux2FlexImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 8 images, each at most 30 MB.
     """
 
     output_format: typing.Optional[InputFlux2FlexOutputFormat] = pydantic.Field(default=None)
@@ -55,12 +55,12 @@ class InputFlux2Flex(UniversalBaseModel):
 
     guidance: typing.Optional[float] = pydantic.Field(default=None)
     """
-    How closely the model follows the prompt.
+    How closely the model follows the prompt. From 1.5 to 10.
     """
 
     steps: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Denoising steps to run.
+    Denoising steps to run. From 2 to 50.
     """
 
     if IS_PYDANTIC_V2:

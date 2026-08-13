@@ -27,7 +27,7 @@ class InputKlingO1(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     aspect_ratio: InputKlingO1AspectRatio = pydantic.Field()
@@ -47,17 +47,17 @@ class InputKlingO1(UniversalBaseModel):
 
     start_image: typing.Optional[InputKlingO1StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputKlingO1EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO1ImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 3 images, each at most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

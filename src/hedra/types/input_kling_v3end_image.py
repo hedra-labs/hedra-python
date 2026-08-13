@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputKlingV3EndImage_Url(UniversalBaseModel):
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputKlingV3EndImage_Url(UniversalBaseModel):
 
 class InputKlingV3EndImage_Asset(UniversalBaseModel):
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

@@ -31,7 +31,7 @@ class InputMinimaxHailuo02(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2000 characters.
     """
 
     resolution: typing.Optional[InputMinimaxHailuo02Resolution] = pydantic.Field(default=None)
@@ -46,12 +46,12 @@ class InputMinimaxHailuo02(UniversalBaseModel):
 
     start_image: typing.Optional[InputMinimaxHailuo02StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). The output video follows this image's aspect ratio.
+    Start frame (image-to-video). The output video follows this image's aspect ratio. At most 20 MB.
     """
 
     end_image: typing.Optional[InputMinimaxHailuo02EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 20 MB.
     """
 
     aspect_ratio: typing.Optional[InputMinimaxHailuo02AspectRatio] = pydantic.Field(default=None)

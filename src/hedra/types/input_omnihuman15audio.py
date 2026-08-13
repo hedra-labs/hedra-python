@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputOmnihuman15Audio_Url(UniversalBaseModel):
     """
-    Driving audio.
+    Driving audio. At most 59.88s and at most 104.8 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputOmnihuman15Audio_Url(UniversalBaseModel):
 
 class InputOmnihuman15Audio_Asset(UniversalBaseModel):
     """
-    Driving audio.
+    Driving audio. At most 59.88s and at most 104.8 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

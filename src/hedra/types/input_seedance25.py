@@ -50,27 +50,27 @@ class InputSeedance25(UniversalBaseModel):
 
     start_image: typing.Optional[InputSeedance25StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). With an aspect ratio from 0.4 to 2.5 and at most 30 MB.
     """
 
     end_image: typing.Optional[InputSeedance25EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). With an aspect ratio from 0.4 to 2.5 and at most 30 MB.
     """
 
     images: typing.Optional[typing.List[InputSeedance25ImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 30 images, each at most 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     videos: typing.Optional[typing.List[InputSeedance25VideosItem]] = pydantic.Field(default=None)
     """
-    Reference videos.
+    Reference videos. 1 to 10 videos, each from 2s to 30s and at most 524.2 MB, at most 30s in total.
     """
 
     audios: typing.Optional[typing.List[InputSeedance25AudiosItem]] = pydantic.Field(default=None)
     """
-    Reference audios.
+    Reference audios. 1 to 10 audio files, each at most 104.8 MB, at most 30s in total.
     """
 
     if IS_PYDANTIC_V2:

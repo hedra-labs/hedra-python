@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputVeo31SourceVideo_Url(UniversalBaseModel):
     """
-    Source video (video-to-video).
+    Source video (video-to-video). From 1s to 30s and at most 524.2 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputVeo31SourceVideo_Url(UniversalBaseModel):
 
 class InputVeo31SourceVideo_Asset(UniversalBaseModel):
     """
-    Source video (video-to-video).
+    Source video (video-to-video). From 1s to 30s and at most 524.2 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

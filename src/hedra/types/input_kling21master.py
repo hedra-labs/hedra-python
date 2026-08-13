@@ -25,7 +25,7 @@ class InputKling21Master(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     aspect_ratio: InputKling21MasterAspectRatio = pydantic.Field()
@@ -45,17 +45,17 @@ class InputKling21Master(UniversalBaseModel):
 
     start_image: typing.Optional[InputKling21MasterStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    What to avoid in the generated video.
+    What to avoid in the generated video. At most 2500 characters.
     """
 
     cfg_scale: typing.Optional[float] = pydantic.Field(default=None)
     """
-    How closely the model follows the prompt.
+    How closely the model follows the prompt. From 0 to 1.
     """
 
     if IS_PYDANTIC_V2:

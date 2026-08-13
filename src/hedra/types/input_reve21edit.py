@@ -16,7 +16,7 @@ class InputReve21Edit(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. From 1 to 4000 characters.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -36,7 +36,7 @@ class InputReve21Edit(UniversalBaseModel):
 
     images: typing.List[InputReve21EditImagesItem] = pydantic.Field()
     """
-    The single source image to edit.
+    The single source image to edit. Exactly 1 image, at most 30 MB.
     """
 
     output_format: typing.Optional[InputReve21EditOutputFormat] = pydantic.Field(default=None)

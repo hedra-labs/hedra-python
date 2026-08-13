@@ -23,7 +23,7 @@ class InputKlingAiAvatarV2(UniversalBaseModel):
 
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     aspect_ratio: InputKlingAiAvatarV2AspectRatio = pydantic.Field()
@@ -38,12 +38,12 @@ class InputKlingAiAvatarV2(UniversalBaseModel):
 
     start_image: InputKlingAiAvatarV2StartImage = pydantic.Field()
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     audio: InputKlingAiAvatarV2Audio = pydantic.Field()
     """
-    Driving audio.
+    Driving audio. At most 104.8 MB.
     """
 
     quality: InputKlingAiAvatarV2Quality = pydantic.Field()

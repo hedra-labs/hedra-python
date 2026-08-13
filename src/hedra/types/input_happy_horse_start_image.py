@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputHappyHorseStartImage_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At least 300px on each side and at most 10 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputHappyHorseStartImage_Url(UniversalBaseModel):
 
 class InputHappyHorseStartImage_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At least 300px on each side and at most 10 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

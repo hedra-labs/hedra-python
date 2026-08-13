@@ -31,7 +31,7 @@ class InputMinimaxH3(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. From 1 to 7000 characters.
     """
 
     resolution: InputMinimaxH3Resolution = pydantic.Field()
@@ -46,12 +46,12 @@ class InputMinimaxH3(UniversalBaseModel):
 
     start_image: typing.Optional[InputMinimaxH3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputMinimaxH3EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     aspect_ratio: typing.Optional[InputMinimaxH3AspectRatio] = pydantic.Field(default=None)
@@ -61,17 +61,17 @@ class InputMinimaxH3(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputMinimaxH3ImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 5 images, each at most 10.4 MB.
     """
 
     videos: typing.Optional[typing.List[InputMinimaxH3VideosItem]] = pydantic.Field(default=None)
     """
-    Reference videos.
+    Reference videos. 1 to 3 videos, each from 2s to 15s and at most 524.2 MB, at most 15s in total.
     """
 
     audios: typing.Optional[typing.List[InputMinimaxH3AudiosItem]] = pydantic.Field(default=None)
     """
-    Reference audios.
+    Reference audios. 1 to 3 audio files, each from 2s to 15s and at most 104.8 MB, at most 15s in total.
     """
 
     if IS_PYDANTIC_V2:

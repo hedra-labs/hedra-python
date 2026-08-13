@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputKlingV3MotionControlStartImage_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). From 340px to 3850px on each side and at most 10.4 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputKlingV3MotionControlStartImage_Url(UniversalBaseModel):
 
 class InputKlingV3MotionControlStartImage_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). From 340px to 3850px on each side and at most 10.4 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

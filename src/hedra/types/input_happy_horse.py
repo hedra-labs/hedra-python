@@ -26,7 +26,7 @@ class InputHappyHorse(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     aspect_ratio: InputHappyHorseAspectRatio = pydantic.Field()
@@ -46,17 +46,17 @@ class InputHappyHorse(UniversalBaseModel):
 
     start_image: typing.Optional[InputHappyHorseStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At least 300px on each side and at most 10 MB.
     """
 
     images: typing.Optional[typing.List[InputHappyHorseImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 9 images, each at least 400px on each side and at most 10 MB.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Seed for reproducible output; omit for a random seed.
+    Seed for reproducible output; omit for a random seed. From 0 to 2147483647.
     """
 
     if IS_PYDANTIC_V2:

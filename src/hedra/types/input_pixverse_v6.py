@@ -25,7 +25,7 @@ class InputPixverseV6(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2048 characters.
     """
 
     resolution: InputPixverseV6Resolution = pydantic.Field()
@@ -45,7 +45,7 @@ class InputPixverseV6(UniversalBaseModel):
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    What to avoid in the generated video.
+    What to avoid in the generated video. At most 2048 characters.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
@@ -55,7 +55,7 @@ class InputPixverseV6(UniversalBaseModel):
 
     start_image: typing.Optional[InputPixverseV6StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     aspect_ratio: typing.Optional[InputPixverseV6AspectRatio] = pydantic.Field(default=None)

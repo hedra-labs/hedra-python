@@ -25,7 +25,7 @@ class InputSora2Pro(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 5000 characters.
     """
 
     aspect_ratio: InputSora2ProAspectRatio = pydantic.Field()
@@ -45,7 +45,7 @@ class InputSora2Pro(UniversalBaseModel):
 
     start_image: typing.Optional[InputSora2ProStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

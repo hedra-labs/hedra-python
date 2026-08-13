@@ -28,17 +28,17 @@ class InputWan27(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 5000 characters.
     """
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    What to avoid in the generated video.
+    What to avoid in the generated video. At most 500 characters.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Seed for reproducible output; omit for a random seed.
+    Seed for reproducible output; omit for a random seed. From 0 to 2147483647.
     """
 
     resolution: InputWan27Resolution = pydantic.Field()
@@ -53,12 +53,12 @@ class InputWan27(UniversalBaseModel):
 
     start_image: typing.Optional[InputWan27StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 20 MB.
     """
 
     end_image: typing.Optional[InputWan27EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 20 MB.
     """
 
     aspect_ratio: typing.Optional[InputWan27AspectRatio] = pydantic.Field(default=None)
@@ -68,7 +68,7 @@ class InputWan27(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputWan27ImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 4 images, each at most 20 MB.
     """
 
     if IS_PYDANTIC_V2:

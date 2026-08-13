@@ -37,12 +37,12 @@ class InputVeedFabric10(UniversalBaseModel):
 
     start_image: InputVeedFabric10StartImage = pydantic.Field()
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     audio: InputVeedFabric10Audio = pydantic.Field()
     """
-    Driving audio.
+    Driving audio. At most 104.8 MB.
     """
 
     if IS_PYDANTIC_V2:

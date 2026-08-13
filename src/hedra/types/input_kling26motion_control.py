@@ -22,7 +22,7 @@ class InputKling26MotionControl(UniversalBaseModel):
 
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     character_orientation: typing.Optional[InputKling26MotionControlCharacterOrientation] = pydantic.Field(default=None)
@@ -32,12 +32,12 @@ class InputKling26MotionControl(UniversalBaseModel):
 
     start_image: InputKling26MotionControlStartImage = pydantic.Field()
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     source_video: InputKling26MotionControlSourceVideo = pydantic.Field()
     """
-    Source video (video-to-video).
+    Source video (video-to-video). From 3s to 30s and at most 524.2 MB.
     """
 
     resolution: InputKling26MotionControlResolution = pydantic.Field()

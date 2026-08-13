@@ -47,17 +47,17 @@ class InputSeedance15Pro(UniversalBaseModel):
 
     start_image: typing.Optional[InputSeedance15ProStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). With an aspect ratio from 0.4 to 2.5 and at most 30 MB.
     """
 
     end_image: typing.Optional[InputSeedance15ProEndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). With an aspect ratio from 0.4 to 2.5 and at most 30 MB.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Seed for reproducible output; omit for a random seed.
+    Seed for reproducible output; omit for a random seed. From 0 to 4294967295.
     """
 
     if IS_PYDANTIC_V2:

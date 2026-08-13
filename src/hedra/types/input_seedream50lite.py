@@ -45,7 +45,7 @@ class InputSeedream50Lite(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputSeedream50LiteImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 14 images, each at most 30 MB.
     """
 
     if IS_PYDANTIC_V2:

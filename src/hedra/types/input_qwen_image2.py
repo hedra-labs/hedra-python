@@ -22,7 +22,7 @@ class InputQwenImage2(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At least 1 character.
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -52,17 +52,17 @@ class InputQwenImage2(UniversalBaseModel):
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    What to avoid in the generated image.
+    What to avoid in the generated image. At most 500 characters.
     """
 
     images: typing.Optional[typing.List[InputQwenImage2ImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend.
+    Images to edit or blend. 1 to 3 images, each at most 30 MB.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Seed for reproducible output; omit for a random seed.
+    Seed for reproducible output; omit for a random seed. From 0 to 2147483647.
     """
 
     quality: InputQwenImage2Quality = pydantic.Field()

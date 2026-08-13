@@ -32,7 +32,7 @@ class InputKlingO3(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt.
+    Generation prompt. At most 2500 characters.
     """
 
     generate_audio: typing.Optional[bool] = pydantic.Field(default=None)
@@ -57,17 +57,17 @@ class InputKlingO3(UniversalBaseModel):
 
     start_image: typing.Optional[InputKlingO3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video).
+    Start frame (image-to-video). At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputKlingO3EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video).
+    End frame (first-last-frame-to-video). At most 10.4 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO3ImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images.
+    Reference images. 1 to 3 images, each at most 10.4 MB.
     """
 
     quality: InputKlingO3Quality = pydantic.Field()
