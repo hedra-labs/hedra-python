@@ -35,11 +35,11 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "hedra-python/1.0.0",
+            "User-Agent": "hedra-sdk/1.0.0",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "hedra-python",
+            "X-Fern-SDK-Name": "hedra-sdk",
             "X-Fern-SDK-Version": "1.0.0",
             **(self.get_custom_headers() or {}),
         }

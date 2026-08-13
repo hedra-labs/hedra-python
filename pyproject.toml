@@ -1,9 +1,9 @@
 [project]
-name = "hedra-python"
+name = "hedra-sdk"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "hedra-python"
+name = "hedra-sdk"
 version = "1.0.0"
 description = "The official Python library for the Hedra API — API spec 3.2.2"
 readme = "README.md"
