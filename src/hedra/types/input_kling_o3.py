@@ -7,8 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_kling_o3aspect_ratio import InputKlingO3AspectRatio
 from .input_kling_o3end_image import InputKlingO3EndImage
 from .input_kling_o3images_item import InputKlingO3ImagesItem
+from .input_kling_o3multi_prompt_item import InputKlingO3MultiPromptItem
 from .input_kling_o3quality import InputKlingO3Quality
 from .input_kling_o3resolution import InputKlingO3Resolution
+from .input_kling_o3shot_type import InputKlingO3ShotType
 from .input_kling_o3start_image import InputKlingO3StartImage
 
 
@@ -17,12 +19,12 @@ class InputKlingO3(UniversalBaseModel):
     Model-specific inputs for `kling-o3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
-    (2) requires: aspect_ratio, duration_ms, images, prompt, resolution; accepts quality: pro; resolution: 1080p | 4K
-    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, images, start_image; accepts quality: pro; resolution: 1080p | 4K
-    (4) requires: aspect_ratio, duration_ms, prompt, start_image; accepts quality: standard; resolution: 720p
-    (5) requires: aspect_ratio, duration_ms, images, prompt; accepts quality: standard; resolution: 720p
-    (6) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, images, start_image; accepts quality: standard; resolution: 720p
+    (1) requires: aspect_ratio, duration_ms, resolution, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (2) requires: aspect_ratio, duration_ms, images, resolution; accepts quality: pro; resolution: 1080p | 4K
+    (3) requires: aspect_ratio, duration_ms, resolution; must omit: end_image, images, start_image; accepts quality: pro; resolution: 1080p | 4K
+    (4) requires: aspect_ratio, duration_ms, start_image; accepts quality: standard; resolution: 720p
+    (5) requires: aspect_ratio, duration_ms, images; accepts quality: standard; resolution: 720p
+    (6) requires: aspect_ratio, duration_ms; must omit: end_image, images, start_image; accepts quality: standard; resolution: 720p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -30,9 +32,19 @@ class InputKlingO3(UniversalBaseModel):
     Number of outputs generated per job. Only 1 is supported.
     """
 
-    prompt: str = pydantic.Field()
+    prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
     Generation prompt. At most 2500 characters.
+    """
+
+    multi_prompt: typing.Optional[typing.List[InputKlingO3MultiPromptItem]] = pydantic.Field(default=None)
+    """
+    Multi-shot storyboard; each shot carries its own prompt and duration. Shot durations must sum to at most 15000 ms, and the storyboard replaces `prompt` — supply one or the other, never both. A shot's prompt has no length limit, unlike the single `prompt` field. 1 to 6 items.
+    """
+
+    shot_type: typing.Optional[InputKlingO3ShotType] = pydantic.Field(default=None)
+    """
+    How a multi-shot storyboard is cut. 'customize' honours each shot's declared duration; 'intelligent' lets the model determine the shot structure. Ignored unless `multi_prompt` is supplied.
     """
 
     generate_audio: typing.Optional[bool] = pydantic.Field(default=None)

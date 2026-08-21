@@ -9,9 +9,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputMinimaxH3StartImage_Url(UniversalBaseModel):
+class InputVeedVideoBackgroundRemovalSourceVideo_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video). From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Video whose background should be made transparent. At most 120s and at most 524.2 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -27,9 +27,9 @@ class InputMinimaxH3StartImage_Url(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class InputMinimaxH3StartImage_Asset(UniversalBaseModel):
+class InputVeedVideoBackgroundRemovalSourceVideo_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video). From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Video whose background should be made transparent. At most 120s and at most 524.2 MB.
     """
 
     source: typing.Literal["asset"] = "asset"
@@ -45,6 +45,7 @@ class InputMinimaxH3StartImage_Asset(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-InputMinimaxH3StartImage = typing_extensions.Annotated[
-    typing.Union[InputMinimaxH3StartImage_Url, InputMinimaxH3StartImage_Asset], pydantic.Field(discriminator="source")
+InputVeedVideoBackgroundRemovalSourceVideo = typing_extensions.Annotated[
+    typing.Union[InputVeedVideoBackgroundRemovalSourceVideo_Url, InputVeedVideoBackgroundRemovalSourceVideo_Asset],
+    pydantic.Field(discriminator="source"),
 ]

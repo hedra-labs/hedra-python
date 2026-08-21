@@ -3694,7 +3694,6 @@ client = Hedra(
 
 client.jobs.submit_kling_o3(
     input=InputKlingO3(
-        prompt="prompt",
         aspect_ratio="16:9",
         duration_ms=1,
         quality="standard",
@@ -3984,7 +3983,6 @@ client = Hedra(
 
 client.jobs.submit_kling_v3(
     input=InputKlingV3(
-        prompt="prompt",
         aspect_ratio="16:9",
         duration_ms=1,
         quality="standard",
@@ -6885,6 +6883,101 @@ client.jobs.submit_veed_fabric10(
 <dd>
 
 **input:** `InputVeedFabric10` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_veed_video_background_removal</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a video's background and return transparent WebM.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputVeedVideoBackgroundRemoval, InputVeedVideoBackgroundRemovalSourceVideo_Url
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_veed_video_background_removal(
+    input=InputVeedVideoBackgroundRemoval(
+        source_video=InputVeedVideoBackgroundRemovalSourceVideo_Url(
+            url="url",
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputVeedVideoBackgroundRemoval` 
     
 </dd>
 </dl>

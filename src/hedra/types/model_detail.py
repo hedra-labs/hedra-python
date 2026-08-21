@@ -24,6 +24,11 @@ class ModelDetail(UniversalBaseModel):
     One-line summary of what the model does.
     """
 
+    price_description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Short USD pricing summary for this model. Exact cost depends on input.
+    """
+
     logo_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     URL of the provider's logo.
