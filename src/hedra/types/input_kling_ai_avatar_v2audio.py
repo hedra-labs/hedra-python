@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputKlingAiAvatarV2Audio_Url(UniversalBaseModel):
     """
-    Driving audio. At most 104.8 MB.
+    Driving audio. From 2s to 60s and at most 5 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputKlingAiAvatarV2Audio_Url(UniversalBaseModel):
 
 class InputKlingAiAvatarV2Audio_Asset(UniversalBaseModel):
     """
-    Driving audio. At most 104.8 MB.
+    Driving audio. From 2s to 60s and at most 5 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

@@ -43,7 +43,7 @@ class InputKlingAiAvatarV2(UniversalBaseModel):
 
     audio: InputKlingAiAvatarV2Audio = pydantic.Field()
     """
-    Driving audio. At most 104.8 MB.
+    Driving audio. From 2s to 60s and at most 5 MB.
     """
 
     quality: InputKlingAiAvatarV2Quality = pydantic.Field()

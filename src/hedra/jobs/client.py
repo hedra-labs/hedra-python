@@ -74,6 +74,7 @@ from ..types.input_seedream50lite import InputSeedream50Lite
 from ..types.input_seedream50pro import InputSeedream50Pro
 from ..types.input_sora2pro import InputSora2Pro
 from ..types.input_veed_fabric10 import InputVeedFabric10
+from ..types.input_veed_video_background_removal import InputVeedVideoBackgroundRemoval
 from ..types.input_veo2 import InputVeo2
 from ..types.input_veo3 import InputVeo3
 from ..types.input_veo31 import InputVeo31
@@ -2144,7 +2145,6 @@ class JobsClient:
         )
         client.jobs.submit_kling_o3(
             input=InputKlingO3(
-                prompt="prompt",
                 aspect_ratio="16:9",
                 duration_ms=1,
                 quality="standard",
@@ -2306,7 +2306,6 @@ class JobsClient:
         )
         client.jobs.submit_kling_v3(
             input=InputKlingV3(
-                prompt="prompt",
                 aspect_ratio="16:9",
                 duration_ms=1,
                 quality="standard",
@@ -3888,6 +3887,61 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_veed_fabric10(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_veed_video_background_removal(
+        self,
+        *,
+        input: InputVeedVideoBackgroundRemoval,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Remove a video's background and return transparent WebM.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputVeedVideoBackgroundRemoval
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputVeedVideoBackgroundRemoval,
+            InputVeedVideoBackgroundRemovalSourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_veed_video_background_removal(
+            input=InputVeedVideoBackgroundRemoval(
+                source_video=InputVeedVideoBackgroundRemovalSourceVideo_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_veed_video_background_removal(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -6644,7 +6698,6 @@ class AsyncJobsClient:
         async def main() -> None:
             await client.jobs.submit_kling_o3(
                 input=InputKlingO3(
-                    prompt="prompt",
                     aspect_ratio="16:9",
                     duration_ms=1,
                     quality="standard",
@@ -6830,7 +6883,6 @@ class AsyncJobsClient:
         async def main() -> None:
             await client.jobs.submit_kling_v3(
                 input=InputKlingV3(
-                    prompt="prompt",
                     aspect_ratio="16:9",
                     duration_ms=1,
                     quality="standard",
@@ -8655,6 +8707,69 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_veed_fabric10(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_veed_video_background_removal(
+        self,
+        *,
+        input: InputVeedVideoBackgroundRemoval,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Remove a video's background and return transparent WebM.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputVeedVideoBackgroundRemoval
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputVeedVideoBackgroundRemoval,
+            InputVeedVideoBackgroundRemovalSourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_veed_video_background_removal(
+                input=InputVeedVideoBackgroundRemoval(
+                    source_video=InputVeedVideoBackgroundRemovalSourceVideo_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_veed_video_background_removal(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data

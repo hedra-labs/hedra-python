@@ -398,6 +398,7 @@ if typing.TYPE_CHECKING:
     )
     from .input_kling_o3images_item_asset import InputKlingO3ImagesItemAsset
     from .input_kling_o3images_item_url import InputKlingO3ImagesItemUrl
+    from .input_kling_o3multi_prompt_item import InputKlingO3MultiPromptItem
     from .input_kling_o3quality import InputKlingO3Quality
     from .input_kling_o3reference import InputKlingO3Reference
     from .input_kling_o3reference_images_item import (
@@ -416,6 +417,7 @@ if typing.TYPE_CHECKING:
     from .input_kling_o3reference_source_video_asset import InputKlingO3ReferenceSourceVideoAsset
     from .input_kling_o3reference_source_video_url import InputKlingO3ReferenceSourceVideoUrl
     from .input_kling_o3resolution import InputKlingO3Resolution
+    from .input_kling_o3shot_type import InputKlingO3ShotType
     from .input_kling_o3start_image import (
         InputKlingO3StartImage,
         InputKlingO3StartImage_Asset,
@@ -445,8 +447,10 @@ if typing.TYPE_CHECKING:
     )
     from .input_kling_v3motion_control_start_image_asset import InputKlingV3MotionControlStartImageAsset
     from .input_kling_v3motion_control_start_image_url import InputKlingV3MotionControlStartImageUrl
+    from .input_kling_v3multi_prompt_item import InputKlingV3MultiPromptItem
     from .input_kling_v3quality import InputKlingV3Quality
     from .input_kling_v3resolution import InputKlingV3Resolution
+    from .input_kling_v3shot_type import InputKlingV3ShotType
     from .input_kling_v3start_image import (
         InputKlingV3StartImage,
         InputKlingV3StartImage_Asset,
@@ -841,6 +845,14 @@ if typing.TYPE_CHECKING:
     )
     from .input_veed_fabric10start_image_asset import InputVeedFabric10StartImageAsset
     from .input_veed_fabric10start_image_url import InputVeedFabric10StartImageUrl
+    from .input_veed_video_background_removal import InputVeedVideoBackgroundRemoval
+    from .input_veed_video_background_removal_source_video import (
+        InputVeedVideoBackgroundRemovalSourceVideo,
+        InputVeedVideoBackgroundRemovalSourceVideo_Asset,
+        InputVeedVideoBackgroundRemovalSourceVideo_Url,
+    )
+    from .input_veed_video_background_removal_source_video_asset import InputVeedVideoBackgroundRemovalSourceVideoAsset
+    from .input_veed_video_background_removal_source_video_url import InputVeedVideoBackgroundRemovalSourceVideoUrl
     from .input_veo2 import InputVeo2
     from .input_veo2aspect_ratio import InputVeo2AspectRatio
     from .input_veo2resolution import InputVeo2Resolution
@@ -1274,6 +1286,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingO3ImagesItemUrl": ".input_kling_o3images_item_url",
     "InputKlingO3ImagesItem_Asset": ".input_kling_o3images_item",
     "InputKlingO3ImagesItem_Url": ".input_kling_o3images_item",
+    "InputKlingO3MultiPromptItem": ".input_kling_o3multi_prompt_item",
     "InputKlingO3Quality": ".input_kling_o3quality",
     "InputKlingO3Reference": ".input_kling_o3reference",
     "InputKlingO3ReferenceImagesItem": ".input_kling_o3reference_images_item",
@@ -1288,6 +1301,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingO3ReferenceSourceVideo_Asset": ".input_kling_o3reference_source_video",
     "InputKlingO3ReferenceSourceVideo_Url": ".input_kling_o3reference_source_video",
     "InputKlingO3Resolution": ".input_kling_o3resolution",
+    "InputKlingO3ShotType": ".input_kling_o3shot_type",
     "InputKlingO3StartImage": ".input_kling_o3start_image",
     "InputKlingO3StartImageAsset": ".input_kling_o3start_image_asset",
     "InputKlingO3StartImageUrl": ".input_kling_o3start_image_url",
@@ -1313,8 +1327,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingV3MotionControlStartImageUrl": ".input_kling_v3motion_control_start_image_url",
     "InputKlingV3MotionControlStartImage_Asset": ".input_kling_v3motion_control_start_image",
     "InputKlingV3MotionControlStartImage_Url": ".input_kling_v3motion_control_start_image",
+    "InputKlingV3MultiPromptItem": ".input_kling_v3multi_prompt_item",
     "InputKlingV3Quality": ".input_kling_v3quality",
     "InputKlingV3Resolution": ".input_kling_v3resolution",
+    "InputKlingV3ShotType": ".input_kling_v3shot_type",
     "InputKlingV3StartImage": ".input_kling_v3start_image",
     "InputKlingV3StartImageAsset": ".input_kling_v3start_image_asset",
     "InputKlingV3StartImageUrl": ".input_kling_v3start_image_url",
@@ -1631,6 +1647,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputVeedFabric10StartImageUrl": ".input_veed_fabric10start_image_url",
     "InputVeedFabric10StartImage_Asset": ".input_veed_fabric10start_image",
     "InputVeedFabric10StartImage_Url": ".input_veed_fabric10start_image",
+    "InputVeedVideoBackgroundRemoval": ".input_veed_video_background_removal",
+    "InputVeedVideoBackgroundRemovalSourceVideo": ".input_veed_video_background_removal_source_video",
+    "InputVeedVideoBackgroundRemovalSourceVideoAsset": ".input_veed_video_background_removal_source_video_asset",
+    "InputVeedVideoBackgroundRemovalSourceVideoUrl": ".input_veed_video_background_removal_source_video_url",
+    "InputVeedVideoBackgroundRemovalSourceVideo_Asset": ".input_veed_video_background_removal_source_video",
+    "InputVeedVideoBackgroundRemovalSourceVideo_Url": ".input_veed_video_background_removal_source_video",
     "InputVeo2": ".input_veo2",
     "InputVeo2AspectRatio": ".input_veo2aspect_ratio",
     "InputVeo2Resolution": ".input_veo2resolution",
@@ -2108,6 +2130,7 @@ __all__ = [
     "InputKlingO3ImagesItemUrl",
     "InputKlingO3ImagesItem_Asset",
     "InputKlingO3ImagesItem_Url",
+    "InputKlingO3MultiPromptItem",
     "InputKlingO3Quality",
     "InputKlingO3Reference",
     "InputKlingO3ReferenceImagesItem",
@@ -2122,6 +2145,7 @@ __all__ = [
     "InputKlingO3ReferenceSourceVideo_Asset",
     "InputKlingO3ReferenceSourceVideo_Url",
     "InputKlingO3Resolution",
+    "InputKlingO3ShotType",
     "InputKlingO3StartImage",
     "InputKlingO3StartImageAsset",
     "InputKlingO3StartImageUrl",
@@ -2147,8 +2171,10 @@ __all__ = [
     "InputKlingV3MotionControlStartImageUrl",
     "InputKlingV3MotionControlStartImage_Asset",
     "InputKlingV3MotionControlStartImage_Url",
+    "InputKlingV3MultiPromptItem",
     "InputKlingV3Quality",
     "InputKlingV3Resolution",
+    "InputKlingV3ShotType",
     "InputKlingV3StartImage",
     "InputKlingV3StartImageAsset",
     "InputKlingV3StartImageUrl",
@@ -2465,6 +2491,12 @@ __all__ = [
     "InputVeedFabric10StartImageUrl",
     "InputVeedFabric10StartImage_Asset",
     "InputVeedFabric10StartImage_Url",
+    "InputVeedVideoBackgroundRemoval",
+    "InputVeedVideoBackgroundRemovalSourceVideo",
+    "InputVeedVideoBackgroundRemovalSourceVideoAsset",
+    "InputVeedVideoBackgroundRemovalSourceVideoUrl",
+    "InputVeedVideoBackgroundRemovalSourceVideo_Asset",
+    "InputVeedVideoBackgroundRemovalSourceVideo_Url",
     "InputVeo2",
     "InputVeo2AspectRatio",
     "InputVeo2Resolution",
