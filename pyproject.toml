@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "hedra-sdk"
-version = "3.0.0-dev"
+version = "3.0.0"
 description = "The official Python library for the Hedra API — API spec 3.9.0"
 readme = "README.md"
 authors = [
