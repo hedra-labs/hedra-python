@@ -33,7 +33,7 @@ class InputElevenlabsV3(UniversalBaseModel):
 
     voice_id: str = pydantic.Field()
     """
-    Voice to speak with (`voice_<uuid>`). List the library voices at GET /v3/models/elevenlabs-v3/voices, or use the voice a voice-clone job returned.
+    Voice to speak with (`voice_<uuid>`). List the voices you can use at GET /v3/models/elevenlabs-v3/voices; sent with your credentials, the list includes the voices you cloned.
     """
 
     if IS_PYDANTIC_V2:
