@@ -15,6 +15,7 @@ ErrorCode = typing.Union[
         "INSUFFICIENT_BALANCE",
         "MODERATION_FAILED",
         "FAILED_PRECONDITION",
+        "CANCELLED",
         "DEADLINE_EXCEEDED",
         "RESOURCE_EXHAUSTED",
         "UNAVAILABLE",

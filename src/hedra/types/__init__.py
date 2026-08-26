@@ -19,10 +19,43 @@ if typing.TYPE_CHECKING:
     from .input_dreamina31 import InputDreamina31
     from .input_dreamina31aspect_ratio import InputDreamina31AspectRatio
     from .input_dreamina31resolution import InputDreamina31Resolution
+    from .input_elevenlabs_audio_isolation import InputElevenlabsAudioIsolation
+    from .input_elevenlabs_audio_isolation_audio import (
+        InputElevenlabsAudioIsolationAudio,
+        InputElevenlabsAudioIsolationAudio_Asset,
+        InputElevenlabsAudioIsolationAudio_Url,
+    )
+    from .input_elevenlabs_audio_isolation_audio_asset import InputElevenlabsAudioIsolationAudioAsset
+    from .input_elevenlabs_audio_isolation_audio_url import InputElevenlabsAudioIsolationAudioUrl
+    from .input_elevenlabs_english_sts_v2 import InputElevenlabsEnglishStsV2
+    from .input_elevenlabs_english_sts_v2audio import (
+        InputElevenlabsEnglishStsV2Audio,
+        InputElevenlabsEnglishStsV2Audio_Asset,
+        InputElevenlabsEnglishStsV2Audio_Url,
+    )
+    from .input_elevenlabs_english_sts_v2audio_asset import InputElevenlabsEnglishStsV2AudioAsset
+    from .input_elevenlabs_english_sts_v2audio_url import InputElevenlabsEnglishStsV2AudioUrl
     from .input_elevenlabs_flash_multilingual_v2 import InputElevenlabsFlashMultilingualV2
     from .input_elevenlabs_flash_v2 import InputElevenlabsFlashV2
+    from .input_elevenlabs_multilingual_sts_v2 import InputElevenlabsMultilingualStsV2
+    from .input_elevenlabs_multilingual_sts_v2audio import (
+        InputElevenlabsMultilingualStsV2Audio,
+        InputElevenlabsMultilingualStsV2Audio_Asset,
+        InputElevenlabsMultilingualStsV2Audio_Url,
+    )
+    from .input_elevenlabs_multilingual_sts_v2audio_asset import InputElevenlabsMultilingualStsV2AudioAsset
+    from .input_elevenlabs_multilingual_sts_v2audio_url import InputElevenlabsMultilingualStsV2AudioUrl
     from .input_elevenlabs_multilingual_v2 import InputElevenlabsMultilingualV2
+    from .input_elevenlabs_sound_effects import InputElevenlabsSoundEffects
     from .input_elevenlabs_v3 import InputElevenlabsV3
+    from .input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
+    from .input_elevenlabs_voice_clone_audio import (
+        InputElevenlabsVoiceCloneAudio,
+        InputElevenlabsVoiceCloneAudio_Asset,
+        InputElevenlabsVoiceCloneAudio_Url,
+    )
+    from .input_elevenlabs_voice_clone_audio_asset import InputElevenlabsVoiceCloneAudioAsset
+    from .input_elevenlabs_voice_clone_audio_url import InputElevenlabsVoiceCloneAudioUrl
     from .input_flux11pro import InputFlux11Pro
     from .input_flux11pro_aspect_ratio import InputFlux11ProAspectRatio
     from .input_flux11pro_output_format import InputFlux11ProOutputFormat
@@ -828,6 +861,92 @@ if typing.TYPE_CHECKING:
     )
     from .input_sora2pro_start_image_asset import InputSora2ProStartImageAsset
     from .input_sora2pro_start_image_url import InputSora2ProStartImageUrl
+    from .input_topaz_image_upscaler import InputTopazImageUpscaler
+    from .input_topaz_image_upscaler_face_recovery import InputTopazImageUpscalerFaceRecovery
+    from .input_topaz_image_upscaler_face_recovery_creativity import InputTopazImageUpscalerFaceRecoveryCreativity
+    from .input_topaz_image_upscaler_source_image import (
+        InputTopazImageUpscalerSourceImage,
+        InputTopazImageUpscalerSourceImage_Asset,
+        InputTopazImageUpscalerSourceImage_Url,
+    )
+    from .input_topaz_image_upscaler_source_image_asset import InputTopazImageUpscalerSourceImageAsset
+    from .input_topaz_image_upscaler_source_image_url import InputTopazImageUpscalerSourceImageUrl
+    from .input_topaz_image_upscaler_target_resolution import InputTopazImageUpscalerTargetResolution
+    from .input_topaz_image_upscaler_wonder import InputTopazImageUpscalerWonder
+    from .input_topaz_image_upscaler_wonder_enhancement_strength import InputTopazImageUpscalerWonderEnhancementStrength
+    from .input_topaz_image_upscaler_wonder_source_image import (
+        InputTopazImageUpscalerWonderSourceImage,
+        InputTopazImageUpscalerWonderSourceImage_Asset,
+        InputTopazImageUpscalerWonderSourceImage_Url,
+    )
+    from .input_topaz_image_upscaler_wonder_source_image_asset import InputTopazImageUpscalerWonderSourceImageAsset
+    from .input_topaz_image_upscaler_wonder_source_image_url import InputTopazImageUpscalerWonderSourceImageUrl
+    from .input_topaz_image_upscaler_wonder_target_resolution import InputTopazImageUpscalerWonderTargetResolution
+    from .input_topaz_video_upscaler import InputTopazVideoUpscaler
+    from .input_topaz_video_upscaler_fps_engine import InputTopazVideoUpscalerFpsEngine
+    from .input_topaz_video_upscaler_hyperion25 import InputTopazVideoUpscalerHyperion25
+    from .input_topaz_video_upscaler_hyperion25source_video import (
+        InputTopazVideoUpscalerHyperion25SourceVideo,
+        InputTopazVideoUpscalerHyperion25SourceVideo_Asset,
+        InputTopazVideoUpscalerHyperion25SourceVideo_Url,
+    )
+    from .input_topaz_video_upscaler_hyperion25source_video_asset import (
+        InputTopazVideoUpscalerHyperion25SourceVideoAsset,
+    )
+    from .input_topaz_video_upscaler_hyperion25source_video_url import InputTopazVideoUpscalerHyperion25SourceVideoUrl
+    from .input_topaz_video_upscaler_resolution import InputTopazVideoUpscalerResolution
+    from .input_topaz_video_upscaler_source_video import (
+        InputTopazVideoUpscalerSourceVideo,
+        InputTopazVideoUpscalerSourceVideo_Asset,
+        InputTopazVideoUpscalerSourceVideo_Url,
+    )
+    from .input_topaz_video_upscaler_source_video_asset import InputTopazVideoUpscalerSourceVideoAsset
+    from .input_topaz_video_upscaler_source_video_url import InputTopazVideoUpscalerSourceVideoUrl
+    from .input_topaz_video_upscaler_starlight_fast import InputTopazVideoUpscalerStarlightFast
+    from .input_topaz_video_upscaler_starlight_fast_resolution import InputTopazVideoUpscalerStarlightFastResolution
+    from .input_topaz_video_upscaler_starlight_fast_source_video import (
+        InputTopazVideoUpscalerStarlightFastSourceVideo,
+        InputTopazVideoUpscalerStarlightFastSourceVideo_Asset,
+        InputTopazVideoUpscalerStarlightFastSourceVideo_Url,
+    )
+    from .input_topaz_video_upscaler_starlight_fast_source_video_asset import (
+        InputTopazVideoUpscalerStarlightFastSourceVideoAsset,
+    )
+    from .input_topaz_video_upscaler_starlight_fast_source_video_url import (
+        InputTopazVideoUpscalerStarlightFastSourceVideoUrl,
+    )
+    from .input_topaz_video_upscaler_starlight_hq import InputTopazVideoUpscalerStarlightHq
+    from .input_topaz_video_upscaler_starlight_hq_resolution import InputTopazVideoUpscalerStarlightHqResolution
+    from .input_topaz_video_upscaler_starlight_hq_source_video import (
+        InputTopazVideoUpscalerStarlightHqSourceVideo,
+        InputTopazVideoUpscalerStarlightHqSourceVideo_Asset,
+        InputTopazVideoUpscalerStarlightHqSourceVideo_Url,
+    )
+    from .input_topaz_video_upscaler_starlight_hq_source_video_asset import (
+        InputTopazVideoUpscalerStarlightHqSourceVideoAsset,
+    )
+    from .input_topaz_video_upscaler_starlight_hq_source_video_url import (
+        InputTopazVideoUpscalerStarlightHqSourceVideoUrl,
+    )
+    from .input_topaz_video_upscaler_starlight_precise import InputTopazVideoUpscalerStarlightPrecise
+    from .input_topaz_video_upscaler_starlight_precise_reduce_sharpening import (
+        InputTopazVideoUpscalerStarlightPreciseReduceSharpening,
+    )
+    from .input_topaz_video_upscaler_starlight_precise_resolution import (
+        InputTopazVideoUpscalerStarlightPreciseResolution,
+    )
+    from .input_topaz_video_upscaler_starlight_precise_source_video import (
+        InputTopazVideoUpscalerStarlightPreciseSourceVideo,
+        InputTopazVideoUpscalerStarlightPreciseSourceVideo_Asset,
+        InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url,
+    )
+    from .input_topaz_video_upscaler_starlight_precise_source_video_asset import (
+        InputTopazVideoUpscalerStarlightPreciseSourceVideoAsset,
+    )
+    from .input_topaz_video_upscaler_starlight_precise_source_video_url import (
+        InputTopazVideoUpscalerStarlightPreciseSourceVideoUrl,
+    )
+    from .input_topaz_video_upscaler_tuning import InputTopazVideoUpscalerTuning
     from .input_veed_fabric10 import InputVeedFabric10
     from .input_veed_fabric10aspect_ratio import InputVeedFabric10AspectRatio
     from .input_veed_fabric10audio import (
@@ -914,6 +1033,25 @@ if typing.TYPE_CHECKING:
     from .input_wan27start_image import InputWan27StartImage, InputWan27StartImage_Asset, InputWan27StartImage_Url
     from .input_wan27start_image_asset import InputWan27StartImageAsset
     from .input_wan27start_image_url import InputWan27StartImageUrl
+    from .input_wan30 import InputWan30
+    from .input_wan30aspect_ratio import InputWan30AspectRatio
+    from .input_wan30audios_item import InputWan30AudiosItem, InputWan30AudiosItem_Asset, InputWan30AudiosItem_Url
+    from .input_wan30audios_item_asset import InputWan30AudiosItemAsset
+    from .input_wan30audios_item_url import InputWan30AudiosItemUrl
+    from .input_wan30end_image import InputWan30EndImage, InputWan30EndImage_Asset, InputWan30EndImage_Url
+    from .input_wan30end_image_asset import InputWan30EndImageAsset
+    from .input_wan30end_image_url import InputWan30EndImageUrl
+    from .input_wan30images_item import InputWan30ImagesItem, InputWan30ImagesItem_Asset, InputWan30ImagesItem_Url
+    from .input_wan30images_item_asset import InputWan30ImagesItemAsset
+    from .input_wan30images_item_url import InputWan30ImagesItemUrl
+    from .input_wan30quality import InputWan30Quality
+    from .input_wan30resolution import InputWan30Resolution
+    from .input_wan30start_image import InputWan30StartImage, InputWan30StartImage_Asset, InputWan30StartImage_Url
+    from .input_wan30start_image_asset import InputWan30StartImageAsset
+    from .input_wan30start_image_url import InputWan30StartImageUrl
+    from .input_wan30videos_item import InputWan30VideosItem, InputWan30VideosItem_Asset, InputWan30VideosItem_Url
+    from .input_wan30videos_item_asset import InputWan30VideosItemAsset
+    from .input_wan30videos_item_url import InputWan30VideosItemUrl
     from .job_list_response import JobListResponse
     from .job_log_event import JobLogEvent
     from .job_log_item import JobLogItem
@@ -927,6 +1065,12 @@ if typing.TYPE_CHECKING:
     from .key_rotate_response import KeyRotateResponse
     from .key_status import KeyStatus
     from .key_summary import KeySummary
+    from .llm_capabilities_object import LlmCapabilitiesObject
+    from .llm_model_list import LlmModelList
+    from .llm_model_list_object import LlmModelListObject
+    from .llm_model_object import LlmModelObject
+    from .llm_model_object_object import LlmModelObjectObject
+    from .llm_pricing import LlmPricing
     from .log_drain_config import LogDrainConfig
     from .log_drain_format import LogDrainFormat
     from .log_drain_list_response import LogDrainListResponse
@@ -936,6 +1080,8 @@ if typing.TYPE_CHECKING:
     from .model_detail import ModelDetail
     from .model_list_response import ModelListResponse
     from .model_summary import ModelSummary
+    from .open_ai_error import OpenAiError
+    from .open_ai_error_response import OpenAiErrorResponse
     from .output_item import OutputItem
     from .output_status import OutputStatus
     from .result_response import ResultResponse
@@ -971,10 +1117,35 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputDreamina31": ".input_dreamina31",
     "InputDreamina31AspectRatio": ".input_dreamina31aspect_ratio",
     "InputDreamina31Resolution": ".input_dreamina31resolution",
+    "InputElevenlabsAudioIsolation": ".input_elevenlabs_audio_isolation",
+    "InputElevenlabsAudioIsolationAudio": ".input_elevenlabs_audio_isolation_audio",
+    "InputElevenlabsAudioIsolationAudioAsset": ".input_elevenlabs_audio_isolation_audio_asset",
+    "InputElevenlabsAudioIsolationAudioUrl": ".input_elevenlabs_audio_isolation_audio_url",
+    "InputElevenlabsAudioIsolationAudio_Asset": ".input_elevenlabs_audio_isolation_audio",
+    "InputElevenlabsAudioIsolationAudio_Url": ".input_elevenlabs_audio_isolation_audio",
+    "InputElevenlabsEnglishStsV2": ".input_elevenlabs_english_sts_v2",
+    "InputElevenlabsEnglishStsV2Audio": ".input_elevenlabs_english_sts_v2audio",
+    "InputElevenlabsEnglishStsV2AudioAsset": ".input_elevenlabs_english_sts_v2audio_asset",
+    "InputElevenlabsEnglishStsV2AudioUrl": ".input_elevenlabs_english_sts_v2audio_url",
+    "InputElevenlabsEnglishStsV2Audio_Asset": ".input_elevenlabs_english_sts_v2audio",
+    "InputElevenlabsEnglishStsV2Audio_Url": ".input_elevenlabs_english_sts_v2audio",
     "InputElevenlabsFlashMultilingualV2": ".input_elevenlabs_flash_multilingual_v2",
     "InputElevenlabsFlashV2": ".input_elevenlabs_flash_v2",
+    "InputElevenlabsMultilingualStsV2": ".input_elevenlabs_multilingual_sts_v2",
+    "InputElevenlabsMultilingualStsV2Audio": ".input_elevenlabs_multilingual_sts_v2audio",
+    "InputElevenlabsMultilingualStsV2AudioAsset": ".input_elevenlabs_multilingual_sts_v2audio_asset",
+    "InputElevenlabsMultilingualStsV2AudioUrl": ".input_elevenlabs_multilingual_sts_v2audio_url",
+    "InputElevenlabsMultilingualStsV2Audio_Asset": ".input_elevenlabs_multilingual_sts_v2audio",
+    "InputElevenlabsMultilingualStsV2Audio_Url": ".input_elevenlabs_multilingual_sts_v2audio",
     "InputElevenlabsMultilingualV2": ".input_elevenlabs_multilingual_v2",
+    "InputElevenlabsSoundEffects": ".input_elevenlabs_sound_effects",
     "InputElevenlabsV3": ".input_elevenlabs_v3",
+    "InputElevenlabsVoiceClone": ".input_elevenlabs_voice_clone",
+    "InputElevenlabsVoiceCloneAudio": ".input_elevenlabs_voice_clone_audio",
+    "InputElevenlabsVoiceCloneAudioAsset": ".input_elevenlabs_voice_clone_audio_asset",
+    "InputElevenlabsVoiceCloneAudioUrl": ".input_elevenlabs_voice_clone_audio_url",
+    "InputElevenlabsVoiceCloneAudio_Asset": ".input_elevenlabs_voice_clone_audio",
+    "InputElevenlabsVoiceCloneAudio_Url": ".input_elevenlabs_voice_clone_audio",
     "InputFlux11Pro": ".input_flux11pro",
     "InputFlux11ProAspectRatio": ".input_flux11pro_aspect_ratio",
     "InputFlux11ProOutputFormat": ".input_flux11pro_output_format",
@@ -1634,6 +1805,60 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputSora2ProStartImageUrl": ".input_sora2pro_start_image_url",
     "InputSora2ProStartImage_Asset": ".input_sora2pro_start_image",
     "InputSora2ProStartImage_Url": ".input_sora2pro_start_image",
+    "InputTopazImageUpscaler": ".input_topaz_image_upscaler",
+    "InputTopazImageUpscalerFaceRecovery": ".input_topaz_image_upscaler_face_recovery",
+    "InputTopazImageUpscalerFaceRecoveryCreativity": ".input_topaz_image_upscaler_face_recovery_creativity",
+    "InputTopazImageUpscalerSourceImage": ".input_topaz_image_upscaler_source_image",
+    "InputTopazImageUpscalerSourceImageAsset": ".input_topaz_image_upscaler_source_image_asset",
+    "InputTopazImageUpscalerSourceImageUrl": ".input_topaz_image_upscaler_source_image_url",
+    "InputTopazImageUpscalerSourceImage_Asset": ".input_topaz_image_upscaler_source_image",
+    "InputTopazImageUpscalerSourceImage_Url": ".input_topaz_image_upscaler_source_image",
+    "InputTopazImageUpscalerTargetResolution": ".input_topaz_image_upscaler_target_resolution",
+    "InputTopazImageUpscalerWonder": ".input_topaz_image_upscaler_wonder",
+    "InputTopazImageUpscalerWonderEnhancementStrength": ".input_topaz_image_upscaler_wonder_enhancement_strength",
+    "InputTopazImageUpscalerWonderSourceImage": ".input_topaz_image_upscaler_wonder_source_image",
+    "InputTopazImageUpscalerWonderSourceImageAsset": ".input_topaz_image_upscaler_wonder_source_image_asset",
+    "InputTopazImageUpscalerWonderSourceImageUrl": ".input_topaz_image_upscaler_wonder_source_image_url",
+    "InputTopazImageUpscalerWonderSourceImage_Asset": ".input_topaz_image_upscaler_wonder_source_image",
+    "InputTopazImageUpscalerWonderSourceImage_Url": ".input_topaz_image_upscaler_wonder_source_image",
+    "InputTopazImageUpscalerWonderTargetResolution": ".input_topaz_image_upscaler_wonder_target_resolution",
+    "InputTopazVideoUpscaler": ".input_topaz_video_upscaler",
+    "InputTopazVideoUpscalerFpsEngine": ".input_topaz_video_upscaler_fps_engine",
+    "InputTopazVideoUpscalerHyperion25": ".input_topaz_video_upscaler_hyperion25",
+    "InputTopazVideoUpscalerHyperion25SourceVideo": ".input_topaz_video_upscaler_hyperion25source_video",
+    "InputTopazVideoUpscalerHyperion25SourceVideoAsset": ".input_topaz_video_upscaler_hyperion25source_video_asset",
+    "InputTopazVideoUpscalerHyperion25SourceVideoUrl": ".input_topaz_video_upscaler_hyperion25source_video_url",
+    "InputTopazVideoUpscalerHyperion25SourceVideo_Asset": ".input_topaz_video_upscaler_hyperion25source_video",
+    "InputTopazVideoUpscalerHyperion25SourceVideo_Url": ".input_topaz_video_upscaler_hyperion25source_video",
+    "InputTopazVideoUpscalerResolution": ".input_topaz_video_upscaler_resolution",
+    "InputTopazVideoUpscalerSourceVideo": ".input_topaz_video_upscaler_source_video",
+    "InputTopazVideoUpscalerSourceVideoAsset": ".input_topaz_video_upscaler_source_video_asset",
+    "InputTopazVideoUpscalerSourceVideoUrl": ".input_topaz_video_upscaler_source_video_url",
+    "InputTopazVideoUpscalerSourceVideo_Asset": ".input_topaz_video_upscaler_source_video",
+    "InputTopazVideoUpscalerSourceVideo_Url": ".input_topaz_video_upscaler_source_video",
+    "InputTopazVideoUpscalerStarlightFast": ".input_topaz_video_upscaler_starlight_fast",
+    "InputTopazVideoUpscalerStarlightFastResolution": ".input_topaz_video_upscaler_starlight_fast_resolution",
+    "InputTopazVideoUpscalerStarlightFastSourceVideo": ".input_topaz_video_upscaler_starlight_fast_source_video",
+    "InputTopazVideoUpscalerStarlightFastSourceVideoAsset": ".input_topaz_video_upscaler_starlight_fast_source_video_asset",
+    "InputTopazVideoUpscalerStarlightFastSourceVideoUrl": ".input_topaz_video_upscaler_starlight_fast_source_video_url",
+    "InputTopazVideoUpscalerStarlightFastSourceVideo_Asset": ".input_topaz_video_upscaler_starlight_fast_source_video",
+    "InputTopazVideoUpscalerStarlightFastSourceVideo_Url": ".input_topaz_video_upscaler_starlight_fast_source_video",
+    "InputTopazVideoUpscalerStarlightHq": ".input_topaz_video_upscaler_starlight_hq",
+    "InputTopazVideoUpscalerStarlightHqResolution": ".input_topaz_video_upscaler_starlight_hq_resolution",
+    "InputTopazVideoUpscalerStarlightHqSourceVideo": ".input_topaz_video_upscaler_starlight_hq_source_video",
+    "InputTopazVideoUpscalerStarlightHqSourceVideoAsset": ".input_topaz_video_upscaler_starlight_hq_source_video_asset",
+    "InputTopazVideoUpscalerStarlightHqSourceVideoUrl": ".input_topaz_video_upscaler_starlight_hq_source_video_url",
+    "InputTopazVideoUpscalerStarlightHqSourceVideo_Asset": ".input_topaz_video_upscaler_starlight_hq_source_video",
+    "InputTopazVideoUpscalerStarlightHqSourceVideo_Url": ".input_topaz_video_upscaler_starlight_hq_source_video",
+    "InputTopazVideoUpscalerStarlightPrecise": ".input_topaz_video_upscaler_starlight_precise",
+    "InputTopazVideoUpscalerStarlightPreciseReduceSharpening": ".input_topaz_video_upscaler_starlight_precise_reduce_sharpening",
+    "InputTopazVideoUpscalerStarlightPreciseResolution": ".input_topaz_video_upscaler_starlight_precise_resolution",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideo": ".input_topaz_video_upscaler_starlight_precise_source_video",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideoAsset": ".input_topaz_video_upscaler_starlight_precise_source_video_asset",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideoUrl": ".input_topaz_video_upscaler_starlight_precise_source_video_url",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideo_Asset": ".input_topaz_video_upscaler_starlight_precise_source_video",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url": ".input_topaz_video_upscaler_starlight_precise_source_video",
+    "InputTopazVideoUpscalerTuning": ".input_topaz_video_upscaler_tuning",
     "InputVeedFabric10": ".input_veed_fabric10",
     "InputVeedFabric10AspectRatio": ".input_veed_fabric10aspect_ratio",
     "InputVeedFabric10Audio": ".input_veed_fabric10audio",
@@ -1734,6 +1959,35 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputWan27StartImageUrl": ".input_wan27start_image_url",
     "InputWan27StartImage_Asset": ".input_wan27start_image",
     "InputWan27StartImage_Url": ".input_wan27start_image",
+    "InputWan30": ".input_wan30",
+    "InputWan30AspectRatio": ".input_wan30aspect_ratio",
+    "InputWan30AudiosItem": ".input_wan30audios_item",
+    "InputWan30AudiosItemAsset": ".input_wan30audios_item_asset",
+    "InputWan30AudiosItemUrl": ".input_wan30audios_item_url",
+    "InputWan30AudiosItem_Asset": ".input_wan30audios_item",
+    "InputWan30AudiosItem_Url": ".input_wan30audios_item",
+    "InputWan30EndImage": ".input_wan30end_image",
+    "InputWan30EndImageAsset": ".input_wan30end_image_asset",
+    "InputWan30EndImageUrl": ".input_wan30end_image_url",
+    "InputWan30EndImage_Asset": ".input_wan30end_image",
+    "InputWan30EndImage_Url": ".input_wan30end_image",
+    "InputWan30ImagesItem": ".input_wan30images_item",
+    "InputWan30ImagesItemAsset": ".input_wan30images_item_asset",
+    "InputWan30ImagesItemUrl": ".input_wan30images_item_url",
+    "InputWan30ImagesItem_Asset": ".input_wan30images_item",
+    "InputWan30ImagesItem_Url": ".input_wan30images_item",
+    "InputWan30Quality": ".input_wan30quality",
+    "InputWan30Resolution": ".input_wan30resolution",
+    "InputWan30StartImage": ".input_wan30start_image",
+    "InputWan30StartImageAsset": ".input_wan30start_image_asset",
+    "InputWan30StartImageUrl": ".input_wan30start_image_url",
+    "InputWan30StartImage_Asset": ".input_wan30start_image",
+    "InputWan30StartImage_Url": ".input_wan30start_image",
+    "InputWan30VideosItem": ".input_wan30videos_item",
+    "InputWan30VideosItemAsset": ".input_wan30videos_item_asset",
+    "InputWan30VideosItemUrl": ".input_wan30videos_item_url",
+    "InputWan30VideosItem_Asset": ".input_wan30videos_item",
+    "InputWan30VideosItem_Url": ".input_wan30videos_item",
     "JobListResponse": ".job_list_response",
     "JobLogEvent": ".job_log_event",
     "JobLogItem": ".job_log_item",
@@ -1747,6 +2001,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KeyRotateResponse": ".key_rotate_response",
     "KeyStatus": ".key_status",
     "KeySummary": ".key_summary",
+    "LlmCapabilitiesObject": ".llm_capabilities_object",
+    "LlmModelList": ".llm_model_list",
+    "LlmModelListObject": ".llm_model_list_object",
+    "LlmModelObject": ".llm_model_object",
+    "LlmModelObjectObject": ".llm_model_object_object",
+    "LlmPricing": ".llm_pricing",
     "LogDrainConfig": ".log_drain_config",
     "LogDrainFormat": ".log_drain_format",
     "LogDrainListResponse": ".log_drain_list_response",
@@ -1756,6 +2016,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelDetail": ".model_detail",
     "ModelListResponse": ".model_list_response",
     "ModelSummary": ".model_summary",
+    "OpenAiError": ".open_ai_error",
+    "OpenAiErrorResponse": ".open_ai_error_response",
     "OutputItem": ".output_item",
     "OutputStatus": ".output_status",
     "ResultResponse": ".result_response",
@@ -1815,10 +2077,35 @@ __all__ = [
     "InputDreamina31",
     "InputDreamina31AspectRatio",
     "InputDreamina31Resolution",
+    "InputElevenlabsAudioIsolation",
+    "InputElevenlabsAudioIsolationAudio",
+    "InputElevenlabsAudioIsolationAudioAsset",
+    "InputElevenlabsAudioIsolationAudioUrl",
+    "InputElevenlabsAudioIsolationAudio_Asset",
+    "InputElevenlabsAudioIsolationAudio_Url",
+    "InputElevenlabsEnglishStsV2",
+    "InputElevenlabsEnglishStsV2Audio",
+    "InputElevenlabsEnglishStsV2AudioAsset",
+    "InputElevenlabsEnglishStsV2AudioUrl",
+    "InputElevenlabsEnglishStsV2Audio_Asset",
+    "InputElevenlabsEnglishStsV2Audio_Url",
     "InputElevenlabsFlashMultilingualV2",
     "InputElevenlabsFlashV2",
+    "InputElevenlabsMultilingualStsV2",
+    "InputElevenlabsMultilingualStsV2Audio",
+    "InputElevenlabsMultilingualStsV2AudioAsset",
+    "InputElevenlabsMultilingualStsV2AudioUrl",
+    "InputElevenlabsMultilingualStsV2Audio_Asset",
+    "InputElevenlabsMultilingualStsV2Audio_Url",
     "InputElevenlabsMultilingualV2",
+    "InputElevenlabsSoundEffects",
     "InputElevenlabsV3",
+    "InputElevenlabsVoiceClone",
+    "InputElevenlabsVoiceCloneAudio",
+    "InputElevenlabsVoiceCloneAudioAsset",
+    "InputElevenlabsVoiceCloneAudioUrl",
+    "InputElevenlabsVoiceCloneAudio_Asset",
+    "InputElevenlabsVoiceCloneAudio_Url",
     "InputFlux11Pro",
     "InputFlux11ProAspectRatio",
     "InputFlux11ProOutputFormat",
@@ -2478,6 +2765,60 @@ __all__ = [
     "InputSora2ProStartImageUrl",
     "InputSora2ProStartImage_Asset",
     "InputSora2ProStartImage_Url",
+    "InputTopazImageUpscaler",
+    "InputTopazImageUpscalerFaceRecovery",
+    "InputTopazImageUpscalerFaceRecoveryCreativity",
+    "InputTopazImageUpscalerSourceImage",
+    "InputTopazImageUpscalerSourceImageAsset",
+    "InputTopazImageUpscalerSourceImageUrl",
+    "InputTopazImageUpscalerSourceImage_Asset",
+    "InputTopazImageUpscalerSourceImage_Url",
+    "InputTopazImageUpscalerTargetResolution",
+    "InputTopazImageUpscalerWonder",
+    "InputTopazImageUpscalerWonderEnhancementStrength",
+    "InputTopazImageUpscalerWonderSourceImage",
+    "InputTopazImageUpscalerWonderSourceImageAsset",
+    "InputTopazImageUpscalerWonderSourceImageUrl",
+    "InputTopazImageUpscalerWonderSourceImage_Asset",
+    "InputTopazImageUpscalerWonderSourceImage_Url",
+    "InputTopazImageUpscalerWonderTargetResolution",
+    "InputTopazVideoUpscaler",
+    "InputTopazVideoUpscalerFpsEngine",
+    "InputTopazVideoUpscalerHyperion25",
+    "InputTopazVideoUpscalerHyperion25SourceVideo",
+    "InputTopazVideoUpscalerHyperion25SourceVideoAsset",
+    "InputTopazVideoUpscalerHyperion25SourceVideoUrl",
+    "InputTopazVideoUpscalerHyperion25SourceVideo_Asset",
+    "InputTopazVideoUpscalerHyperion25SourceVideo_Url",
+    "InputTopazVideoUpscalerResolution",
+    "InputTopazVideoUpscalerSourceVideo",
+    "InputTopazVideoUpscalerSourceVideoAsset",
+    "InputTopazVideoUpscalerSourceVideoUrl",
+    "InputTopazVideoUpscalerSourceVideo_Asset",
+    "InputTopazVideoUpscalerSourceVideo_Url",
+    "InputTopazVideoUpscalerStarlightFast",
+    "InputTopazVideoUpscalerStarlightFastResolution",
+    "InputTopazVideoUpscalerStarlightFastSourceVideo",
+    "InputTopazVideoUpscalerStarlightFastSourceVideoAsset",
+    "InputTopazVideoUpscalerStarlightFastSourceVideoUrl",
+    "InputTopazVideoUpscalerStarlightFastSourceVideo_Asset",
+    "InputTopazVideoUpscalerStarlightFastSourceVideo_Url",
+    "InputTopazVideoUpscalerStarlightHq",
+    "InputTopazVideoUpscalerStarlightHqResolution",
+    "InputTopazVideoUpscalerStarlightHqSourceVideo",
+    "InputTopazVideoUpscalerStarlightHqSourceVideoAsset",
+    "InputTopazVideoUpscalerStarlightHqSourceVideoUrl",
+    "InputTopazVideoUpscalerStarlightHqSourceVideo_Asset",
+    "InputTopazVideoUpscalerStarlightHqSourceVideo_Url",
+    "InputTopazVideoUpscalerStarlightPrecise",
+    "InputTopazVideoUpscalerStarlightPreciseReduceSharpening",
+    "InputTopazVideoUpscalerStarlightPreciseResolution",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideo",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideoAsset",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideoUrl",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideo_Asset",
+    "InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url",
+    "InputTopazVideoUpscalerTuning",
     "InputVeedFabric10",
     "InputVeedFabric10AspectRatio",
     "InputVeedFabric10Audio",
@@ -2578,6 +2919,35 @@ __all__ = [
     "InputWan27StartImageUrl",
     "InputWan27StartImage_Asset",
     "InputWan27StartImage_Url",
+    "InputWan30",
+    "InputWan30AspectRatio",
+    "InputWan30AudiosItem",
+    "InputWan30AudiosItemAsset",
+    "InputWan30AudiosItemUrl",
+    "InputWan30AudiosItem_Asset",
+    "InputWan30AudiosItem_Url",
+    "InputWan30EndImage",
+    "InputWan30EndImageAsset",
+    "InputWan30EndImageUrl",
+    "InputWan30EndImage_Asset",
+    "InputWan30EndImage_Url",
+    "InputWan30ImagesItem",
+    "InputWan30ImagesItemAsset",
+    "InputWan30ImagesItemUrl",
+    "InputWan30ImagesItem_Asset",
+    "InputWan30ImagesItem_Url",
+    "InputWan30Quality",
+    "InputWan30Resolution",
+    "InputWan30StartImage",
+    "InputWan30StartImageAsset",
+    "InputWan30StartImageUrl",
+    "InputWan30StartImage_Asset",
+    "InputWan30StartImage_Url",
+    "InputWan30VideosItem",
+    "InputWan30VideosItemAsset",
+    "InputWan30VideosItemUrl",
+    "InputWan30VideosItem_Asset",
+    "InputWan30VideosItem_Url",
     "JobListResponse",
     "JobLogEvent",
     "JobLogItem",
@@ -2591,6 +2961,12 @@ __all__ = [
     "KeyRotateResponse",
     "KeyStatus",
     "KeySummary",
+    "LlmCapabilitiesObject",
+    "LlmModelList",
+    "LlmModelListObject",
+    "LlmModelObject",
+    "LlmModelObjectObject",
+    "LlmPricing",
     "LogDrainConfig",
     "LogDrainFormat",
     "LogDrainListResponse",
@@ -2600,6 +2976,8 @@ __all__ = [
     "ModelDetail",
     "ModelListResponse",
     "ModelSummary",
+    "OpenAiError",
+    "OpenAiErrorResponse",
     "OutputItem",
     "OutputStatus",
     "ResultResponse",

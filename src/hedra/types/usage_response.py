@@ -26,6 +26,11 @@ class UsageResponse(UniversalBaseModel):
     Jobs submitted across the whole window.
     """
 
+    total_requests: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Settled LLM chat requests across the whole window.
+    """
+
     total_spent: float = pydantic.Field()
     """
     Net amount spent across the whole window.

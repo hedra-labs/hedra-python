@@ -33,7 +33,7 @@ class InputMinimaxSpeech25HdPreview(UniversalBaseModel):
 
     voice_id: str = pydantic.Field()
     """
-    Voice to speak with (`voice_<uuid>`). List valid voices at GET /v3/models/minimax-speech-25-hd-preview/voices.
+    Voice to speak with (`voice_<uuid>`). List the library voices at GET /v3/models/minimax-speech-25-hd-preview/voices, or use the voice a voice-clone job returned.
     """
 
     if IS_PYDANTIC_V2:

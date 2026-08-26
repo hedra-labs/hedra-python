@@ -12,6 +12,7 @@ ApiKeyScope = typing.Union[
         "log_drains:manage",
         "usage:read",
         "keys:manage",
+        "chat:write",
     ],
     typing.Any,
 ]

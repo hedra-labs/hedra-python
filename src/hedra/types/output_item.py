@@ -18,12 +18,21 @@ class OutputItem(UniversalBaseModel):
     `fps: null`, an audio output `width: null` — so the shape is one object
     rather than one per modality. `url` and `asset_id` go null on an expired
     output, which has metadata but no retrievable bytes.
+
+    A voice-clone job's output is a voice rather than a file: it reports
+    `voice_id` and leaves `url`, `content_type`, and `asset_id` null, since
+    there are no bytes to fetch and nothing to pass back as a media input.
     """
 
     status: typing.Optional[OutputStatus] = None
     asset_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     This output's asset id — server-issued, and opaque. Pass it as `{"source": "asset", "asset_id": ...}` in a later submit's media inputs to reuse this output as a reference. Null once the output has expired, since its bytes are no longer retrievable.
+    """
+
+    voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The voice a voice-clone job created (`voice_<uuid>`). Send it back as `voice_id` on a text-to-speech submit to speak with this voice; it stays usable by the account that created it. Null for every other kind of output.
     """
 
     url: typing.Optional[str] = pydantic.Field(default=None)
