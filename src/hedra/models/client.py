@@ -139,7 +139,7 @@ class ModelsClient:
 
     def list_voices(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceListResponse:
         """
-        Voices this model accepts — scoped to the model's voice provider.
+        Voices this model accepts — the shared library, plus the caller's own cloned voices when the request carries credentials.
 
         Parameters
         ----------
@@ -390,7 +390,7 @@ class AsyncModelsClient:
         self, model: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> VoiceListResponse:
         """
-        Voices this model accepts — scoped to the model's voice provider.
+        Voices this model accepts — the shared library, plus the caller's own cloned voices when the request carries credentials.
 
         Parameters
         ----------
