@@ -14,10 +14,10 @@
       "exported_filename": "client.py"
     }
   },
-  "originGitCommit": "64bb7afd8cbe03aa4de3176c3eb7dff1fc6d5a05",
+  "originGitCommit": "07be185cd69d933a07353db2019097d0e34fb236",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
-  "requestedVersion": "3.0.0",
+  "requestedVersion": "4.0.0-dev",
   "ciProvider": "github",
-  "sdkVersion": "3.0.0"
+  "sdkVersion": "4.0.0-dev"
 }

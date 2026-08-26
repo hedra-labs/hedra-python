@@ -6,10 +6,15 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.input_dreamina31 import InputDreamina31
+from ..types.input_elevenlabs_audio_isolation import InputElevenlabsAudioIsolation
+from ..types.input_elevenlabs_english_sts_v2 import InputElevenlabsEnglishStsV2
 from ..types.input_elevenlabs_flash_multilingual_v2 import InputElevenlabsFlashMultilingualV2
 from ..types.input_elevenlabs_flash_v2 import InputElevenlabsFlashV2
+from ..types.input_elevenlabs_multilingual_sts_v2 import InputElevenlabsMultilingualStsV2
 from ..types.input_elevenlabs_multilingual_v2 import InputElevenlabsMultilingualV2
+from ..types.input_elevenlabs_sound_effects import InputElevenlabsSoundEffects
 from ..types.input_elevenlabs_v3 import InputElevenlabsV3
+from ..types.input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
 from ..types.input_flux2flex import InputFlux2Flex
 from ..types.input_flux2klein9b import InputFlux2Klein9B
 from ..types.input_flux2max import InputFlux2Max
@@ -73,6 +78,13 @@ from ..types.input_seedream45 import InputSeedream45
 from ..types.input_seedream50lite import InputSeedream50Lite
 from ..types.input_seedream50pro import InputSeedream50Pro
 from ..types.input_sora2pro import InputSora2Pro
+from ..types.input_topaz_image_upscaler import InputTopazImageUpscaler
+from ..types.input_topaz_image_upscaler_wonder import InputTopazImageUpscalerWonder
+from ..types.input_topaz_video_upscaler import InputTopazVideoUpscaler
+from ..types.input_topaz_video_upscaler_hyperion25 import InputTopazVideoUpscalerHyperion25
+from ..types.input_topaz_video_upscaler_starlight_fast import InputTopazVideoUpscalerStarlightFast
+from ..types.input_topaz_video_upscaler_starlight_hq import InputTopazVideoUpscalerStarlightHq
+from ..types.input_topaz_video_upscaler_starlight_precise import InputTopazVideoUpscalerStarlightPrecise
 from ..types.input_veed_fabric10 import InputVeedFabric10
 from ..types.input_veed_video_background_removal import InputVeedVideoBackgroundRemoval
 from ..types.input_veo2 import InputVeo2
@@ -81,6 +93,7 @@ from ..types.input_veo31 import InputVeo31
 from ..types.input_vidu_q3 import InputViduQ3
 from ..types.input_vidu_q3reference import InputViduQ3Reference
 from ..types.input_wan27 import InputWan27
+from ..types.input_wan30 import InputWan30
 from ..types.job_list_response import JobListResponse
 from ..types.job_log_item import JobLogItem
 from ..types.job_log_list_response import JobLogListResponse
@@ -354,6 +367,115 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_elevenlabs_audio_isolation(
+        self,
+        *,
+        input: InputElevenlabsAudioIsolation,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Strip background noise from a recording, keeping the speech.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsAudioIsolation
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputElevenlabsAudioIsolation,
+            InputElevenlabsAudioIsolationAudio_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_elevenlabs_audio_isolation(
+            input=InputElevenlabsAudioIsolation(
+                audio=InputElevenlabsAudioIsolationAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_audio_isolation(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_elevenlabs_english_sts_v2(
+        self,
+        *,
+        input: InputElevenlabsEnglishStsV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsEnglishStsV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputElevenlabsEnglishStsV2,
+            InputElevenlabsEnglishStsV2Audio_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_elevenlabs_english_sts_v2(
+            input=InputElevenlabsEnglishStsV2(
+                audio=InputElevenlabsEnglishStsV2Audio_Url(
+                    url="url",
+                ),
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_english_sts_v2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_elevenlabs_flash_multilingual_v2(
         self,
         *,
@@ -450,6 +572,60 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_elevenlabs_multilingual_sts_v2(
+        self,
+        *,
+        input: InputElevenlabsMultilingualStsV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsMultilingualStsV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputElevenlabsMultilingualStsV2,
+            InputElevenlabsMultilingualStsV2Audio_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_elevenlabs_multilingual_sts_v2(
+            input=InputElevenlabsMultilingualStsV2(
+                audio=InputElevenlabsMultilingualStsV2Audio_Url(
+                    url="url",
+                ),
+                voice_id="voice_id",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_multilingual_sts_v2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_elevenlabs_multilingual_v2(
         self,
         *,
@@ -494,6 +670,56 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_elevenlabs_multilingual_v2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_elevenlabs_sound_effects(
+        self,
+        *,
+        input: InputElevenlabsSoundEffects,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generate sound effects from text descriptions using ElevenLabs
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsSoundEffects
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputElevenlabsSoundEffects
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_elevenlabs_sound_effects(
+            input=InputElevenlabsSoundEffects(
+                text="text",
+                duration_ms=1,
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_sound_effects(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -544,6 +770,62 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_elevenlabs_v3(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_elevenlabs_voice_clone(
+        self,
+        *,
+        input: InputElevenlabsVoiceClone,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Use an audio clip to create a new Voice.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsVoiceClone
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputElevenlabsVoiceClone,
+            InputElevenlabsVoiceCloneAudio_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_elevenlabs_voice_clone(
+            input=InputElevenlabsVoiceClone(
+                audio=InputElevenlabsVoiceCloneAudio_Url(
+                    url="url",
+                ),
+                name="name",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_voice_clone(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -3829,6 +4111,397 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_topaz_image_upscaler(
+        self,
+        *,
+        input: InputTopazImageUpscaler,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Use the powerful and accurate Topaz image enhancer to upscale and enhance your images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazImageUpscaler
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazImageUpscaler,
+            InputTopazImageUpscalerSourceImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_image_upscaler(
+            input=InputTopazImageUpscaler(
+                source_image=InputTopazImageUpscalerSourceImage_Url(
+                    url="url",
+                ),
+                target_resolution="1080p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_image_upscaler(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_topaz_image_upscaler_wonder(
+        self,
+        *,
+        input: InputTopazImageUpscalerWonder,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generative upscaling with realistic detail, precise text, and clean graphics — Topaz's highest-quality image upscaler.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazImageUpscalerWonder
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazImageUpscalerWonder,
+            InputTopazImageUpscalerWonderSourceImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_image_upscaler_wonder(
+            input=InputTopazImageUpscalerWonder(
+                source_image=InputTopazImageUpscalerWonderSourceImage_Url(
+                    url="url",
+                ),
+                target_resolution="1080p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_image_upscaler_wonder(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_topaz_video_upscaler(
+        self,
+        *,
+        input: InputTopazVideoUpscaler,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Precision upscaling that cleans compression and noise while staying faithful to the source.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscaler
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazVideoUpscaler,
+            InputTopazVideoUpscalerSourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_video_upscaler(
+            input=InputTopazVideoUpscaler(
+                source_video=InputTopazVideoUpscalerSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="1080p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_video_upscaler(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_topaz_video_upscaler_hyperion25(
+        self,
+        *,
+        input: InputTopazVideoUpscalerHyperion25,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Convert SDR video to 10-bit HDR with richer highlights, color, and tonal separation. The output keeps the source resolution.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerHyperion25
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazVideoUpscalerHyperion25,
+            InputTopazVideoUpscalerHyperion25SourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_video_upscaler_hyperion25(
+            input=InputTopazVideoUpscalerHyperion25(
+                source_video=InputTopazVideoUpscalerHyperion25SourceVideo_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_video_upscaler_hyperion25(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_topaz_video_upscaler_starlight_fast(
+        self,
+        *,
+        input: InputTopazVideoUpscalerStarlightFast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Faster generative diffusion upscaling at half the cost of Starlight Precise.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerStarlightFast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazVideoUpscalerStarlightFast,
+            InputTopazVideoUpscalerStarlightFastSourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_video_upscaler_starlight_fast(
+            input=InputTopazVideoUpscalerStarlightFast(
+                source_video=InputTopazVideoUpscalerStarlightFastSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="1080p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_video_upscaler_starlight_fast(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_topaz_video_upscaler_starlight_hq(
+        self,
+        *,
+        input: InputTopazVideoUpscalerStarlightHq,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generative diffusion upscaling balancing detail and sharpness for medium-to-high quality sources.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerStarlightHq
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazVideoUpscalerStarlightHq,
+            InputTopazVideoUpscalerStarlightHqSourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_video_upscaler_starlight_hq(
+            input=InputTopazVideoUpscalerStarlightHq(
+                source_video=InputTopazVideoUpscalerStarlightHqSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="1080p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_video_upscaler_starlight_hq(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_topaz_video_upscaler_starlight_precise(
+        self,
+        *,
+        input: InputTopazVideoUpscalerStarlightPrecise,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generative diffusion upscaling for AI-generated and archival video with realistic faces, textures, and text.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerStarlightPrecise
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputTopazVideoUpscalerStarlightPrecise,
+            InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_topaz_video_upscaler_starlight_precise(
+            input=InputTopazVideoUpscalerStarlightPrecise(
+                source_video=InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url(
+                    url="url",
+                ),
+                resolution="1080p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_topaz_video_upscaler_starlight_precise(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_veed_fabric10(
         self,
         *,
@@ -4264,6 +4937,59 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_wan30(
+        self,
+        *,
+        input: InputWan30,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Wan 3.0 video with native audio, up to 30 seconds in one shot — from a text prompt, from a first frame with an optional last frame, or from reference images that keep subjects consistent
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputWan30
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputWan30
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_wan30(
+            input=InputWan30(
+                prompt="prompt",
+                aspect_ratio="adaptive",
+                resolution="480p",
+                duration_ms=1,
+                quality="standard",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_wan30(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit(
         self,
         model: str,
@@ -4630,6 +5356,131 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_elevenlabs_audio_isolation(
+        self,
+        *,
+        input: InputElevenlabsAudioIsolation,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Strip background noise from a recording, keeping the speech.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsAudioIsolation
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputElevenlabsAudioIsolation,
+            InputElevenlabsAudioIsolationAudio_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_elevenlabs_audio_isolation(
+                input=InputElevenlabsAudioIsolation(
+                    audio=InputElevenlabsAudioIsolationAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_audio_isolation(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_elevenlabs_english_sts_v2(
+        self,
+        *,
+        input: InputElevenlabsEnglishStsV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsEnglishStsV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputElevenlabsEnglishStsV2,
+            InputElevenlabsEnglishStsV2Audio_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_elevenlabs_english_sts_v2(
+                input=InputElevenlabsEnglishStsV2(
+                    audio=InputElevenlabsEnglishStsV2Audio_Url(
+                        url="url",
+                    ),
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_english_sts_v2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_elevenlabs_flash_multilingual_v2(
         self,
         *,
@@ -4742,6 +5593,68 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_elevenlabs_multilingual_sts_v2(
+        self,
+        *,
+        input: InputElevenlabsMultilingualStsV2,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsMultilingualStsV2
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputElevenlabsMultilingualStsV2,
+            InputElevenlabsMultilingualStsV2Audio_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_elevenlabs_multilingual_sts_v2(
+                input=InputElevenlabsMultilingualStsV2(
+                    audio=InputElevenlabsMultilingualStsV2Audio_Url(
+                        url="url",
+                    ),
+                    voice_id="voice_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_multilingual_sts_v2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_elevenlabs_multilingual_v2(
         self,
         *,
@@ -4794,6 +5707,64 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_elevenlabs_multilingual_v2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_elevenlabs_sound_effects(
+        self,
+        *,
+        input: InputElevenlabsSoundEffects,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generate sound effects from text descriptions using ElevenLabs
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsSoundEffects
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputElevenlabsSoundEffects
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_elevenlabs_sound_effects(
+                input=InputElevenlabsSoundEffects(
+                    text="text",
+                    duration_ms=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_sound_effects(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -4852,6 +5823,70 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_elevenlabs_v3(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_elevenlabs_voice_clone(
+        self,
+        *,
+        input: InputElevenlabsVoiceClone,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Use an audio clip to create a new Voice.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsVoiceClone
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputElevenlabsVoiceClone,
+            InputElevenlabsVoiceCloneAudio_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_elevenlabs_voice_clone(
+                input=InputElevenlabsVoiceClone(
+                    audio=InputElevenlabsVoiceCloneAudio_Url(
+                        url="url",
+                    ),
+                    name="name",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_voice_clone(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -8641,6 +9676,453 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_topaz_image_upscaler(
+        self,
+        *,
+        input: InputTopazImageUpscaler,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Use the powerful and accurate Topaz image enhancer to upscale and enhance your images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazImageUpscaler
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazImageUpscaler,
+            InputTopazImageUpscalerSourceImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_image_upscaler(
+                input=InputTopazImageUpscaler(
+                    source_image=InputTopazImageUpscalerSourceImage_Url(
+                        url="url",
+                    ),
+                    target_resolution="1080p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_image_upscaler(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_topaz_image_upscaler_wonder(
+        self,
+        *,
+        input: InputTopazImageUpscalerWonder,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generative upscaling with realistic detail, precise text, and clean graphics — Topaz's highest-quality image upscaler.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazImageUpscalerWonder
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazImageUpscalerWonder,
+            InputTopazImageUpscalerWonderSourceImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_image_upscaler_wonder(
+                input=InputTopazImageUpscalerWonder(
+                    source_image=InputTopazImageUpscalerWonderSourceImage_Url(
+                        url="url",
+                    ),
+                    target_resolution="1080p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_image_upscaler_wonder(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_topaz_video_upscaler(
+        self,
+        *,
+        input: InputTopazVideoUpscaler,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Precision upscaling that cleans compression and noise while staying faithful to the source.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscaler
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazVideoUpscaler,
+            InputTopazVideoUpscalerSourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_video_upscaler(
+                input=InputTopazVideoUpscaler(
+                    source_video=InputTopazVideoUpscalerSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="1080p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_video_upscaler(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_topaz_video_upscaler_hyperion25(
+        self,
+        *,
+        input: InputTopazVideoUpscalerHyperion25,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Convert SDR video to 10-bit HDR with richer highlights, color, and tonal separation. The output keeps the source resolution.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerHyperion25
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazVideoUpscalerHyperion25,
+            InputTopazVideoUpscalerHyperion25SourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_video_upscaler_hyperion25(
+                input=InputTopazVideoUpscalerHyperion25(
+                    source_video=InputTopazVideoUpscalerHyperion25SourceVideo_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_video_upscaler_hyperion25(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_topaz_video_upscaler_starlight_fast(
+        self,
+        *,
+        input: InputTopazVideoUpscalerStarlightFast,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Faster generative diffusion upscaling at half the cost of Starlight Precise.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerStarlightFast
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazVideoUpscalerStarlightFast,
+            InputTopazVideoUpscalerStarlightFastSourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_video_upscaler_starlight_fast(
+                input=InputTopazVideoUpscalerStarlightFast(
+                    source_video=InputTopazVideoUpscalerStarlightFastSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="1080p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_video_upscaler_starlight_fast(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_topaz_video_upscaler_starlight_hq(
+        self,
+        *,
+        input: InputTopazVideoUpscalerStarlightHq,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generative diffusion upscaling balancing detail and sharpness for medium-to-high quality sources.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerStarlightHq
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazVideoUpscalerStarlightHq,
+            InputTopazVideoUpscalerStarlightHqSourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_video_upscaler_starlight_hq(
+                input=InputTopazVideoUpscalerStarlightHq(
+                    source_video=InputTopazVideoUpscalerStarlightHqSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="1080p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_video_upscaler_starlight_hq(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_topaz_video_upscaler_starlight_precise(
+        self,
+        *,
+        input: InputTopazVideoUpscalerStarlightPrecise,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Generative diffusion upscaling for AI-generated and archival video with realistic faces, textures, and text.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputTopazVideoUpscalerStarlightPrecise
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputTopazVideoUpscalerStarlightPrecise,
+            InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_topaz_video_upscaler_starlight_precise(
+                input=InputTopazVideoUpscalerStarlightPrecise(
+                    source_video=InputTopazVideoUpscalerStarlightPreciseSourceVideo_Url(
+                        url="url",
+                    ),
+                    resolution="1080p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_topaz_video_upscaler_starlight_precise(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_veed_fabric10(
         self,
         *,
@@ -9136,6 +10618,67 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_wan27(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_wan30(
+        self,
+        *,
+        input: InputWan30,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Wan 3.0 video with native audio, up to 30 seconds in one shot — from a text prompt, from a first frame with an optional last frame, or from reference images that keep subjects consistent
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputWan30
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputWan30
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_wan30(
+                input=InputWan30(
+                    prompt="prompt",
+                    aspect_ratio="adaptive",
+                    resolution="480p",
+                    duration_ms=1,
+                    quality="standard",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_wan30(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
