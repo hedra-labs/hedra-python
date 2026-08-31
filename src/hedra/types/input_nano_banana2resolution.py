@@ -2,4 +2,4 @@
 
 import typing
 
-InputNanoBanana2Resolution = typing.Union[typing.Literal["1K", "2K", "4K"], typing.Any]
+InputNanoBanana2Resolution = typing.Union[typing.Literal["512px", "1K", "2K", "4K"], typing.Any]

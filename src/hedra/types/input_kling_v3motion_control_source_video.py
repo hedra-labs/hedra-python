@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputKlingV3MotionControlSourceVideo_Url(UniversalBaseModel):
     """
-    Source video (video-to-video). From 3s to 30s, from 340px to 3850px on each side, and at most 104.8 MB.
+    Source video. From 3s to 30s, from 340px to 3850px on each side, and at most 104.8 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputKlingV3MotionControlSourceVideo_Url(UniversalBaseModel):
 
 class InputKlingV3MotionControlSourceVideo_Asset(UniversalBaseModel):
     """
-    Source video (video-to-video). From 3s to 30s, from 340px to 3850px on each side, and at most 104.8 MB.
+    Source video. From 3s to 30s, from 340px to 3850px on each side, and at most 104.8 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

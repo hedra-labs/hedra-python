@@ -32,12 +32,12 @@ class InputKling26MotionControl(UniversalBaseModel):
 
     start_image: InputKling26MotionControlStartImage = pydantic.Field()
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     source_video: InputKling26MotionControlSourceVideo = pydantic.Field()
     """
-    Source video (video-to-video). From 3s to 30s and at most 524.2 MB.
+    Source video. From 3s to 30s and at most 524.2 MB.
     """
 
     resolution: InputKling26MotionControlResolution = pydantic.Field()

@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputFlux3StartImage_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputFlux3StartImage_Url(UniversalBaseModel):
 
 class InputFlux3StartImage_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

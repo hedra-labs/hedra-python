@@ -45,7 +45,7 @@ class InputKling16(UniversalBaseModel):
 
     start_image: typing.Optional[InputKling16StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)

@@ -45,7 +45,7 @@ class InputSora2Pro(UniversalBaseModel):
 
     start_image: typing.Optional[InputSora2ProStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

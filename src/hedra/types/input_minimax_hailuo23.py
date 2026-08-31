@@ -43,7 +43,7 @@ class InputMinimaxHailuo23(UniversalBaseModel):
 
     start_image: typing.Optional[InputMinimaxHailuo23StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). The output video follows this image's aspect ratio. At most 20 MB.
+    Start frame. The output video follows this image's aspect ratio. At most 20 MB.
     """
 
     aspect_ratio: typing.Optional[InputMinimaxHailuo23AspectRatio] = pydantic.Field(default=None)
@@ -51,9 +51,9 @@ class InputMinimaxHailuo23(UniversalBaseModel):
     Output aspect ratio.
     """
 
-    quality: InputMinimaxHailuo23Quality = pydantic.Field()
+    quality: typing.Optional[InputMinimaxHailuo23Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — 768p, for everyday motion. `pro` — 1080p, with smoother motion and sharper detail. `fast-standard` — 768p on the low-latency path, from a start frame only. `fast-pro` — 1080p on the low-latency path, from a start frame only.
     """
 
     if IS_PYDANTIC_V2:

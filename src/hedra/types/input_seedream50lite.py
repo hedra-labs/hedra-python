@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_seedream50lite_aspect_ratio import InputSeedream50LiteAspectRatio
 from .input_seedream50lite_images_item import InputSeedream50LiteImagesItem
+from .input_seedream50lite_output_format import InputSeedream50LiteOutputFormat
 from .input_seedream50lite_resolution import InputSeedream50LiteResolution
 
 
@@ -41,6 +42,11 @@ class InputSeedream50Lite(UniversalBaseModel):
     resolution: InputSeedream50LiteResolution = pydantic.Field()
     """
     Output resolution.
+    """
+
+    output_format: typing.Optional[InputSeedream50LiteOutputFormat] = pydantic.Field(default=None)
+    """
+    Output image format.
     """
 
     images: typing.Optional[typing.List[InputSeedream50LiteImagesItem]] = pydantic.Field(default=None)

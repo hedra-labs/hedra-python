@@ -73,7 +73,7 @@ class InputKlingV3(UniversalBaseModel):
 
     start_image: typing.Optional[InputKlingV3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     cfg_scale: typing.Optional[float] = pydantic.Field(default=None)
@@ -83,12 +83,12 @@ class InputKlingV3(UniversalBaseModel):
 
     end_image: typing.Optional[InputKlingV3EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 10.4 MB.
+    End frame. At most 10.4 MB.
     """
 
-    quality: InputKlingV3Quality = pydantic.Field()
+    quality: typing.Optional[InputKlingV3Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the 720p tier. `pro` — the high-resolution tier, at 1080p and 4K.
     """
 
     if IS_PYDANTIC_V2:

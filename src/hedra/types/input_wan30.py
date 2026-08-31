@@ -61,12 +61,12 @@ class InputWan30(UniversalBaseModel):
 
     start_image: typing.Optional[InputWan30StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 20 MB.
+    Start frame. At most 20 MB.
     """
 
     end_image: typing.Optional[InputWan30EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 20 MB.
+    End frame. At most 20 MB.
     """
 
     images: typing.Optional[typing.List[InputWan30ImagesItem]] = pydantic.Field(default=None)
@@ -84,9 +84,9 @@ class InputWan30(UniversalBaseModel):
     Reference audios. 1 to 5 audio files, each at most 15s and at most 104.8 MB, at most 15s in total.
     """
 
-    quality: InputWan30Quality = pydantic.Field()
+    quality: typing.Optional[InputWan30Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the base tier. `prime` — Wan's higher-fidelity tier over the same options, for final output.
     """
 
     if IS_PYDANTIC_V2:

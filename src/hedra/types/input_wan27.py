@@ -53,12 +53,12 @@ class InputWan27(UniversalBaseModel):
 
     start_image: typing.Optional[InputWan27StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 20 MB.
+    Start frame. At most 20 MB.
     """
 
     end_image: typing.Optional[InputWan27EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 20 MB.
+    End frame. At most 20 MB.
     """
 
     aspect_ratio: typing.Optional[InputWan27AspectRatio] = pydantic.Field(default=None)

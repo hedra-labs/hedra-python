@@ -46,7 +46,7 @@ class InputHappyHorse(UniversalBaseModel):
 
     start_image: typing.Optional[InputHappyHorseStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At least 300px on each side and at most 10 MB.
+    Start frame. At least 300px on each side and at most 10 MB.
     """
 
     images: typing.Optional[typing.List[InputHappyHorseImagesItem]] = pydantic.Field(default=None)

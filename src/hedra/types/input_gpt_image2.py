@@ -55,9 +55,9 @@ class InputGptImage2(UniversalBaseModel):
     Output image format.
     """
 
-    quality: InputGptImage2Quality = pydantic.Field()
+    quality: typing.Optional[InputGptImage2Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `low` — the quickest and cheapest pass, for drafts, thumbnails, and rapid exploration. `medium` — balanced cost and fidelity, for everyday work and iterative refinement. `high` — the most rendering effort, for final deliverables and text-heavy designs.
     """
 
     if IS_PYDANTIC_V2:

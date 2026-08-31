@@ -51,7 +51,7 @@ class InputVeo3(UniversalBaseModel):
 
     start_image: typing.Optional[InputVeo3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 8 MB.
+    Start frame. At most 8 MB.
     """
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
@@ -64,9 +64,9 @@ class InputVeo3(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
-    quality: InputVeo3Quality = pydantic.Field()
+    quality: typing.Optional[InputVeo3Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the full model, for hero shots. `fast` — the same model tuned for turnaround, at a lower rate.
     """
 
     if IS_PYDANTIC_V2:

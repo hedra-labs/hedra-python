@@ -24,6 +24,7 @@ from ..types.job_summary import JobSummary
 from ..types.modality import Modality
 from ..types.model_detail import ModelDetail
 from ..types.model_list_response import ModelListResponse
+from ..types.voice_gender import VoiceGender
 from ..types.voice_list_response import VoiceListResponse
 from pydantic import ValidationError
 
@@ -381,6 +382,140 @@ class RawModelsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"models/{encode_path_param(model)}/voices",
             method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    VoiceListResponse,
+                    parse_obj_as(
+                        type_=VoiceListResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def search_voices(
+        self,
+        model: str,
+        *,
+        q: str,
+        limit: typing.Optional[int] = None,
+        gender: typing.Optional[VoiceGender] = None,
+        language: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[VoiceListResponse]:
+        """
+        The voices this model accepts, ranked against a description — the whole shared library, including the voices the listing does not return.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        q : str
+            What the voice should sound like, in plain words — "warm british narrator", "energetic young announcer". Matched against the whole library for this model's provider, not just the voices `GET /v3/models/{model}/voices` returns.
+
+        limit : typing.Optional[int]
+            Maximum voices to return. Applies to the whole response.
+
+        gender : typing.Optional[VoiceGender]
+            Only voices curated with this gender.
+
+        language : typing.Optional[str]
+            Only voices curated for this language, as an ISO 639-1 two-letter code (`en`, `es`, `fr`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[VoiceListResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"models/{encode_path_param(model)}/voices/search",
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "gender": gender,
+                "language": language,
+            },
             request_options=request_options,
         )
         try:
@@ -1043,6 +1178,140 @@ class AsyncRawModelsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"models/{encode_path_param(model)}/voices",
             method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    VoiceListResponse,
+                    parse_obj_as(
+                        type_=VoiceListResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search_voices(
+        self,
+        model: str,
+        *,
+        q: str,
+        limit: typing.Optional[int] = None,
+        gender: typing.Optional[VoiceGender] = None,
+        language: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[VoiceListResponse]:
+        """
+        The voices this model accepts, ranked against a description — the whole shared library, including the voices the listing does not return.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        q : str
+            What the voice should sound like, in plain words — "warm british narrator", "energetic young announcer". Matched against the whole library for this model's provider, not just the voices `GET /v3/models/{model}/voices` returns.
+
+        limit : typing.Optional[int]
+            Maximum voices to return. Applies to the whole response.
+
+        gender : typing.Optional[VoiceGender]
+            Only voices curated with this gender.
+
+        language : typing.Optional[str]
+            Only voices curated for this language, as an ISO 639-1 two-letter code (`en`, `es`, `fr`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[VoiceListResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"models/{encode_path_param(model)}/voices/search",
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "gender": gender,
+                "language": language,
+            },
             request_options=request_options,
         )
         try:

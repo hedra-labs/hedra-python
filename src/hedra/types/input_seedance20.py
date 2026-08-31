@@ -55,12 +55,12 @@ class InputSeedance20(UniversalBaseModel):
 
     start_image: typing.Optional[InputSeedance20StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Start frame. From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     end_image: typing.Optional[InputSeedance20EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    End frame. From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     images: typing.Optional[typing.List[InputSeedance20ImagesItem]] = pydantic.Field(default=None)
@@ -78,9 +78,9 @@ class InputSeedance20(UniversalBaseModel):
     Reference audios. 1 to 3 audio files, each at most 104.8 MB, at most 15s in total.
     """
 
-    quality: InputSeedance20Quality = pydantic.Field()
+    quality: typing.Optional[InputSeedance20Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the full model, and the only level that reaches 1080p and 4K. `fast` — tuned for turnaround, at 480p and 720p.
     """
 
     if IS_PYDANTIC_V2:

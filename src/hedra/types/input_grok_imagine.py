@@ -7,6 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_grok_imagine_aspect_ratio import InputGrokImagineAspectRatio
 from .input_grok_imagine_images_item import InputGrokImagineImagesItem
 from .input_grok_imagine_output_format import InputGrokImagineOutputFormat
+from .input_grok_imagine_quality import InputGrokImagineQuality
+from .input_grok_imagine_resolution import InputGrokImagineResolution
 
 
 class InputGrokImagine(UniversalBaseModel):
@@ -14,8 +16,10 @@ class InputGrokImagine(UniversalBaseModel):
     Model-specific inputs for `grok-imagine`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: images, prompt; must omit: aspect_ratio
-    (2) requires: aspect_ratio, prompt; must omit: images
+    (1) requires: images, prompt; must omit: aspect_ratio, resolution; accepts quality: standard
+    (2) requires: aspect_ratio, images, prompt, resolution; accepts quality: quality
+    (3) requires: aspect_ratio, prompt, resolution; must omit: images; accepts aspect_ratio: 2:1 | 20:9 | 19.5:9 | 16:9 | 4:3 | 3:2 | 1:1 | 2:3 | 3:4 | 9:16 | 9:19.5 | 9:20 | 1:2; quality: quality
+    (4) requires: aspect_ratio, prompt; must omit: images, resolution; accepts aspect_ratio: 2:1 | 20:9 | 19.5:9 | 16:9 | 4:3 | 3:2 | 1:1 | 2:3 | 3:4 | 9:16 | 9:19.5 | 9:20 | 1:2; quality: standard
     """
 
     prompt: str = pydantic.Field()
@@ -46,6 +50,16 @@ class InputGrokImagine(UniversalBaseModel):
     aspect_ratio: typing.Optional[InputGrokImagineAspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
+    """
+
+    resolution: typing.Optional[InputGrokImagineResolution] = pydantic.Field(default=None)
+    """
+    Output resolution.
+    """
+
+    quality: typing.Optional[InputGrokImagineQuality] = pydantic.Field(default=None)
+    """
+    Quality level to generate at. `standard` — the base tier, at a flat rate whatever the output size. `quality` — xAI's higher-fidelity tier, and the only one offering 2k.
     """
 
     if IS_PYDANTIC_V2:

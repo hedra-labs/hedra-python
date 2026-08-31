@@ -38,7 +38,7 @@ class InputKlingAiAvatarV2(UniversalBaseModel):
 
     start_image: InputKlingAiAvatarV2StartImage = pydantic.Field()
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     audio: InputKlingAiAvatarV2Audio = pydantic.Field()
@@ -46,9 +46,9 @@ class InputKlingAiAvatarV2(UniversalBaseModel):
     Driving audio. From 2s to 60s and at most 5 MB.
     """
 
-    quality: InputKlingAiAvatarV2Quality = pydantic.Field()
+    quality: typing.Optional[InputKlingAiAvatarV2Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the base tier. `pro` — sharper detail and steadier motion at the same resolution, at a higher rate.
     """
 
     if IS_PYDANTIC_V2:

@@ -54,17 +54,17 @@ class InputLtx23(UniversalBaseModel):
 
     start_image: typing.Optional[InputLtx23StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputLtx23EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 10.4 MB.
+    End frame. At most 10.4 MB.
     """
 
-    quality: InputLtx23Quality = pydantic.Field()
+    quality: typing.Optional[InputLtx23Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `fast` — tuned for turnaround, for iteration. `pro` — the higher-fidelity tier, for final output.
     """
 
     if IS_PYDANTIC_V2:

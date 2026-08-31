@@ -50,9 +50,9 @@ class InputIdeogramV4(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
-    quality: InputIdeogramV4Quality = pydantic.Field()
+    quality: typing.Optional[InputIdeogramV4Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `turbo` — the least rendering effort, for quick exploration. `balanced` — middle rendering effort, the everyday choice. `quality` — the most rendering effort, for poster-ready text and layout.
     """
 
     if IS_PYDANTIC_V2:

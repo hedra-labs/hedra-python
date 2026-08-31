@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputMinimaxHailuo02StartImage_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video). The output video follows this image's aspect ratio. At most 20 MB.
+    Start frame. The output video follows this image's aspect ratio. At most 20 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputMinimaxHailuo02StartImage_Url(UniversalBaseModel):
 
 class InputMinimaxHailuo02StartImage_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video). The output video follows this image's aspect ratio. At most 20 MB.
+    Start frame. The output video follows this image's aspect ratio. At most 20 MB.
     """
 
     source: typing.Literal["asset"] = "asset"
