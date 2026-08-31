@@ -5284,7 +5284,7 @@ class AsyncJobsClient:
 
 
         async def main() -> None:
-            response = await client.jobs.stream(
+            response = client.jobs.stream(
                 job_id="job_id",
             )
             async for chunk in response:
