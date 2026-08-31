@@ -12,6 +12,7 @@ from ..types.input_elevenlabs_flash_multilingual_v2 import InputElevenlabsFlashM
 from ..types.input_elevenlabs_flash_v2 import InputElevenlabsFlashV2
 from ..types.input_elevenlabs_multilingual_sts_v2 import InputElevenlabsMultilingualStsV2
 from ..types.input_elevenlabs_multilingual_v2 import InputElevenlabsMultilingualV2
+from ..types.input_elevenlabs_music import InputElevenlabsMusic
 from ..types.input_elevenlabs_sound_effects import InputElevenlabsSoundEffects
 from ..types.input_elevenlabs_v3 import InputElevenlabsV3
 from ..types.input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
@@ -29,6 +30,7 @@ from ..types.input_gemini_omni_flash import InputGeminiOmniFlash
 from ..types.input_gpt_image2 import InputGptImage2
 from ..types.input_gpt_image15 import InputGptImage15
 from ..types.input_grok_imagine import InputGrokImagine
+from ..types.input_grok_imagine20 import InputGrokImagine20
 from ..types.input_grok_video import InputGrokVideo
 from ..types.input_happy_horse import InputHappyHorse
 from ..types.input_hedra_avatar import InputHedraAvatar
@@ -325,7 +327,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ultra high quality generations for professional grade images.
+        Polished, print-ready stills when the brief is a finished image rather than a sketch.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -485,6 +487,8 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        The low-latency voice across 30+ languages, for interactive and high-volume speech.
+
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
@@ -533,6 +537,8 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        The low-latency English voice, for interactive speech.
+
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
@@ -635,6 +641,8 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        Steady, natural narration across 30+ languages, for finished voiceover.
+
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
@@ -674,6 +682,56 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_elevenlabs_music(
+        self,
+        *,
+        input: InputElevenlabsMusic,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Full tracks from a written brief, with optional lyrics placed across the length you ask for.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsMusic
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputElevenlabsMusic
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_elevenlabs_music(
+            input=InputElevenlabsMusic(
+                prompt="prompt",
+                duration_ms=1,
+            ),
+        )
+        """
+        _response = self._raw_client.submit_elevenlabs_music(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_elevenlabs_sound_effects(
         self,
         *,
@@ -683,7 +741,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Generate sound effects from text descriptions using ElevenLabs
+        One-off sound effects from a written description, loopable on request.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -733,7 +791,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ElevenLabs V3
+        The most expressive ElevenLabs voice — emotional range and delivery cues for performance, not just narration.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -940,7 +998,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Black Forest Labs FLUX.3 text-to-video with native audio.
+        Video with native audio, straight from a prompt.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1141,7 +1199,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Image creation and editing with FLUX.2 [flex] from Black Forest Labs.
+        The tunable Flux.2 tier — trade denoising steps against speed per generation.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1191,7 +1249,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Flux.2 [klein] 9B model from Black Forest Labs.
+        The lean Flux.2 tier — quick, inexpensive stills for concepting and high-volume work.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1241,7 +1299,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        FLUX.2 [max] delivers state-of-the-art image generation and advanced image editing with exceptional realism, precision, and consistency.
+        The top Flux.2 tier, for realism and precision in final deliverables.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1291,7 +1349,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Image creation and editing with FLUX.2 [pro] from Black Forest Labs. Ideal for high-quality image manipulation, style transfer, and sequential editing workflows
+        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1391,7 +1449,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        OpenAI-powered image generation with exceptional prompt understanding and versatile editing capabilities.
+        Reads a long, specific brief closely — the choice when the prompt carries the detail.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1475,7 +1533,6 @@ class JobsClient:
                 prompt="prompt",
                 aspect_ratio="16:9",
                 resolution="1K",
-                quality="low",
             ),
         )
         """
@@ -1493,7 +1550,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        xAI's Grok Imagine image generation model
+        Grok's take on a prompt — punchy, irreverent stills, in everything from ultrawide to tall.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1533,6 +1590,57 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_grok_imagine20(
+        self,
+        *,
+        input: InputGrokImagine20,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        xAI's current Grok Imagine — the same irreverence at higher fidelity, from a prompt or from up to three source images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputGrokImagine20
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputGrokImagine20
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_grok_imagine20(
+            input=InputGrokImagine20(
+                prompt="prompt",
+                aspect_ratio="2:1",
+                resolution="1k",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_grok_imagine20(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_grok_video(
         self,
         *,
@@ -1542,7 +1650,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        xAI's text-to-video generation model.
+        Short, punchy clips from a prompt at 480p or 720p.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1594,7 +1702,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Generate video from text with Alibaba Happy Horse 1.0.
+        Open-weight video generation from a prompt.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1803,7 +1911,6 @@ class JobsClient:
             input=InputHidreamO1Image(
                 prompt="prompt",
                 aspect_ratio="16:9",
-                quality="standard",
             ),
         )
         """
@@ -1905,7 +2012,6 @@ class JobsClient:
                 prompt="prompt",
                 aspect_ratio="16:9",
                 resolution="720p",
-                quality="turbo",
             ),
         )
         """
@@ -1923,7 +2029,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The latest text to image model from Google
+        Google's earlier photoreal generator, kept for parity.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2327,7 +2433,6 @@ class JobsClient:
                 audio=InputKlingAiAvatarV2Audio_Url(
                     url="url",
                 ),
-                quality="standard",
             ),
         )
         """
@@ -2396,7 +2501,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Text-to-video model with up to 15-second generations and native audio.
+        Clips up to 15 seconds with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2429,7 +2534,6 @@ class JobsClient:
             input=InputKlingO3(
                 aspect_ratio="16:9",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -2557,7 +2661,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Text-to-video with ultra-high-definition storyboards and native audio.
+        Ultra-high-definition storyboards with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2590,7 +2694,6 @@ class JobsClient:
             input=InputKlingV3(
                 aspect_ratio="16:9",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -2668,7 +2771,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Lightricks LTX-2.3 text-to-video at up to 4K, with synchronized native audio
+        Clips up to 4K with synchronized native audio, for final output.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2703,7 +2806,6 @@ class JobsClient:
                 resolution="1080p",
                 duration_ms=1,
                 aspect_ratio="auto",
-                quality="fast",
             ),
         )
         """
@@ -2721,7 +2823,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Luma Ray 3.2 text-to-video with cinematic motion and camera control
+        Cinematic motion with deliberate camera control, from a prompt.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2753,7 +2855,7 @@ class JobsClient:
         client.jobs.submit_luma_ray32(
             input=InputLumaRay32(
                 prompt="prompt",
-                aspect_ratio="1:1",
+                aspect_ratio="3:4",
                 resolution="540p",
                 duration_ms=1,
             ),
@@ -2806,7 +2908,6 @@ class JobsClient:
             input=InputMaiImage25(
                 prompt="prompt",
                 aspect_ratio="1:1",
-                quality="standard",
             ),
         )
         """
@@ -2824,7 +2925,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        MiniMax H3 video generation from text, frames, or references.
+        One model for every starting point — a prompt, a keyframe pair, or reference images that keep a subject consistent.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2856,7 +2957,7 @@ class JobsClient:
         client.jobs.submit_minimax_h3(
             input=InputMinimaxH3(
                 prompt="prompt",
-                resolution="768p",
+                resolution="480p",
                 duration_ms=1,
             ),
         )
@@ -2908,7 +3009,6 @@ class JobsClient:
             input=InputMinimaxHailuo02(
                 prompt="prompt",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -2959,7 +3059,6 @@ class JobsClient:
             input=InputMinimaxHailuo23(
                 prompt="prompt",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -2977,7 +3076,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The brand new HD model. Ultimate Similarity, Ultra-High Quality. Supports 40+ languages including Tamil, Hebrew, Swedish, etc.
+        The high-fidelity tier — closest voice likeness, across 40+ languages.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3027,7 +3126,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The brand new Turbo model. Ultimate Value, 40 Languages. Major improvements to natural English expression.
+        The value tier — natural English delivery across 40+ languages, at a lower rate.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3077,7 +3176,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Best in class image model with reference image support and ultra high quality generations for professional grade images.
+        Reference-guided stills that hold a character or product across a set.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3128,7 +3227,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Gemini 3.1 Flash native image generation with improved quality and advanced features including multi-subject reference and high-fidelity style transfer
+        Multi-subject stills up to 4K — hand it several references and it keeps each one recognizable.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3160,8 +3259,8 @@ class JobsClient:
         client.jobs.submit_nano_banana2(
             input=InputNanoBanana2(
                 prompt="prompt",
-                aspect_ratio="16:9",
-                resolution="1K",
+                aspect_ratio="adaptive",
+                resolution="512px",
             ),
         )
         """
@@ -3179,7 +3278,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Gemini 3 Pro native image generation with advanced multimodal understanding and richer visuals
+        The reasoning-heavy tier — dense prompts, mixed references, and style transfer up to 4K.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3211,7 +3310,7 @@ class JobsClient:
         client.jobs.submit_nano_banana_pro(
             input=InputNanoBananaPro(
                 prompt="prompt",
-                aspect_ratio="16:9",
+                aspect_ratio="adaptive",
                 resolution="1K",
             ),
         )
@@ -3290,7 +3389,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        PixVerse V6 text-to-video with native audio and 1080p output up to 15 seconds
+        Stylized 1080p clips up to 15 seconds, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3375,7 +3474,6 @@ class JobsClient:
                 prompt="prompt",
                 aspect_ratio="16:9",
                 resolution="540p",
-                quality="standard",
             ),
         )
         """
@@ -3655,7 +3753,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 1.5 Pro video generation model
+        Keyframe-driven video with native audio, from a start frame, an end frame, or both.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3707,7 +3805,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 2.0 video generation model
+        Reference-driven video up to 4K with native audio — hold a look across shots with reference images, clips, or audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3742,7 +3840,6 @@ class JobsClient:
                 aspect_ratio="1:1",
                 resolution="4K",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -3760,7 +3857,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 2.0 Mini video generation model
+        The lightest Seedance tier — short reference-driven clips at 480p and 720p.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3812,7 +3909,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 2.5 video generation model
+        Reference-driven video up to 30 seconds at 1080p, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3864,7 +3961,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ultra-fast pro grade image model, pairing reference image support with high quality output for professional visuals
+        Quick, reference-aware stills for professional work on a tight turnaround.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3915,7 +4012,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Latest Seedream with enhanced detail, refined composition, and multi-reference image support for professional visuals.
+        Finer detail and steadier composition than 4.0, with support for several references at once.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3966,7 +4063,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedream 5.0 Lite Text-to-Image
+        Sharp 2K and 4K stills from a prompt, at the light tier's price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4017,7 +4114,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedream 5.0 Pro Text-to-Image
+        The top Seedream tier — layer-separable output and strong multilingual in-image text, up to 2K.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4628,7 +4725,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The current state of the art in video generation
+        Google's earlier cinematic generator, kept for existing workflows.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4712,7 +4809,6 @@ class JobsClient:
                 aspect_ratio="16:9",
                 resolution="720p",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -4764,7 +4860,6 @@ class JobsClient:
                 prompt="prompt",
                 aspect_ratio="16:9",
                 resolution="720p",
-                quality="standard",
             ),
         )
         """
@@ -4782,7 +4877,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Vidu Q3 video with native dialogue and sound, up to 16 seconds — from a text prompt, from a start frame, or between a start and end frame
+        The longest clips in the catalog — up to 16 seconds with native dialogue and sound, from a text prompt, from a start frame, or between a start and end frame
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4816,7 +4911,6 @@ class JobsClient:
                 prompt="prompt",
                 resolution="540p",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -4834,7 +4928,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Vidu Q3 reference-to-video keeping up to four subjects consistent
+        Keep up to four subjects consistent across a clip from reference images.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4981,7 +5075,6 @@ class JobsClient:
                 aspect_ratio="adaptive",
                 resolution="480p",
                 duration_ms=1,
-                quality="standard",
             ),
         )
         """
@@ -5306,7 +5399,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ultra high quality generations for professional grade images.
+        Polished, print-ready stills when the brief is a finished image rather than a sketch.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -5490,6 +5583,8 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        The low-latency voice across 30+ languages, for interactive and high-volume speech.
+
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
@@ -5546,6 +5641,8 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        The low-latency English voice, for interactive speech.
+
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
@@ -5664,6 +5761,8 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
+        Steady, natural narration across 30+ languages, for finished voiceover.
+
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
@@ -5711,6 +5810,64 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_elevenlabs_music(
+        self,
+        *,
+        input: InputElevenlabsMusic,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Full tracks from a written brief, with optional lyrics placed across the length you ask for.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputElevenlabsMusic
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputElevenlabsMusic
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_elevenlabs_music(
+                input=InputElevenlabsMusic(
+                    prompt="prompt",
+                    duration_ms=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_elevenlabs_music(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_elevenlabs_sound_effects(
         self,
         *,
@@ -5720,7 +5877,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Generate sound effects from text descriptions using ElevenLabs
+        One-off sound effects from a written description, loopable on request.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -5778,7 +5935,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ElevenLabs V3
+        The most expressive ElevenLabs voice — emotional range and delivery cues for performance, not just narration.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6017,7 +6174,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Black Forest Labs FLUX.3 text-to-video with native audio.
+        Video with native audio, straight from a prompt.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6250,7 +6407,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Image creation and editing with FLUX.2 [flex] from Black Forest Labs.
+        The tunable Flux.2 tier — trade denoising steps against speed per generation.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6308,7 +6465,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Flux.2 [klein] 9B model from Black Forest Labs.
+        The lean Flux.2 tier — quick, inexpensive stills for concepting and high-volume work.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6366,7 +6523,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        FLUX.2 [max] delivers state-of-the-art image generation and advanced image editing with exceptional realism, precision, and consistency.
+        The top Flux.2 tier, for realism and precision in final deliverables.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6424,7 +6581,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Image creation and editing with FLUX.2 [pro] from Black Forest Labs. Ideal for high-quality image manipulation, style transfer, and sequential editing workflows
+        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6540,7 +6697,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        OpenAI-powered image generation with exceptional prompt understanding and versatile editing capabilities.
+        Reads a long, specific brief closely — the choice when the prompt carries the detail.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6637,7 +6794,6 @@ class AsyncJobsClient:
                     prompt="prompt",
                     aspect_ratio="16:9",
                     resolution="1K",
-                    quality="low",
                 ),
             )
 
@@ -6658,7 +6814,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        xAI's Grok Imagine image generation model
+        Grok's take on a prompt — punchy, irreverent stills, in everything from ultrawide to tall.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6706,6 +6862,65 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_grok_imagine20(
+        self,
+        *,
+        input: InputGrokImagine20,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        xAI's current Grok Imagine — the same irreverence at higher fidelity, from a prompt or from up to three source images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputGrokImagine20
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputGrokImagine20
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_grok_imagine20(
+                input=InputGrokImagine20(
+                    prompt="prompt",
+                    aspect_ratio="2:1",
+                    resolution="1k",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_grok_imagine20(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_grok_video(
         self,
         *,
@@ -6715,7 +6930,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        xAI's text-to-video generation model.
+        Short, punchy clips from a prompt at 480p or 720p.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6775,7 +6990,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Generate video from text with Alibaba Happy Horse 1.0.
+        Open-weight video generation from a prompt.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -7013,7 +7228,6 @@ class AsyncJobsClient:
                 input=InputHidreamO1Image(
                     prompt="prompt",
                     aspect_ratio="16:9",
-                    quality="standard",
                 ),
             )
 
@@ -7131,7 +7345,6 @@ class AsyncJobsClient:
                     prompt="prompt",
                     aspect_ratio="16:9",
                     resolution="720p",
-                    quality="turbo",
                 ),
             )
 
@@ -7152,7 +7365,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The latest text to image model from Google
+        Google's earlier photoreal generator, kept for parity.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -7617,7 +7830,6 @@ class AsyncJobsClient:
                     audio=InputKlingAiAvatarV2Audio_Url(
                         url="url",
                     ),
-                    quality="standard",
                 ),
             )
 
@@ -7697,7 +7909,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Text-to-video model with up to 15-second generations and native audio.
+        Clips up to 15 seconds with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -7735,7 +7947,6 @@ class AsyncJobsClient:
                 input=InputKlingO3(
                     aspect_ratio="16:9",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -7882,7 +8093,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Text-to-video with ultra-high-definition storyboards and native audio.
+        Ultra-high-definition storyboards with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -7920,7 +8131,6 @@ class AsyncJobsClient:
                 input=InputKlingV3(
                     aspect_ratio="16:9",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -8009,7 +8219,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Lightricks LTX-2.3 text-to-video at up to 4K, with synchronized native audio
+        Clips up to 4K with synchronized native audio, for final output.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8049,7 +8259,6 @@ class AsyncJobsClient:
                     resolution="1080p",
                     duration_ms=1,
                     aspect_ratio="auto",
-                    quality="fast",
                 ),
             )
 
@@ -8070,7 +8279,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Luma Ray 3.2 text-to-video with cinematic motion and camera control
+        Cinematic motion with deliberate camera control, from a prompt.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8107,7 +8316,7 @@ class AsyncJobsClient:
             await client.jobs.submit_luma_ray32(
                 input=InputLumaRay32(
                     prompt="prompt",
-                    aspect_ratio="1:1",
+                    aspect_ratio="3:4",
                     resolution="540p",
                     duration_ms=1,
                 ),
@@ -8168,7 +8377,6 @@ class AsyncJobsClient:
                 input=InputMaiImage25(
                     prompt="prompt",
                     aspect_ratio="1:1",
-                    quality="standard",
                 ),
             )
 
@@ -8189,7 +8397,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        MiniMax H3 video generation from text, frames, or references.
+        One model for every starting point — a prompt, a keyframe pair, or reference images that keep a subject consistent.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8226,7 +8434,7 @@ class AsyncJobsClient:
             await client.jobs.submit_minimax_h3(
                 input=InputMinimaxH3(
                     prompt="prompt",
-                    resolution="768p",
+                    resolution="480p",
                     duration_ms=1,
                 ),
             )
@@ -8286,7 +8494,6 @@ class AsyncJobsClient:
                 input=InputMinimaxHailuo02(
                     prompt="prompt",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -8345,7 +8552,6 @@ class AsyncJobsClient:
                 input=InputMinimaxHailuo23(
                     prompt="prompt",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -8366,7 +8572,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The brand new HD model. Ultimate Similarity, Ultra-High Quality. Supports 40+ languages including Tamil, Hebrew, Swedish, etc.
+        The high-fidelity tier — closest voice likeness, across 40+ languages.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8424,7 +8630,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The brand new Turbo model. Ultimate Value, 40 Languages. Major improvements to natural English expression.
+        The value tier — natural English delivery across 40+ languages, at a lower rate.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8482,7 +8688,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Best in class image model with reference image support and ultra high quality generations for professional grade images.
+        Reference-guided stills that hold a character or product across a set.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8541,7 +8747,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Gemini 3.1 Flash native image generation with improved quality and advanced features including multi-subject reference and high-fidelity style transfer
+        Multi-subject stills up to 4K — hand it several references and it keeps each one recognizable.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8578,8 +8784,8 @@ class AsyncJobsClient:
             await client.jobs.submit_nano_banana2(
                 input=InputNanoBanana2(
                     prompt="prompt",
-                    aspect_ratio="16:9",
-                    resolution="1K",
+                    aspect_ratio="adaptive",
+                    resolution="512px",
                 ),
             )
 
@@ -8600,7 +8806,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Gemini 3 Pro native image generation with advanced multimodal understanding and richer visuals
+        The reasoning-heavy tier — dense prompts, mixed references, and style transfer up to 4K.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8637,7 +8843,7 @@ class AsyncJobsClient:
             await client.jobs.submit_nano_banana_pro(
                 input=InputNanoBananaPro(
                     prompt="prompt",
-                    aspect_ratio="16:9",
+                    aspect_ratio="adaptive",
                     resolution="1K",
                 ),
             )
@@ -8727,7 +8933,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        PixVerse V6 text-to-video with native audio and 1080p output up to 15 seconds
+        Stylized 1080p clips up to 15 seconds, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8825,7 +9031,6 @@ class AsyncJobsClient:
                     prompt="prompt",
                     aspect_ratio="16:9",
                     resolution="540p",
-                    quality="standard",
                 ),
             )
 
@@ -9148,7 +9353,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 1.5 Pro video generation model
+        Keyframe-driven video with native audio, from a start frame, an end frame, or both.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9208,7 +9413,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 2.0 video generation model
+        Reference-driven video up to 4K with native audio — hold a look across shots with reference images, clips, or audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9248,7 +9453,6 @@ class AsyncJobsClient:
                     aspect_ratio="1:1",
                     resolution="4K",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -9269,7 +9473,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 2.0 Mini video generation model
+        The lightest Seedance tier — short reference-driven clips at 480p and 720p.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9329,7 +9533,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedance 2.5 video generation model
+        Reference-driven video up to 30 seconds at 1080p, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9389,7 +9593,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ultra-fast pro grade image model, pairing reference image support with high quality output for professional visuals
+        Quick, reference-aware stills for professional work on a tight turnaround.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9448,7 +9652,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Latest Seedream with enhanced detail, refined composition, and multi-reference image support for professional visuals.
+        Finer detail and steadier composition than 4.0, with support for several references at once.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9507,7 +9711,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedream 5.0 Lite Text-to-Image
+        Sharp 2K and 4K stills from a prompt, at the light tier's price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9566,7 +9770,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        ByteDance Seedream 5.0 Pro Text-to-Image
+        The top Seedream tier — layer-separable output and strong multilingual in-image text, up to 2K.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -10265,7 +10469,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The current state of the art in video generation
+        Google's earlier cinematic generator, kept for existing workflows.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -10362,7 +10566,6 @@ class AsyncJobsClient:
                     aspect_ratio="16:9",
                     resolution="720p",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -10422,7 +10625,6 @@ class AsyncJobsClient:
                     prompt="prompt",
                     aspect_ratio="16:9",
                     resolution="720p",
-                    quality="standard",
                 ),
             )
 
@@ -10443,7 +10645,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Vidu Q3 video with native dialogue and sound, up to 16 seconds — from a text prompt, from a start frame, or between a start and end frame
+        The longest clips in the catalog — up to 16 seconds with native dialogue and sound, from a text prompt, from a start frame, or between a start and end frame
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -10482,7 +10684,6 @@ class AsyncJobsClient:
                     prompt="prompt",
                     resolution="540p",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 
@@ -10503,7 +10704,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Vidu Q3 reference-to-video keeping up to four subjects consistent
+        Keep up to four subjects consistent across a clip from reference images.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -10671,7 +10872,6 @@ class AsyncJobsClient:
                     aspect_ratio="adaptive",
                     resolution="480p",
                     duration_ms=1,
-                    quality="standard",
                 ),
             )
 

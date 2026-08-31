@@ -6,6 +6,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.balance_response import BalanceResponse
+from ..types.transaction_list_response import TransactionListResponse
 from ..types.usage_group_by import UsageGroupBy
 from ..types.usage_response import UsageResponse
 from .raw_client import AsyncRawBillingClient, RawBillingClient
@@ -88,6 +89,46 @@ class BillingClient:
         client.billing.get_usage()
         """
         _response = self._raw_client.get_usage(start=start, end=end, group_by=group_by, request_options=request_options)
+        return _response.data
+
+    def list_transactions(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TransactionListResponse:
+        """
+        Every movement of the API wallet's balance, newest first: funds added,
+        jobs charged, charges refunded, and corrections. Scoped to the workspace
+        the credential bills, the same one `GET /v3/balance` reports.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Maximum items per page.
+
+        cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TransactionListResponse
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.billing.list_transactions()
+        """
+        _response = self._raw_client.list_transactions(limit=limit, cursor=cursor, request_options=request_options)
         return _response.data
 
 
@@ -185,5 +226,55 @@ class AsyncBillingClient:
         """
         _response = await self._raw_client.get_usage(
             start=start, end=end, group_by=group_by, request_options=request_options
+        )
+        return _response.data
+
+    async def list_transactions(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TransactionListResponse:
+        """
+        Every movement of the API wallet's balance, newest first: funds added,
+        jobs charged, charges refunded, and corrections. Scoped to the workspace
+        the credential bills, the same one `GET /v3/balance` reports.
+
+        Parameters
+        ----------
+        limit : typing.Optional[int]
+            Maximum items per page.
+
+        cursor : typing.Optional[str]
+            Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TransactionListResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.billing.list_transactions()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_transactions(
+            limit=limit, cursor=cursor, request_options=request_options
         )
         return _response.data

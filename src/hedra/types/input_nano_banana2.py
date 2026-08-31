@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_nano_banana2aspect_ratio import InputNanoBanana2AspectRatio
 from .input_nano_banana2images_item import InputNanoBanana2ImagesItem
 from .input_nano_banana2resolution import InputNanoBanana2Resolution
+from .input_nano_banana2thinking_level import InputNanoBanana2ThinkingLevel
 
 
 class InputNanoBanana2(UniversalBaseModel):
@@ -31,7 +32,7 @@ class InputNanoBanana2(UniversalBaseModel):
 
     aspect_ratio: InputNanoBanana2AspectRatio = pydantic.Field()
     """
-    Output aspect ratio.
+    Output aspect ratio. 'adaptive' lets the model size the output itself — matching the source image when you pass one.
     """
 
     resolution: InputNanoBanana2Resolution = pydantic.Field()
@@ -47,6 +48,21 @@ class InputNanoBanana2(UniversalBaseModel):
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
     Seed for reproducible output; omit for a random seed.
+    """
+
+    google_search: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Ground the generation in live Google Search results, so a prompt about current events or real-world specifics draws on what the web says now. Grounded generations cost more than ungrounded ones.
+    """
+
+    image_search: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Let the grounding search return images as well as text, so the model sees what it found rather than only reading about it. Turning this on grounds the generation whether or not google_search is also set.
+    """
+
+    thinking_level: typing.Optional[InputNanoBanana2ThinkingLevel] = pydantic.Field(default=None)
+    """
+    How much the model plans before it draws. Omit for the model's own default ('minimal'); 'high' reasons further at the cost of latency.
     """
 
     if IS_PYDANTIC_V2:

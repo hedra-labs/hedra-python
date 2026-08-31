@@ -47,12 +47,12 @@ class InputKlingO1(UniversalBaseModel):
 
     start_image: typing.Optional[InputKlingO1StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputKlingO1EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 10.4 MB.
+    End frame. At most 10.4 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO1ImagesItem]] = pydantic.Field(default=None)

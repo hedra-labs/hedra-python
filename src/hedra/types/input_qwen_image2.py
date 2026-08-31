@@ -65,9 +65,9 @@ class InputQwenImage2(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed. From 0 to 2147483647.
     """
 
-    quality: InputQwenImage2Quality = pydantic.Field()
+    quality: typing.Optional[InputQwenImage2Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — tuned for speed, for rapid iteration. `pro` — the higher-fidelity tier, for fine detail and in-image text accuracy.
     """
 
     if IS_PYDANTIC_V2:

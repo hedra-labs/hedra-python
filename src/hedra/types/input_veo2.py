@@ -45,7 +45,7 @@ class InputVeo2(UniversalBaseModel):
 
     start_image: typing.Optional[InputVeo2StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 8 MB.
+    Start frame. At most 8 MB.
     """
 
     negative_prompt: typing.Optional[str] = pydantic.Field(default=None)

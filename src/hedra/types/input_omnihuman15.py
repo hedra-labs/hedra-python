@@ -37,7 +37,7 @@ class InputOmnihuman15(UniversalBaseModel):
 
     start_image: InputOmnihuman15StartImage = pydantic.Field()
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     audio: InputOmnihuman15Audio = pydantic.Field()

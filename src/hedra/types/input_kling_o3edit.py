@@ -26,7 +26,7 @@ class InputKlingO3Edit(UniversalBaseModel):
 
     source_video: InputKlingO3EditSourceVideo = pydantic.Field()
     """
-    Source video (video-to-video). From 3s to 15s and at most 524.2 MB.
+    Source video. From 3s to 15s and at most 524.2 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO3EditImagesItem]] = pydantic.Field(default=None)

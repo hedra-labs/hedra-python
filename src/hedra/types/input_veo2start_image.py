@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputVeo2StartImage_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video). At most 8 MB.
+    Start frame. At most 8 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputVeo2StartImage_Url(UniversalBaseModel):
 
 class InputVeo2StartImage_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video). At most 8 MB.
+    Start frame. At most 8 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

@@ -70,9 +70,9 @@ class InputHidreamO1Image(UniversalBaseModel):
     Output resolution.
     """
 
-    quality: InputHidreamO1ImageQuality = pydantic.Field()
+    quality: typing.Optional[InputHidreamO1ImageQuality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the full model, at 50 denoising steps. `dev` — HiDream's distilled checkpoint, at 28 denoising steps instead of 50 — quicker and cheaper for the same prompt.
     """
 
     if IS_PYDANTIC_V2:

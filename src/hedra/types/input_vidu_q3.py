@@ -48,12 +48,12 @@ class InputViduQ3(UniversalBaseModel):
 
     start_image: typing.Optional[InputViduQ3StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     end_image: typing.Optional[InputViduQ3EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 10.4 MB.
+    End frame. At most 10.4 MB.
     """
 
     aspect_ratio: typing.Optional[InputViduQ3AspectRatio] = pydantic.Field(default=None)
@@ -61,9 +61,9 @@ class InputViduQ3(UniversalBaseModel):
     Output aspect ratio.
     """
 
-    quality: InputViduQ3Quality = pydantic.Field()
+    quality: typing.Optional[InputViduQ3Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the full model. `turbo` — the same options tuned for turnaround, at a lower rate.
     """
 
     if IS_PYDANTIC_V2:

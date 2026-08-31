@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputMinimaxH3StartImage_Url(UniversalBaseModel):
     """
-    Start frame (image-to-video). From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputMinimaxH3StartImage_Url(UniversalBaseModel):
 
 class InputMinimaxH3StartImage_Asset(UniversalBaseModel):
     """
-    Start frame (image-to-video). From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

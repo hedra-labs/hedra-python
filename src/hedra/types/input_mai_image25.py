@@ -49,9 +49,9 @@ class InputMaiImage25(UniversalBaseModel):
     Output image format.
     """
 
-    quality: InputMaiImage25Quality = pydantic.Field()
+    quality: typing.Optional[InputMaiImage25Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — photorealistic generation and editing at the base rate. `pro` — the higher-fidelity tier, for final deliverables that need maximum detail and text rendering.
     """
 
     if IS_PYDANTIC_V2:

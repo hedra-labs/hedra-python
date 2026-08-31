@@ -45,12 +45,12 @@ class InputSeedance20Mini(UniversalBaseModel):
 
     start_image: typing.Optional[InputSeedance20MiniStartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Start frame. From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     end_image: typing.Optional[InputSeedance20MiniEndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    End frame. From 300px to 6000px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
     images: typing.Optional[typing.List[InputSeedance20MiniImagesItem]] = pydantic.Field(default=None)

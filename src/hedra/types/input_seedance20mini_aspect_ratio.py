@@ -2,4 +2,6 @@
 
 import typing
 
-InputSeedance20MiniAspectRatio = typing.Union[typing.Literal["1:1", "3:4", "4:3", "16:9", "21:9", "9:16"], typing.Any]
+InputSeedance20MiniAspectRatio = typing.Union[
+    typing.Literal["1:1", "3:4", "4:3", "16:9", "21:9", "9:16", "adaptive"], typing.Any
+]

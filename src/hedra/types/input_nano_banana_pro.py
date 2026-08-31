@@ -31,7 +31,7 @@ class InputNanoBananaPro(UniversalBaseModel):
 
     aspect_ratio: InputNanoBananaProAspectRatio = pydantic.Field()
     """
-    Output aspect ratio.
+    Output aspect ratio. 'adaptive' lets the model size the output itself — matching the source image when you pass one.
     """
 
     resolution: InputNanoBananaProResolution = pydantic.Field()
@@ -47,6 +47,11 @@ class InputNanoBananaPro(UniversalBaseModel):
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
     Seed for reproducible output; omit for a random seed.
+    """
+
+    google_search: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Ground the generation in live Google Search results, so a prompt about current events or real-world specifics draws on what the web says now. Grounded generations cost more than ungrounded ones.
     """
 
     if IS_PYDANTIC_V2:

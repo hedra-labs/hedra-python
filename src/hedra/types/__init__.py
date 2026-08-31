@@ -46,6 +46,7 @@ if typing.TYPE_CHECKING:
     from .input_elevenlabs_multilingual_sts_v2audio_asset import InputElevenlabsMultilingualStsV2AudioAsset
     from .input_elevenlabs_multilingual_sts_v2audio_url import InputElevenlabsMultilingualStsV2AudioUrl
     from .input_elevenlabs_multilingual_v2 import InputElevenlabsMultilingualV2
+    from .input_elevenlabs_music import InputElevenlabsMusic
     from .input_elevenlabs_sound_effects import InputElevenlabsSoundEffects
     from .input_elevenlabs_v3 import InputElevenlabsV3
     from .input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
@@ -194,6 +195,17 @@ if typing.TYPE_CHECKING:
     from .input_gpt_image2quality import InputGptImage2Quality
     from .input_gpt_image2resolution import InputGptImage2Resolution
     from .input_grok_imagine import InputGrokImagine
+    from .input_grok_imagine20 import InputGrokImagine20
+    from .input_grok_imagine20aspect_ratio import InputGrokImagine20AspectRatio
+    from .input_grok_imagine20images_item import (
+        InputGrokImagine20ImagesItem,
+        InputGrokImagine20ImagesItem_Asset,
+        InputGrokImagine20ImagesItem_Url,
+    )
+    from .input_grok_imagine20images_item_asset import InputGrokImagine20ImagesItemAsset
+    from .input_grok_imagine20images_item_url import InputGrokImagine20ImagesItemUrl
+    from .input_grok_imagine20output_format import InputGrokImagine20OutputFormat
+    from .input_grok_imagine20resolution import InputGrokImagine20Resolution
     from .input_grok_imagine_aspect_ratio import InputGrokImagineAspectRatio
     from .input_grok_imagine_images_item import (
         InputGrokImagineImagesItem,
@@ -203,6 +215,8 @@ if typing.TYPE_CHECKING:
     from .input_grok_imagine_images_item_asset import InputGrokImagineImagesItemAsset
     from .input_grok_imagine_images_item_url import InputGrokImagineImagesItemUrl
     from .input_grok_imagine_output_format import InputGrokImagineOutputFormat
+    from .input_grok_imagine_quality import InputGrokImagineQuality
+    from .input_grok_imagine_resolution import InputGrokImagineResolution
     from .input_grok_video import InputGrokVideo
     from .input_grok_video_aspect_ratio import InputGrokVideoAspectRatio
     from .input_grok_video_resolution import InputGrokVideoResolution
@@ -538,6 +552,7 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3images_item_asset import InputMinimaxH3ImagesItemAsset
     from .input_minimax_h3images_item_url import InputMinimaxH3ImagesItemUrl
+    from .input_minimax_h3quality import InputMinimaxH3Quality
     from .input_minimax_h3resolution import InputMinimaxH3Resolution
     from .input_minimax_h3start_image import (
         InputMinimaxH3StartImage,
@@ -595,6 +610,7 @@ if typing.TYPE_CHECKING:
     from .input_nano_banana2images_item_asset import InputNanoBanana2ImagesItemAsset
     from .input_nano_banana2images_item_url import InputNanoBanana2ImagesItemUrl
     from .input_nano_banana2resolution import InputNanoBanana2Resolution
+    from .input_nano_banana2thinking_level import InputNanoBanana2ThinkingLevel
     from .input_nano_banana_aspect_ratio import InputNanoBananaAspectRatio
     from .input_nano_banana_images_item import (
         InputNanoBananaImagesItem,
@@ -840,6 +856,7 @@ if typing.TYPE_CHECKING:
     )
     from .input_seedream50lite_images_item_asset import InputSeedream50LiteImagesItemAsset
     from .input_seedream50lite_images_item_url import InputSeedream50LiteImagesItemUrl
+    from .input_seedream50lite_output_format import InputSeedream50LiteOutputFormat
     from .input_seedream50lite_resolution import InputSeedream50LiteResolution
     from .input_seedream50pro import InputSeedream50Pro
     from .input_seedream50pro_aspect_ratio import InputSeedream50ProAspectRatio
@@ -850,6 +867,7 @@ if typing.TYPE_CHECKING:
     )
     from .input_seedream50pro_images_item_asset import InputSeedream50ProImagesItemAsset
     from .input_seedream50pro_images_item_url import InputSeedream50ProImagesItemUrl
+    from .input_seedream50pro_output_format import InputSeedream50ProOutputFormat
     from .input_seedream50pro_resolution import InputSeedream50ProResolution
     from .input_sora2pro import InputSora2Pro
     from .input_sora2pro_aspect_ratio import InputSora2ProAspectRatio
@@ -1080,9 +1098,12 @@ if typing.TYPE_CHECKING:
     from .status_response import StatusResponse
     from .submit_response import SubmitResponse
     from .token_create_response import TokenCreateResponse
+    from .transaction_list_response import TransactionListResponse
+    from .transaction_record import TransactionRecord
     from .usage_bucket import UsageBucket
     from .usage_group_by import UsageGroupBy
     from .usage_response import UsageResponse
+    from .voice_gender import VoiceGender
     from .voice_list_response import VoiceListResponse
     from .voice_summary import VoiceSummary
     from .webhook_default_config import WebhookDefaultConfig
@@ -1130,6 +1151,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputElevenlabsMultilingualStsV2Audio_Asset": ".input_elevenlabs_multilingual_sts_v2audio",
     "InputElevenlabsMultilingualStsV2Audio_Url": ".input_elevenlabs_multilingual_sts_v2audio",
     "InputElevenlabsMultilingualV2": ".input_elevenlabs_multilingual_v2",
+    "InputElevenlabsMusic": ".input_elevenlabs_music",
     "InputElevenlabsSoundEffects": ".input_elevenlabs_sound_effects",
     "InputElevenlabsV3": ".input_elevenlabs_v3",
     "InputElevenlabsVoiceClone": ".input_elevenlabs_voice_clone",
@@ -1256,6 +1278,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputGptImage2Quality": ".input_gpt_image2quality",
     "InputGptImage2Resolution": ".input_gpt_image2resolution",
     "InputGrokImagine": ".input_grok_imagine",
+    "InputGrokImagine20": ".input_grok_imagine20",
+    "InputGrokImagine20AspectRatio": ".input_grok_imagine20aspect_ratio",
+    "InputGrokImagine20ImagesItem": ".input_grok_imagine20images_item",
+    "InputGrokImagine20ImagesItemAsset": ".input_grok_imagine20images_item_asset",
+    "InputGrokImagine20ImagesItemUrl": ".input_grok_imagine20images_item_url",
+    "InputGrokImagine20ImagesItem_Asset": ".input_grok_imagine20images_item",
+    "InputGrokImagine20ImagesItem_Url": ".input_grok_imagine20images_item",
+    "InputGrokImagine20OutputFormat": ".input_grok_imagine20output_format",
+    "InputGrokImagine20Resolution": ".input_grok_imagine20resolution",
     "InputGrokImagineAspectRatio": ".input_grok_imagine_aspect_ratio",
     "InputGrokImagineImagesItem": ".input_grok_imagine_images_item",
     "InputGrokImagineImagesItemAsset": ".input_grok_imagine_images_item_asset",
@@ -1263,6 +1294,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputGrokImagineImagesItem_Asset": ".input_grok_imagine_images_item",
     "InputGrokImagineImagesItem_Url": ".input_grok_imagine_images_item",
     "InputGrokImagineOutputFormat": ".input_grok_imagine_output_format",
+    "InputGrokImagineQuality": ".input_grok_imagine_quality",
+    "InputGrokImagineResolution": ".input_grok_imagine_resolution",
     "InputGrokVideo": ".input_grok_video",
     "InputGrokVideoAspectRatio": ".input_grok_video_aspect_ratio",
     "InputGrokVideoResolution": ".input_grok_video_resolution",
@@ -1542,6 +1575,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3ImagesItemUrl": ".input_minimax_h3images_item_url",
     "InputMinimaxH3ImagesItem_Asset": ".input_minimax_h3images_item",
     "InputMinimaxH3ImagesItem_Url": ".input_minimax_h3images_item",
+    "InputMinimaxH3Quality": ".input_minimax_h3quality",
     "InputMinimaxH3Resolution": ".input_minimax_h3resolution",
     "InputMinimaxH3StartImage": ".input_minimax_h3start_image",
     "InputMinimaxH3StartImageAsset": ".input_minimax_h3start_image_asset",
@@ -1587,6 +1621,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputNanoBanana2ImagesItem_Asset": ".input_nano_banana2images_item",
     "InputNanoBanana2ImagesItem_Url": ".input_nano_banana2images_item",
     "InputNanoBanana2Resolution": ".input_nano_banana2resolution",
+    "InputNanoBanana2ThinkingLevel": ".input_nano_banana2thinking_level",
     "InputNanoBananaAspectRatio": ".input_nano_banana_aspect_ratio",
     "InputNanoBananaImagesItem": ".input_nano_banana_images_item",
     "InputNanoBananaImagesItemAsset": ".input_nano_banana_images_item_asset",
@@ -1780,6 +1815,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputSeedream50LiteImagesItemUrl": ".input_seedream50lite_images_item_url",
     "InputSeedream50LiteImagesItem_Asset": ".input_seedream50lite_images_item",
     "InputSeedream50LiteImagesItem_Url": ".input_seedream50lite_images_item",
+    "InputSeedream50LiteOutputFormat": ".input_seedream50lite_output_format",
     "InputSeedream50LiteResolution": ".input_seedream50lite_resolution",
     "InputSeedream50Pro": ".input_seedream50pro",
     "InputSeedream50ProAspectRatio": ".input_seedream50pro_aspect_ratio",
@@ -1788,6 +1824,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputSeedream50ProImagesItemUrl": ".input_seedream50pro_images_item_url",
     "InputSeedream50ProImagesItem_Asset": ".input_seedream50pro_images_item",
     "InputSeedream50ProImagesItem_Url": ".input_seedream50pro_images_item",
+    "InputSeedream50ProOutputFormat": ".input_seedream50pro_output_format",
     "InputSeedream50ProResolution": ".input_seedream50pro_resolution",
     "InputSora2Pro": ".input_sora2pro",
     "InputSora2ProAspectRatio": ".input_sora2pro_aspect_ratio",
@@ -2008,9 +2045,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StatusResponse": ".status_response",
     "SubmitResponse": ".submit_response",
     "TokenCreateResponse": ".token_create_response",
+    "TransactionListResponse": ".transaction_list_response",
+    "TransactionRecord": ".transaction_record",
     "UsageBucket": ".usage_bucket",
     "UsageGroupBy": ".usage_group_by",
     "UsageResponse": ".usage_response",
+    "VoiceGender": ".voice_gender",
     "VoiceListResponse": ".voice_list_response",
     "VoiceSummary": ".voice_summary",
     "WebhookDefaultConfig": ".webhook_default_config",
@@ -2082,6 +2122,7 @@ __all__ = [
     "InputElevenlabsMultilingualStsV2Audio_Asset",
     "InputElevenlabsMultilingualStsV2Audio_Url",
     "InputElevenlabsMultilingualV2",
+    "InputElevenlabsMusic",
     "InputElevenlabsSoundEffects",
     "InputElevenlabsV3",
     "InputElevenlabsVoiceClone",
@@ -2208,6 +2249,15 @@ __all__ = [
     "InputGptImage2Quality",
     "InputGptImage2Resolution",
     "InputGrokImagine",
+    "InputGrokImagine20",
+    "InputGrokImagine20AspectRatio",
+    "InputGrokImagine20ImagesItem",
+    "InputGrokImagine20ImagesItemAsset",
+    "InputGrokImagine20ImagesItemUrl",
+    "InputGrokImagine20ImagesItem_Asset",
+    "InputGrokImagine20ImagesItem_Url",
+    "InputGrokImagine20OutputFormat",
+    "InputGrokImagine20Resolution",
     "InputGrokImagineAspectRatio",
     "InputGrokImagineImagesItem",
     "InputGrokImagineImagesItemAsset",
@@ -2215,6 +2265,8 @@ __all__ = [
     "InputGrokImagineImagesItem_Asset",
     "InputGrokImagineImagesItem_Url",
     "InputGrokImagineOutputFormat",
+    "InputGrokImagineQuality",
+    "InputGrokImagineResolution",
     "InputGrokVideo",
     "InputGrokVideoAspectRatio",
     "InputGrokVideoResolution",
@@ -2494,6 +2546,7 @@ __all__ = [
     "InputMinimaxH3ImagesItemUrl",
     "InputMinimaxH3ImagesItem_Asset",
     "InputMinimaxH3ImagesItem_Url",
+    "InputMinimaxH3Quality",
     "InputMinimaxH3Resolution",
     "InputMinimaxH3StartImage",
     "InputMinimaxH3StartImageAsset",
@@ -2539,6 +2592,7 @@ __all__ = [
     "InputNanoBanana2ImagesItem_Asset",
     "InputNanoBanana2ImagesItem_Url",
     "InputNanoBanana2Resolution",
+    "InputNanoBanana2ThinkingLevel",
     "InputNanoBananaAspectRatio",
     "InputNanoBananaImagesItem",
     "InputNanoBananaImagesItemAsset",
@@ -2732,6 +2786,7 @@ __all__ = [
     "InputSeedream50LiteImagesItemUrl",
     "InputSeedream50LiteImagesItem_Asset",
     "InputSeedream50LiteImagesItem_Url",
+    "InputSeedream50LiteOutputFormat",
     "InputSeedream50LiteResolution",
     "InputSeedream50Pro",
     "InputSeedream50ProAspectRatio",
@@ -2740,6 +2795,7 @@ __all__ = [
     "InputSeedream50ProImagesItemUrl",
     "InputSeedream50ProImagesItem_Asset",
     "InputSeedream50ProImagesItem_Url",
+    "InputSeedream50ProOutputFormat",
     "InputSeedream50ProResolution",
     "InputSora2Pro",
     "InputSora2ProAspectRatio",
@@ -2960,9 +3016,12 @@ __all__ = [
     "StatusResponse",
     "SubmitResponse",
     "TokenCreateResponse",
+    "TransactionListResponse",
+    "TransactionRecord",
     "UsageBucket",
     "UsageGroupBy",
     "UsageResponse",
+    "VoiceGender",
     "VoiceListResponse",
     "VoiceSummary",
     "WebhookDefaultConfig",

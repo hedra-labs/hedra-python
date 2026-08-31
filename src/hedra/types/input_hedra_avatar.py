@@ -43,7 +43,7 @@ class InputHedraAvatar(UniversalBaseModel):
 
     start_image: InputHedraAvatarStartImage = pydantic.Field()
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     audio: InputHedraAvatarAudio = pydantic.Field()

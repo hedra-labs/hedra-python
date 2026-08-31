@@ -55,7 +55,7 @@ class InputPixverseV6(UniversalBaseModel):
 
     start_image: typing.Optional[InputPixverseV6StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 10.4 MB.
+    Start frame. At most 10.4 MB.
     """
 
     aspect_ratio: typing.Optional[InputPixverseV6AspectRatio] = pydantic.Field(default=None)

@@ -2,4 +2,4 @@
 
 import typing
 
-InputLumaRay32AspectRatio = typing.Union[typing.Literal["1:1", "3:4", "4:3", "16:9", "21:9", "9:16"], typing.Any]
+InputLumaRay32AspectRatio = typing.Union[typing.Literal["3:4", "4:3", "1:1", "9:16", "16:9", "21:9"], typing.Any]

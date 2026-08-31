@@ -55,17 +55,17 @@ class InputVeo31(UniversalBaseModel):
 
     start_image: typing.Optional[InputVeo31StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). At most 20 MB.
+    Start frame. At most 20 MB.
     """
 
     end_image: typing.Optional[InputVeo31EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 20 MB.
+    End frame. At most 20 MB.
     """
 
     source_video: typing.Optional[InputVeo31SourceVideo] = pydantic.Field(default=None)
     """
-    Source video (video-to-video). From 1s to 30s and at most 524.2 MB.
+    Source video. From 1s to 30s and at most 524.2 MB.
     """
 
     images: typing.Optional[typing.List[InputVeo31ImagesItem]] = pydantic.Field(default=None)
@@ -78,9 +78,9 @@ class InputVeo31(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed. From 0 to 4294967295.
     """
 
-    quality: InputVeo31Quality = pydantic.Field()
+    quality: typing.Optional[InputVeo31Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — the full model, for maximum detail and nuance. `fast` — the same model tuned for turnaround, at a lower rate.
     """
 
     if IS_PYDANTIC_V2:

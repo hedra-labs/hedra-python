@@ -26,7 +26,7 @@ class InputKlingO3Reference(UniversalBaseModel):
 
     source_video: InputKlingO3ReferenceSourceVideo = pydantic.Field()
     """
-    Source video (video-to-video). From 3s to 15s and at most 524.2 MB.
+    Source video. From 3s to 15s and at most 524.2 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO3ReferenceImagesItem]] = pydantic.Field(default=None)

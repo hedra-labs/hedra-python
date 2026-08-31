@@ -11,6 +11,7 @@ from ..types.job_summary import JobSummary
 from ..types.modality import Modality
 from ..types.model_detail import ModelDetail
 from ..types.model_list_response import ModelListResponse
+from ..types.voice_gender import VoiceGender
 from ..types.voice_list_response import VoiceListResponse
 from .raw_client import AsyncRawModelsClient, RawModelsClient
 
@@ -166,6 +167,61 @@ class ModelsClient:
         )
         """
         _response = self._raw_client.list_voices(model, request_options=request_options)
+        return _response.data
+
+    def search_voices(
+        self,
+        model: str,
+        *,
+        q: str,
+        limit: typing.Optional[int] = None,
+        gender: typing.Optional[VoiceGender] = None,
+        language: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> VoiceListResponse:
+        """
+        The voices this model accepts, ranked against a description — the whole shared library, including the voices the listing does not return.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        q : str
+            What the voice should sound like, in plain words — "warm british narrator", "energetic young announcer". Matched against the whole library for this model's provider, not just the voices `GET /v3/models/{model}/voices` returns.
+
+        limit : typing.Optional[int]
+            Maximum voices to return. Applies to the whole response.
+
+        gender : typing.Optional[VoiceGender]
+            Only voices curated with this gender.
+
+        language : typing.Optional[str]
+            Only voices curated for this language, as an ISO 639-1 two-letter code (`en`, `es`, `fr`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceListResponse
+            Successful Response
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.models.search_voices(
+            model="model",
+            q="q",
+        )
+        """
+        _response = self._raw_client.search_voices(
+            model, q=q, limit=limit, gender=gender, language=language, request_options=request_options
+        )
         return _response.data
 
     def get_openapi(
@@ -425,6 +481,69 @@ class AsyncModelsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list_voices(model, request_options=request_options)
+        return _response.data
+
+    async def search_voices(
+        self,
+        model: str,
+        *,
+        q: str,
+        limit: typing.Optional[int] = None,
+        gender: typing.Optional[VoiceGender] = None,
+        language: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> VoiceListResponse:
+        """
+        The voices this model accepts, ranked against a description — the whole shared library, including the voices the listing does not return.
+
+        Parameters
+        ----------
+        model : str
+            The model's public id (`GET /v3/models`).
+
+        q : str
+            What the voice should sound like, in plain words — "warm british narrator", "energetic young announcer". Matched against the whole library for this model's provider, not just the voices `GET /v3/models/{model}/voices` returns.
+
+        limit : typing.Optional[int]
+            Maximum voices to return. Applies to the whole response.
+
+        gender : typing.Optional[VoiceGender]
+            Only voices curated with this gender.
+
+        language : typing.Optional[str]
+            Only voices curated for this language, as an ISO 639-1 two-letter code (`en`, `es`, `fr`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceListResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.models.search_voices(
+                model="model",
+                q="q",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search_voices(
+            model, q=q, limit=limit, gender=gender, language=language, request_options=request_options
+        )
         return _response.data
 
     async def get_openapi(

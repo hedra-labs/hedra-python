@@ -2,4 +2,9 @@
 
 import typing
 
-InputGrokImagineAspectRatio = typing.Union[typing.Literal["16:9", "9:16", "1:1"], typing.Any]
+InputGrokImagineAspectRatio = typing.Union[
+    typing.Literal[
+        "auto", "2:1", "20:9", "19.5:9", "16:9", "4:3", "3:2", "1:1", "2:3", "3:4", "9:16", "9:19.5", "9:20", "1:2"
+    ],
+    typing.Any,
+]

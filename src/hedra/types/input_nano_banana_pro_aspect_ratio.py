@@ -3,5 +3,5 @@
 import typing
 
 InputNanoBananaProAspectRatio = typing.Union[
-    typing.Literal["16:9", "9:16", "1:1", "21:9", "4:3", "3:4", "3:2", "2:3", "5:4", "4:5"], typing.Any
+    typing.Literal["adaptive", "16:9", "9:16", "1:1", "21:9", "4:3", "3:4", "3:2", "2:3", "5:4", "4:5"], typing.Any
 ]

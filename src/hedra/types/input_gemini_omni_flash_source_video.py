@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputGeminiOmniFlashSourceVideo_Url(UniversalBaseModel):
     """
-    Source video (video-to-video). From 1s to 10s and at most 524.2 MB.
+    Source video. From 1s to 10s and at most 524.2 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputGeminiOmniFlashSourceVideo_Url(UniversalBaseModel):
 
 class InputGeminiOmniFlashSourceVideo_Asset(UniversalBaseModel):
     """
-    Source video (video-to-video). From 1s to 10s and at most 524.2 MB.
+    Source video. From 1s to 10s and at most 524.2 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

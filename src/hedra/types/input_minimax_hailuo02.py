@@ -46,12 +46,12 @@ class InputMinimaxHailuo02(UniversalBaseModel):
 
     start_image: typing.Optional[InputMinimaxHailuo02StartImage] = pydantic.Field(default=None)
     """
-    Start frame (image-to-video). The output video follows this image's aspect ratio. At most 20 MB.
+    Start frame. The output video follows this image's aspect ratio. At most 20 MB.
     """
 
     end_image: typing.Optional[InputMinimaxHailuo02EndImage] = pydantic.Field(default=None)
     """
-    End frame (first-last-frame-to-video). At most 20 MB.
+    End frame. At most 20 MB.
     """
 
     aspect_ratio: typing.Optional[InputMinimaxHailuo02AspectRatio] = pydantic.Field(default=None)
@@ -59,9 +59,9 @@ class InputMinimaxHailuo02(UniversalBaseModel):
     Output aspect ratio.
     """
 
-    quality: InputMinimaxHailuo02Quality = pydantic.Field()
+    quality: typing.Optional[InputMinimaxHailuo02Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at.
+    Quality level to generate at. `standard` — 768p, for everyday motion. `pro` — 1080p, with smoother motion and sharper detail.
     """
 
     if IS_PYDANTIC_V2:
