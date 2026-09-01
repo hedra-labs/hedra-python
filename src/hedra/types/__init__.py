@@ -552,7 +552,6 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3images_item_asset import InputMinimaxH3ImagesItemAsset
     from .input_minimax_h3images_item_url import InputMinimaxH3ImagesItemUrl
-    from .input_minimax_h3quality import InputMinimaxH3Quality
     from .input_minimax_h3resolution import InputMinimaxH3Resolution
     from .input_minimax_h3start_image import (
         InputMinimaxH3StartImage,
@@ -1575,7 +1574,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3ImagesItemUrl": ".input_minimax_h3images_item_url",
     "InputMinimaxH3ImagesItem_Asset": ".input_minimax_h3images_item",
     "InputMinimaxH3ImagesItem_Url": ".input_minimax_h3images_item",
-    "InputMinimaxH3Quality": ".input_minimax_h3quality",
     "InputMinimaxH3Resolution": ".input_minimax_h3resolution",
     "InputMinimaxH3StartImage": ".input_minimax_h3start_image",
     "InputMinimaxH3StartImageAsset": ".input_minimax_h3start_image_asset",
@@ -2546,7 +2544,6 @@ __all__ = [
     "InputMinimaxH3ImagesItemUrl",
     "InputMinimaxH3ImagesItem_Asset",
     "InputMinimaxH3ImagesItem_Url",
-    "InputMinimaxH3Quality",
     "InputMinimaxH3Resolution",
     "InputMinimaxH3StartImage",
     "InputMinimaxH3StartImageAsset",
