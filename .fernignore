@@ -7,7 +7,15 @@ poetry.lock
 # Local-dev ignores are hand-maintained
 .gitignore
 
-# README install/badge + usage use the hedra-sdk distribution name
+# README is hand-curated: the quickstart (submit -> poll -> result), auth notes,
+# custom base URL, streaming and upload sections. Fern's README generator only
+# keeps sections whose headings it does not own; it rewrites Usage, Advanced,
+# Installation, ... wholesale on every regeneration, and fern-replay would then
+# try to re-apply the hand edits as patches on top (ENG-10135's failure mode).
+# When the generator's boilerplate moves, regenerate locally in fern-config
+# (`fern generate --group python-local --local`) and diff .local-python/README.md
+# against this file. tests/custom/test_readme.py fails if the README references
+# a method or import the shipped client no longer has.
 README.md
 
 # version.py looks up the hedra-sdk distribution
