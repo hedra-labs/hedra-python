@@ -46,7 +46,7 @@ class BaseClientWrapper:
         api_key = self._get_api_key()
         if api_key is not None:
             headers["Authorization"] = f"Bearer {api_key}"
-        headers["X-Hedra-Spec-Version"] = self._spec_version if self._spec_version is not None else "3.15.5"
+        headers["X-Hedra-Spec-Version"] = self._spec_version if self._spec_version is not None else "3.16.0"
         return headers
 
     def _get_api_key(self) -> typing.Optional[str]:

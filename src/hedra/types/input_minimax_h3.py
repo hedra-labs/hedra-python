@@ -8,7 +8,6 @@ from .input_minimax_h3aspect_ratio import InputMinimaxH3AspectRatio
 from .input_minimax_h3audios_item import InputMinimaxH3AudiosItem
 from .input_minimax_h3end_image import InputMinimaxH3EndImage
 from .input_minimax_h3images_item import InputMinimaxH3ImagesItem
-from .input_minimax_h3quality import InputMinimaxH3Quality
 from .input_minimax_h3resolution import InputMinimaxH3Resolution
 from .input_minimax_h3start_image import InputMinimaxH3StartImage
 from .input_minimax_h3videos_item import InputMinimaxH3VideosItem
@@ -19,13 +18,10 @@ class InputMinimaxH3(UniversalBaseModel):
     Model-specific inputs for `minimax-h3`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, audios, end_image, images, videos; accepts quality: standard
-    (2) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio, audios, images, videos; accepts quality: standard
-    (3) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image; accepts quality: standard
-    (4) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, audios, end_image, images, videos; accepts quality: max; resolution: 480p | 768p
-    (5) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio, audios, images, videos; accepts quality: max; resolution: 480p | 768p
-    (6) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: audios, end_image, images, start_image, videos; accepts aspect_ratio: 1:1 | 3:4 | 4:3 | 16:9 | 21:9 | 9:16; quality: max; resolution: 480p | 768p
-    (7) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: audios, end_image, images, start_image, videos; accepts aspect_ratio: 1:1 | 3:4 | 4:3 | 16:9 | 21:9 | 9:16; quality: standard
+    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, audios, end_image, images, videos
+    (2) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio, audios, images, videos
+    (3) requires: aspect_ratio, duration_ms, images, prompt, resolution; must omit: end_image, start_image
+    (4) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: audios, end_image, images, start_image, videos; accepts aspect_ratio: 1:1 | 3:4 | 4:3 | 16:9 | 21:9 | 9:16
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -76,11 +72,6 @@ class InputMinimaxH3(UniversalBaseModel):
     audios: typing.Optional[typing.List[InputMinimaxH3AudiosItem]] = pydantic.Field(default=None)
     """
     Reference audios. 1 to 3 audio files, each from 2s to 15s and at most 104.8 MB, at most 15s in total.
-    """
-
-    quality: typing.Optional[InputMinimaxH3Quality] = pydantic.Field(default=None)
-    """
-    Quality level to generate at. `standard` — the base tier, offering 2K and 4K and the only one with a reference mode. `max` — a post-trained variant at half the price, 480p and 768p only.
     """
 
     if IS_PYDANTIC_V2:
