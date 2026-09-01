@@ -40,18 +40,18 @@ Instantiate and use the client with the following:
 ```python
 import time
 
-from hedra import Hedra, InputKlingO3
+from hedra import Hedra, InputMinimaxH3
 
 client = Hedra(
     api_key="<value>",
 )
 
-submitted = client.jobs.submit_kling_o3(
-    input=InputKlingO3(
+submitted = client.jobs.submit_minimax_h3(
+    input=InputMinimaxH3(
         prompt="a fox sprinting across fresh snow",
         aspect_ratio="16:9",
-        duration_ms=5000,
-        quality="standard",
+        resolution="768p",
+        duration_ms=6000,
     ),
 )
 
@@ -66,8 +66,8 @@ for output in result.outputs or []:
     print(output.url)
 ```
 
-Every model has its own submit method — `submit_kling_o3`, `submit_veo3`, `submit_nano_banana`
-and so on — each taking the typed input model for that model (`InputKlingO3`, `InputVeo3`, …).
+Every model has its own submit method — `submit_minimax_h3`, `submit_kling_o3`, `submit_veo3`
+and so on — each taking the typed input model for that model (`InputMinimaxH3`, `InputKlingO3`, …).
 The [reference](https://github.com/hedra-labs/hedra-python/blob/main/reference.md) lists all of them.
 To run a model by its public id instead, with an untyped `input` dict that the API validates at
 submit time, use `client.jobs.submit(model, input={...})`.
@@ -106,7 +106,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from hedra import AsyncHedra, InputKlingO3
+from hedra import AsyncHedra, InputMinimaxH3
 
 client = AsyncHedra(
     api_key="<value>",
@@ -114,12 +114,12 @@ client = AsyncHedra(
 
 
 async def main() -> None:
-    await client.jobs.submit_kling_o3(
-        input=InputKlingO3(
+    await client.jobs.submit_minimax_h3(
+        input=InputMinimaxH3(
             prompt="a fox sprinting across fresh snow",
             aspect_ratio="16:9",
-            duration_ms=5000,
-            quality="standard",
+            resolution="768p",
+            duration_ms=6000,
         ),
     )
 
@@ -136,7 +136,7 @@ will be thrown.
 from hedra.core.api_error import ApiError
 
 try:
-    client.jobs.submit_kling_o3(...)
+    client.jobs.submit_minimax_h3(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -198,7 +198,7 @@ file you uploaded first. `client.files.upload` stores the bytes and returns a pr
 file's handle for the next hour; pass it back verbatim as a `url` source:
 
 ```python
-from hedra import Hedra, InputKlingO3, InputKlingO3StartImage_Url
+from hedra import Hedra, InputMinimaxH3, InputMinimaxH3StartImage_Url
 
 client = Hedra(
     api_key="<value>",
@@ -207,13 +207,12 @@ client = Hedra(
 with open("frame.png", "rb") as f:
     upload = client.files.upload(file=f)
 
-client.jobs.submit_kling_o3(
-    input=InputKlingO3(
+client.jobs.submit_minimax_h3(
+    input=InputMinimaxH3(
         prompt="the fox turns toward the camera",
-        aspect_ratio="16:9",
-        duration_ms=5000,
-        quality="standard",
-        start_image=InputKlingO3StartImage_Url(url=upload.url),
+        resolution="768p",
+        duration_ms=6000,
+        start_image=InputMinimaxH3StartImage_Url(url=upload.url),
     ),
 )
 ```
@@ -231,7 +230,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from hedra import Hedra
 
 client = Hedra(...)
-response = client.jobs.with_raw_response.submit_kling_o3(...)
+response = client.jobs.with_raw_response.submit_minimax_h3(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -262,7 +261,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.jobs.submit_kling_o3(..., request_options={
+client.jobs.submit_minimax_h3(..., request_options={
     "max_retries": 1
 })
 ```
@@ -277,7 +276,7 @@ from hedra import Hedra
 client = Hedra(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.jobs.submit_kling_o3(..., request_options={
+client.jobs.submit_minimax_h3(..., request_options={
     "timeout": 1
 })
 ```
