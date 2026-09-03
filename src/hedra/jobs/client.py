@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
+from ..types.input_creatify_aurora import InputCreatifyAurora
 from ..types.input_dreamina31 import InputDreamina31
 from ..types.input_elevenlabs_audio_isolation import InputElevenlabsAudioIsolation
 from ..types.input_elevenlabs_english_sts_v2 import InputElevenlabsEnglishStsV2
@@ -35,6 +36,7 @@ from ..types.input_grok_video import InputGrokVideo
 from ..types.input_happy_horse import InputHappyHorse
 from ..types.input_hedra_avatar import InputHedraAvatar
 from ..types.input_hedra_character3 import InputHedraCharacter3
+from ..types.input_heygen_photo_avatar4 import InputHeygenPhotoAvatar4
 from ..types.input_hidream_o1image import InputHidreamO1Image
 from ..types.input_ideogram_v2 import InputIdeogramV2
 from ..types.input_ideogram_v4 import InputIdeogramV4
@@ -317,6 +319,66 @@ class JobsClient:
         """
         with self._raw_client.stream(job_id, last_event_id=last_event_id, request_options=request_options) as r:
             yield from r.data
+
+    def submit_creatify_aurora(
+        self,
+        *,
+        input: InputCreatifyAurora,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Create high-fidelity speaking or singing avatar videos.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputCreatifyAurora
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputCreatifyAurora,
+            InputCreatifyAuroraAudio_Url,
+            InputCreatifyAuroraStartImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_creatify_aurora(
+            input=InputCreatifyAurora(
+                resolution="480p",
+                start_image=InputCreatifyAuroraStartImage_Url(
+                    url="url",
+                ),
+                audio=InputCreatifyAuroraAudio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_creatify_aurora(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
 
     def submit_dreamina31(
         self,
@@ -1865,6 +1927,67 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_hedra_character3(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_heygen_photo_avatar4(
+        self,
+        *,
+        input: InputHeygenPhotoAvatar4,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Turn a clear portrait and driving audio into a talking avatar.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputHeygenPhotoAvatar4
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputHeygenPhotoAvatar4,
+            InputHeygenPhotoAvatar4Audio_Url,
+            InputHeygenPhotoAvatar4StartImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_heygen_photo_avatar4(
+            input=InputHeygenPhotoAvatar4(
+                aspect_ratio="16:9",
+                resolution="360p",
+                start_image=InputHeygenPhotoAvatar4StartImage_Url(
+                    url="url",
+                ),
+                audio=InputHeygenPhotoAvatar4Audio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_heygen_photo_avatar4(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -5390,6 +5513,74 @@ class AsyncJobsClient:
             async for _chunk in r.data:
                 yield _chunk
 
+    async def submit_creatify_aurora(
+        self,
+        *,
+        input: InputCreatifyAurora,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Create high-fidelity speaking or singing avatar videos.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputCreatifyAurora
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputCreatifyAurora,
+            InputCreatifyAuroraAudio_Url,
+            InputCreatifyAuroraStartImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_creatify_aurora(
+                input=InputCreatifyAurora(
+                    resolution="480p",
+                    start_image=InputCreatifyAuroraStartImage_Url(
+                        url="url",
+                    ),
+                    audio=InputCreatifyAuroraAudio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_creatify_aurora(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_dreamina31(
         self,
         *,
@@ -7177,6 +7368,75 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_hedra_character3(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_heygen_photo_avatar4(
+        self,
+        *,
+        input: InputHeygenPhotoAvatar4,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Turn a clear portrait and driving audio into a talking avatar.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputHeygenPhotoAvatar4
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputHeygenPhotoAvatar4,
+            InputHeygenPhotoAvatar4Audio_Url,
+            InputHeygenPhotoAvatar4StartImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_heygen_photo_avatar4(
+                input=InputHeygenPhotoAvatar4(
+                    aspect_ratio="16:9",
+                    resolution="360p",
+                    start_image=InputHeygenPhotoAvatar4StartImage_Url(
+                        url="url",
+                    ),
+                    audio=InputHeygenPhotoAvatar4Audio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_heygen_photo_avatar4(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
