@@ -16,6 +16,22 @@ if typing.TYPE_CHECKING:
     from .estimate_response import EstimateResponse
     from .field_error import FieldError
     from .file_upload_response import FileUploadResponse
+    from .input_creatify_aurora import InputCreatifyAurora
+    from .input_creatify_aurora_audio import (
+        InputCreatifyAuroraAudio,
+        InputCreatifyAuroraAudio_Asset,
+        InputCreatifyAuroraAudio_Url,
+    )
+    from .input_creatify_aurora_audio_asset import InputCreatifyAuroraAudioAsset
+    from .input_creatify_aurora_audio_url import InputCreatifyAuroraAudioUrl
+    from .input_creatify_aurora_resolution import InputCreatifyAuroraResolution
+    from .input_creatify_aurora_start_image import (
+        InputCreatifyAuroraStartImage,
+        InputCreatifyAuroraStartImage_Asset,
+        InputCreatifyAuroraStartImage_Url,
+    )
+    from .input_creatify_aurora_start_image_asset import InputCreatifyAuroraStartImageAsset
+    from .input_creatify_aurora_start_image_url import InputCreatifyAuroraStartImageUrl
     from .input_dreamina31 import InputDreamina31
     from .input_dreamina31aspect_ratio import InputDreamina31AspectRatio
     from .input_dreamina31resolution import InputDreamina31Resolution
@@ -296,6 +312,23 @@ if typing.TYPE_CHECKING:
     )
     from .input_hedra_character3start_image_asset import InputHedraCharacter3StartImageAsset
     from .input_hedra_character3start_image_url import InputHedraCharacter3StartImageUrl
+    from .input_heygen_photo_avatar4 import InputHeygenPhotoAvatar4
+    from .input_heygen_photo_avatar4aspect_ratio import InputHeygenPhotoAvatar4AspectRatio
+    from .input_heygen_photo_avatar4audio import (
+        InputHeygenPhotoAvatar4Audio,
+        InputHeygenPhotoAvatar4Audio_Asset,
+        InputHeygenPhotoAvatar4Audio_Url,
+    )
+    from .input_heygen_photo_avatar4audio_asset import InputHeygenPhotoAvatar4AudioAsset
+    from .input_heygen_photo_avatar4audio_url import InputHeygenPhotoAvatar4AudioUrl
+    from .input_heygen_photo_avatar4resolution import InputHeygenPhotoAvatar4Resolution
+    from .input_heygen_photo_avatar4start_image import (
+        InputHeygenPhotoAvatar4StartImage,
+        InputHeygenPhotoAvatar4StartImage_Asset,
+        InputHeygenPhotoAvatar4StartImage_Url,
+    )
+    from .input_heygen_photo_avatar4start_image_asset import InputHeygenPhotoAvatar4StartImageAsset
+    from .input_heygen_photo_avatar4start_image_url import InputHeygenPhotoAvatar4StartImageUrl
     from .input_hidream_o1image import InputHidreamO1Image
     from .input_hidream_o1image_aspect_ratio import InputHidreamO1ImageAspectRatio
     from .input_hidream_o1image_images_item import (
@@ -1126,6 +1159,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EstimateResponse": ".estimate_response",
     "FieldError": ".field_error",
     "FileUploadResponse": ".file_upload_response",
+    "InputCreatifyAurora": ".input_creatify_aurora",
+    "InputCreatifyAuroraAudio": ".input_creatify_aurora_audio",
+    "InputCreatifyAuroraAudioAsset": ".input_creatify_aurora_audio_asset",
+    "InputCreatifyAuroraAudioUrl": ".input_creatify_aurora_audio_url",
+    "InputCreatifyAuroraAudio_Asset": ".input_creatify_aurora_audio",
+    "InputCreatifyAuroraAudio_Url": ".input_creatify_aurora_audio",
+    "InputCreatifyAuroraResolution": ".input_creatify_aurora_resolution",
+    "InputCreatifyAuroraStartImage": ".input_creatify_aurora_start_image",
+    "InputCreatifyAuroraStartImageAsset": ".input_creatify_aurora_start_image_asset",
+    "InputCreatifyAuroraStartImageUrl": ".input_creatify_aurora_start_image_url",
+    "InputCreatifyAuroraStartImage_Asset": ".input_creatify_aurora_start_image",
+    "InputCreatifyAuroraStartImage_Url": ".input_creatify_aurora_start_image",
     "InputDreamina31": ".input_dreamina31",
     "InputDreamina31AspectRatio": ".input_dreamina31aspect_ratio",
     "InputDreamina31Resolution": ".input_dreamina31resolution",
@@ -1356,6 +1401,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputHedraCharacter3StartImageUrl": ".input_hedra_character3start_image_url",
     "InputHedraCharacter3StartImage_Asset": ".input_hedra_character3start_image",
     "InputHedraCharacter3StartImage_Url": ".input_hedra_character3start_image",
+    "InputHeygenPhotoAvatar4": ".input_heygen_photo_avatar4",
+    "InputHeygenPhotoAvatar4AspectRatio": ".input_heygen_photo_avatar4aspect_ratio",
+    "InputHeygenPhotoAvatar4Audio": ".input_heygen_photo_avatar4audio",
+    "InputHeygenPhotoAvatar4AudioAsset": ".input_heygen_photo_avatar4audio_asset",
+    "InputHeygenPhotoAvatar4AudioUrl": ".input_heygen_photo_avatar4audio_url",
+    "InputHeygenPhotoAvatar4Audio_Asset": ".input_heygen_photo_avatar4audio",
+    "InputHeygenPhotoAvatar4Audio_Url": ".input_heygen_photo_avatar4audio",
+    "InputHeygenPhotoAvatar4Resolution": ".input_heygen_photo_avatar4resolution",
+    "InputHeygenPhotoAvatar4StartImage": ".input_heygen_photo_avatar4start_image",
+    "InputHeygenPhotoAvatar4StartImageAsset": ".input_heygen_photo_avatar4start_image_asset",
+    "InputHeygenPhotoAvatar4StartImageUrl": ".input_heygen_photo_avatar4start_image_url",
+    "InputHeygenPhotoAvatar4StartImage_Asset": ".input_heygen_photo_avatar4start_image",
+    "InputHeygenPhotoAvatar4StartImage_Url": ".input_heygen_photo_avatar4start_image",
     "InputHidreamO1Image": ".input_hidream_o1image",
     "InputHidreamO1ImageAspectRatio": ".input_hidream_o1image_aspect_ratio",
     "InputHidreamO1ImageImagesItem": ".input_hidream_o1image_images_item",
@@ -2096,6 +2154,18 @@ __all__ = [
     "EstimateResponse",
     "FieldError",
     "FileUploadResponse",
+    "InputCreatifyAurora",
+    "InputCreatifyAuroraAudio",
+    "InputCreatifyAuroraAudioAsset",
+    "InputCreatifyAuroraAudioUrl",
+    "InputCreatifyAuroraAudio_Asset",
+    "InputCreatifyAuroraAudio_Url",
+    "InputCreatifyAuroraResolution",
+    "InputCreatifyAuroraStartImage",
+    "InputCreatifyAuroraStartImageAsset",
+    "InputCreatifyAuroraStartImageUrl",
+    "InputCreatifyAuroraStartImage_Asset",
+    "InputCreatifyAuroraStartImage_Url",
     "InputDreamina31",
     "InputDreamina31AspectRatio",
     "InputDreamina31Resolution",
@@ -2326,6 +2396,19 @@ __all__ = [
     "InputHedraCharacter3StartImageUrl",
     "InputHedraCharacter3StartImage_Asset",
     "InputHedraCharacter3StartImage_Url",
+    "InputHeygenPhotoAvatar4",
+    "InputHeygenPhotoAvatar4AspectRatio",
+    "InputHeygenPhotoAvatar4Audio",
+    "InputHeygenPhotoAvatar4AudioAsset",
+    "InputHeygenPhotoAvatar4AudioUrl",
+    "InputHeygenPhotoAvatar4Audio_Asset",
+    "InputHeygenPhotoAvatar4Audio_Url",
+    "InputHeygenPhotoAvatar4Resolution",
+    "InputHeygenPhotoAvatar4StartImage",
+    "InputHeygenPhotoAvatar4StartImageAsset",
+    "InputHeygenPhotoAvatar4StartImageUrl",
+    "InputHeygenPhotoAvatar4StartImage_Asset",
+    "InputHeygenPhotoAvatar4StartImage_Url",
     "InputHidreamO1Image",
     "InputHidreamO1ImageAspectRatio",
     "InputHidreamO1ImageImagesItem",
