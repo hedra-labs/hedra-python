@@ -32,7 +32,7 @@ class InputGptImage2(UniversalBaseModel):
 
     enhance_prompt: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Not available on this model. Its price is computed from the exact prompt submitted, which a rewrite would invalidate.
+    Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
     aspect_ratio: InputGptImage2AspectRatio = pydantic.Field()
