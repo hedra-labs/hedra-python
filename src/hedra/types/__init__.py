@@ -130,6 +130,24 @@ if typing.TYPE_CHECKING:
     from .input_flux3start_image import InputFlux3StartImage, InputFlux3StartImage_Asset, InputFlux3StartImage_Url
     from .input_flux3start_image_asset import InputFlux3StartImageAsset
     from .input_flux3start_image_url import InputFlux3StartImageUrl
+    from .input_flux3video_upscaler_creative import InputFlux3VideoUpscalerCreative
+    from .input_flux3video_upscaler_creative_resolution import InputFlux3VideoUpscalerCreativeResolution
+    from .input_flux3video_upscaler_creative_source_video import (
+        InputFlux3VideoUpscalerCreativeSourceVideo,
+        InputFlux3VideoUpscalerCreativeSourceVideo_Asset,
+        InputFlux3VideoUpscalerCreativeSourceVideo_Url,
+    )
+    from .input_flux3video_upscaler_creative_source_video_asset import InputFlux3VideoUpscalerCreativeSourceVideoAsset
+    from .input_flux3video_upscaler_creative_source_video_url import InputFlux3VideoUpscalerCreativeSourceVideoUrl
+    from .input_flux3video_upscaler_precise import InputFlux3VideoUpscalerPrecise
+    from .input_flux3video_upscaler_precise_resolution import InputFlux3VideoUpscalerPreciseResolution
+    from .input_flux3video_upscaler_precise_source_video import (
+        InputFlux3VideoUpscalerPreciseSourceVideo,
+        InputFlux3VideoUpscalerPreciseSourceVideo_Asset,
+        InputFlux3VideoUpscalerPreciseSourceVideo_Url,
+    )
+    from .input_flux3video_upscaler_precise_source_video_asset import InputFlux3VideoUpscalerPreciseSourceVideoAsset
+    from .input_flux3video_upscaler_precise_source_video_url import InputFlux3VideoUpscalerPreciseSourceVideoUrl
     from .input_flux_dev import InputFluxDev
     from .input_flux_dev_aspect_ratio import InputFluxDevAspectRatio
     from .input_flux_dev_output_format import InputFluxDevOutputFormat
@@ -157,6 +175,44 @@ if typing.TYPE_CHECKING:
     from .input_flux_kontext_pro_output_format import InputFluxKontextProOutputFormat
     from .input_flux_kontext_pro_resolution import InputFluxKontextProResolution
     from .input_gemini_omni_flash import InputGeminiOmniFlash
+    from .input_gemini_omni_flash11 import InputGeminiOmniFlash11
+    from .input_gemini_omni_flash11aspect_ratio import InputGeminiOmniFlash11AspectRatio
+    from .input_gemini_omni_flash11end_image import (
+        InputGeminiOmniFlash11EndImage,
+        InputGeminiOmniFlash11EndImage_Asset,
+        InputGeminiOmniFlash11EndImage_Url,
+    )
+    from .input_gemini_omni_flash11end_image_asset import InputGeminiOmniFlash11EndImageAsset
+    from .input_gemini_omni_flash11end_image_url import InputGeminiOmniFlash11EndImageUrl
+    from .input_gemini_omni_flash11images_item import (
+        InputGeminiOmniFlash11ImagesItem,
+        InputGeminiOmniFlash11ImagesItem_Asset,
+        InputGeminiOmniFlash11ImagesItem_Url,
+    )
+    from .input_gemini_omni_flash11images_item_asset import InputGeminiOmniFlash11ImagesItemAsset
+    from .input_gemini_omni_flash11images_item_url import InputGeminiOmniFlash11ImagesItemUrl
+    from .input_gemini_omni_flash11resolution import InputGeminiOmniFlash11Resolution
+    from .input_gemini_omni_flash11source_video import (
+        InputGeminiOmniFlash11SourceVideo,
+        InputGeminiOmniFlash11SourceVideo_Asset,
+        InputGeminiOmniFlash11SourceVideo_Url,
+    )
+    from .input_gemini_omni_flash11source_video_asset import InputGeminiOmniFlash11SourceVideoAsset
+    from .input_gemini_omni_flash11source_video_url import InputGeminiOmniFlash11SourceVideoUrl
+    from .input_gemini_omni_flash11start_image import (
+        InputGeminiOmniFlash11StartImage,
+        InputGeminiOmniFlash11StartImage_Asset,
+        InputGeminiOmniFlash11StartImage_Url,
+    )
+    from .input_gemini_omni_flash11start_image_asset import InputGeminiOmniFlash11StartImageAsset
+    from .input_gemini_omni_flash11start_image_url import InputGeminiOmniFlash11StartImageUrl
+    from .input_gemini_omni_flash11videos_item import (
+        InputGeminiOmniFlash11VideosItem,
+        InputGeminiOmniFlash11VideosItem_Asset,
+        InputGeminiOmniFlash11VideosItem_Url,
+    )
+    from .input_gemini_omni_flash11videos_item_asset import InputGeminiOmniFlash11VideosItemAsset
+    from .input_gemini_omni_flash11videos_item_url import InputGeminiOmniFlash11VideosItemUrl
     from .input_gemini_omni_flash_aspect_ratio import InputGeminiOmniFlashAspectRatio
     from .input_gemini_omni_flash_images_item import (
         InputGeminiOmniFlashImagesItem,
@@ -199,6 +255,30 @@ if typing.TYPE_CHECKING:
     from .input_gpt_image15output_format import InputGptImage15OutputFormat
     from .input_gpt_image15resolution import InputGptImage15Resolution
     from .input_gpt_image2 import InputGptImage2
+    from .input_gpt_image25flare import InputGptImage25Flare
+    from .input_gpt_image25flare_aspect_ratio import InputGptImage25FlareAspectRatio
+    from .input_gpt_image25flare_images_item import (
+        InputGptImage25FlareImagesItem,
+        InputGptImage25FlareImagesItem_Asset,
+        InputGptImage25FlareImagesItem_Url,
+    )
+    from .input_gpt_image25flare_images_item_asset import InputGptImage25FlareImagesItemAsset
+    from .input_gpt_image25flare_images_item_url import InputGptImage25FlareImagesItemUrl
+    from .input_gpt_image25flare_output_format import InputGptImage25FlareOutputFormat
+    from .input_gpt_image25flare_quality import InputGptImage25FlareQuality
+    from .input_gpt_image25flare_resolution import InputGptImage25FlareResolution
+    from .input_gpt_image25sunburst import InputGptImage25Sunburst
+    from .input_gpt_image25sunburst_aspect_ratio import InputGptImage25SunburstAspectRatio
+    from .input_gpt_image25sunburst_images_item import (
+        InputGptImage25SunburstImagesItem,
+        InputGptImage25SunburstImagesItem_Asset,
+        InputGptImage25SunburstImagesItem_Url,
+    )
+    from .input_gpt_image25sunburst_images_item_asset import InputGptImage25SunburstImagesItemAsset
+    from .input_gpt_image25sunburst_images_item_url import InputGptImage25SunburstImagesItemUrl
+    from .input_gpt_image25sunburst_output_format import InputGptImage25SunburstOutputFormat
+    from .input_gpt_image25sunburst_quality import InputGptImage25SunburstQuality
+    from .input_gpt_image25sunburst_resolution import InputGptImage25SunburstResolution
     from .input_gpt_image2aspect_ratio import InputGptImage2AspectRatio
     from .input_gpt_image2images_item import (
         InputGptImage2ImagesItem,
@@ -538,6 +618,13 @@ if typing.TYPE_CHECKING:
     )
     from .input_kling_v3start_image_asset import InputKlingV3StartImageAsset
     from .input_kling_v3start_image_url import InputKlingV3StartImageUrl
+    from .input_krea2 import InputKrea2
+    from .input_krea2aspect_ratio import InputKrea2AspectRatio
+    from .input_krea2creativity import InputKrea2Creativity
+    from .input_krea2images_item import InputKrea2ImagesItem, InputKrea2ImagesItem_Asset, InputKrea2ImagesItem_Url
+    from .input_krea2images_item_asset import InputKrea2ImagesItemAsset
+    from .input_krea2images_item_url import InputKrea2ImagesItemUrl
+    from .input_krea2quality import InputKrea2Quality
     from .input_ltx23 import InputLtx23
     from .input_ltx23aspect_ratio import InputLtx23AspectRatio
     from .input_ltx23end_image import InputLtx23EndImage, InputLtx23EndImage_Asset, InputLtx23EndImage_Url
@@ -1257,6 +1344,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFlux3StartImageUrl": ".input_flux3start_image_url",
     "InputFlux3StartImage_Asset": ".input_flux3start_image",
     "InputFlux3StartImage_Url": ".input_flux3start_image",
+    "InputFlux3VideoUpscalerCreative": ".input_flux3video_upscaler_creative",
+    "InputFlux3VideoUpscalerCreativeResolution": ".input_flux3video_upscaler_creative_resolution",
+    "InputFlux3VideoUpscalerCreativeSourceVideo": ".input_flux3video_upscaler_creative_source_video",
+    "InputFlux3VideoUpscalerCreativeSourceVideoAsset": ".input_flux3video_upscaler_creative_source_video_asset",
+    "InputFlux3VideoUpscalerCreativeSourceVideoUrl": ".input_flux3video_upscaler_creative_source_video_url",
+    "InputFlux3VideoUpscalerCreativeSourceVideo_Asset": ".input_flux3video_upscaler_creative_source_video",
+    "InputFlux3VideoUpscalerCreativeSourceVideo_Url": ".input_flux3video_upscaler_creative_source_video",
+    "InputFlux3VideoUpscalerPrecise": ".input_flux3video_upscaler_precise",
+    "InputFlux3VideoUpscalerPreciseResolution": ".input_flux3video_upscaler_precise_resolution",
+    "InputFlux3VideoUpscalerPreciseSourceVideo": ".input_flux3video_upscaler_precise_source_video",
+    "InputFlux3VideoUpscalerPreciseSourceVideoAsset": ".input_flux3video_upscaler_precise_source_video_asset",
+    "InputFlux3VideoUpscalerPreciseSourceVideoUrl": ".input_flux3video_upscaler_precise_source_video_url",
+    "InputFlux3VideoUpscalerPreciseSourceVideo_Asset": ".input_flux3video_upscaler_precise_source_video",
+    "InputFlux3VideoUpscalerPreciseSourceVideo_Url": ".input_flux3video_upscaler_precise_source_video",
     "InputFluxDev": ".input_flux_dev",
     "InputFluxDevAspectRatio": ".input_flux_dev_aspect_ratio",
     "InputFluxDevOutputFormat": ".input_flux_dev_output_format",
@@ -1280,6 +1381,34 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFluxKontextProOutputFormat": ".input_flux_kontext_pro_output_format",
     "InputFluxKontextProResolution": ".input_flux_kontext_pro_resolution",
     "InputGeminiOmniFlash": ".input_gemini_omni_flash",
+    "InputGeminiOmniFlash11": ".input_gemini_omni_flash11",
+    "InputGeminiOmniFlash11AspectRatio": ".input_gemini_omni_flash11aspect_ratio",
+    "InputGeminiOmniFlash11EndImage": ".input_gemini_omni_flash11end_image",
+    "InputGeminiOmniFlash11EndImageAsset": ".input_gemini_omni_flash11end_image_asset",
+    "InputGeminiOmniFlash11EndImageUrl": ".input_gemini_omni_flash11end_image_url",
+    "InputGeminiOmniFlash11EndImage_Asset": ".input_gemini_omni_flash11end_image",
+    "InputGeminiOmniFlash11EndImage_Url": ".input_gemini_omni_flash11end_image",
+    "InputGeminiOmniFlash11ImagesItem": ".input_gemini_omni_flash11images_item",
+    "InputGeminiOmniFlash11ImagesItemAsset": ".input_gemini_omni_flash11images_item_asset",
+    "InputGeminiOmniFlash11ImagesItemUrl": ".input_gemini_omni_flash11images_item_url",
+    "InputGeminiOmniFlash11ImagesItem_Asset": ".input_gemini_omni_flash11images_item",
+    "InputGeminiOmniFlash11ImagesItem_Url": ".input_gemini_omni_flash11images_item",
+    "InputGeminiOmniFlash11Resolution": ".input_gemini_omni_flash11resolution",
+    "InputGeminiOmniFlash11SourceVideo": ".input_gemini_omni_flash11source_video",
+    "InputGeminiOmniFlash11SourceVideoAsset": ".input_gemini_omni_flash11source_video_asset",
+    "InputGeminiOmniFlash11SourceVideoUrl": ".input_gemini_omni_flash11source_video_url",
+    "InputGeminiOmniFlash11SourceVideo_Asset": ".input_gemini_omni_flash11source_video",
+    "InputGeminiOmniFlash11SourceVideo_Url": ".input_gemini_omni_flash11source_video",
+    "InputGeminiOmniFlash11StartImage": ".input_gemini_omni_flash11start_image",
+    "InputGeminiOmniFlash11StartImageAsset": ".input_gemini_omni_flash11start_image_asset",
+    "InputGeminiOmniFlash11StartImageUrl": ".input_gemini_omni_flash11start_image_url",
+    "InputGeminiOmniFlash11StartImage_Asset": ".input_gemini_omni_flash11start_image",
+    "InputGeminiOmniFlash11StartImage_Url": ".input_gemini_omni_flash11start_image",
+    "InputGeminiOmniFlash11VideosItem": ".input_gemini_omni_flash11videos_item",
+    "InputGeminiOmniFlash11VideosItemAsset": ".input_gemini_omni_flash11videos_item_asset",
+    "InputGeminiOmniFlash11VideosItemUrl": ".input_gemini_omni_flash11videos_item_url",
+    "InputGeminiOmniFlash11VideosItem_Asset": ".input_gemini_omni_flash11videos_item",
+    "InputGeminiOmniFlash11VideosItem_Url": ".input_gemini_omni_flash11videos_item",
     "InputGeminiOmniFlashAspectRatio": ".input_gemini_omni_flash_aspect_ratio",
     "InputGeminiOmniFlashImagesItem": ".input_gemini_omni_flash_images_item",
     "InputGeminiOmniFlashImagesItemAsset": ".input_gemini_omni_flash_images_item_asset",
@@ -1312,6 +1441,26 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputGptImage15OutputFormat": ".input_gpt_image15output_format",
     "InputGptImage15Resolution": ".input_gpt_image15resolution",
     "InputGptImage2": ".input_gpt_image2",
+    "InputGptImage25Flare": ".input_gpt_image25flare",
+    "InputGptImage25FlareAspectRatio": ".input_gpt_image25flare_aspect_ratio",
+    "InputGptImage25FlareImagesItem": ".input_gpt_image25flare_images_item",
+    "InputGptImage25FlareImagesItemAsset": ".input_gpt_image25flare_images_item_asset",
+    "InputGptImage25FlareImagesItemUrl": ".input_gpt_image25flare_images_item_url",
+    "InputGptImage25FlareImagesItem_Asset": ".input_gpt_image25flare_images_item",
+    "InputGptImage25FlareImagesItem_Url": ".input_gpt_image25flare_images_item",
+    "InputGptImage25FlareOutputFormat": ".input_gpt_image25flare_output_format",
+    "InputGptImage25FlareQuality": ".input_gpt_image25flare_quality",
+    "InputGptImage25FlareResolution": ".input_gpt_image25flare_resolution",
+    "InputGptImage25Sunburst": ".input_gpt_image25sunburst",
+    "InputGptImage25SunburstAspectRatio": ".input_gpt_image25sunburst_aspect_ratio",
+    "InputGptImage25SunburstImagesItem": ".input_gpt_image25sunburst_images_item",
+    "InputGptImage25SunburstImagesItemAsset": ".input_gpt_image25sunburst_images_item_asset",
+    "InputGptImage25SunburstImagesItemUrl": ".input_gpt_image25sunburst_images_item_url",
+    "InputGptImage25SunburstImagesItem_Asset": ".input_gpt_image25sunburst_images_item",
+    "InputGptImage25SunburstImagesItem_Url": ".input_gpt_image25sunburst_images_item",
+    "InputGptImage25SunburstOutputFormat": ".input_gpt_image25sunburst_output_format",
+    "InputGptImage25SunburstQuality": ".input_gpt_image25sunburst_quality",
+    "InputGptImage25SunburstResolution": ".input_gpt_image25sunburst_resolution",
     "InputGptImage2AspectRatio": ".input_gpt_image2aspect_ratio",
     "InputGptImage2ImagesItem": ".input_gpt_image2images_item",
     "InputGptImage2ImagesItemAsset": ".input_gpt_image2images_item_asset",
@@ -1589,6 +1738,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKlingV3StartImageUrl": ".input_kling_v3start_image_url",
     "InputKlingV3StartImage_Asset": ".input_kling_v3start_image",
     "InputKlingV3StartImage_Url": ".input_kling_v3start_image",
+    "InputKrea2": ".input_krea2",
+    "InputKrea2AspectRatio": ".input_krea2aspect_ratio",
+    "InputKrea2Creativity": ".input_krea2creativity",
+    "InputKrea2ImagesItem": ".input_krea2images_item",
+    "InputKrea2ImagesItemAsset": ".input_krea2images_item_asset",
+    "InputKrea2ImagesItemUrl": ".input_krea2images_item_url",
+    "InputKrea2ImagesItem_Asset": ".input_krea2images_item",
+    "InputKrea2ImagesItem_Url": ".input_krea2images_item",
+    "InputKrea2Quality": ".input_krea2quality",
     "InputLtx23": ".input_ltx23",
     "InputLtx23AspectRatio": ".input_ltx23aspect_ratio",
     "InputLtx23EndImage": ".input_ltx23end_image",
@@ -2252,6 +2410,20 @@ __all__ = [
     "InputFlux3StartImageUrl",
     "InputFlux3StartImage_Asset",
     "InputFlux3StartImage_Url",
+    "InputFlux3VideoUpscalerCreative",
+    "InputFlux3VideoUpscalerCreativeResolution",
+    "InputFlux3VideoUpscalerCreativeSourceVideo",
+    "InputFlux3VideoUpscalerCreativeSourceVideoAsset",
+    "InputFlux3VideoUpscalerCreativeSourceVideoUrl",
+    "InputFlux3VideoUpscalerCreativeSourceVideo_Asset",
+    "InputFlux3VideoUpscalerCreativeSourceVideo_Url",
+    "InputFlux3VideoUpscalerPrecise",
+    "InputFlux3VideoUpscalerPreciseResolution",
+    "InputFlux3VideoUpscalerPreciseSourceVideo",
+    "InputFlux3VideoUpscalerPreciseSourceVideoAsset",
+    "InputFlux3VideoUpscalerPreciseSourceVideoUrl",
+    "InputFlux3VideoUpscalerPreciseSourceVideo_Asset",
+    "InputFlux3VideoUpscalerPreciseSourceVideo_Url",
     "InputFluxDev",
     "InputFluxDevAspectRatio",
     "InputFluxDevOutputFormat",
@@ -2275,6 +2447,34 @@ __all__ = [
     "InputFluxKontextProOutputFormat",
     "InputFluxKontextProResolution",
     "InputGeminiOmniFlash",
+    "InputGeminiOmniFlash11",
+    "InputGeminiOmniFlash11AspectRatio",
+    "InputGeminiOmniFlash11EndImage",
+    "InputGeminiOmniFlash11EndImageAsset",
+    "InputGeminiOmniFlash11EndImageUrl",
+    "InputGeminiOmniFlash11EndImage_Asset",
+    "InputGeminiOmniFlash11EndImage_Url",
+    "InputGeminiOmniFlash11ImagesItem",
+    "InputGeminiOmniFlash11ImagesItemAsset",
+    "InputGeminiOmniFlash11ImagesItemUrl",
+    "InputGeminiOmniFlash11ImagesItem_Asset",
+    "InputGeminiOmniFlash11ImagesItem_Url",
+    "InputGeminiOmniFlash11Resolution",
+    "InputGeminiOmniFlash11SourceVideo",
+    "InputGeminiOmniFlash11SourceVideoAsset",
+    "InputGeminiOmniFlash11SourceVideoUrl",
+    "InputGeminiOmniFlash11SourceVideo_Asset",
+    "InputGeminiOmniFlash11SourceVideo_Url",
+    "InputGeminiOmniFlash11StartImage",
+    "InputGeminiOmniFlash11StartImageAsset",
+    "InputGeminiOmniFlash11StartImageUrl",
+    "InputGeminiOmniFlash11StartImage_Asset",
+    "InputGeminiOmniFlash11StartImage_Url",
+    "InputGeminiOmniFlash11VideosItem",
+    "InputGeminiOmniFlash11VideosItemAsset",
+    "InputGeminiOmniFlash11VideosItemUrl",
+    "InputGeminiOmniFlash11VideosItem_Asset",
+    "InputGeminiOmniFlash11VideosItem_Url",
     "InputGeminiOmniFlashAspectRatio",
     "InputGeminiOmniFlashImagesItem",
     "InputGeminiOmniFlashImagesItemAsset",
@@ -2307,6 +2507,26 @@ __all__ = [
     "InputGptImage15OutputFormat",
     "InputGptImage15Resolution",
     "InputGptImage2",
+    "InputGptImage25Flare",
+    "InputGptImage25FlareAspectRatio",
+    "InputGptImage25FlareImagesItem",
+    "InputGptImage25FlareImagesItemAsset",
+    "InputGptImage25FlareImagesItemUrl",
+    "InputGptImage25FlareImagesItem_Asset",
+    "InputGptImage25FlareImagesItem_Url",
+    "InputGptImage25FlareOutputFormat",
+    "InputGptImage25FlareQuality",
+    "InputGptImage25FlareResolution",
+    "InputGptImage25Sunburst",
+    "InputGptImage25SunburstAspectRatio",
+    "InputGptImage25SunburstImagesItem",
+    "InputGptImage25SunburstImagesItemAsset",
+    "InputGptImage25SunburstImagesItemUrl",
+    "InputGptImage25SunburstImagesItem_Asset",
+    "InputGptImage25SunburstImagesItem_Url",
+    "InputGptImage25SunburstOutputFormat",
+    "InputGptImage25SunburstQuality",
+    "InputGptImage25SunburstResolution",
     "InputGptImage2AspectRatio",
     "InputGptImage2ImagesItem",
     "InputGptImage2ImagesItemAsset",
@@ -2584,6 +2804,15 @@ __all__ = [
     "InputKlingV3StartImageUrl",
     "InputKlingV3StartImage_Asset",
     "InputKlingV3StartImage_Url",
+    "InputKrea2",
+    "InputKrea2AspectRatio",
+    "InputKrea2Creativity",
+    "InputKrea2ImagesItem",
+    "InputKrea2ImagesItemAsset",
+    "InputKrea2ImagesItemUrl",
+    "InputKrea2ImagesItem_Asset",
+    "InputKrea2ImagesItem_Url",
+    "InputKrea2Quality",
     "InputLtx23",
     "InputLtx23AspectRatio",
     "InputLtx23EndImage",
