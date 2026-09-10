@@ -1755,6 +1755,198 @@ client.jobs.submit_flux3(
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux3video_upscaler_creative</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Super-resolution that adds detail as it enlarges, for soft or low-resolution footage.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux3VideoUpscalerCreative, InputFlux3VideoUpscalerCreativeSourceVideo_Url
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux3video_upscaler_creative(
+    input=InputFlux3VideoUpscalerCreative(
+        source_video=InputFlux3VideoUpscalerCreativeSourceVideo_Url(
+            url="url",
+        ),
+        resolution="1080p",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux3VideoUpscalerCreative` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux3video_upscaler_precise</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Super-resolution that reproduces the source faithfully, for footage whose detail should not change.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux3VideoUpscalerPrecise, InputFlux3VideoUpscalerPreciseSourceVideo_Url
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux3video_upscaler_precise(
+    input=InputFlux3VideoUpscalerPrecise(
+        source_video=InputFlux3VideoUpscalerPreciseSourceVideo_Url(
+            url="url",
+        ),
+        resolution="1080p",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux3VideoUpscalerPrecise` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux_dev</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -2506,6 +2698,101 @@ client.jobs.submit_gemini_omni_flash(
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_gemini_omni_flash11</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gemini's fast multimodal video model — cinematic clips with native audio, from a prompt, a keyframe pair, or reference images, up to 4K.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputGeminiOmniFlash11
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_gemini_omni_flash11(
+    input=InputGeminiOmniFlash11(
+        prompt="prompt",
+        aspect_ratio="16:9",
+        resolution="360p",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputGeminiOmniFlash11` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_gpt_image15</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -2660,6 +2947,196 @@ client.jobs.submit_gpt_image2(
 <dd>
 
 **input:** `InputGptImage2` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_gpt_image25flare</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+OpenAI's GPT Image 2.5 Flare; automatically selects rendering quality for the prompt.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputGptImage25Flare
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_gpt_image25flare(
+    input=InputGptImage25Flare(
+        prompt="prompt",
+        aspect_ratio="16:9",
+        resolution="1K",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputGptImage25Flare` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_gpt_image25sunburst</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+OpenAI's GPT Image 2.5 Sunburst; automatically selects rendering quality for the prompt.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputGptImage25Sunburst
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_gpt_image25sunburst(
+    input=InputGptImage25Sunburst(
+        prompt="prompt",
+        aspect_ratio="16:9",
+        resolution="1K",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputGptImage25Sunburst` 
     
 </dd>
 </dl>
@@ -4964,6 +5441,100 @@ client.jobs.submit_kling_v3motion_control(
 <dd>
 
 **input:** `InputKlingV3MotionControl` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_krea2</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Krea 2 renders in whatever style you hand it — pass reference images and it takes on their palette, lighting and texture in a new scene. The smaller of the two, strongest on illustration, anime and painting.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputKrea2
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_krea2(
+    input=InputKrea2(
+        prompt="prompt",
+        aspect_ratio="1:1",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputKrea2` 
     
 </dd>
 </dl>
