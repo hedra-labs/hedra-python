@@ -87,6 +87,7 @@ from ..types.input_minimax_hailuo02 import InputMinimaxHailuo02
 from ..types.input_minimax_hailuo23 import InputMinimaxHailuo23
 from ..types.input_minimax_speech25hd_preview import InputMinimaxSpeech25HdPreview
 from ..types.input_minimax_speech25turbo_preview import InputMinimaxSpeech25TurboPreview
+from ..types.input_muse_image import InputMuseImage
 from ..types.input_nano_banana import InputNanoBanana
 from ..types.input_nano_banana2 import InputNanoBanana2
 from ..types.input_nano_banana_pro import InputNanoBananaPro
@@ -10383,6 +10384,160 @@ class RawJobsClient:
             json={
                 "input": convert_and_respect_annotation_metadata(
                     object_=input, annotation=InputMinimaxSpeech25TurboPreview, direction="write"
+                ),
+                "webhook": webhook,
+                "idempotency_key": idempotency_key,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SubmitResponse,
+                    parse_obj_as(
+                        type_=SubmitResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def submit_muse_image(
+        self,
+        *,
+        input: InputMuseImage,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SubmitResponse]:
+        """
+        Meta's Muse Image: an agentic image model that plans before it renders, with faithful instruction-following, accurate in-image text, and edits that change only what you ask.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputMuseImage
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SubmitResponse]
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "models/muse-image",
+            method="POST",
+            json={
+                "input": convert_and_respect_annotation_metadata(
+                    object_=input, annotation=InputMuseImage, direction="write"
                 ),
                 "webhook": webhook,
                 "idempotency_key": idempotency_key,
@@ -26456,6 +26611,160 @@ class AsyncRawJobsClient:
             json={
                 "input": convert_and_respect_annotation_metadata(
                     object_=input, annotation=InputMinimaxSpeech25TurboPreview, direction="write"
+                ),
+                "webhook": webhook,
+                "idempotency_key": idempotency_key,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SubmitResponse,
+                    parse_obj_as(
+                        type_=SubmitResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def submit_muse_image(
+        self,
+        *,
+        input: InputMuseImage,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SubmitResponse]:
+        """
+        Meta's Muse Image: an agentic image model that plans before it renders, with faithful instruction-following, accurate in-image text, and edits that change only what you ask.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputMuseImage
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SubmitResponse]
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "models/muse-image",
+            method="POST",
+            json={
+                "input": convert_and_respect_annotation_metadata(
+                    object_=input, annotation=InputMuseImage, direction="write"
                 ),
                 "webhook": webhook,
                 "idempotency_key": idempotency_key,

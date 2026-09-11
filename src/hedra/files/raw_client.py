@@ -14,6 +14,7 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
+from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
@@ -37,6 +38,10 @@ class RawFilesClient:
         Free, and available on an empty API wallet — funding is enforced when you
         submit a generation, not when you upload its inputs. `GET /v3/balance`
         reports what the wallet holds.
+
+        Returns 402 while uploads are paused, which happens when your recent
+        requests were all refused for insufficient funds. Adding funds to the API
+        wallet resumes them.
 
         Parameters
         ----------
@@ -85,6 +90,17 @@ class RawFilesClient:
                 )
             if _response.status_code == 401:
                 raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -162,6 +178,10 @@ class AsyncRawFilesClient:
         submit a generation, not when you upload its inputs. `GET /v3/balance`
         reports what the wallet holds.
 
+        Returns 402 while uploads are paused, which happens when your recent
+        requests were all refused for insufficient funds. Adding funds to the API
+        wallet resumes them.
+
         Parameters
         ----------
         file : core.File
@@ -209,6 +229,17 @@ class AsyncRawFilesClient:
                 )
             if _response.status_code == 401:
                 raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 402:
+                raise PaymentRequiredError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

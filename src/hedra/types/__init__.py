@@ -718,6 +718,16 @@ if typing.TYPE_CHECKING:
     from .input_minimax_hailuo23start_image_url import InputMinimaxHailuo23StartImageUrl
     from .input_minimax_speech25hd_preview import InputMinimaxSpeech25HdPreview
     from .input_minimax_speech25turbo_preview import InputMinimaxSpeech25TurboPreview
+    from .input_muse_image import InputMuseImage
+    from .input_muse_image_aspect_ratio import InputMuseImageAspectRatio
+    from .input_muse_image_images_item import (
+        InputMuseImageImagesItem,
+        InputMuseImageImagesItem_Asset,
+        InputMuseImageImagesItem_Url,
+    )
+    from .input_muse_image_images_item_asset import InputMuseImageImagesItemAsset
+    from .input_muse_image_images_item_url import InputMuseImageImagesItemUrl
+    from .input_muse_image_output_format import InputMuseImageOutputFormat
     from .input_nano_banana import InputNanoBanana
     from .input_nano_banana2 import InputNanoBanana2
     from .input_nano_banana2aspect_ratio import InputNanoBanana2AspectRatio
@@ -1826,6 +1836,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxHailuo23StartImage_Url": ".input_minimax_hailuo23start_image",
     "InputMinimaxSpeech25HdPreview": ".input_minimax_speech25hd_preview",
     "InputMinimaxSpeech25TurboPreview": ".input_minimax_speech25turbo_preview",
+    "InputMuseImage": ".input_muse_image",
+    "InputMuseImageAspectRatio": ".input_muse_image_aspect_ratio",
+    "InputMuseImageImagesItem": ".input_muse_image_images_item",
+    "InputMuseImageImagesItemAsset": ".input_muse_image_images_item_asset",
+    "InputMuseImageImagesItemUrl": ".input_muse_image_images_item_url",
+    "InputMuseImageImagesItem_Asset": ".input_muse_image_images_item",
+    "InputMuseImageImagesItem_Url": ".input_muse_image_images_item",
+    "InputMuseImageOutputFormat": ".input_muse_image_output_format",
     "InputNanoBanana": ".input_nano_banana",
     "InputNanoBanana2": ".input_nano_banana2",
     "InputNanoBanana2AspectRatio": ".input_nano_banana2aspect_ratio",
@@ -2892,6 +2910,14 @@ __all__ = [
     "InputMinimaxHailuo23StartImage_Url",
     "InputMinimaxSpeech25HdPreview",
     "InputMinimaxSpeech25TurboPreview",
+    "InputMuseImage",
+    "InputMuseImageAspectRatio",
+    "InputMuseImageImagesItem",
+    "InputMuseImageImagesItemAsset",
+    "InputMuseImageImagesItemUrl",
+    "InputMuseImageImagesItem_Asset",
+    "InputMuseImageImagesItem_Url",
+    "InputMuseImageOutputFormat",
     "InputNanoBanana",
     "InputNanoBanana2",
     "InputNanoBanana2AspectRatio",
