@@ -26,7 +26,7 @@ class InputHappyHorse(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt. At most 2500 characters.
+    Generation prompt. From 1 to 2500 characters.
     """
 
     aspect_ratio: InputHappyHorseAspectRatio = pydantic.Field()

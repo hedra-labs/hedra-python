@@ -35,6 +35,10 @@ class FilesClient:
         submit a generation, not when you upload its inputs. `GET /v3/balance`
         reports what the wallet holds.
 
+        Returns 402 while uploads are paused, which happens when your recent
+        requests were all refused for insufficient funds. Adding funds to the API
+        wallet resumes them.
+
         Parameters
         ----------
         file : core.File
@@ -85,6 +89,10 @@ class AsyncFilesClient:
         Free, and available on an empty API wallet — funding is enforced when you
         submit a generation, not when you upload its inputs. `GET /v3/balance`
         reports what the wallet holds.
+
+        Returns 402 while uploads are paused, which happens when your recent
+        requests were all refused for insufficient funds. Adding funds to the API
+        wallet resumes them.
 
         Parameters
         ----------

@@ -31,7 +31,7 @@ class InputWan30(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt. At most 5000 characters.
+    Generation prompt. From 1 to 5000 characters.
     """
 
     aspect_ratio: InputWan30AspectRatio = pydantic.Field()

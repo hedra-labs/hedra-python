@@ -68,6 +68,7 @@ from ..types.input_minimax_hailuo02 import InputMinimaxHailuo02
 from ..types.input_minimax_hailuo23 import InputMinimaxHailuo23
 from ..types.input_minimax_speech25hd_preview import InputMinimaxSpeech25HdPreview
 from ..types.input_minimax_speech25turbo_preview import InputMinimaxSpeech25TurboPreview
+from ..types.input_muse_image import InputMuseImage
 from ..types.input_nano_banana import InputNanoBanana
 from ..types.input_nano_banana2 import InputNanoBanana2
 from ..types.input_nano_banana_pro import InputNanoBananaPro
@@ -3607,6 +3608,56 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_minimax_speech25turbo_preview(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_muse_image(
+        self,
+        *,
+        input: InputMuseImage,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Meta's Muse Image: an agentic image model that plans before it renders, with faithful instruction-following, accurate in-image text, and edits that change only what you ask.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputMuseImage
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputMuseImage
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_muse_image(
+            input=InputMuseImage(
+                prompt="prompt",
+                aspect_ratio="adaptive",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_muse_image(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -9619,6 +9670,64 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_minimax_speech25turbo_preview(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_muse_image(
+        self,
+        *,
+        input: InputMuseImage,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Meta's Muse Image: an agentic image model that plans before it renders, with faithful instruction-following, accurate in-image text, and edits that change only what you ask.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputMuseImage
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputMuseImage
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_muse_image(
+                input=InputMuseImage(
+                    prompt="prompt",
+                    aspect_ratio="adaptive",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_muse_image(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data

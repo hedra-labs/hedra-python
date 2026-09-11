@@ -6327,6 +6327,100 @@ client.jobs.submit_minimax_speech25turbo_preview(
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_muse_image</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Meta's Muse Image: an agentic image model that plans before it renders, with faithful instruction-following, accurate in-image text, and edits that change only what you ask.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputMuseImage
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_muse_image(
+    input=InputMuseImage(
+        prompt="prompt",
+        aspect_ratio="adaptive",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputMuseImage` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_nano_banana</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -10753,6 +10847,10 @@ Store a file and return a short-lived URL to pass in a model's `input`.
 Free, and available on an empty API wallet — funding is enforced when you
 submit a generation, not when you upload its inputs. `GET /v3/balance`
 reports what the wallet holds.
+
+Returns 402 while uploads are paused, which happens when your recent
+requests were all refused for insufficient funds. Adding funds to the API
+wallet resumes them.
 </dd>
 </dl>
 </dd>
