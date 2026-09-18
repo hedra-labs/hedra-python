@@ -2,6 +2,4 @@
 
 import typing
 
-InputHappyHorseAspectRatio = typing.Union[
-    typing.Literal["21:9", "16:10", "16:9", "4:3", "3:2", "1:1", "2:3", "3:4", "9:16", "10:16", "9:21"], typing.Any
-]
+InputHappyHorseAspectRatio = typing.Union[typing.Literal["16:9", "9:16", "4:3", "3:4", "1:1"], typing.Any]

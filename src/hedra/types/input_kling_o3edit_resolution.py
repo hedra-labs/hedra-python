@@ -2,4 +2,4 @@
 
 import typing
 
-InputKlingO3EditResolution = typing.Union[typing.Literal["720p", "1080p"], typing.Any]
+InputKlingO3EditResolution = typing.Union[typing.Literal["720p", "1080p", "4K"], typing.Any]

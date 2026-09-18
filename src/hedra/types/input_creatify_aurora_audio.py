@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputCreatifyAuroraAudio_Url(UniversalBaseModel):
     """
-    Driving audio. At most 104.8 MB.
+    Driving audio. At most 60s and at most 104.8 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputCreatifyAuroraAudio_Url(UniversalBaseModel):
 
 class InputCreatifyAuroraAudio_Asset(UniversalBaseModel):
     """
-    Driving audio. At most 104.8 MB.
+    Driving audio. At most 60s and at most 104.8 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

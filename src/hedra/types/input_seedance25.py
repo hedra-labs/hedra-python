@@ -65,12 +65,12 @@ class InputSeedance25(UniversalBaseModel):
 
     videos: typing.Optional[typing.List[InputSeedance25VideosItem]] = pydantic.Field(default=None)
     """
-    Reference videos. 1 to 10 videos, each from 2s to 30s and at most 524.2 MB, at most 30s in total.
+    Reference videos. 1 to 10 videos, each from 2s to 30.15s and at most 524.2 MB, at most 30.15s in total.
     """
 
     audios: typing.Optional[typing.List[InputSeedance25AudiosItem]] = pydantic.Field(default=None)
     """
-    Reference audios. 1 to 10 audio files, each at most 104.8 MB, at most 30s in total.
+    Reference audios. 1 to 10 audio files, each at most 104.8 MB, at most 30.15s in total.
     """
 
     if IS_PYDANTIC_V2:
