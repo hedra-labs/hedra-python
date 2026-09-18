@@ -73,6 +73,36 @@ if typing.TYPE_CHECKING:
     )
     from .input_elevenlabs_voice_clone_audio_asset import InputElevenlabsVoiceCloneAudioAsset
     from .input_elevenlabs_voice_clone_audio_url import InputElevenlabsVoiceCloneAudioUrl
+    from .input_eyeline_id_relight import InputEyelineIdRelight
+    from .input_eyeline_id_relight_images_item import (
+        InputEyelineIdRelightImagesItem,
+        InputEyelineIdRelightImagesItem_Asset,
+        InputEyelineIdRelightImagesItem_Url,
+    )
+    from .input_eyeline_id_relight_images_item_asset import InputEyelineIdRelightImagesItemAsset
+    from .input_eyeline_id_relight_images_item_url import InputEyelineIdRelightImagesItemUrl
+    from .input_eyeline_id_relight_source_video import (
+        InputEyelineIdRelightSourceVideo,
+        InputEyelineIdRelightSourceVideo_Asset,
+        InputEyelineIdRelightSourceVideo_Url,
+    )
+    from .input_eyeline_id_relight_source_video_asset import InputEyelineIdRelightSourceVideoAsset
+    from .input_eyeline_id_relight_source_video_url import InputEyelineIdRelightSourceVideoUrl
+    from .input_eyeline_id_restyle import InputEyelineIdRestyle
+    from .input_eyeline_id_restyle_images_item import (
+        InputEyelineIdRestyleImagesItem,
+        InputEyelineIdRestyleImagesItem_Asset,
+        InputEyelineIdRestyleImagesItem_Url,
+    )
+    from .input_eyeline_id_restyle_images_item_asset import InputEyelineIdRestyleImagesItemAsset
+    from .input_eyeline_id_restyle_images_item_url import InputEyelineIdRestyleImagesItemUrl
+    from .input_eyeline_id_restyle_source_video import (
+        InputEyelineIdRestyleSourceVideo,
+        InputEyelineIdRestyleSourceVideo_Asset,
+        InputEyelineIdRestyleSourceVideo_Url,
+    )
+    from .input_eyeline_id_restyle_source_video_asset import InputEyelineIdRestyleSourceVideoAsset
+    from .input_eyeline_id_restyle_source_video_url import InputEyelineIdRestyleSourceVideoUrl
     from .input_flux11pro import InputFlux11Pro
     from .input_flux11pro_aspect_ratio import InputFlux11ProAspectRatio
     from .input_flux11pro_output_format import InputFlux11ProOutputFormat
@@ -635,6 +665,19 @@ if typing.TYPE_CHECKING:
     from .input_ltx23start_image import InputLtx23StartImage, InputLtx23StartImage_Asset, InputLtx23StartImage_Url
     from .input_ltx23start_image_asset import InputLtx23StartImageAsset
     from .input_ltx23start_image_url import InputLtx23StartImageUrl
+    from .input_ltx25 import InputLtx25
+    from .input_ltx25aspect_ratio import InputLtx25AspectRatio
+    from .input_ltx25audio import InputLtx25Audio, InputLtx25Audio_Asset, InputLtx25Audio_Url
+    from .input_ltx25audio_asset import InputLtx25AudioAsset
+    from .input_ltx25audio_url import InputLtx25AudioUrl
+    from .input_ltx25end_image import InputLtx25EndImage, InputLtx25EndImage_Asset, InputLtx25EndImage_Url
+    from .input_ltx25end_image_asset import InputLtx25EndImageAsset
+    from .input_ltx25end_image_url import InputLtx25EndImageUrl
+    from .input_ltx25quality import InputLtx25Quality
+    from .input_ltx25resolution import InputLtx25Resolution
+    from .input_ltx25start_image import InputLtx25StartImage, InputLtx25StartImage_Asset, InputLtx25StartImage_Url
+    from .input_ltx25start_image_asset import InputLtx25StartImageAsset
+    from .input_ltx25start_image_url import InputLtx25StartImageUrl
     from .input_luma_ray32 import InputLumaRay32
     from .input_luma_ray32aspect_ratio import InputLumaRay32AspectRatio
     from .input_luma_ray32resolution import InputLumaRay32Resolution
@@ -672,6 +715,35 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3images_item_asset import InputMinimaxH3ImagesItemAsset
     from .input_minimax_h3images_item_url import InputMinimaxH3ImagesItemUrl
+    from .input_minimax_h3max_camera_controls import InputMinimaxH3MaxCameraControls
+    from .input_minimax_h3max_camera_controls_camera_trajectory_item import (
+        InputMinimaxH3MaxCameraControlsCameraTrajectoryItem,
+    )
+    from .input_minimax_h3max_camera_controls_resolution import InputMinimaxH3MaxCameraControlsResolution
+    from .input_minimax_h3max_camera_controls_start_image import (
+        InputMinimaxH3MaxCameraControlsStartImage,
+        InputMinimaxH3MaxCameraControlsStartImage_Asset,
+        InputMinimaxH3MaxCameraControlsStartImage_Url,
+    )
+    from .input_minimax_h3max_camera_controls_start_image_asset import InputMinimaxH3MaxCameraControlsStartImageAsset
+    from .input_minimax_h3max_camera_controls_start_image_url import InputMinimaxH3MaxCameraControlsStartImageUrl
+    from .input_minimax_h3max_turbo import InputMinimaxH3MaxTurbo
+    from .input_minimax_h3max_turbo_aspect_ratio import InputMinimaxH3MaxTurboAspectRatio
+    from .input_minimax_h3max_turbo_end_image import (
+        InputMinimaxH3MaxTurboEndImage,
+        InputMinimaxH3MaxTurboEndImage_Asset,
+        InputMinimaxH3MaxTurboEndImage_Url,
+    )
+    from .input_minimax_h3max_turbo_end_image_asset import InputMinimaxH3MaxTurboEndImageAsset
+    from .input_minimax_h3max_turbo_end_image_url import InputMinimaxH3MaxTurboEndImageUrl
+    from .input_minimax_h3max_turbo_resolution import InputMinimaxH3MaxTurboResolution
+    from .input_minimax_h3max_turbo_start_image import (
+        InputMinimaxH3MaxTurboStartImage,
+        InputMinimaxH3MaxTurboStartImage_Asset,
+        InputMinimaxH3MaxTurboStartImage_Url,
+    )
+    from .input_minimax_h3max_turbo_start_image_asset import InputMinimaxH3MaxTurboStartImageAsset
+    from .input_minimax_h3max_turbo_start_image_url import InputMinimaxH3MaxTurboStartImageUrl
     from .input_minimax_h3resolution import InputMinimaxH3Resolution
     from .input_minimax_h3start_image import (
         InputMinimaxH3StartImage,
@@ -1019,6 +1091,18 @@ if typing.TYPE_CHECKING:
     from .input_topaz_image_upscaler_source_image_asset import InputTopazImageUpscalerSourceImageAsset
     from .input_topaz_image_upscaler_source_image_url import InputTopazImageUpscalerSourceImageUrl
     from .input_topaz_image_upscaler_target_resolution import InputTopazImageUpscalerTargetResolution
+    from .input_topaz_image_upscaler_transparency import InputTopazImageUpscalerTransparency
+    from .input_topaz_image_upscaler_transparency_source_image import (
+        InputTopazImageUpscalerTransparencySourceImage,
+        InputTopazImageUpscalerTransparencySourceImage_Asset,
+        InputTopazImageUpscalerTransparencySourceImage_Url,
+    )
+    from .input_topaz_image_upscaler_transparency_source_image_asset import (
+        InputTopazImageUpscalerTransparencySourceImageAsset,
+    )
+    from .input_topaz_image_upscaler_transparency_source_image_url import (
+        InputTopazImageUpscalerTransparencySourceImageUrl,
+    )
     from .input_topaz_image_upscaler_wonder import InputTopazImageUpscalerWonder
     from .input_topaz_image_upscaler_wonder_enhancement_strength import InputTopazImageUpscalerWonderEnhancementStrength
     from .input_topaz_image_upscaler_wonder_source_image import (
@@ -1301,6 +1385,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputElevenlabsVoiceCloneAudioUrl": ".input_elevenlabs_voice_clone_audio_url",
     "InputElevenlabsVoiceCloneAudio_Asset": ".input_elevenlabs_voice_clone_audio",
     "InputElevenlabsVoiceCloneAudio_Url": ".input_elevenlabs_voice_clone_audio",
+    "InputEyelineIdRelight": ".input_eyeline_id_relight",
+    "InputEyelineIdRelightImagesItem": ".input_eyeline_id_relight_images_item",
+    "InputEyelineIdRelightImagesItemAsset": ".input_eyeline_id_relight_images_item_asset",
+    "InputEyelineIdRelightImagesItemUrl": ".input_eyeline_id_relight_images_item_url",
+    "InputEyelineIdRelightImagesItem_Asset": ".input_eyeline_id_relight_images_item",
+    "InputEyelineIdRelightImagesItem_Url": ".input_eyeline_id_relight_images_item",
+    "InputEyelineIdRelightSourceVideo": ".input_eyeline_id_relight_source_video",
+    "InputEyelineIdRelightSourceVideoAsset": ".input_eyeline_id_relight_source_video_asset",
+    "InputEyelineIdRelightSourceVideoUrl": ".input_eyeline_id_relight_source_video_url",
+    "InputEyelineIdRelightSourceVideo_Asset": ".input_eyeline_id_relight_source_video",
+    "InputEyelineIdRelightSourceVideo_Url": ".input_eyeline_id_relight_source_video",
+    "InputEyelineIdRestyle": ".input_eyeline_id_restyle",
+    "InputEyelineIdRestyleImagesItem": ".input_eyeline_id_restyle_images_item",
+    "InputEyelineIdRestyleImagesItemAsset": ".input_eyeline_id_restyle_images_item_asset",
+    "InputEyelineIdRestyleImagesItemUrl": ".input_eyeline_id_restyle_images_item_url",
+    "InputEyelineIdRestyleImagesItem_Asset": ".input_eyeline_id_restyle_images_item",
+    "InputEyelineIdRestyleImagesItem_Url": ".input_eyeline_id_restyle_images_item",
+    "InputEyelineIdRestyleSourceVideo": ".input_eyeline_id_restyle_source_video",
+    "InputEyelineIdRestyleSourceVideoAsset": ".input_eyeline_id_restyle_source_video_asset",
+    "InputEyelineIdRestyleSourceVideoUrl": ".input_eyeline_id_restyle_source_video_url",
+    "InputEyelineIdRestyleSourceVideo_Asset": ".input_eyeline_id_restyle_source_video",
+    "InputEyelineIdRestyleSourceVideo_Url": ".input_eyeline_id_restyle_source_video",
     "InputFlux11Pro": ".input_flux11pro",
     "InputFlux11ProAspectRatio": ".input_flux11pro_aspect_ratio",
     "InputFlux11ProOutputFormat": ".input_flux11pro_output_format",
@@ -1771,6 +1877,25 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputLtx23StartImageUrl": ".input_ltx23start_image_url",
     "InputLtx23StartImage_Asset": ".input_ltx23start_image",
     "InputLtx23StartImage_Url": ".input_ltx23start_image",
+    "InputLtx25": ".input_ltx25",
+    "InputLtx25AspectRatio": ".input_ltx25aspect_ratio",
+    "InputLtx25Audio": ".input_ltx25audio",
+    "InputLtx25AudioAsset": ".input_ltx25audio_asset",
+    "InputLtx25AudioUrl": ".input_ltx25audio_url",
+    "InputLtx25Audio_Asset": ".input_ltx25audio",
+    "InputLtx25Audio_Url": ".input_ltx25audio",
+    "InputLtx25EndImage": ".input_ltx25end_image",
+    "InputLtx25EndImageAsset": ".input_ltx25end_image_asset",
+    "InputLtx25EndImageUrl": ".input_ltx25end_image_url",
+    "InputLtx25EndImage_Asset": ".input_ltx25end_image",
+    "InputLtx25EndImage_Url": ".input_ltx25end_image",
+    "InputLtx25Quality": ".input_ltx25quality",
+    "InputLtx25Resolution": ".input_ltx25resolution",
+    "InputLtx25StartImage": ".input_ltx25start_image",
+    "InputLtx25StartImageAsset": ".input_ltx25start_image_asset",
+    "InputLtx25StartImageUrl": ".input_ltx25start_image_url",
+    "InputLtx25StartImage_Asset": ".input_ltx25start_image",
+    "InputLtx25StartImage_Url": ".input_ltx25start_image",
     "InputLumaRay32": ".input_luma_ray32",
     "InputLumaRay32AspectRatio": ".input_luma_ray32aspect_ratio",
     "InputLumaRay32Resolution": ".input_luma_ray32resolution",
@@ -1800,6 +1925,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3ImagesItemUrl": ".input_minimax_h3images_item_url",
     "InputMinimaxH3ImagesItem_Asset": ".input_minimax_h3images_item",
     "InputMinimaxH3ImagesItem_Url": ".input_minimax_h3images_item",
+    "InputMinimaxH3MaxCameraControls": ".input_minimax_h3max_camera_controls",
+    "InputMinimaxH3MaxCameraControlsCameraTrajectoryItem": ".input_minimax_h3max_camera_controls_camera_trajectory_item",
+    "InputMinimaxH3MaxCameraControlsResolution": ".input_minimax_h3max_camera_controls_resolution",
+    "InputMinimaxH3MaxCameraControlsStartImage": ".input_minimax_h3max_camera_controls_start_image",
+    "InputMinimaxH3MaxCameraControlsStartImageAsset": ".input_minimax_h3max_camera_controls_start_image_asset",
+    "InputMinimaxH3MaxCameraControlsStartImageUrl": ".input_minimax_h3max_camera_controls_start_image_url",
+    "InputMinimaxH3MaxCameraControlsStartImage_Asset": ".input_minimax_h3max_camera_controls_start_image",
+    "InputMinimaxH3MaxCameraControlsStartImage_Url": ".input_minimax_h3max_camera_controls_start_image",
+    "InputMinimaxH3MaxTurbo": ".input_minimax_h3max_turbo",
+    "InputMinimaxH3MaxTurboAspectRatio": ".input_minimax_h3max_turbo_aspect_ratio",
+    "InputMinimaxH3MaxTurboEndImage": ".input_minimax_h3max_turbo_end_image",
+    "InputMinimaxH3MaxTurboEndImageAsset": ".input_minimax_h3max_turbo_end_image_asset",
+    "InputMinimaxH3MaxTurboEndImageUrl": ".input_minimax_h3max_turbo_end_image_url",
+    "InputMinimaxH3MaxTurboEndImage_Asset": ".input_minimax_h3max_turbo_end_image",
+    "InputMinimaxH3MaxTurboEndImage_Url": ".input_minimax_h3max_turbo_end_image",
+    "InputMinimaxH3MaxTurboResolution": ".input_minimax_h3max_turbo_resolution",
+    "InputMinimaxH3MaxTurboStartImage": ".input_minimax_h3max_turbo_start_image",
+    "InputMinimaxH3MaxTurboStartImageAsset": ".input_minimax_h3max_turbo_start_image_asset",
+    "InputMinimaxH3MaxTurboStartImageUrl": ".input_minimax_h3max_turbo_start_image_url",
+    "InputMinimaxH3MaxTurboStartImage_Asset": ".input_minimax_h3max_turbo_start_image",
+    "InputMinimaxH3MaxTurboStartImage_Url": ".input_minimax_h3max_turbo_start_image",
     "InputMinimaxH3Resolution": ".input_minimax_h3resolution",
     "InputMinimaxH3StartImage": ".input_minimax_h3start_image",
     "InputMinimaxH3StartImageAsset": ".input_minimax_h3start_image_asset",
@@ -2075,6 +2221,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputTopazImageUpscalerSourceImage_Asset": ".input_topaz_image_upscaler_source_image",
     "InputTopazImageUpscalerSourceImage_Url": ".input_topaz_image_upscaler_source_image",
     "InputTopazImageUpscalerTargetResolution": ".input_topaz_image_upscaler_target_resolution",
+    "InputTopazImageUpscalerTransparency": ".input_topaz_image_upscaler_transparency",
+    "InputTopazImageUpscalerTransparencySourceImage": ".input_topaz_image_upscaler_transparency_source_image",
+    "InputTopazImageUpscalerTransparencySourceImageAsset": ".input_topaz_image_upscaler_transparency_source_image_asset",
+    "InputTopazImageUpscalerTransparencySourceImageUrl": ".input_topaz_image_upscaler_transparency_source_image_url",
+    "InputTopazImageUpscalerTransparencySourceImage_Asset": ".input_topaz_image_upscaler_transparency_source_image",
+    "InputTopazImageUpscalerTransparencySourceImage_Url": ".input_topaz_image_upscaler_transparency_source_image",
     "InputTopazImageUpscalerWonder": ".input_topaz_image_upscaler_wonder",
     "InputTopazImageUpscalerWonderEnhancementStrength": ".input_topaz_image_upscaler_wonder_enhancement_strength",
     "InputTopazImageUpscalerWonderSourceImage": ".input_topaz_image_upscaler_wonder_source_image",
@@ -2375,6 +2527,28 @@ __all__ = [
     "InputElevenlabsVoiceCloneAudioUrl",
     "InputElevenlabsVoiceCloneAudio_Asset",
     "InputElevenlabsVoiceCloneAudio_Url",
+    "InputEyelineIdRelight",
+    "InputEyelineIdRelightImagesItem",
+    "InputEyelineIdRelightImagesItemAsset",
+    "InputEyelineIdRelightImagesItemUrl",
+    "InputEyelineIdRelightImagesItem_Asset",
+    "InputEyelineIdRelightImagesItem_Url",
+    "InputEyelineIdRelightSourceVideo",
+    "InputEyelineIdRelightSourceVideoAsset",
+    "InputEyelineIdRelightSourceVideoUrl",
+    "InputEyelineIdRelightSourceVideo_Asset",
+    "InputEyelineIdRelightSourceVideo_Url",
+    "InputEyelineIdRestyle",
+    "InputEyelineIdRestyleImagesItem",
+    "InputEyelineIdRestyleImagesItemAsset",
+    "InputEyelineIdRestyleImagesItemUrl",
+    "InputEyelineIdRestyleImagesItem_Asset",
+    "InputEyelineIdRestyleImagesItem_Url",
+    "InputEyelineIdRestyleSourceVideo",
+    "InputEyelineIdRestyleSourceVideoAsset",
+    "InputEyelineIdRestyleSourceVideoUrl",
+    "InputEyelineIdRestyleSourceVideo_Asset",
+    "InputEyelineIdRestyleSourceVideo_Url",
     "InputFlux11Pro",
     "InputFlux11ProAspectRatio",
     "InputFlux11ProOutputFormat",
@@ -2845,6 +3019,25 @@ __all__ = [
     "InputLtx23StartImageUrl",
     "InputLtx23StartImage_Asset",
     "InputLtx23StartImage_Url",
+    "InputLtx25",
+    "InputLtx25AspectRatio",
+    "InputLtx25Audio",
+    "InputLtx25AudioAsset",
+    "InputLtx25AudioUrl",
+    "InputLtx25Audio_Asset",
+    "InputLtx25Audio_Url",
+    "InputLtx25EndImage",
+    "InputLtx25EndImageAsset",
+    "InputLtx25EndImageUrl",
+    "InputLtx25EndImage_Asset",
+    "InputLtx25EndImage_Url",
+    "InputLtx25Quality",
+    "InputLtx25Resolution",
+    "InputLtx25StartImage",
+    "InputLtx25StartImageAsset",
+    "InputLtx25StartImageUrl",
+    "InputLtx25StartImage_Asset",
+    "InputLtx25StartImage_Url",
     "InputLumaRay32",
     "InputLumaRay32AspectRatio",
     "InputLumaRay32Resolution",
@@ -2874,6 +3067,27 @@ __all__ = [
     "InputMinimaxH3ImagesItemUrl",
     "InputMinimaxH3ImagesItem_Asset",
     "InputMinimaxH3ImagesItem_Url",
+    "InputMinimaxH3MaxCameraControls",
+    "InputMinimaxH3MaxCameraControlsCameraTrajectoryItem",
+    "InputMinimaxH3MaxCameraControlsResolution",
+    "InputMinimaxH3MaxCameraControlsStartImage",
+    "InputMinimaxH3MaxCameraControlsStartImageAsset",
+    "InputMinimaxH3MaxCameraControlsStartImageUrl",
+    "InputMinimaxH3MaxCameraControlsStartImage_Asset",
+    "InputMinimaxH3MaxCameraControlsStartImage_Url",
+    "InputMinimaxH3MaxTurbo",
+    "InputMinimaxH3MaxTurboAspectRatio",
+    "InputMinimaxH3MaxTurboEndImage",
+    "InputMinimaxH3MaxTurboEndImageAsset",
+    "InputMinimaxH3MaxTurboEndImageUrl",
+    "InputMinimaxH3MaxTurboEndImage_Asset",
+    "InputMinimaxH3MaxTurboEndImage_Url",
+    "InputMinimaxH3MaxTurboResolution",
+    "InputMinimaxH3MaxTurboStartImage",
+    "InputMinimaxH3MaxTurboStartImageAsset",
+    "InputMinimaxH3MaxTurboStartImageUrl",
+    "InputMinimaxH3MaxTurboStartImage_Asset",
+    "InputMinimaxH3MaxTurboStartImage_Url",
     "InputMinimaxH3Resolution",
     "InputMinimaxH3StartImage",
     "InputMinimaxH3StartImageAsset",
@@ -3149,6 +3363,12 @@ __all__ = [
     "InputTopazImageUpscalerSourceImage_Asset",
     "InputTopazImageUpscalerSourceImage_Url",
     "InputTopazImageUpscalerTargetResolution",
+    "InputTopazImageUpscalerTransparency",
+    "InputTopazImageUpscalerTransparencySourceImage",
+    "InputTopazImageUpscalerTransparencySourceImageAsset",
+    "InputTopazImageUpscalerTransparencySourceImageUrl",
+    "InputTopazImageUpscalerTransparencySourceImage_Asset",
+    "InputTopazImageUpscalerTransparencySourceImage_Url",
     "InputTopazImageUpscalerWonder",
     "InputTopazImageUpscalerWonderEnhancementStrength",
     "InputTopazImageUpscalerWonderSourceImage",

@@ -13,10 +13,6 @@ from .input_happy_horse_start_image import InputHappyHorseStartImage
 class InputHappyHorse(UniversalBaseModel):
     """
     Model-specific inputs for `happy-horse`.
-
-    Accepted field combinations (one per input mode):
-    (1) requires: aspect_ratio, duration_ms, prompt, resolution, start_image
-    (2) requires: aspect_ratio, duration_ms, prompt, resolution; accepts aspect_ratio: 16:9 | 4:3 | 1:1 | 3:4 | 9:16
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)

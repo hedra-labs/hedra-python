@@ -55,7 +55,7 @@ class InputGeminiOmniFlash11(UniversalBaseModel):
 
     source_video: typing.Optional[InputGeminiOmniFlash11SourceVideo] = pydantic.Field(default=None)
     """
-    Source video. From 1s to 10s and at most 524.2 MB.
+    Source video. From 1s to 10.15s and at most 524.2 MB.
     """
 
     images: typing.Optional[typing.List[InputGeminiOmniFlash11ImagesItem]] = pydantic.Field(default=None)
@@ -65,7 +65,7 @@ class InputGeminiOmniFlash11(UniversalBaseModel):
 
     videos: typing.Optional[typing.List[InputGeminiOmniFlash11VideosItem]] = pydantic.Field(default=None)
     """
-    Reference videos. 1 to 3 videos, each at most 10s and at most 524.2 MB.
+    Reference videos. 1 to 3 videos, each at most 10.15s and at most 524.2 MB.
     """
 
     if IS_PYDANTIC_V2:
