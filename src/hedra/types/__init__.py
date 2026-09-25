@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .api_key_scope import ApiKeyScope
     from .balance_response import BalanceResponse
     from .billing_error import BillingError
+    from .billing_event_type import BillingEventType
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
@@ -1296,6 +1297,15 @@ if typing.TYPE_CHECKING:
     from .key_rotate_response import KeyRotateResponse
     from .key_status import KeyStatus
     from .key_summary import KeySummary
+    from .llm_capabilities_object import LlmCapabilitiesObject
+    from .llm_model_list import LlmModelList
+    from .llm_model_list_object import LlmModelListObject
+    from .llm_model_object import LlmModelObject
+    from .llm_model_object_object import LlmModelObjectObject
+    from .llm_pricing import LlmPricing
+    from .llm_usage_record import LlmUsageRecord
+    from .llm_usage_record_list_response import LlmUsageRecordListResponse
+    from .llm_usage_status import LlmUsageStatus
     from .log_drain_config import LogDrainConfig
     from .log_drain_format import LogDrainFormat
     from .log_drain_list_response import LogDrainListResponse
@@ -1305,12 +1315,16 @@ if typing.TYPE_CHECKING:
     from .model_detail import ModelDetail
     from .model_list_response import ModelListResponse
     from .model_summary import ModelSummary
+    from .open_ai_error import OpenAiError
+    from .open_ai_error_response import OpenAiErrorResponse
     from .output_item import OutputItem
     from .output_status import OutputStatus
     from .result_response import ResultResponse
     from .status_response import StatusResponse
     from .submit_response import SubmitResponse
     from .token_create_response import TokenCreateResponse
+    from .top_off_failed_event import TopOffFailedEvent
+    from .top_off_failure_reason import TopOffFailureReason
     from .transaction_list_response import TransactionListResponse
     from .transaction_record import TransactionRecord
     from .usage_bucket import UsageBucket
@@ -1334,6 +1348,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiKeyScope": ".api_key_scope",
     "BalanceResponse": ".balance_response",
     "BillingError": ".billing_error",
+    "BillingEventType": ".billing_event_type",
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
@@ -2414,6 +2429,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KeyRotateResponse": ".key_rotate_response",
     "KeyStatus": ".key_status",
     "KeySummary": ".key_summary",
+    "LlmCapabilitiesObject": ".llm_capabilities_object",
+    "LlmModelList": ".llm_model_list",
+    "LlmModelListObject": ".llm_model_list_object",
+    "LlmModelObject": ".llm_model_object",
+    "LlmModelObjectObject": ".llm_model_object_object",
+    "LlmPricing": ".llm_pricing",
+    "LlmUsageRecord": ".llm_usage_record",
+    "LlmUsageRecordListResponse": ".llm_usage_record_list_response",
+    "LlmUsageStatus": ".llm_usage_status",
     "LogDrainConfig": ".log_drain_config",
     "LogDrainFormat": ".log_drain_format",
     "LogDrainListResponse": ".log_drain_list_response",
@@ -2423,12 +2447,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModelDetail": ".model_detail",
     "ModelListResponse": ".model_list_response",
     "ModelSummary": ".model_summary",
+    "OpenAiError": ".open_ai_error",
+    "OpenAiErrorResponse": ".open_ai_error_response",
     "OutputItem": ".output_item",
     "OutputStatus": ".output_status",
     "ResultResponse": ".result_response",
     "StatusResponse": ".status_response",
     "SubmitResponse": ".submit_response",
     "TokenCreateResponse": ".token_create_response",
+    "TopOffFailedEvent": ".top_off_failed_event",
+    "TopOffFailureReason": ".top_off_failure_reason",
     "TransactionListResponse": ".transaction_list_response",
     "TransactionRecord": ".transaction_record",
     "UsageBucket": ".usage_bucket",
@@ -2476,6 +2504,7 @@ __all__ = [
     "ApiKeyScope",
     "BalanceResponse",
     "BillingError",
+    "BillingEventType",
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",
@@ -3556,6 +3585,15 @@ __all__ = [
     "KeyRotateResponse",
     "KeyStatus",
     "KeySummary",
+    "LlmCapabilitiesObject",
+    "LlmModelList",
+    "LlmModelListObject",
+    "LlmModelObject",
+    "LlmModelObjectObject",
+    "LlmPricing",
+    "LlmUsageRecord",
+    "LlmUsageRecordListResponse",
+    "LlmUsageStatus",
     "LogDrainConfig",
     "LogDrainFormat",
     "LogDrainListResponse",
@@ -3565,12 +3603,16 @@ __all__ = [
     "ModelDetail",
     "ModelListResponse",
     "ModelSummary",
+    "OpenAiError",
+    "OpenAiErrorResponse",
     "OutputItem",
     "OutputStatus",
     "ResultResponse",
     "StatusResponse",
     "SubmitResponse",
     "TokenCreateResponse",
+    "TopOffFailedEvent",
+    "TopOffFailureReason",
     "TransactionListResponse",
     "TransactionRecord",
     "UsageBucket",
