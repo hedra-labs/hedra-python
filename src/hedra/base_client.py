@@ -12,7 +12,6 @@ from .environment import HedraEnvironment
 
 if typing.TYPE_CHECKING:
     from .billing.client import AsyncBillingClient, BillingClient
-    from .chat.client import AsyncChatClient, ChatClient
     from .files.client import AsyncFilesClient, FilesClient
     from .jobs.client import AsyncJobsClient, JobsClient
     from .keys.client import AsyncKeysClient, KeysClient
@@ -117,7 +116,6 @@ class BaseHedra:
         self._billing: typing.Optional[BillingClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._log_drains: typing.Optional[LogDrainsClient] = None
-        self._chat: typing.Optional[ChatClient] = None
 
     @property
     def jobs(self):
@@ -182,14 +180,6 @@ class BaseHedra:
 
             self._log_drains = LogDrainsClient(client_wrapper=self._client_wrapper)
         return self._log_drains
-
-    @property
-    def chat(self):
-        if self._chat is None:
-            from .chat.client import ChatClient  # noqa: E402
-
-            self._chat = ChatClient(client_wrapper=self._client_wrapper)
-        return self._chat
 
 
 def _make_default_async_client(
@@ -308,7 +298,6 @@ class AsyncBaseHedra:
         self._billing: typing.Optional[AsyncBillingClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._log_drains: typing.Optional[AsyncLogDrainsClient] = None
-        self._chat: typing.Optional[AsyncChatClient] = None
 
     @property
     def jobs(self):
@@ -373,14 +362,6 @@ class AsyncBaseHedra:
 
             self._log_drains = AsyncLogDrainsClient(client_wrapper=self._client_wrapper)
         return self._log_drains
-
-    @property
-    def chat(self):
-        if self._chat is None:
-            from .chat.client import AsyncChatClient  # noqa: E402
-
-            self._chat = AsyncChatClient(client_wrapper=self._client_wrapper)
-        return self._chat
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: HedraEnvironment) -> str:
