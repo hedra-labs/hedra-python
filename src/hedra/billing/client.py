@@ -6,7 +6,6 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.balance_response import BalanceResponse
-from ..types.llm_usage_record_list_response import LlmUsageRecordListResponse
 from ..types.transaction_list_response import TransactionListResponse
 from ..types.usage_group_by import UsageGroupBy
 from ..types.usage_response import UsageResponse
@@ -130,66 +129,6 @@ class BillingClient:
         client.billing.list_transactions()
         """
         _response = self._raw_client.list_transactions(limit=limit, cursor=cursor, request_options=request_options)
-        return _response.data
-
-    def list_llm_usage(
-        self,
-        *,
-        limit: typing.Optional[int] = None,
-        cursor: typing.Optional[str] = None,
-        start: typing.Optional[dt.datetime] = None,
-        end: typing.Optional[dt.datetime] = None,
-        model: typing.Optional[str] = None,
-        key_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> LlmUsageRecordListResponse:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[int]
-            Maximum items per page.
-
-        cursor : typing.Optional[str]
-            Opaque cursor from the previous page's `next_cursor`; omit for the first page. Each cursor records the filters it was issued under, so a walk must keep them fixed.
-
-        start : typing.Optional[dt.datetime]
-            Only requests created at or after this instant (ISO-8601). Unlike `GET /v3/usage` there is no default window and no window cap.
-
-        end : typing.Optional[dt.datetime]
-            Only requests created before this instant (ISO-8601, exclusive).
-
-        model : typing.Optional[str]
-            Only requests admitted for this model id.
-
-        key_id : typing.Optional[str]
-            Only requests made with this API key (its `key_id`, as listed by GET /v3/keys). An unknown key id yields an empty page.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LlmUsageRecordListResponse
-            Successful Response
-
-        Examples
-        --------
-        from hedra import Hedra
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.billing.list_llm_usage()
-        """
-        _response = self._raw_client.list_llm_usage(
-            limit=limit,
-            cursor=cursor,
-            start=start,
-            end=end,
-            model=model,
-            key_id=key_id,
-            request_options=request_options,
-        )
         return _response.data
 
 
@@ -337,73 +276,5 @@ class AsyncBillingClient:
         """
         _response = await self._raw_client.list_transactions(
             limit=limit, cursor=cursor, request_options=request_options
-        )
-        return _response.data
-
-    async def list_llm_usage(
-        self,
-        *,
-        limit: typing.Optional[int] = None,
-        cursor: typing.Optional[str] = None,
-        start: typing.Optional[dt.datetime] = None,
-        end: typing.Optional[dt.datetime] = None,
-        model: typing.Optional[str] = None,
-        key_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> LlmUsageRecordListResponse:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[int]
-            Maximum items per page.
-
-        cursor : typing.Optional[str]
-            Opaque cursor from the previous page's `next_cursor`; omit for the first page. Each cursor records the filters it was issued under, so a walk must keep them fixed.
-
-        start : typing.Optional[dt.datetime]
-            Only requests created at or after this instant (ISO-8601). Unlike `GET /v3/usage` there is no default window and no window cap.
-
-        end : typing.Optional[dt.datetime]
-            Only requests created before this instant (ISO-8601, exclusive).
-
-        model : typing.Optional[str]
-            Only requests admitted for this model id.
-
-        key_id : typing.Optional[str]
-            Only requests made with this API key (its `key_id`, as listed by GET /v3/keys). An unknown key id yields an empty page.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LlmUsageRecordListResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.billing.list_llm_usage()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.list_llm_usage(
-            limit=limit,
-            cursor=cursor,
-            start=start,
-            end=end,
-            model=model,
-            key_id=key_id,
-            request_options=request_options,
         )
         return _response.data
