@@ -7,12 +7,16 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        WebhookBillingTopOffFailedPayloadXHedraWebhookEvent,
+        WebhookBillingTopOffFailedPayloadXHedraWebhookRedelivery,
         WebhookJobCompletedPayloadXHedraWebhookEvent,
         WebhookJobCompletedPayloadXHedraWebhookRedelivery,
         WebhookJobFailedPayloadXHedraWebhookEvent,
         WebhookJobFailedPayloadXHedraWebhookRedelivery,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "WebhookBillingTopOffFailedPayloadXHedraWebhookEvent": ".types",
+    "WebhookBillingTopOffFailedPayloadXHedraWebhookRedelivery": ".types",
     "WebhookJobCompletedPayloadXHedraWebhookEvent": ".types",
     "WebhookJobCompletedPayloadXHedraWebhookRedelivery": ".types",
     "WebhookJobFailedPayloadXHedraWebhookEvent": ".types",
@@ -42,6 +46,8 @@ def __dir__():
 
 
 __all__ = [
+    "WebhookBillingTopOffFailedPayloadXHedraWebhookEvent",
+    "WebhookBillingTopOffFailedPayloadXHedraWebhookRedelivery",
     "WebhookJobCompletedPayloadXHedraWebhookEvent",
     "WebhookJobCompletedPayloadXHedraWebhookRedelivery",
     "WebhookJobFailedPayloadXHedraWebhookEvent",

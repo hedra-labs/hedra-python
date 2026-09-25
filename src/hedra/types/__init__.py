@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .api_key_scope import ApiKeyScope
     from .balance_response import BalanceResponse
     from .billing_error import BillingError
+    from .billing_event_type import BillingEventType
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
@@ -1311,6 +1312,8 @@ if typing.TYPE_CHECKING:
     from .status_response import StatusResponse
     from .submit_response import SubmitResponse
     from .token_create_response import TokenCreateResponse
+    from .top_off_failed_event import TopOffFailedEvent
+    from .top_off_failure_reason import TopOffFailureReason
     from .transaction_list_response import TransactionListResponse
     from .transaction_record import TransactionRecord
     from .usage_bucket import UsageBucket
@@ -1334,6 +1337,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiKeyScope": ".api_key_scope",
     "BalanceResponse": ".balance_response",
     "BillingError": ".billing_error",
+    "BillingEventType": ".billing_event_type",
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
@@ -2429,6 +2433,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StatusResponse": ".status_response",
     "SubmitResponse": ".submit_response",
     "TokenCreateResponse": ".token_create_response",
+    "TopOffFailedEvent": ".top_off_failed_event",
+    "TopOffFailureReason": ".top_off_failure_reason",
     "TransactionListResponse": ".transaction_list_response",
     "TransactionRecord": ".transaction_record",
     "UsageBucket": ".usage_bucket",
@@ -2476,6 +2482,7 @@ __all__ = [
     "ApiKeyScope",
     "BalanceResponse",
     "BillingError",
+    "BillingEventType",
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",
@@ -3571,6 +3578,8 @@ __all__ = [
     "StatusResponse",
     "SubmitResponse",
     "TokenCreateResponse",
+    "TopOffFailedEvent",
+    "TopOffFailureReason",
     "TransactionListResponse",
     "TransactionRecord",
     "UsageBucket",
