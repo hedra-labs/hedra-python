@@ -32,7 +32,7 @@ class FieldError(UniversalBaseModel):
 
     allowed: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    The accepted values, when the field is an enum — so the request can be fixed without re-fetching the model schema.
+    Accepted values for an enum, or accepted field names on the first unknown-field violation. Omitted on subsequent unknown fields.
     """
 
     if IS_PYDANTIC_V2:

@@ -4,18 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .input_minimax_h3aspect_ratio import InputMinimaxH3AspectRatio
-from .input_minimax_h3audios_item import InputMinimaxH3AudiosItem
-from .input_minimax_h3end_image import InputMinimaxH3EndImage
-from .input_minimax_h3images_item import InputMinimaxH3ImagesItem
-from .input_minimax_h3resolution import InputMinimaxH3Resolution
-from .input_minimax_h3start_image import InputMinimaxH3StartImage
-from .input_minimax_h3videos_item import InputMinimaxH3VideosItem
+from .input_minimax_h3max_aspect_ratio import InputMinimaxH3MaxAspectRatio
+from .input_minimax_h3max_audios_item import InputMinimaxH3MaxAudiosItem
+from .input_minimax_h3max_end_image import InputMinimaxH3MaxEndImage
+from .input_minimax_h3max_images_item import InputMinimaxH3MaxImagesItem
+from .input_minimax_h3max_resolution import InputMinimaxH3MaxResolution
+from .input_minimax_h3max_start_image import InputMinimaxH3MaxStartImage
+from .input_minimax_h3max_videos_item import InputMinimaxH3MaxVideosItem
 
 
-class InputMinimaxH3(UniversalBaseModel):
+class InputMinimaxH3Max(UniversalBaseModel):
     """
-    Model-specific inputs for `minimax-h3`.
+    Model-specific inputs for `minimax-h3-max`.
 
     Accepted field combinations (one per input mode):
     (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, audios, end_image, images, videos
@@ -34,7 +34,7 @@ class InputMinimaxH3(UniversalBaseModel):
     Generation prompt. From 1 to 7000 characters.
     """
 
-    resolution: InputMinimaxH3Resolution = pydantic.Field()
+    resolution: InputMinimaxH3MaxResolution = pydantic.Field()
     """
     Output resolution.
     """
@@ -44,32 +44,37 @@ class InputMinimaxH3(UniversalBaseModel):
     Duration in ms.
     """
 
-    start_image: typing.Optional[InputMinimaxH3StartImage] = pydantic.Field(default=None)
+    enhance_prompt: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
+    """
+
+    start_image: typing.Optional[InputMinimaxH3MaxStartImage] = pydantic.Field(default=None)
     """
     Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
-    end_image: typing.Optional[InputMinimaxH3EndImage] = pydantic.Field(default=None)
+    end_image: typing.Optional[InputMinimaxH3MaxEndImage] = pydantic.Field(default=None)
     """
     End frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
-    aspect_ratio: typing.Optional[InputMinimaxH3AspectRatio] = pydantic.Field(default=None)
+    aspect_ratio: typing.Optional[InputMinimaxH3MaxAspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image, else the first reference video.
     """
 
-    images: typing.Optional[typing.List[InputMinimaxH3ImagesItem]] = pydantic.Field(default=None)
+    images: typing.Optional[typing.List[InputMinimaxH3MaxImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images. 1 to 5 images, each from 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    Reference images. 1 to 4 images, each from 256px to 1024px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
-    videos: typing.Optional[typing.List[InputMinimaxH3VideosItem]] = pydantic.Field(default=None)
+    videos: typing.Optional[typing.List[InputMinimaxH3MaxVideosItem]] = pydantic.Field(default=None)
     """
     Reference videos. 1 to 3 videos, each from 2s to 15s and at most 524.2 MB, at most 15s in total.
     """
 
-    audios: typing.Optional[typing.List[InputMinimaxH3AudiosItem]] = pydantic.Field(default=None)
+    audios: typing.Optional[typing.List[InputMinimaxH3MaxAudiosItem]] = pydantic.Field(default=None)
     """
     Reference audios. 1 to 3 audio files, each from 2s to 15s and at most 104.8 MB, at most 15s in total.
     """

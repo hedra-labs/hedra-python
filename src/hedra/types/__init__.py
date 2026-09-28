@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
+    from .error_type import ErrorType
     from .estimate_response import EstimateResponse
     from .field_error import FieldError
     from .file_upload_response import FileUploadResponse
@@ -716,6 +717,15 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3images_item_asset import InputMinimaxH3ImagesItemAsset
     from .input_minimax_h3images_item_url import InputMinimaxH3ImagesItemUrl
+    from .input_minimax_h3max import InputMinimaxH3Max
+    from .input_minimax_h3max_aspect_ratio import InputMinimaxH3MaxAspectRatio
+    from .input_minimax_h3max_audios_item import (
+        InputMinimaxH3MaxAudiosItem,
+        InputMinimaxH3MaxAudiosItem_Asset,
+        InputMinimaxH3MaxAudiosItem_Url,
+    )
+    from .input_minimax_h3max_audios_item_asset import InputMinimaxH3MaxAudiosItemAsset
+    from .input_minimax_h3max_audios_item_url import InputMinimaxH3MaxAudiosItemUrl
     from .input_minimax_h3max_camera_controls import InputMinimaxH3MaxCameraControls
     from .input_minimax_h3max_camera_controls_camera_trajectory_item import (
         InputMinimaxH3MaxCameraControlsCameraTrajectoryItem,
@@ -728,6 +738,28 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3max_camera_controls_start_image_asset import InputMinimaxH3MaxCameraControlsStartImageAsset
     from .input_minimax_h3max_camera_controls_start_image_url import InputMinimaxH3MaxCameraControlsStartImageUrl
+    from .input_minimax_h3max_end_image import (
+        InputMinimaxH3MaxEndImage,
+        InputMinimaxH3MaxEndImage_Asset,
+        InputMinimaxH3MaxEndImage_Url,
+    )
+    from .input_minimax_h3max_end_image_asset import InputMinimaxH3MaxEndImageAsset
+    from .input_minimax_h3max_end_image_url import InputMinimaxH3MaxEndImageUrl
+    from .input_minimax_h3max_images_item import (
+        InputMinimaxH3MaxImagesItem,
+        InputMinimaxH3MaxImagesItem_Asset,
+        InputMinimaxH3MaxImagesItem_Url,
+    )
+    from .input_minimax_h3max_images_item_asset import InputMinimaxH3MaxImagesItemAsset
+    from .input_minimax_h3max_images_item_url import InputMinimaxH3MaxImagesItemUrl
+    from .input_minimax_h3max_resolution import InputMinimaxH3MaxResolution
+    from .input_minimax_h3max_start_image import (
+        InputMinimaxH3MaxStartImage,
+        InputMinimaxH3MaxStartImage_Asset,
+        InputMinimaxH3MaxStartImage_Url,
+    )
+    from .input_minimax_h3max_start_image_asset import InputMinimaxH3MaxStartImageAsset
+    from .input_minimax_h3max_start_image_url import InputMinimaxH3MaxStartImageUrl
     from .input_minimax_h3max_turbo import InputMinimaxH3MaxTurbo
     from .input_minimax_h3max_turbo_aspect_ratio import InputMinimaxH3MaxTurboAspectRatio
     from .input_minimax_h3max_turbo_end_image import (
@@ -745,6 +777,13 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3max_turbo_start_image_asset import InputMinimaxH3MaxTurboStartImageAsset
     from .input_minimax_h3max_turbo_start_image_url import InputMinimaxH3MaxTurboStartImageUrl
+    from .input_minimax_h3max_videos_item import (
+        InputMinimaxH3MaxVideosItem,
+        InputMinimaxH3MaxVideosItem_Asset,
+        InputMinimaxH3MaxVideosItem_Url,
+    )
+    from .input_minimax_h3max_videos_item_asset import InputMinimaxH3MaxVideosItemAsset
+    from .input_minimax_h3max_videos_item_url import InputMinimaxH3MaxVideosItemUrl
     from .input_minimax_h3resolution import InputMinimaxH3Resolution
     from .input_minimax_h3start_image import (
         InputMinimaxH3StartImage,
@@ -753,6 +792,23 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3start_image_asset import InputMinimaxH3StartImageAsset
     from .input_minimax_h3start_image_url import InputMinimaxH3StartImageUrl
+    from .input_minimax_h3ultra import InputMinimaxH3Ultra
+    from .input_minimax_h3ultra_aspect_ratio import InputMinimaxH3UltraAspectRatio
+    from .input_minimax_h3ultra_end_image import (
+        InputMinimaxH3UltraEndImage,
+        InputMinimaxH3UltraEndImage_Asset,
+        InputMinimaxH3UltraEndImage_Url,
+    )
+    from .input_minimax_h3ultra_end_image_asset import InputMinimaxH3UltraEndImageAsset
+    from .input_minimax_h3ultra_end_image_url import InputMinimaxH3UltraEndImageUrl
+    from .input_minimax_h3ultra_resolution import InputMinimaxH3UltraResolution
+    from .input_minimax_h3ultra_start_image import (
+        InputMinimaxH3UltraStartImage,
+        InputMinimaxH3UltraStartImage_Asset,
+        InputMinimaxH3UltraStartImage_Url,
+    )
+    from .input_minimax_h3ultra_start_image_asset import InputMinimaxH3UltraStartImageAsset
+    from .input_minimax_h3ultra_start_image_url import InputMinimaxH3UltraStartImageUrl
     from .input_minimax_h3videos_item import (
         InputMinimaxH3VideosItem,
         InputMinimaxH3VideosItem_Asset,
@@ -856,6 +912,17 @@ if typing.TYPE_CHECKING:
     from .input_pixverse_v6start_image_asset import InputPixverseV6StartImageAsset
     from .input_pixverse_v6start_image_url import InputPixverseV6StartImageUrl
     from .input_qwen_image2 import InputQwenImage2
+    from .input_qwen_image21 import InputQwenImage21
+    from .input_qwen_image21aspect_ratio import InputQwenImage21AspectRatio
+    from .input_qwen_image21images_item import (
+        InputQwenImage21ImagesItem,
+        InputQwenImage21ImagesItem_Asset,
+        InputQwenImage21ImagesItem_Url,
+    )
+    from .input_qwen_image21images_item_asset import InputQwenImage21ImagesItemAsset
+    from .input_qwen_image21images_item_url import InputQwenImage21ImagesItemUrl
+    from .input_qwen_image21output_format import InputQwenImage21OutputFormat
+    from .input_qwen_image21resolution import InputQwenImage21Resolution
     from .input_qwen_image2aspect_ratio import InputQwenImage2AspectRatio
     from .input_qwen_image2images_item import (
         InputQwenImage2ImagesItem,
@@ -1315,6 +1382,7 @@ if typing.TYPE_CHECKING:
     from .top_off_failed_event import TopOffFailedEvent
     from .top_off_failure_reason import TopOffFailureReason
     from .transaction_list_response import TransactionListResponse
+    from .transaction_llm_usage import TransactionLlmUsage
     from .transaction_record import TransactionRecord
     from .usage_bucket import UsageBucket
     from .usage_group_by import UsageGroupBy
@@ -1341,6 +1409,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
+    "ErrorType": ".error_type",
     "EstimateResponse": ".estimate_response",
     "FieldError": ".field_error",
     "FileUploadResponse": ".file_upload_response",
@@ -1929,6 +1998,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3ImagesItemUrl": ".input_minimax_h3images_item_url",
     "InputMinimaxH3ImagesItem_Asset": ".input_minimax_h3images_item",
     "InputMinimaxH3ImagesItem_Url": ".input_minimax_h3images_item",
+    "InputMinimaxH3Max": ".input_minimax_h3max",
+    "InputMinimaxH3MaxAspectRatio": ".input_minimax_h3max_aspect_ratio",
+    "InputMinimaxH3MaxAudiosItem": ".input_minimax_h3max_audios_item",
+    "InputMinimaxH3MaxAudiosItemAsset": ".input_minimax_h3max_audios_item_asset",
+    "InputMinimaxH3MaxAudiosItemUrl": ".input_minimax_h3max_audios_item_url",
+    "InputMinimaxH3MaxAudiosItem_Asset": ".input_minimax_h3max_audios_item",
+    "InputMinimaxH3MaxAudiosItem_Url": ".input_minimax_h3max_audios_item",
     "InputMinimaxH3MaxCameraControls": ".input_minimax_h3max_camera_controls",
     "InputMinimaxH3MaxCameraControlsCameraTrajectoryItem": ".input_minimax_h3max_camera_controls_camera_trajectory_item",
     "InputMinimaxH3MaxCameraControlsResolution": ".input_minimax_h3max_camera_controls_resolution",
@@ -1937,6 +2013,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3MaxCameraControlsStartImageUrl": ".input_minimax_h3max_camera_controls_start_image_url",
     "InputMinimaxH3MaxCameraControlsStartImage_Asset": ".input_minimax_h3max_camera_controls_start_image",
     "InputMinimaxH3MaxCameraControlsStartImage_Url": ".input_minimax_h3max_camera_controls_start_image",
+    "InputMinimaxH3MaxEndImage": ".input_minimax_h3max_end_image",
+    "InputMinimaxH3MaxEndImageAsset": ".input_minimax_h3max_end_image_asset",
+    "InputMinimaxH3MaxEndImageUrl": ".input_minimax_h3max_end_image_url",
+    "InputMinimaxH3MaxEndImage_Asset": ".input_minimax_h3max_end_image",
+    "InputMinimaxH3MaxEndImage_Url": ".input_minimax_h3max_end_image",
+    "InputMinimaxH3MaxImagesItem": ".input_minimax_h3max_images_item",
+    "InputMinimaxH3MaxImagesItemAsset": ".input_minimax_h3max_images_item_asset",
+    "InputMinimaxH3MaxImagesItemUrl": ".input_minimax_h3max_images_item_url",
+    "InputMinimaxH3MaxImagesItem_Asset": ".input_minimax_h3max_images_item",
+    "InputMinimaxH3MaxImagesItem_Url": ".input_minimax_h3max_images_item",
+    "InputMinimaxH3MaxResolution": ".input_minimax_h3max_resolution",
+    "InputMinimaxH3MaxStartImage": ".input_minimax_h3max_start_image",
+    "InputMinimaxH3MaxStartImageAsset": ".input_minimax_h3max_start_image_asset",
+    "InputMinimaxH3MaxStartImageUrl": ".input_minimax_h3max_start_image_url",
+    "InputMinimaxH3MaxStartImage_Asset": ".input_minimax_h3max_start_image",
+    "InputMinimaxH3MaxStartImage_Url": ".input_minimax_h3max_start_image",
     "InputMinimaxH3MaxTurbo": ".input_minimax_h3max_turbo",
     "InputMinimaxH3MaxTurboAspectRatio": ".input_minimax_h3max_turbo_aspect_ratio",
     "InputMinimaxH3MaxTurboEndImage": ".input_minimax_h3max_turbo_end_image",
@@ -1950,12 +2042,30 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3MaxTurboStartImageUrl": ".input_minimax_h3max_turbo_start_image_url",
     "InputMinimaxH3MaxTurboStartImage_Asset": ".input_minimax_h3max_turbo_start_image",
     "InputMinimaxH3MaxTurboStartImage_Url": ".input_minimax_h3max_turbo_start_image",
+    "InputMinimaxH3MaxVideosItem": ".input_minimax_h3max_videos_item",
+    "InputMinimaxH3MaxVideosItemAsset": ".input_minimax_h3max_videos_item_asset",
+    "InputMinimaxH3MaxVideosItemUrl": ".input_minimax_h3max_videos_item_url",
+    "InputMinimaxH3MaxVideosItem_Asset": ".input_minimax_h3max_videos_item",
+    "InputMinimaxH3MaxVideosItem_Url": ".input_minimax_h3max_videos_item",
     "InputMinimaxH3Resolution": ".input_minimax_h3resolution",
     "InputMinimaxH3StartImage": ".input_minimax_h3start_image",
     "InputMinimaxH3StartImageAsset": ".input_minimax_h3start_image_asset",
     "InputMinimaxH3StartImageUrl": ".input_minimax_h3start_image_url",
     "InputMinimaxH3StartImage_Asset": ".input_minimax_h3start_image",
     "InputMinimaxH3StartImage_Url": ".input_minimax_h3start_image",
+    "InputMinimaxH3Ultra": ".input_minimax_h3ultra",
+    "InputMinimaxH3UltraAspectRatio": ".input_minimax_h3ultra_aspect_ratio",
+    "InputMinimaxH3UltraEndImage": ".input_minimax_h3ultra_end_image",
+    "InputMinimaxH3UltraEndImageAsset": ".input_minimax_h3ultra_end_image_asset",
+    "InputMinimaxH3UltraEndImageUrl": ".input_minimax_h3ultra_end_image_url",
+    "InputMinimaxH3UltraEndImage_Asset": ".input_minimax_h3ultra_end_image",
+    "InputMinimaxH3UltraEndImage_Url": ".input_minimax_h3ultra_end_image",
+    "InputMinimaxH3UltraResolution": ".input_minimax_h3ultra_resolution",
+    "InputMinimaxH3UltraStartImage": ".input_minimax_h3ultra_start_image",
+    "InputMinimaxH3UltraStartImageAsset": ".input_minimax_h3ultra_start_image_asset",
+    "InputMinimaxH3UltraStartImageUrl": ".input_minimax_h3ultra_start_image_url",
+    "InputMinimaxH3UltraStartImage_Asset": ".input_minimax_h3ultra_start_image",
+    "InputMinimaxH3UltraStartImage_Url": ".input_minimax_h3ultra_start_image",
     "InputMinimaxH3VideosItem": ".input_minimax_h3videos_item",
     "InputMinimaxH3VideosItemAsset": ".input_minimax_h3videos_item_asset",
     "InputMinimaxH3VideosItemUrl": ".input_minimax_h3videos_item_url",
@@ -2041,6 +2151,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputPixverseV6StartImage_Asset": ".input_pixverse_v6start_image",
     "InputPixverseV6StartImage_Url": ".input_pixverse_v6start_image",
     "InputQwenImage2": ".input_qwen_image2",
+    "InputQwenImage21": ".input_qwen_image21",
+    "InputQwenImage21AspectRatio": ".input_qwen_image21aspect_ratio",
+    "InputQwenImage21ImagesItem": ".input_qwen_image21images_item",
+    "InputQwenImage21ImagesItemAsset": ".input_qwen_image21images_item_asset",
+    "InputQwenImage21ImagesItemUrl": ".input_qwen_image21images_item_url",
+    "InputQwenImage21ImagesItem_Asset": ".input_qwen_image21images_item",
+    "InputQwenImage21ImagesItem_Url": ".input_qwen_image21images_item",
+    "InputQwenImage21OutputFormat": ".input_qwen_image21output_format",
+    "InputQwenImage21Resolution": ".input_qwen_image21resolution",
     "InputQwenImage2AspectRatio": ".input_qwen_image2aspect_ratio",
     "InputQwenImage2ImagesItem": ".input_qwen_image2images_item",
     "InputQwenImage2ImagesItemAsset": ".input_qwen_image2images_item_asset",
@@ -2436,6 +2555,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TopOffFailedEvent": ".top_off_failed_event",
     "TopOffFailureReason": ".top_off_failure_reason",
     "TransactionListResponse": ".transaction_list_response",
+    "TransactionLlmUsage": ".transaction_llm_usage",
     "TransactionRecord": ".transaction_record",
     "UsageBucket": ".usage_bucket",
     "UsageGroupBy": ".usage_group_by",
@@ -2486,6 +2606,7 @@ __all__ = [
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",
+    "ErrorType",
     "EstimateResponse",
     "FieldError",
     "FileUploadResponse",
@@ -3074,6 +3195,13 @@ __all__ = [
     "InputMinimaxH3ImagesItemUrl",
     "InputMinimaxH3ImagesItem_Asset",
     "InputMinimaxH3ImagesItem_Url",
+    "InputMinimaxH3Max",
+    "InputMinimaxH3MaxAspectRatio",
+    "InputMinimaxH3MaxAudiosItem",
+    "InputMinimaxH3MaxAudiosItemAsset",
+    "InputMinimaxH3MaxAudiosItemUrl",
+    "InputMinimaxH3MaxAudiosItem_Asset",
+    "InputMinimaxH3MaxAudiosItem_Url",
     "InputMinimaxH3MaxCameraControls",
     "InputMinimaxH3MaxCameraControlsCameraTrajectoryItem",
     "InputMinimaxH3MaxCameraControlsResolution",
@@ -3082,6 +3210,22 @@ __all__ = [
     "InputMinimaxH3MaxCameraControlsStartImageUrl",
     "InputMinimaxH3MaxCameraControlsStartImage_Asset",
     "InputMinimaxH3MaxCameraControlsStartImage_Url",
+    "InputMinimaxH3MaxEndImage",
+    "InputMinimaxH3MaxEndImageAsset",
+    "InputMinimaxH3MaxEndImageUrl",
+    "InputMinimaxH3MaxEndImage_Asset",
+    "InputMinimaxH3MaxEndImage_Url",
+    "InputMinimaxH3MaxImagesItem",
+    "InputMinimaxH3MaxImagesItemAsset",
+    "InputMinimaxH3MaxImagesItemUrl",
+    "InputMinimaxH3MaxImagesItem_Asset",
+    "InputMinimaxH3MaxImagesItem_Url",
+    "InputMinimaxH3MaxResolution",
+    "InputMinimaxH3MaxStartImage",
+    "InputMinimaxH3MaxStartImageAsset",
+    "InputMinimaxH3MaxStartImageUrl",
+    "InputMinimaxH3MaxStartImage_Asset",
+    "InputMinimaxH3MaxStartImage_Url",
     "InputMinimaxH3MaxTurbo",
     "InputMinimaxH3MaxTurboAspectRatio",
     "InputMinimaxH3MaxTurboEndImage",
@@ -3095,12 +3239,30 @@ __all__ = [
     "InputMinimaxH3MaxTurboStartImageUrl",
     "InputMinimaxH3MaxTurboStartImage_Asset",
     "InputMinimaxH3MaxTurboStartImage_Url",
+    "InputMinimaxH3MaxVideosItem",
+    "InputMinimaxH3MaxVideosItemAsset",
+    "InputMinimaxH3MaxVideosItemUrl",
+    "InputMinimaxH3MaxVideosItem_Asset",
+    "InputMinimaxH3MaxVideosItem_Url",
     "InputMinimaxH3Resolution",
     "InputMinimaxH3StartImage",
     "InputMinimaxH3StartImageAsset",
     "InputMinimaxH3StartImageUrl",
     "InputMinimaxH3StartImage_Asset",
     "InputMinimaxH3StartImage_Url",
+    "InputMinimaxH3Ultra",
+    "InputMinimaxH3UltraAspectRatio",
+    "InputMinimaxH3UltraEndImage",
+    "InputMinimaxH3UltraEndImageAsset",
+    "InputMinimaxH3UltraEndImageUrl",
+    "InputMinimaxH3UltraEndImage_Asset",
+    "InputMinimaxH3UltraEndImage_Url",
+    "InputMinimaxH3UltraResolution",
+    "InputMinimaxH3UltraStartImage",
+    "InputMinimaxH3UltraStartImageAsset",
+    "InputMinimaxH3UltraStartImageUrl",
+    "InputMinimaxH3UltraStartImage_Asset",
+    "InputMinimaxH3UltraStartImage_Url",
     "InputMinimaxH3VideosItem",
     "InputMinimaxH3VideosItemAsset",
     "InputMinimaxH3VideosItemUrl",
@@ -3186,6 +3348,15 @@ __all__ = [
     "InputPixverseV6StartImage_Asset",
     "InputPixverseV6StartImage_Url",
     "InputQwenImage2",
+    "InputQwenImage21",
+    "InputQwenImage21AspectRatio",
+    "InputQwenImage21ImagesItem",
+    "InputQwenImage21ImagesItemAsset",
+    "InputQwenImage21ImagesItemUrl",
+    "InputQwenImage21ImagesItem_Asset",
+    "InputQwenImage21ImagesItem_Url",
+    "InputQwenImage21OutputFormat",
+    "InputQwenImage21Resolution",
     "InputQwenImage2AspectRatio",
     "InputQwenImage2ImagesItem",
     "InputQwenImage2ImagesItemAsset",
@@ -3581,6 +3752,7 @@ __all__ = [
     "TopOffFailedEvent",
     "TopOffFailureReason",
     "TransactionListResponse",
+    "TransactionLlmUsage",
     "TransactionRecord",
     "UsageBucket",
     "UsageGroupBy",

@@ -100,8 +100,11 @@ class BillingClient:
     ) -> TransactionListResponse:
         """
         Every movement of the API wallet's balance, newest first: funds added,
-        jobs charged, charges refunded, and corrections. Scoped to the workspace
-        the credential bills, the same one `GET /v3/balance` reports.
+        jobs charged, charges refunded, and corrections. Chat requests are summed
+        into one `llm_usage` row per model per UTC day. Scoped to the workspace the
+        credential bills, the same one `GET /v3/balance` reports, so an
+        `llm_usage` row sums every member's requests; `GET /v3/usage/llm` lists
+        only your own.
 
         Parameters
         ----------
@@ -238,8 +241,11 @@ class AsyncBillingClient:
     ) -> TransactionListResponse:
         """
         Every movement of the API wallet's balance, newest first: funds added,
-        jobs charged, charges refunded, and corrections. Scoped to the workspace
-        the credential bills, the same one `GET /v3/balance` reports.
+        jobs charged, charges refunded, and corrections. Chat requests are summed
+        into one `llm_usage` row per model per UTC day. Scoped to the workspace the
+        credential bills, the same one `GET /v3/balance` reports, so an
+        `llm_usage` row sums every member's requests; `GET /v3/usage/llm` lists
+        only your own.
 
         Parameters
         ----------

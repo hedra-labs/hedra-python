@@ -4,20 +4,20 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .input_minimax_h3max_turbo_aspect_ratio import InputMinimaxH3MaxTurboAspectRatio
-from .input_minimax_h3max_turbo_end_image import InputMinimaxH3MaxTurboEndImage
-from .input_minimax_h3max_turbo_resolution import InputMinimaxH3MaxTurboResolution
-from .input_minimax_h3max_turbo_start_image import InputMinimaxH3MaxTurboStartImage
+from .input_minimax_h3ultra_aspect_ratio import InputMinimaxH3UltraAspectRatio
+from .input_minimax_h3ultra_end_image import InputMinimaxH3UltraEndImage
+from .input_minimax_h3ultra_resolution import InputMinimaxH3UltraResolution
+from .input_minimax_h3ultra_start_image import InputMinimaxH3UltraStartImage
 
 
-class InputMinimaxH3MaxTurbo(UniversalBaseModel):
+class InputMinimaxH3Ultra(UniversalBaseModel):
     """
-    Model-specific inputs for `minimax-h3-max-turbo`.
+    Model-specific inputs for `minimax-h3-ultra`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: duration_ms, prompt, resolution, start_image; must omit: aspect_ratio, end_image
-    (2) requires: duration_ms, end_image, prompt, resolution, start_image; must omit: aspect_ratio
-    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: end_image, start_image
+    (1) requires: duration_ms, prompt, start_image; must omit: aspect_ratio, end_image
+    (2) requires: duration_ms, end_image, prompt, start_image; must omit: aspect_ratio
+    (3) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, start_image
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -30,7 +30,7 @@ class InputMinimaxH3MaxTurbo(UniversalBaseModel):
     Generation prompt. From 1 to 7000 characters.
     """
 
-    resolution: InputMinimaxH3MaxTurboResolution = pydantic.Field()
+    resolution: typing.Optional[InputMinimaxH3UltraResolution] = pydantic.Field(default=None)
     """
     Output resolution.
     """
@@ -45,17 +45,17 @@ class InputMinimaxH3MaxTurbo(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
-    start_image: typing.Optional[InputMinimaxH3MaxTurboStartImage] = pydantic.Field(default=None)
+    start_image: typing.Optional[InputMinimaxH3UltraStartImage] = pydantic.Field(default=None)
     """
     Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
-    end_image: typing.Optional[InputMinimaxH3MaxTurboEndImage] = pydantic.Field(default=None)
+    end_image: typing.Optional[InputMinimaxH3UltraEndImage] = pydantic.Field(default=None)
     """
     End frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
     """
 
-    aspect_ratio: typing.Optional[InputMinimaxH3MaxTurboAspectRatio] = pydantic.Field(default=None)
+    aspect_ratio: typing.Optional[InputMinimaxH3UltraAspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
     """
