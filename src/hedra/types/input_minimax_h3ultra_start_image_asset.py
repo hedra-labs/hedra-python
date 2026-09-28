@@ -6,24 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class EstimateResponse(UniversalBaseModel):
+class InputMinimaxH3UltraStartImageAsset(UniversalBaseModel):
     """
-    The price, in US dollars, of submitting the request's `input` to the model.
-    """
-
-    model: str = pydantic.Field()
-    """
-    The resolved model id this estimate prices.
+    An existing asset you own, referenced by its id.
     """
 
-    cost: float = pydantic.Field()
+    asset_id: str = pydantic.Field()
     """
-    The price of submitting the request's `input` to the model, in `currency`.
-    """
-
-    currency: str = pydantic.Field()
-    """
-    ISO-4217 currency code for `cost`.
+    The asset's id (`asset_<uuid>`), as issued by the server — a completed generation publishes one per output as `outputs[].asset_id`. Do not construct one or derive it from any other id.
     """
 
     if IS_PYDANTIC_V2:

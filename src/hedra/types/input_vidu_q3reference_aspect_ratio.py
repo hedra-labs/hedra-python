@@ -2,4 +2,4 @@
 
 import typing
 
-InputViduQ3ReferenceAspectRatio = typing.Union[typing.Literal["16:9", "9:16", "4:3", "3:4", "1:1"], typing.Any]
+InputViduQ3ReferenceAspectRatio = typing.Union[typing.Literal["16:9", "9:16", "1:1", "4:3", "3:4"], typing.Any]

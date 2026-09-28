@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .billing_error import BillingError
 from .error_code import ErrorCode
+from .error_type import ErrorType
 from .field_error import FieldError
 
 
@@ -44,6 +45,11 @@ class ErrorEnvelope(UniversalBaseModel):
     billing: typing.Optional[BillingError] = pydantic.Field(default=None)
     """
     Balance, price, and where to add funds — set when the request was refused for funds (code `INSUFFICIENT_BALANCE`); null otherwise.
+    """
+
+    type: typing.Optional[ErrorType] = pydantic.Field(default=None)
+    """
+    The OpenAI error type for this error's HTTP status: `authentication_error` (401), `permission_error` (403), `rate_limit_error` (429), `server_error` (5xx), and `invalid_request_error` for every other status. Match on `code`, which is more specific.
     """
 
     if IS_PYDANTIC_V2:

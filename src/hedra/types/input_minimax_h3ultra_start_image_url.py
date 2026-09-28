@@ -6,24 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class EstimateResponse(UniversalBaseModel):
+class InputMinimaxH3UltraStartImageUrl(UniversalBaseModel):
     """
-    The price, in US dollars, of submitting the request's `input` to the model.
-    """
-
-    model: str = pydantic.Field()
-    """
-    The resolved model id this estimate prices.
+    A file uploaded via POST /v3/files, referenced by the returned url.
     """
 
-    cost: float = pydantic.Field()
+    url: str = pydantic.Field()
     """
-    The price of submitting the request's `input` to the model, in `currency`.
-    """
-
-    currency: str = pydantic.Field()
-    """
-    ISO-4217 currency code for `cost`.
+    A URL returned by POST /v3/files.
     """
 
     if IS_PYDANTIC_V2:

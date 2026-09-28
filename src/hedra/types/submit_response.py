@@ -22,7 +22,7 @@ class SubmitResponse(UniversalBaseModel):
     status: JobStatus
     status_url: str = pydantic.Field()
     """
-    Path of this job's status monitor: poll GET /v3/jobs/{job_id}/status for status, progress, and an estimate.
+    Path of this job's status monitor: poll GET /v3/jobs/{job_id}/status for status, progress, and the estimated completion time.
     """
 
     result_url: str = pydantic.Field()
@@ -32,7 +32,7 @@ class SubmitResponse(UniversalBaseModel):
 
     estimated_completion_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    ISO-8601 instant this job is estimated to finish. Null when no estimate exists for the model yet; poll GET /v3/jobs/{job_id}/status for a refreshed one.
+    ISO-8601 instant this job is estimated to finish, as of this response. Null when no estimate is available yet, and when the job has already finished. The estimate can change while the job runs: poll `GET /v3/jobs/{job_id}/status` for the current one.
     """
 
     if IS_PYDANTIC_V2:

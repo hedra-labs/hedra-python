@@ -265,6 +265,14 @@ class ModelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EstimateResponse:
         """
+        Return what `POST /v3/models/{model}` would charge for this `input`.
+
+        Validates `input` against the model's input schema and returns the price in
+        US dollars. Creates no job, charges nothing, and does not check the wallet
+        balance. The response includes no completion time: a job's
+        `estimated_completion_at` appears on the submit response, on
+        `GET /v3/jobs/{job_id}/status`, and on `GET /v3/jobs/{job_id}/stream`.
+
         Parameters
         ----------
         model : str
@@ -595,6 +603,14 @@ class AsyncModelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EstimateResponse:
         """
+        Return what `POST /v3/models/{model}` would charge for this `input`.
+
+        Validates `input` against the model's input schema and returns the price in
+        US dollars. Creates no job, charges nothing, and does not check the wallet
+        balance. The response includes no completion time: a job's
+        `estimated_completion_at` appears on the submit response, on
+        `GET /v3/jobs/{job_id}/status`, and on `GET /v3/jobs/{job_id}/stream`.
+
         Parameters
         ----------
         model : str
