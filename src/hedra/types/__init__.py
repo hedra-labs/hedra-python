@@ -392,7 +392,6 @@ if typing.TYPE_CHECKING:
     )
     from .input_hedra_avatar_audio_zero_asset import InputHedraAvatarAudioZeroAsset
     from .input_hedra_avatar_audio_zero_url import InputHedraAvatarAudioZeroUrl
-    from .input_hedra_avatar_bounding_box_target import InputHedraAvatarBoundingBoxTarget
     from .input_hedra_avatar_resolution import InputHedraAvatarResolution
     from .input_hedra_avatar_start_image import (
         InputHedraAvatarStartImage,
@@ -418,7 +417,6 @@ if typing.TYPE_CHECKING:
     )
     from .input_hedra_character3audio_zero_asset import InputHedraCharacter3AudioZeroAsset
     from .input_hedra_character3audio_zero_url import InputHedraCharacter3AudioZeroUrl
-    from .input_hedra_character3bounding_box_target import InputHedraCharacter3BoundingBoxTarget
     from .input_hedra_character3resolution import InputHedraCharacter3Resolution
     from .input_hedra_character3start_image import (
         InputHedraCharacter3StartImage,
@@ -1718,7 +1716,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputHedraAvatarAudioZeroUrl": ".input_hedra_avatar_audio_zero_url",
     "InputHedraAvatarAudioZero_Asset": ".input_hedra_avatar_audio_zero",
     "InputHedraAvatarAudioZero_Url": ".input_hedra_avatar_audio_zero",
-    "InputHedraAvatarBoundingBoxTarget": ".input_hedra_avatar_bounding_box_target",
     "InputHedraAvatarResolution": ".input_hedra_avatar_resolution",
     "InputHedraAvatarStartImage": ".input_hedra_avatar_start_image",
     "InputHedraAvatarStartImageAsset": ".input_hedra_avatar_start_image_asset",
@@ -1738,7 +1735,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputHedraCharacter3AudioZeroUrl": ".input_hedra_character3audio_zero_url",
     "InputHedraCharacter3AudioZero_Asset": ".input_hedra_character3audio_zero",
     "InputHedraCharacter3AudioZero_Url": ".input_hedra_character3audio_zero",
-    "InputHedraCharacter3BoundingBoxTarget": ".input_hedra_character3bounding_box_target",
     "InputHedraCharacter3Resolution": ".input_hedra_character3resolution",
     "InputHedraCharacter3StartImage": ".input_hedra_character3start_image",
     "InputHedraCharacter3StartImageAsset": ".input_hedra_character3start_image_asset",
@@ -2918,7 +2914,6 @@ __all__ = [
     "InputHedraAvatarAudioZeroUrl",
     "InputHedraAvatarAudioZero_Asset",
     "InputHedraAvatarAudioZero_Url",
-    "InputHedraAvatarBoundingBoxTarget",
     "InputHedraAvatarResolution",
     "InputHedraAvatarStartImage",
     "InputHedraAvatarStartImageAsset",
@@ -2938,7 +2933,6 @@ __all__ = [
     "InputHedraCharacter3AudioZeroUrl",
     "InputHedraCharacter3AudioZero_Asset",
     "InputHedraCharacter3AudioZero_Url",
-    "InputHedraCharacter3BoundingBoxTarget",
     "InputHedraCharacter3Resolution",
     "InputHedraCharacter3StartImage",
     "InputHedraCharacter3StartImageAsset",

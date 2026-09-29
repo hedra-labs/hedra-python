@@ -6,7 +6,6 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_hedra_avatar_aspect_ratio import InputHedraAvatarAspectRatio
 from .input_hedra_avatar_audio import InputHedraAvatarAudio
-from .input_hedra_avatar_bounding_box_target import InputHedraAvatarBoundingBoxTarget
 from .input_hedra_avatar_resolution import InputHedraAvatarResolution
 from .input_hedra_avatar_start_image import InputHedraAvatarStartImage
 
@@ -51,7 +50,7 @@ class InputHedraAvatar(UniversalBaseModel):
     Driving audio: a single reference, or a list of references for multi-speaker generation — one audio per speaker, played in list order. 1 to 4 audio files, each from 0.5s to 600s and at most 104.8 MB.
     """
 
-    bounding_box_target: typing.Optional[InputHedraAvatarBoundingBoxTarget] = pydantic.Field(default=None)
+    bounding_box_target: typing.Optional[typing.List[typing.Any]] = pydantic.Field(default=None)
     """
     Speaker position(s) in the start frame, as normalized [x, y] image coordinates (0-1 from the top-left).
     """
