@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.idempotency import generate_idempotency_key
 from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -191,6 +192,7 @@ class RawKeysClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -312,6 +314,7 @@ class RawKeysClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -661,6 +664,7 @@ class AsyncRawKeysClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -782,6 +786,7 @@ class AsyncRawKeysClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,

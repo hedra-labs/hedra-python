@@ -4,6 +4,22 @@
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Your jobs, newest first. Each `POST /v3/chat/completions` request is a
+job too, whose id is the completion's `id`. A chat job has no outputs,
+and it sends no `job.completed` or `job.failed` webhook.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -412,14 +428,6 @@ client.jobs.submit_creatify_aurora(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -500,14 +508,6 @@ client.jobs.submit_dreamina31(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -602,14 +602,6 @@ client.jobs.submit_elevenlabs_audio_isolation(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -689,14 +681,6 @@ client.jobs.submit_elevenlabs_english_sts_v2(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -790,14 +774,6 @@ client.jobs.submit_elevenlabs_flash_multilingual_v2(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -877,14 +853,6 @@ client.jobs.submit_elevenlabs_flash_v2(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -978,14 +946,6 @@ client.jobs.submit_elevenlabs_multilingual_sts_v2(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1065,14 +1025,6 @@ client.jobs.submit_elevenlabs_multilingual_v2(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -1166,14 +1118,6 @@ client.jobs.submit_elevenlabs_music(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1253,14 +1197,6 @@ client.jobs.submit_elevenlabs_sound_effects(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -1354,14 +1290,6 @@ client.jobs.submit_elevenlabs_v3(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1443,14 +1371,6 @@ client.jobs.submit_elevenlabs_voice_clone(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -1551,14 +1471,6 @@ client.jobs.submit_eyeline_id_relight(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1645,14 +1557,6 @@ client.jobs.submit_eyeline_id_restyle(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -1747,14 +1651,6 @@ client.jobs.submit_flux11pro(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1834,14 +1730,6 @@ client.jobs.submit_flux11ultra(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -1937,14 +1825,6 @@ client.jobs.submit_flux3(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2026,14 +1906,6 @@ client.jobs.submit_flux3video_upscaler_creative(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -2129,14 +2001,6 @@ client.jobs.submit_flux3video_upscaler_precise(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2217,14 +2081,6 @@ client.jobs.submit_flux_dev(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -2317,14 +2173,6 @@ client.jobs.submit_flux_kontext_max(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2403,14 +2251,6 @@ client.jobs.submit_flux_kontext_pro(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -2504,14 +2344,6 @@ client.jobs.submit_flux2flex(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2591,14 +2423,6 @@ client.jobs.submit_flux2klein9b(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -2692,14 +2516,6 @@ client.jobs.submit_flux2max(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2786,14 +2602,6 @@ client.jobs.submit_flux2pro(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2873,14 +2681,6 @@ client.jobs.submit_gemini_omni_flash(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -2975,14 +2775,6 @@ client.jobs.submit_gemini_omni_flash11(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3062,14 +2854,6 @@ client.jobs.submit_gpt_image15(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -3164,14 +2948,6 @@ client.jobs.submit_gpt_image2(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3252,14 +3028,6 @@ client.jobs.submit_gpt_image25flare(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -3354,14 +3122,6 @@ client.jobs.submit_gpt_image25sunburst(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3440,14 +3200,6 @@ client.jobs.submit_grok_imagine(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -3535,14 +3287,6 @@ client.jobs.submit_grok_imagine20(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -3638,14 +3382,6 @@ client.jobs.submit_grok_video(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3727,14 +3463,6 @@ client.jobs.submit_happy_horse(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -3835,14 +3563,6 @@ client.jobs.submit_hedra_avatar(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3929,14 +3649,6 @@ client.jobs.submit_hedra_character3(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -4036,14 +3748,6 @@ client.jobs.submit_heygen_photo_avatar4(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4130,14 +3834,6 @@ client.jobs.submit_hidream_o1image(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4217,14 +3913,6 @@ client.jobs.submit_ideogram_v2(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -4319,14 +4007,6 @@ client.jobs.submit_ideogram_v4(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4406,14 +4086,6 @@ client.jobs.submit_imagen3(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -4508,14 +4180,6 @@ client.jobs.submit_imagen4(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4592,14 +4256,6 @@ client.jobs.submit_kling16(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -4694,14 +4350,6 @@ client.jobs.submit_kling21master(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4782,14 +4430,6 @@ client.jobs.submit_kling25turbo(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -4888,14 +4528,6 @@ client.jobs.submit_kling26motion_control(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4976,14 +4608,6 @@ client.jobs.submit_kling26pro(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -5082,14 +4706,6 @@ client.jobs.submit_kling_ai_avatar_v2(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5177,14 +4793,6 @@ client.jobs.submit_kling_o1(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5264,14 +4872,6 @@ client.jobs.submit_kling_o3(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -5368,14 +4968,6 @@ client.jobs.submit_kling_o3edit(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5465,14 +5057,6 @@ client.jobs.submit_kling_o3reference(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5552,14 +5136,6 @@ client.jobs.submit_kling_v3(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -5658,14 +5234,6 @@ client.jobs.submit_kling_v3motion_control(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5745,14 +5313,6 @@ client.jobs.submit_krea2(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -5848,14 +5408,6 @@ client.jobs.submit_ltx23(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5936,14 +5488,6 @@ client.jobs.submit_ltx25(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -6039,14 +5583,6 @@ client.jobs.submit_luma_ray32(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6126,14 +5662,6 @@ client.jobs.submit_mai_image25(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -6228,14 +5756,6 @@ client.jobs.submit_minimax_h3(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6316,14 +5836,6 @@ client.jobs.submit_minimax_h3max(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -6429,14 +5941,6 @@ client.jobs.submit_minimax_h3max_camera_controls(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6517,14 +6021,6 @@ client.jobs.submit_minimax_h3max_turbo(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -6618,14 +6114,6 @@ client.jobs.submit_minimax_h3ultra(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6705,14 +6193,6 @@ client.jobs.submit_minimax_hailuo02(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -6806,14 +6286,6 @@ client.jobs.submit_minimax_hailuo23(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6893,14 +6365,6 @@ client.jobs.submit_minimax_speech25hd_preview(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -6994,14 +6458,6 @@ client.jobs.submit_minimax_speech25turbo_preview(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7081,14 +6537,6 @@ client.jobs.submit_muse_image(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -7183,14 +6631,6 @@ client.jobs.submit_nano_banana(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7278,14 +6718,6 @@ client.jobs.submit_nano_banana2(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7366,14 +6798,6 @@ client.jobs.submit_nano_banana_pro(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -7472,14 +6896,6 @@ client.jobs.submit_omnihuman15(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7560,14 +6976,6 @@ client.jobs.submit_pixverse_v6(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -7662,14 +7070,6 @@ client.jobs.submit_qwen_image2(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7750,14 +7150,6 @@ client.jobs.submit_qwen_image21(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -7852,14 +7244,6 @@ client.jobs.submit_recraft_v3(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7939,14 +7323,6 @@ client.jobs.submit_reve21(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -8045,14 +7421,6 @@ client.jobs.submit_reve21edit(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8144,14 +7512,6 @@ client.jobs.submit_reve21remix(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8232,14 +7592,6 @@ client.jobs.submit_sana(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -8335,14 +7687,6 @@ client.jobs.submit_seedance15pro(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8424,14 +7768,6 @@ client.jobs.submit_seedance20(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -8527,14 +7863,6 @@ client.jobs.submit_seedance20mini(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8616,14 +7944,6 @@ client.jobs.submit_seedance25(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -8718,14 +8038,6 @@ client.jobs.submit_seedream40(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8806,14 +8118,6 @@ client.jobs.submit_seedream45(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -8908,14 +8212,6 @@ client.jobs.submit_seedream50lite(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8996,14 +8292,6 @@ client.jobs.submit_seedream50pro(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -9099,14 +8387,6 @@ client.jobs.submit_sora2pro(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9195,14 +8475,6 @@ client.jobs.submit_topaz_image_upscaler(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9283,14 +8555,6 @@ client.jobs.submit_topaz_image_upscaler_transparency(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -9386,14 +8650,6 @@ client.jobs.submit_topaz_image_upscaler_wonder(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9482,14 +8738,6 @@ client.jobs.submit_topaz_video_upscaler(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9570,14 +8818,6 @@ client.jobs.submit_topaz_video_upscaler_hyperion25(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -9673,14 +8913,6 @@ client.jobs.submit_topaz_video_upscaler_starlight_fast(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9769,14 +9001,6 @@ client.jobs.submit_topaz_video_upscaler_starlight_hq(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9858,14 +9082,6 @@ client.jobs.submit_topaz_video_upscaler_starlight_precise(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -9966,14 +9182,6 @@ client.jobs.submit_veed_fabric10(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10061,14 +9269,6 @@ client.jobs.submit_veed_video_background_removal(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10147,14 +9347,6 @@ client.jobs.submit_veo2(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -10250,14 +9442,6 @@ client.jobs.submit_veo3(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10345,14 +9529,6 @@ client.jobs.submit_veo31(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10433,14 +9609,6 @@ client.jobs.submit_vidu_q3(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -10541,14 +9709,6 @@ client.jobs.submit_vidu_q3reference(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10629,14 +9789,6 @@ client.jobs.submit_wan27(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -10725,14 +9877,6 @@ client.jobs.submit_wan30(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -10829,14 +9973,6 @@ client.jobs.submit(
 <dd>
 
 **webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — Replays the original ack for a retried submit instead of enqueueing a duplicate job.
     
 </dd>
 </dl>
@@ -11947,8 +11083,7 @@ Every movement of the API wallet's balance, newest first: funds added,
 jobs charged, charges refunded, and corrections. Chat requests are summed
 into one `llm_usage` row per model per UTC day. Scoped to the workspace the
 credential bills, the same one `GET /v3/balance` reports, so an
-`llm_usage` row sums every member's requests; `GET /v3/usage/llm` lists
-only your own.
+`llm_usage` row sums every member's requests.
 </dd>
 </dl>
 </dd>

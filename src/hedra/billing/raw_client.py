@@ -266,8 +266,7 @@ class RawBillingClient:
         jobs charged, charges refunded, and corrections. Chat requests are summed
         into one `llm_usage` row per model per UTC day. Scoped to the workspace the
         credential bills, the same one `GET /v3/balance` reports, so an
-        `llm_usage` row sums every member's requests; `GET /v3/usage/llm` lists
-        only your own.
+        `llm_usage` row sums every member's requests.
 
         Parameters
         ----------
@@ -623,8 +622,7 @@ class AsyncRawBillingClient:
         jobs charged, charges refunded, and corrections. Chat requests are summed
         into one `llm_usage` row per model per UTC day. Scoped to the workspace the
         credential bills, the same one `GET /v3/balance` reports, so an
-        `llm_usage` row sums every member's requests; `GET /v3/usage/llm` lists
-        only your own.
+        `llm_usage` row sums every member's requests.
 
         Parameters
         ----------

@@ -2,4 +2,4 @@
 
 import typing
 
-Modality = typing.Union[typing.Literal["image", "video", "audio"], typing.Any]
+Modality = typing.Union[typing.Literal["image", "video", "audio", "text"], typing.Any]

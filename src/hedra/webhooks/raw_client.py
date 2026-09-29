@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.idempotency import generate_idempotency_key
 from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
@@ -263,6 +264,7 @@ class RawWebhooksClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -463,6 +465,9 @@ class RawWebhooksClient:
         _response = self._client_wrapper.httpx_client.request(
             "webhooks/default/test",
             method="POST",
+            headers={
+                "Idempotency-Key": generate_idempotency_key(),
+            },
             request_options=request_options,
         )
         try:
@@ -709,6 +714,9 @@ class RawWebhooksClient:
         _response = self._client_wrapper.httpx_client.request(
             f"webhooks/deliveries/{encode_path_param(job_id)}/redeliver",
             method="POST",
+            headers={
+                "Idempotency-Key": generate_idempotency_key(),
+            },
             request_options=request_options,
         )
         try:
@@ -1031,6 +1039,7 @@ class AsyncRawWebhooksClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1233,6 +1242,9 @@ class AsyncRawWebhooksClient:
         _response = await self._client_wrapper.httpx_client.request(
             "webhooks/default/test",
             method="POST",
+            headers={
+                "Idempotency-Key": generate_idempotency_key(),
+            },
             request_options=request_options,
         )
         try:
@@ -1482,6 +1494,9 @@ class AsyncRawWebhooksClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"webhooks/deliveries/{encode_path_param(job_id)}/redeliver",
             method="POST",
+            headers={
+                "Idempotency-Key": generate_idempotency_key(),
+            },
             request_options=request_options,
         )
         try:

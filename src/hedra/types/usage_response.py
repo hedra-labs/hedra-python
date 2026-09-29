@@ -23,12 +23,7 @@ class UsageResponse(UniversalBaseModel):
     group_by: UsageGroupBy
     total_jobs: int = pydantic.Field()
     """
-    Jobs submitted across the whole window.
-    """
-
-    total_requests: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Settled LLM chat requests across the whole window.
+    Jobs submitted across the whole window, chat completions included.
     """
 
     total_spent: float = pydantic.Field()
