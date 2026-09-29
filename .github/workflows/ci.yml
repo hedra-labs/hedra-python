@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   compile:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
@@ -27,7 +27,7 @@ jobs:
       - name: Compile
         run: poetry run mypy .
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
@@ -56,10 +56,10 @@ jobs:
   #
   # No actions/setup-python step here on purpose: the version rule below uses
   # tomllib, which needs Python >= 3.11, so the job relies on the runner's own
-  # interpreter (3.12 on ubuntu-latest). The compile/test jobs above pin 3.10;
+  # interpreter (3.12 on ubuntu-24.04). The compile/test jobs above pin 3.10;
   # that pin must not be copied into this job.
   regen-shape:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
         with:

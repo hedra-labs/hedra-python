@@ -40,7 +40,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Gates every publish -- release-triggered and manual alike -- behind an
     # explicit human approval.
     #
