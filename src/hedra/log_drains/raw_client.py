@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.idempotency import generate_idempotency_key
 from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -192,6 +193,7 @@ class RawLogDrainsClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -658,6 +660,9 @@ class RawLogDrainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"log-drains/{encode_path_param(drain_id)}/test",
             method="POST",
+            headers={
+                "Idempotency-Key": generate_idempotency_key(),
+            },
             request_options=request_options,
         )
         try:
@@ -911,6 +916,7 @@ class AsyncRawLogDrainsClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1377,6 +1383,9 @@ class AsyncRawLogDrainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"log-drains/{encode_path_param(drain_id)}/test",
             method="POST",
+            headers={
+                "Idempotency-Key": generate_idempotency_key(),
+            },
             request_options=request_options,
         )
         try:

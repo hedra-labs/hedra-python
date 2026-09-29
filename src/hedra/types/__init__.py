@@ -11,6 +11,9 @@ if typing.TYPE_CHECKING:
     from .balance_response import BalanceResponse
     from .billing_error import BillingError
     from .billing_event_type import BillingEventType
+    from .chat_capabilities import ChatCapabilities
+    from .chat_token_pricing import ChatTokenPricing
+    from .chat_usage import ChatUsage
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
@@ -1406,6 +1409,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BalanceResponse": ".balance_response",
     "BillingError": ".billing_error",
     "BillingEventType": ".billing_event_type",
+    "ChatCapabilities": ".chat_capabilities",
+    "ChatTokenPricing": ".chat_token_pricing",
+    "ChatUsage": ".chat_usage",
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
@@ -2603,6 +2609,9 @@ __all__ = [
     "BalanceResponse",
     "BillingError",
     "BillingEventType",
+    "ChatCapabilities",
+    "ChatTokenPricing",
+    "ChatUsage",
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",

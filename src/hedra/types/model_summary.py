@@ -34,6 +34,16 @@ class ModelSummary(UniversalBaseModel):
     URL of the provider's logo.
     """
 
+    context_length: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    A chat model's context window in tokens; null for other models.
+    """
+
+    max_output_tokens: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The largest `max_tokens` a chat model accepts; null for other models.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

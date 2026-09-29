@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .chat_usage import ChatUsage
 from .error_envelope import ErrorEnvelope
 from .job_log_item import JobLogItem
 from .job_status import JobStatus
@@ -35,12 +36,17 @@ class ResultResponse(UniversalBaseModel):
 
     outputs: typing.Optional[typing.List[OutputItem]] = pydantic.Field(default=None)
     """
-    The job's outputs — always an array, even for a single output; empty until the job completes.
+    The job's outputs — always an array, even for a single output; empty until the job completes. Always empty for a chat completion, whose text the chat response returned.
     """
 
     metrics: typing.Optional[Metrics] = pydantic.Field(default=None)
     """
-    Timing for this job; present on completed jobs only.
+    Timing for this job; present on completed jobs, and on every finished chat completion.
+    """
+
+    usage: typing.Optional[ChatUsage] = pydantic.Field(default=None)
+    """
+    The tokens a chat completion used; absent for other jobs and before a chat completion's usage is recorded.
     """
 
     error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
@@ -55,7 +61,7 @@ class ResultResponse(UniversalBaseModel):
 
     cost: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Net cost of this job; 0 when fully refunded; absent until charged. Absent from webhook payloads.
+    Net cost of this job; 0 when fully refunded; absent until charged. Absent from webhook payloads. A chat completion that the caller disconnected or stopped reading (`CANCELLED`), or that reached its deadline (`DEADLINE_EXCEEDED`), is `FAILED` and costs the tokens the model reported; one that the model failed (`UNAVAILABLE`) costs 0.
     """
 
     currency: typing.Optional[str] = pydantic.Field(default=None)

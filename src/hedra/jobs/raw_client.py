@@ -9,6 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.http_sse._api import EventSource
+from ..core.idempotency import generate_idempotency_key
 from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
@@ -159,6 +160,10 @@ class RawJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobSummary, JobListResponse]:
         """
+        Your jobs, newest first. Each `POST /v3/chat/completions` request is a
+        job too, whose id is the completion's `id`. A chat job has no outputs,
+        and it sends no `job.completed` or `job.failed` webhook.
+
         Parameters
         ----------
         limit : typing.Optional[int]
@@ -819,7 +824,7 @@ class RawJobsClient:
         *,
         input: InputCreatifyAurora,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -835,7 +840,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -853,10 +857,10 @@ class RawJobsClient:
                     object_=input, annotation=InputCreatifyAurora, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -973,7 +977,7 @@ class RawJobsClient:
         *,
         input: InputDreamina31,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -989,7 +993,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1007,10 +1010,10 @@ class RawJobsClient:
                     object_=input, annotation=InputDreamina31, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1127,7 +1130,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsAudioIsolation,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -1143,7 +1146,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1161,10 +1163,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsAudioIsolation, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1281,7 +1283,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsEnglishStsV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -1295,7 +1297,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1313,10 +1314,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsEnglishStsV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1433,7 +1434,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsFlashMultilingualV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -1449,7 +1450,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1467,10 +1467,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsFlashMultilingualV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1587,7 +1587,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsFlashV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -1603,7 +1603,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1621,10 +1620,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsFlashV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1741,7 +1740,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsMultilingualStsV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -1755,7 +1754,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1773,10 +1771,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsMultilingualStsV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1893,7 +1891,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsMultilingualV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -1909,7 +1907,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1927,10 +1924,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsMultilingualV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2047,7 +2044,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsMusic,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2063,7 +2060,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2081,10 +2077,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsMusic, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2201,7 +2197,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsSoundEffects,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2217,7 +2213,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2235,10 +2230,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsSoundEffects, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2355,7 +2350,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsV3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2371,7 +2366,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2389,10 +2383,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsV3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2509,7 +2503,7 @@ class RawJobsClient:
         *,
         input: InputElevenlabsVoiceClone,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2525,7 +2519,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2543,10 +2536,10 @@ class RawJobsClient:
                     object_=input, annotation=InputElevenlabsVoiceClone, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2663,7 +2656,7 @@ class RawJobsClient:
         *,
         input: InputEyelineIdRelight,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2679,7 +2672,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2697,10 +2689,10 @@ class RawJobsClient:
                     object_=input, annotation=InputEyelineIdRelight, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2817,7 +2809,7 @@ class RawJobsClient:
         *,
         input: InputEyelineIdRestyle,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2833,7 +2825,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2851,10 +2842,10 @@ class RawJobsClient:
                     object_=input, annotation=InputEyelineIdRestyle, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -2971,7 +2962,7 @@ class RawJobsClient:
         *,
         input: InputFlux11Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -2987,7 +2978,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3005,10 +2995,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux11Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -3125,7 +3115,7 @@ class RawJobsClient:
         *,
         input: InputFlux11Ultra,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -3141,7 +3131,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3159,10 +3148,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux11Ultra, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -3279,7 +3268,7 @@ class RawJobsClient:
         *,
         input: InputFlux3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -3295,7 +3284,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3313,10 +3301,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -3433,7 +3421,7 @@ class RawJobsClient:
         *,
         input: InputFlux3VideoUpscalerCreative,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -3449,7 +3437,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3467,10 +3454,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux3VideoUpscalerCreative, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -3587,7 +3574,7 @@ class RawJobsClient:
         *,
         input: InputFlux3VideoUpscalerPrecise,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -3603,7 +3590,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3621,10 +3607,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux3VideoUpscalerPrecise, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -3741,7 +3727,7 @@ class RawJobsClient:
         *,
         input: InputFluxDev,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -3757,7 +3743,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3775,10 +3760,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFluxDev, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -3895,7 +3880,7 @@ class RawJobsClient:
         *,
         input: InputFluxKontextMax,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -3911,7 +3896,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3929,10 +3913,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFluxKontextMax, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4049,7 +4033,7 @@ class RawJobsClient:
         *,
         input: InputFluxKontextPro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4065,7 +4049,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4083,10 +4066,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFluxKontextPro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4203,7 +4186,7 @@ class RawJobsClient:
         *,
         input: InputFlux2Flex,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4219,7 +4202,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4237,10 +4219,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux2Flex, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4357,7 +4339,7 @@ class RawJobsClient:
         *,
         input: InputFlux2Klein9B,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4373,7 +4355,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4391,10 +4372,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux2Klein9B, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4511,7 +4492,7 @@ class RawJobsClient:
         *,
         input: InputFlux2Max,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4527,7 +4508,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4545,10 +4525,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux2Max, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4665,7 +4645,7 @@ class RawJobsClient:
         *,
         input: InputFlux2Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4681,7 +4661,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4699,10 +4678,10 @@ class RawJobsClient:
                     object_=input, annotation=InputFlux2Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4819,7 +4798,7 @@ class RawJobsClient:
         *,
         input: InputGeminiOmniFlash,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4835,7 +4814,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4853,10 +4831,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGeminiOmniFlash, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -4973,7 +4951,7 @@ class RawJobsClient:
         *,
         input: InputGeminiOmniFlash11,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -4989,7 +4967,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5007,10 +4984,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGeminiOmniFlash11, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -5127,7 +5104,7 @@ class RawJobsClient:
         *,
         input: InputGptImage15,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -5143,7 +5120,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5161,10 +5137,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGptImage15, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -5281,7 +5257,7 @@ class RawJobsClient:
         *,
         input: InputGptImage2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -5297,7 +5273,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5315,10 +5290,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGptImage2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -5435,7 +5410,7 @@ class RawJobsClient:
         *,
         input: InputGptImage25Flare,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -5451,7 +5426,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5469,10 +5443,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGptImage25Flare, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -5589,7 +5563,7 @@ class RawJobsClient:
         *,
         input: InputGptImage25Sunburst,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -5605,7 +5579,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5623,10 +5596,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGptImage25Sunburst, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -5743,7 +5716,7 @@ class RawJobsClient:
         *,
         input: InputGrokImagine,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -5759,7 +5732,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5777,10 +5749,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGrokImagine, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -5897,7 +5869,7 @@ class RawJobsClient:
         *,
         input: InputGrokImagine20,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -5913,7 +5885,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5931,10 +5902,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGrokImagine20, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6051,7 +6022,7 @@ class RawJobsClient:
         *,
         input: InputGrokVideo,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6067,7 +6038,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -6085,10 +6055,10 @@ class RawJobsClient:
                     object_=input, annotation=InputGrokVideo, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6205,7 +6175,7 @@ class RawJobsClient:
         *,
         input: InputHappyHorse,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6221,7 +6191,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -6239,10 +6208,10 @@ class RawJobsClient:
                     object_=input, annotation=InputHappyHorse, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6359,7 +6328,7 @@ class RawJobsClient:
         *,
         input: InputHedraAvatar,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6375,7 +6344,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -6393,10 +6361,10 @@ class RawJobsClient:
                     object_=input, annotation=InputHedraAvatar, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6513,7 +6481,7 @@ class RawJobsClient:
         *,
         input: InputHedraCharacter3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6529,7 +6497,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -6547,10 +6514,10 @@ class RawJobsClient:
                     object_=input, annotation=InputHedraCharacter3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6667,7 +6634,7 @@ class RawJobsClient:
         *,
         input: InputHeygenPhotoAvatar4,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6683,7 +6650,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -6701,10 +6667,10 @@ class RawJobsClient:
                     object_=input, annotation=InputHeygenPhotoAvatar4, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6821,7 +6787,7 @@ class RawJobsClient:
         *,
         input: InputHidreamO1Image,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6837,7 +6803,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -6855,10 +6820,10 @@ class RawJobsClient:
                     object_=input, annotation=InputHidreamO1Image, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -6975,7 +6940,7 @@ class RawJobsClient:
         *,
         input: InputIdeogramV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -6991,7 +6956,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7009,10 +6973,10 @@ class RawJobsClient:
                     object_=input, annotation=InputIdeogramV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -7129,7 +7093,7 @@ class RawJobsClient:
         *,
         input: InputIdeogramV4,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -7145,7 +7109,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7163,10 +7126,10 @@ class RawJobsClient:
                     object_=input, annotation=InputIdeogramV4, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -7283,7 +7246,7 @@ class RawJobsClient:
         *,
         input: InputImagen3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -7299,7 +7262,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7317,10 +7279,10 @@ class RawJobsClient:
                     object_=input, annotation=InputImagen3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -7437,7 +7399,7 @@ class RawJobsClient:
         *,
         input: InputImagen4,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -7453,7 +7415,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7471,10 +7432,10 @@ class RawJobsClient:
                     object_=input, annotation=InputImagen4, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -7591,7 +7552,7 @@ class RawJobsClient:
         *,
         input: InputKling16,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -7605,7 +7566,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7623,10 +7583,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKling16, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -7743,7 +7703,7 @@ class RawJobsClient:
         *,
         input: InputKling21Master,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -7759,7 +7719,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7777,10 +7736,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKling21Master, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -7897,7 +7856,7 @@ class RawJobsClient:
         *,
         input: InputKling25Turbo,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -7913,7 +7872,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -7931,10 +7889,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKling25Turbo, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8051,7 +8009,7 @@ class RawJobsClient:
         *,
         input: InputKling26MotionControl,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8067,7 +8025,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -8085,10 +8042,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKling26MotionControl, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8205,7 +8162,7 @@ class RawJobsClient:
         *,
         input: InputKling26Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8221,7 +8178,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -8239,10 +8195,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKling26Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8359,7 +8315,7 @@ class RawJobsClient:
         *,
         input: InputKlingAiAvatarV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8375,7 +8331,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -8393,10 +8348,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingAiAvatarV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8513,7 +8468,7 @@ class RawJobsClient:
         *,
         input: InputKlingO1,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8529,7 +8484,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -8547,10 +8501,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingO1, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8667,7 +8621,7 @@ class RawJobsClient:
         *,
         input: InputKlingO3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8683,7 +8637,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -8701,10 +8654,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingO3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8821,7 +8774,7 @@ class RawJobsClient:
         *,
         input: InputKlingO3Edit,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8837,7 +8790,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -8855,10 +8807,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingO3Edit, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -8975,7 +8927,7 @@ class RawJobsClient:
         *,
         input: InputKlingO3Reference,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -8991,7 +8943,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9009,10 +8960,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingO3Reference, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -9129,7 +9080,7 @@ class RawJobsClient:
         *,
         input: InputKlingV3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -9145,7 +9096,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9163,10 +9113,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingV3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -9283,7 +9233,7 @@ class RawJobsClient:
         *,
         input: InputKlingV3MotionControl,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -9299,7 +9249,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9317,10 +9266,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKlingV3MotionControl, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -9437,7 +9386,7 @@ class RawJobsClient:
         *,
         input: InputKrea2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -9453,7 +9402,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9471,10 +9419,10 @@ class RawJobsClient:
                     object_=input, annotation=InputKrea2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -9591,7 +9539,7 @@ class RawJobsClient:
         *,
         input: InputLtx23,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -9607,7 +9555,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9625,10 +9572,10 @@ class RawJobsClient:
                     object_=input, annotation=InputLtx23, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -9745,7 +9692,7 @@ class RawJobsClient:
         *,
         input: InputLtx25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -9761,7 +9708,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9779,10 +9725,10 @@ class RawJobsClient:
                     object_=input, annotation=InputLtx25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -9899,7 +9845,7 @@ class RawJobsClient:
         *,
         input: InputLumaRay32,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -9915,7 +9861,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -9933,10 +9878,10 @@ class RawJobsClient:
                     object_=input, annotation=InputLumaRay32, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10053,7 +9998,7 @@ class RawJobsClient:
         *,
         input: InputMaiImage25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10069,7 +10014,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -10087,10 +10031,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMaiImage25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10207,7 +10151,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxH3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10223,7 +10167,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -10241,10 +10184,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxH3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10361,7 +10304,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxH3Max,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10377,7 +10320,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -10395,10 +10337,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxH3Max, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10515,7 +10457,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxH3MaxCameraControls,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10531,7 +10473,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -10549,10 +10490,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxH3MaxCameraControls, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10669,7 +10610,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxH3MaxTurbo,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10685,7 +10626,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -10703,10 +10643,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxH3MaxTurbo, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10823,7 +10763,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxH3Ultra,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10839,7 +10779,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -10857,10 +10796,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxH3Ultra, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -10977,7 +10916,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxHailuo02,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -10993,7 +10932,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11011,10 +10949,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxHailuo02, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -11131,7 +11069,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxHailuo23,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -11147,7 +11085,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11165,10 +11102,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxHailuo23, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -11285,7 +11222,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxSpeech25HdPreview,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -11301,7 +11238,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11319,10 +11255,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxSpeech25HdPreview, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -11439,7 +11375,7 @@ class RawJobsClient:
         *,
         input: InputMinimaxSpeech25TurboPreview,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -11455,7 +11391,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11473,10 +11408,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMinimaxSpeech25TurboPreview, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -11593,7 +11528,7 @@ class RawJobsClient:
         *,
         input: InputMuseImage,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -11609,7 +11544,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11627,10 +11561,10 @@ class RawJobsClient:
                     object_=input, annotation=InputMuseImage, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -11747,7 +11681,7 @@ class RawJobsClient:
         *,
         input: InputNanoBanana,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -11763,7 +11697,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11781,10 +11714,10 @@ class RawJobsClient:
                     object_=input, annotation=InputNanoBanana, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -11901,7 +11834,7 @@ class RawJobsClient:
         *,
         input: InputNanoBanana2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -11917,7 +11850,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -11935,10 +11867,10 @@ class RawJobsClient:
                     object_=input, annotation=InputNanoBanana2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12055,7 +11987,7 @@ class RawJobsClient:
         *,
         input: InputNanoBananaPro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12071,7 +12003,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -12089,10 +12020,10 @@ class RawJobsClient:
                     object_=input, annotation=InputNanoBananaPro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12209,7 +12140,7 @@ class RawJobsClient:
         *,
         input: InputOmnihuman15,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12225,7 +12156,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -12243,10 +12173,10 @@ class RawJobsClient:
                     object_=input, annotation=InputOmnihuman15, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12363,7 +12293,7 @@ class RawJobsClient:
         *,
         input: InputPixverseV6,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12379,7 +12309,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -12397,10 +12326,10 @@ class RawJobsClient:
                     object_=input, annotation=InputPixverseV6, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12517,7 +12446,7 @@ class RawJobsClient:
         *,
         input: InputQwenImage2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12533,7 +12462,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -12551,10 +12479,10 @@ class RawJobsClient:
                     object_=input, annotation=InputQwenImage2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12671,7 +12599,7 @@ class RawJobsClient:
         *,
         input: InputQwenImage21,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12687,7 +12615,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -12705,10 +12632,10 @@ class RawJobsClient:
                     object_=input, annotation=InputQwenImage21, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12825,7 +12752,7 @@ class RawJobsClient:
         *,
         input: InputRecraftV3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12841,7 +12768,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -12859,10 +12785,10 @@ class RawJobsClient:
                     object_=input, annotation=InputRecraftV3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -12979,7 +12905,7 @@ class RawJobsClient:
         *,
         input: InputReve21,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -12995,7 +12921,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13013,10 +12938,10 @@ class RawJobsClient:
                     object_=input, annotation=InputReve21, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -13133,7 +13058,7 @@ class RawJobsClient:
         *,
         input: InputReve21Edit,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -13149,7 +13074,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13167,10 +13091,10 @@ class RawJobsClient:
                     object_=input, annotation=InputReve21Edit, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -13287,7 +13211,7 @@ class RawJobsClient:
         *,
         input: InputReve21Remix,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -13303,7 +13227,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13321,10 +13244,10 @@ class RawJobsClient:
                     object_=input, annotation=InputReve21Remix, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -13441,7 +13364,7 @@ class RawJobsClient:
         *,
         input: InputSana,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -13457,7 +13380,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13475,10 +13397,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSana, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -13595,7 +13517,7 @@ class RawJobsClient:
         *,
         input: InputSeedance15Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -13611,7 +13533,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13629,10 +13550,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedance15Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -13749,7 +13670,7 @@ class RawJobsClient:
         *,
         input: InputSeedance20,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -13765,7 +13686,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13783,10 +13703,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedance20, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -13903,7 +13823,7 @@ class RawJobsClient:
         *,
         input: InputSeedance20Mini,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -13919,7 +13839,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -13937,10 +13856,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedance20Mini, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14057,7 +13976,7 @@ class RawJobsClient:
         *,
         input: InputSeedance25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14073,7 +13992,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -14091,10 +14009,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedance25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14211,7 +14129,7 @@ class RawJobsClient:
         *,
         input: InputSeedream40,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14227,7 +14145,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -14245,10 +14162,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedream40, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14365,7 +14282,7 @@ class RawJobsClient:
         *,
         input: InputSeedream45,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14381,7 +14298,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -14399,10 +14315,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedream45, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14519,7 +14435,7 @@ class RawJobsClient:
         *,
         input: InputSeedream50Lite,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14535,7 +14451,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -14553,10 +14468,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedream50Lite, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14673,7 +14588,7 @@ class RawJobsClient:
         *,
         input: InputSeedream50Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14689,7 +14604,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -14707,10 +14621,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSeedream50Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14827,7 +14741,7 @@ class RawJobsClient:
         *,
         input: InputSora2Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14843,7 +14757,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -14861,10 +14774,10 @@ class RawJobsClient:
                     object_=input, annotation=InputSora2Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -14981,7 +14894,7 @@ class RawJobsClient:
         *,
         input: InputTopazImageUpscaler,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -14997,7 +14910,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15015,10 +14927,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazImageUpscaler, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -15135,7 +15047,7 @@ class RawJobsClient:
         *,
         input: InputTopazImageUpscalerTransparency,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -15151,7 +15063,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15169,10 +15080,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazImageUpscalerTransparency, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -15289,7 +15200,7 @@ class RawJobsClient:
         *,
         input: InputTopazImageUpscalerWonder,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -15305,7 +15216,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15323,10 +15233,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazImageUpscalerWonder, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -15443,7 +15353,7 @@ class RawJobsClient:
         *,
         input: InputTopazVideoUpscaler,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -15459,7 +15369,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15477,10 +15386,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscaler, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -15597,7 +15506,7 @@ class RawJobsClient:
         *,
         input: InputTopazVideoUpscalerHyperion25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -15613,7 +15522,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15631,10 +15539,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerHyperion25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -15751,7 +15659,7 @@ class RawJobsClient:
         *,
         input: InputTopazVideoUpscalerStarlightFast,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -15767,7 +15675,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15785,10 +15692,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerStarlightFast, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -15905,7 +15812,7 @@ class RawJobsClient:
         *,
         input: InputTopazVideoUpscalerStarlightHq,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -15921,7 +15828,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -15939,10 +15845,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerStarlightHq, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16059,7 +15965,7 @@ class RawJobsClient:
         *,
         input: InputTopazVideoUpscalerStarlightPrecise,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16075,7 +15981,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -16093,10 +15998,10 @@ class RawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerStarlightPrecise, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16213,7 +16118,7 @@ class RawJobsClient:
         *,
         input: InputVeedFabric10,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16229,7 +16134,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -16247,10 +16151,10 @@ class RawJobsClient:
                     object_=input, annotation=InputVeedFabric10, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16367,7 +16271,7 @@ class RawJobsClient:
         *,
         input: InputVeedVideoBackgroundRemoval,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16383,7 +16287,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -16401,10 +16304,10 @@ class RawJobsClient:
                     object_=input, annotation=InputVeedVideoBackgroundRemoval, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16521,7 +16424,7 @@ class RawJobsClient:
         *,
         input: InputVeo2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16537,7 +16440,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -16555,10 +16457,10 @@ class RawJobsClient:
                     object_=input, annotation=InputVeo2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16675,7 +16577,7 @@ class RawJobsClient:
         *,
         input: InputVeo3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16691,7 +16593,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -16709,10 +16610,10 @@ class RawJobsClient:
                     object_=input, annotation=InputVeo3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16829,7 +16730,7 @@ class RawJobsClient:
         *,
         input: InputVeo31,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16845,7 +16746,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -16863,10 +16763,10 @@ class RawJobsClient:
                     object_=input, annotation=InputVeo31, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -16983,7 +16883,7 @@ class RawJobsClient:
         *,
         input: InputViduQ3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -16999,7 +16899,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -17017,10 +16916,10 @@ class RawJobsClient:
                     object_=input, annotation=InputViduQ3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -17137,7 +17036,7 @@ class RawJobsClient:
         *,
         input: InputViduQ3Reference,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -17153,7 +17052,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -17171,10 +17069,10 @@ class RawJobsClient:
                     object_=input, annotation=InputViduQ3Reference, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -17291,7 +17189,7 @@ class RawJobsClient:
         *,
         input: InputWan27,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -17307,7 +17205,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -17325,10 +17222,10 @@ class RawJobsClient:
                     object_=input, annotation=InputWan27, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -17445,7 +17342,7 @@ class RawJobsClient:
         *,
         input: InputWan30,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -17461,7 +17358,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -17479,10 +17375,10 @@ class RawJobsClient:
                     object_=input, annotation=InputWan30, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -17600,7 +17496,7 @@ class RawJobsClient:
         *,
         input: typing.Dict[str, typing.Any],
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SubmitResponse]:
         """
@@ -17622,7 +17518,6 @@ class RawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -17638,10 +17533,10 @@ class RawJobsClient:
             json={
                 "input": input,
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -17766,6 +17661,10 @@ class AsyncRawJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobSummary, JobListResponse]:
         """
+        Your jobs, newest first. Each `POST /v3/chat/completions` request is a
+        job too, whose id is the completion's `id`. A chat job has no outputs,
+        and it sends no `job.completed` or `job.failed` webhook.
+
         Parameters
         ----------
         limit : typing.Optional[int]
@@ -18432,7 +18331,7 @@ class AsyncRawJobsClient:
         *,
         input: InputCreatifyAurora,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -18448,7 +18347,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -18466,10 +18364,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputCreatifyAurora, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -18586,7 +18484,7 @@ class AsyncRawJobsClient:
         *,
         input: InputDreamina31,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -18602,7 +18500,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -18620,10 +18517,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputDreamina31, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -18740,7 +18637,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsAudioIsolation,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -18756,7 +18653,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -18774,10 +18670,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsAudioIsolation, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -18894,7 +18790,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsEnglishStsV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -18908,7 +18804,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -18926,10 +18821,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsEnglishStsV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19046,7 +18941,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsFlashMultilingualV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19062,7 +18957,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -19080,10 +18974,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsFlashMultilingualV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19200,7 +19094,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsFlashV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19216,7 +19110,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -19234,10 +19127,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsFlashV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19354,7 +19247,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsMultilingualStsV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19368,7 +19261,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -19386,10 +19278,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsMultilingualStsV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19506,7 +19398,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsMultilingualV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19522,7 +19414,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -19540,10 +19431,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsMultilingualV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19660,7 +19551,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsMusic,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19676,7 +19567,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -19694,10 +19584,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsMusic, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19814,7 +19704,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsSoundEffects,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19830,7 +19720,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -19848,10 +19737,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsSoundEffects, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -19968,7 +19857,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsV3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -19984,7 +19873,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20002,10 +19890,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsV3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -20122,7 +20010,7 @@ class AsyncRawJobsClient:
         *,
         input: InputElevenlabsVoiceClone,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -20138,7 +20026,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20156,10 +20043,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputElevenlabsVoiceClone, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -20276,7 +20163,7 @@ class AsyncRawJobsClient:
         *,
         input: InputEyelineIdRelight,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -20292,7 +20179,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20310,10 +20196,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputEyelineIdRelight, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -20430,7 +20316,7 @@ class AsyncRawJobsClient:
         *,
         input: InputEyelineIdRestyle,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -20446,7 +20332,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20464,10 +20349,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputEyelineIdRestyle, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -20584,7 +20469,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux11Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -20600,7 +20485,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20618,10 +20502,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux11Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -20738,7 +20622,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux11Ultra,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -20754,7 +20638,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20772,10 +20655,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux11Ultra, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -20892,7 +20775,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -20908,7 +20791,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -20926,10 +20808,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21046,7 +20928,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux3VideoUpscalerCreative,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21062,7 +20944,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -21080,10 +20961,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux3VideoUpscalerCreative, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21200,7 +21081,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux3VideoUpscalerPrecise,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21216,7 +21097,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -21234,10 +21114,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux3VideoUpscalerPrecise, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21354,7 +21234,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFluxDev,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21370,7 +21250,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -21388,10 +21267,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFluxDev, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21508,7 +21387,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFluxKontextMax,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21524,7 +21403,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -21542,10 +21420,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFluxKontextMax, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21662,7 +21540,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFluxKontextPro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21678,7 +21556,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -21696,10 +21573,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFluxKontextPro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21816,7 +21693,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux2Flex,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21832,7 +21709,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -21850,10 +21726,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux2Flex, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -21970,7 +21846,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux2Klein9B,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -21986,7 +21862,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22004,10 +21879,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux2Klein9B, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -22124,7 +21999,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux2Max,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -22140,7 +22015,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22158,10 +22032,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux2Max, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -22278,7 +22152,7 @@ class AsyncRawJobsClient:
         *,
         input: InputFlux2Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -22294,7 +22168,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22312,10 +22185,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputFlux2Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -22432,7 +22305,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGeminiOmniFlash,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -22448,7 +22321,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22466,10 +22338,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGeminiOmniFlash, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -22586,7 +22458,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGeminiOmniFlash11,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -22602,7 +22474,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22620,10 +22491,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGeminiOmniFlash11, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -22740,7 +22611,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGptImage15,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -22756,7 +22627,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22774,10 +22644,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGptImage15, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -22894,7 +22764,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGptImage2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -22910,7 +22780,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -22928,10 +22797,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGptImage2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23048,7 +22917,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGptImage25Flare,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23064,7 +22933,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -23082,10 +22950,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGptImage25Flare, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23202,7 +23070,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGptImage25Sunburst,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23218,7 +23086,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -23236,10 +23103,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGptImage25Sunburst, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23356,7 +23223,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGrokImagine,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23372,7 +23239,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -23390,10 +23256,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGrokImagine, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23510,7 +23376,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGrokImagine20,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23526,7 +23392,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -23544,10 +23409,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGrokImagine20, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23664,7 +23529,7 @@ class AsyncRawJobsClient:
         *,
         input: InputGrokVideo,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23680,7 +23545,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -23698,10 +23562,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputGrokVideo, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23818,7 +23682,7 @@ class AsyncRawJobsClient:
         *,
         input: InputHappyHorse,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23834,7 +23698,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -23852,10 +23715,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputHappyHorse, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -23972,7 +23835,7 @@ class AsyncRawJobsClient:
         *,
         input: InputHedraAvatar,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -23988,7 +23851,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24006,10 +23868,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputHedraAvatar, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -24126,7 +23988,7 @@ class AsyncRawJobsClient:
         *,
         input: InputHedraCharacter3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -24142,7 +24004,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24160,10 +24021,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputHedraCharacter3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -24280,7 +24141,7 @@ class AsyncRawJobsClient:
         *,
         input: InputHeygenPhotoAvatar4,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -24296,7 +24157,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24314,10 +24174,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputHeygenPhotoAvatar4, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -24434,7 +24294,7 @@ class AsyncRawJobsClient:
         *,
         input: InputHidreamO1Image,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -24450,7 +24310,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24468,10 +24327,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputHidreamO1Image, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -24588,7 +24447,7 @@ class AsyncRawJobsClient:
         *,
         input: InputIdeogramV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -24604,7 +24463,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24622,10 +24480,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputIdeogramV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -24742,7 +24600,7 @@ class AsyncRawJobsClient:
         *,
         input: InputIdeogramV4,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -24758,7 +24616,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24776,10 +24633,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputIdeogramV4, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -24896,7 +24753,7 @@ class AsyncRawJobsClient:
         *,
         input: InputImagen3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -24912,7 +24769,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -24930,10 +24786,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputImagen3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25050,7 +24906,7 @@ class AsyncRawJobsClient:
         *,
         input: InputImagen4,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25066,7 +24922,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -25084,10 +24939,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputImagen4, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25204,7 +25059,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKling16,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25218,7 +25073,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -25236,10 +25090,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKling16, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25356,7 +25210,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKling21Master,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25372,7 +25226,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -25390,10 +25243,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKling21Master, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25510,7 +25363,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKling25Turbo,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25526,7 +25379,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -25544,10 +25396,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKling25Turbo, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25664,7 +25516,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKling26MotionControl,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25680,7 +25532,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -25698,10 +25549,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKling26MotionControl, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25818,7 +25669,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKling26Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25834,7 +25685,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -25852,10 +25702,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKling26Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -25972,7 +25822,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingAiAvatarV2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -25988,7 +25838,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26006,10 +25855,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingAiAvatarV2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -26126,7 +25975,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingO1,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -26142,7 +25991,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26160,10 +26008,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingO1, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -26280,7 +26128,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingO3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -26296,7 +26144,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26314,10 +26161,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingO3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -26434,7 +26281,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingO3Edit,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -26450,7 +26297,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26468,10 +26314,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingO3Edit, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -26588,7 +26434,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingO3Reference,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -26604,7 +26450,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26622,10 +26467,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingO3Reference, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -26742,7 +26587,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingV3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -26758,7 +26603,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26776,10 +26620,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingV3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -26896,7 +26740,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKlingV3MotionControl,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -26912,7 +26756,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -26930,10 +26773,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKlingV3MotionControl, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27050,7 +26893,7 @@ class AsyncRawJobsClient:
         *,
         input: InputKrea2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27066,7 +26909,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -27084,10 +26926,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputKrea2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27204,7 +27046,7 @@ class AsyncRawJobsClient:
         *,
         input: InputLtx23,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27220,7 +27062,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -27238,10 +27079,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputLtx23, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27358,7 +27199,7 @@ class AsyncRawJobsClient:
         *,
         input: InputLtx25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27374,7 +27215,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -27392,10 +27232,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputLtx25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27512,7 +27352,7 @@ class AsyncRawJobsClient:
         *,
         input: InputLumaRay32,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27528,7 +27368,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -27546,10 +27385,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputLumaRay32, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27666,7 +27505,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMaiImage25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27682,7 +27521,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -27700,10 +27538,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMaiImage25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27820,7 +27658,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxH3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27836,7 +27674,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -27854,10 +27691,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxH3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -27974,7 +27811,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxH3Max,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -27990,7 +27827,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28008,10 +27844,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxH3Max, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -28128,7 +27964,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxH3MaxCameraControls,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -28144,7 +27980,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28162,10 +27997,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxH3MaxCameraControls, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -28282,7 +28117,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxH3MaxTurbo,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -28298,7 +28133,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28316,10 +28150,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxH3MaxTurbo, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -28436,7 +28270,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxH3Ultra,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -28452,7 +28286,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28470,10 +28303,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxH3Ultra, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -28590,7 +28423,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxHailuo02,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -28606,7 +28439,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28624,10 +28456,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxHailuo02, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -28744,7 +28576,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxHailuo23,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -28760,7 +28592,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28778,10 +28609,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxHailuo23, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -28898,7 +28729,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxSpeech25HdPreview,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -28914,7 +28745,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -28932,10 +28762,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxSpeech25HdPreview, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29052,7 +28882,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMinimaxSpeech25TurboPreview,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29068,7 +28898,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -29086,10 +28915,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMinimaxSpeech25TurboPreview, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29206,7 +29035,7 @@ class AsyncRawJobsClient:
         *,
         input: InputMuseImage,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29222,7 +29051,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -29240,10 +29068,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputMuseImage, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29360,7 +29188,7 @@ class AsyncRawJobsClient:
         *,
         input: InputNanoBanana,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29376,7 +29204,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -29394,10 +29221,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputNanoBanana, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29514,7 +29341,7 @@ class AsyncRawJobsClient:
         *,
         input: InputNanoBanana2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29530,7 +29357,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -29548,10 +29374,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputNanoBanana2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29668,7 +29494,7 @@ class AsyncRawJobsClient:
         *,
         input: InputNanoBananaPro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29684,7 +29510,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -29702,10 +29527,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputNanoBananaPro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29822,7 +29647,7 @@ class AsyncRawJobsClient:
         *,
         input: InputOmnihuman15,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29838,7 +29663,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -29856,10 +29680,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputOmnihuman15, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -29976,7 +29800,7 @@ class AsyncRawJobsClient:
         *,
         input: InputPixverseV6,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -29992,7 +29816,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30010,10 +29833,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputPixverseV6, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -30130,7 +29953,7 @@ class AsyncRawJobsClient:
         *,
         input: InputQwenImage2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -30146,7 +29969,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30164,10 +29986,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputQwenImage2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -30284,7 +30106,7 @@ class AsyncRawJobsClient:
         *,
         input: InputQwenImage21,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -30300,7 +30122,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30318,10 +30139,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputQwenImage21, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -30438,7 +30259,7 @@ class AsyncRawJobsClient:
         *,
         input: InputRecraftV3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -30454,7 +30275,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30472,10 +30292,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputRecraftV3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -30592,7 +30412,7 @@ class AsyncRawJobsClient:
         *,
         input: InputReve21,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -30608,7 +30428,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30626,10 +30445,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputReve21, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -30746,7 +30565,7 @@ class AsyncRawJobsClient:
         *,
         input: InputReve21Edit,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -30762,7 +30581,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30780,10 +30598,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputReve21Edit, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -30900,7 +30718,7 @@ class AsyncRawJobsClient:
         *,
         input: InputReve21Remix,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -30916,7 +30734,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -30934,10 +30751,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputReve21Remix, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31054,7 +30871,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSana,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31070,7 +30887,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -31088,10 +30904,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSana, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31208,7 +31024,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedance15Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31224,7 +31040,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -31242,10 +31057,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedance15Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31362,7 +31177,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedance20,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31378,7 +31193,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -31396,10 +31210,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedance20, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31516,7 +31330,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedance20Mini,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31532,7 +31346,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -31550,10 +31363,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedance20Mini, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31670,7 +31483,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedance25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31686,7 +31499,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -31704,10 +31516,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedance25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31824,7 +31636,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedream40,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31840,7 +31652,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -31858,10 +31669,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedream40, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -31978,7 +31789,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedream45,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -31994,7 +31805,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32012,10 +31822,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedream45, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -32132,7 +31942,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedream50Lite,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -32148,7 +31958,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32166,10 +31975,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedream50Lite, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -32286,7 +32095,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSeedream50Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -32302,7 +32111,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32320,10 +32128,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSeedream50Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -32440,7 +32248,7 @@ class AsyncRawJobsClient:
         *,
         input: InputSora2Pro,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -32456,7 +32264,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32474,10 +32281,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputSora2Pro, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -32594,7 +32401,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazImageUpscaler,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -32610,7 +32417,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32628,10 +32434,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazImageUpscaler, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -32748,7 +32554,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazImageUpscalerTransparency,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -32764,7 +32570,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32782,10 +32587,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazImageUpscalerTransparency, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -32902,7 +32707,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazImageUpscalerWonder,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -32918,7 +32723,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -32936,10 +32740,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazImageUpscalerWonder, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33056,7 +32860,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazVideoUpscaler,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33072,7 +32876,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -33090,10 +32893,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscaler, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33210,7 +33013,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazVideoUpscalerHyperion25,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33226,7 +33029,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -33244,10 +33046,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerHyperion25, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33364,7 +33166,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazVideoUpscalerStarlightFast,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33380,7 +33182,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -33398,10 +33199,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerStarlightFast, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33518,7 +33319,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazVideoUpscalerStarlightHq,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33534,7 +33335,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -33552,10 +33352,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerStarlightHq, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33672,7 +33472,7 @@ class AsyncRawJobsClient:
         *,
         input: InputTopazVideoUpscalerStarlightPrecise,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33688,7 +33488,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -33706,10 +33505,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputTopazVideoUpscalerStarlightPrecise, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33826,7 +33625,7 @@ class AsyncRawJobsClient:
         *,
         input: InputVeedFabric10,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33842,7 +33641,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -33860,10 +33658,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputVeedFabric10, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -33980,7 +33778,7 @@ class AsyncRawJobsClient:
         *,
         input: InputVeedVideoBackgroundRemoval,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -33996,7 +33794,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34014,10 +33811,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputVeedVideoBackgroundRemoval, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -34134,7 +33931,7 @@ class AsyncRawJobsClient:
         *,
         input: InputVeo2,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -34150,7 +33947,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34168,10 +33964,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputVeo2, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -34288,7 +34084,7 @@ class AsyncRawJobsClient:
         *,
         input: InputVeo3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -34304,7 +34100,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34322,10 +34117,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputVeo3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -34442,7 +34237,7 @@ class AsyncRawJobsClient:
         *,
         input: InputVeo31,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -34458,7 +34253,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34476,10 +34270,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputVeo31, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -34596,7 +34390,7 @@ class AsyncRawJobsClient:
         *,
         input: InputViduQ3,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -34612,7 +34406,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34630,10 +34423,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputViduQ3, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -34750,7 +34543,7 @@ class AsyncRawJobsClient:
         *,
         input: InputViduQ3Reference,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -34766,7 +34559,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34784,10 +34576,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputViduQ3Reference, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -34904,7 +34696,7 @@ class AsyncRawJobsClient:
         *,
         input: InputWan27,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -34920,7 +34712,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -34938,10 +34729,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputWan27, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -35058,7 +34849,7 @@ class AsyncRawJobsClient:
         *,
         input: InputWan30,
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -35074,7 +34865,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -35092,10 +34882,10 @@ class AsyncRawJobsClient:
                     object_=input, annotation=InputWan30, direction="write"
                 ),
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -35213,7 +35003,7 @@ class AsyncRawJobsClient:
         *,
         input: typing.Dict[str, typing.Any],
         webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SubmitResponse]:
         """
@@ -35235,7 +35025,6 @@ class AsyncRawJobsClient:
             URL to receive a signed completion webhook.
 
         idempotency_key : typing.Optional[str]
-            Replays the original ack for a retried submit instead of enqueueing a duplicate job.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -35251,10 +35040,10 @@ class AsyncRawJobsClient:
             json={
                 "input": input,
                 "webhook": webhook,
-                "idempotency_key": idempotency_key,
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,

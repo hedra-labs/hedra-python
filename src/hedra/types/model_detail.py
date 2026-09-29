@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .chat_capabilities import ChatCapabilities
 from .modality import Modality
 
 
@@ -34,14 +35,29 @@ class ModelDetail(UniversalBaseModel):
     URL of the provider's logo.
     """
 
+    context_length: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    A chat model's context window in tokens; null for other models.
+    """
+
+    max_output_tokens: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The largest `max_tokens` a chat model accepts; null for other models.
+    """
+
     input_schema: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
-    JSON Schema for this model's `input` object on submit — the same schema `GET /v3/models/{model}/openapi.json` embeds.
+    JSON Schema for this model's `input` object on submit — the same schema `GET /v3/models/{model}/openapi.json` embeds. For a chat model, the JSON Schema of the `POST /v3/chat/completions` request body as this model accepts it; a chat model has no per-model OpenAPI document.
     """
 
     output_schema: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
-    JSON Schema of one item of a completed job's `outputs[]`.
+    JSON Schema of one item of a completed job's `outputs[]`. Empty for a chat model.
+    """
+
+    chat: typing.Optional[ChatCapabilities] = pydantic.Field(default=None)
+    """
+    The facts about a chat model that its `input_schema` cannot state: token prices, the default output bound and the image limit; null for other models.
     """
 
     if IS_PYDANTIC_V2:
