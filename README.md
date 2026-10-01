@@ -15,7 +15,9 @@ The Hedra Python library provides convenient access to the Hedra APIs from Pytho
 - [Exception Handling](#exception-handling)
 - [Streaming](#streaming)
 - [Pagination](#pagination)
-- [File Uploads](#file-uploads)
+- [Media Inputs and File Uploads](#media-inputs-and-file-uploads)
+  - [Untyped input](#untyped-input-clientjobssubmit--clientmodelsestimate)
+  - [Which fields go together](#which-fields-go-together)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -70,7 +72,10 @@ Every model has its own submit method — `submit_minimax_h3`, `submit_kling_o3`
 and so on — each taking the typed input model for that model (`InputMinimaxH3`, `InputKlingO3`, …).
 The [reference](https://github.com/hedra-labs/hedra-python/blob/main/reference.md) lists all of them.
 To run a model by its public id instead, with an untyped `input` dict that the API validates at
-submit time, use `client.jobs.submit(model, input={...})`.
+submit time, use `client.jobs.submit(model, input={...})`. Prefer the typed methods when one exists:
+the untyped path sends whatever dict you give it, so a malformed field only fails once it reaches the
+server. See [Media Inputs and File Uploads](#media-inputs-and-file-uploads) for the shape a media
+reference must have there.
 
 Instead of polling you can follow the job over server-sent events; see [Streaming](#streaming).
 
@@ -191,11 +196,23 @@ for page in pager.iter_pages():
         print(item)
 ```
 
-## File Uploads
+## Media Inputs and File Uploads
 
-Media inputs (`start_image`, `end_image`, `images`, `audio`, `video`, …) take either a public URL or a
-file you uploaded first. `client.files.upload` stores the bytes and returns a presigned URL that is the
-file's handle for the next hour; pass it back verbatim as a `url` source:
+Media inputs (`start_image`, `end_image`, `images`, `audios`, `videos`, …) accept exactly two kinds of
+reference:
+
+- **an uploaded file**: the `url` that `client.files.upload` returned to you, or
+- **an earlier output**: the `asset_id` of an output from one of your own completed jobs
+  (`outputs[].asset_id` on `client.jobs.get`).
+
+**A public URL is not accepted.** It rejects any URL that `POST /v3/files` did not issue to you
+with a `400` (`reason: "external_url_rejected"`), even a public link, a CDN URL or a presigned URL from
+your own bucket. To use a remote file, download it and upload it with `client.files.upload`.
+
+The upload URL is the file's handle. Pass it back exactly as returned, query string included: if you
+change it, the API treats it as an external URL. It stops being accepted about an hour after upload
+(`upload.expires_at`), and after that a submit fails with `400` (`reason: "expired"`). Upload right
+before you submit, and upload again rather than reusing an old URL.
 
 ```python
 from hedra import Hedra, InputMinimaxH3, InputMinimaxH3StartImage_Url
@@ -217,7 +234,87 @@ client.jobs.submit_minimax_h3(
 )
 ```
 
-`file` accepts an open binary file, raw `bytes`, or a `(filename, content, content_type)` tuple.
+`file` accepts an open binary file, raw `bytes`, or a `(filename, content, content_type)` tuple. A file
+that lives at a remote URL is downloaded first and then uploaded:
+
+```python
+import httpx
+
+remote = httpx.get("https://example.com/frame.png", follow_redirects=True)
+remote.raise_for_status()
+upload = client.files.upload(file=("frame.png", remote.content, remote.headers["content-type"]))
+```
+
+To reuse an output of an earlier job, reference it by asset id. You don't need to upload it again:
+
+```python
+from hedra import InputMinimaxH3, InputMinimaxH3StartImage_Asset
+
+previous = client.jobs.get("<job_id of an image job>")
+
+client.jobs.submit_minimax_h3(
+    input=InputMinimaxH3(
+        prompt="the fox turns toward the camera",
+        resolution="768p",
+        duration_ms=6000,
+        start_image=InputMinimaxH3StartImage_Asset(asset_id=previous.outputs[0].asset_id),
+    ),
+)
+```
+
+Every media field has its own pair of classes, named `Input<Model><Field>_Url` and
+`Input<Model><Field>_Asset`, for example `InputKlingO3StartImage_Url` or `InputMinimaxH3ImagesItem_Asset`
+for one item of an `images` list. Use these underscore classes. `InputMinimaxH3StartImageUrl` (no
+underscore) also exists, but it is only the body of the `url` variant. It has no `source` field, so
+passing it as `start_image` fails with `Unable to extract tag using discriminator 'source'`.
+
+### Untyped input (`client.jobs.submit` / `client.models.estimate`)
+
+`client.jobs.submit(model, input={...})` and `client.models.estimate(model, input={...})` take a plain dict
+and send it unchanged. The SDK does no checking on that path. There, a media reference is an object whose
+`source` field says which kind it is:
+
+```python
+client.jobs.submit(
+    "minimax-h3",
+    input={
+        "prompt": "the fox turns toward the camera",
+        "resolution": "768p",
+        "duration_ms": 6000,
+        "start_image": {"source": "url", "url": upload.url},
+        # or, for an earlier output: {"source": "asset", "asset_id": "asset_<uuid>"}
+    },
+)
+```
+
+These are the mistakes we see most. The first two can only happen on the untyped path, because the typed
+`submit_<model>` methods raise a `pydantic.ValidationError` before sending the request:
+
+| You send | The API answers `400` with |
+| --- | --- |
+| a bare string: `"start_image": upload.url` | `Input should be a valid dictionary or object to extract fields from` |
+| an object without `source`: `"start_image": {"url": upload.url}` | `Unable to extract tag using discriminator 'source'` |
+| any URL that `client.files.upload` did not return | `reason: "external_url_rejected"` |
+| an upload URL more than about an hour old | `reason: "expired"` |
+
+**Prefer the typed `client.jobs.submit_<model>(...)` methods** whenever your client has one for the model.
+They build the right `source`-tagged object for you and catch a malformed reference before it costs a
+round trip. Keep the untyped `submit` for model ids that are only known at runtime.
+
+### Which fields go together
+
+Each model accepts a fixed set of field combinations, one per input mode. They are listed under "Accepted
+field combinations" in the docstring of its `Input<Model>` class. The SDK does not enforce them: an
+`Input<Model>` object will hold any combination, and only the server rejects a wrong one. The combination
+most often gotten wrong is `aspect_ratio` together with `start_image`, and the rule differs from model to
+model:
+
+- **must not be sent** for the MiniMax H3 and Hailuo video models (`minimax-h3`, `minimax-hailuo-23`, …),
+  `pixverse-v6`, `vidu-q3` and `wan-2-7`. The image-to-video mode uses the start frame's aspect ratio.
+- **required** for the Kling models, `veo-3`, `sora-2-pro`, `wan-3-0` and others.
+
+`client.models.estimate(model, input={...})` validates `input` against these rules without creating a job
+or charging anything. Use it to check a new combination before you submit.
 
 ## Advanced
 
