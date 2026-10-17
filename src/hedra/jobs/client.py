@@ -45,8 +45,8 @@ from ..types.input_hedra_avatar import InputHedraAvatar
 from ..types.input_hedra_character3 import InputHedraCharacter3
 from ..types.input_heygen_photo_avatar4 import InputHeygenPhotoAvatar4
 from ..types.input_hidream_o1image import InputHidreamO1Image
-from ..types.input_ideogram_v2 import InputIdeogramV2
 from ..types.input_ideogram_v4 import InputIdeogramV4
+from ..types.input_ideogram_v45 import InputIdeogramV45
 from ..types.input_imagen3 import InputImagen3
 from ..types.input_imagen4 import InputImagen4
 from ..types.input_kling16 import InputKling16
@@ -62,6 +62,7 @@ from ..types.input_kling_o3reference import InputKlingO3Reference
 from ..types.input_kling_v3 import InputKlingV3
 from ..types.input_kling_v3motion_control import InputKlingV3MotionControl
 from ..types.input_krea2 import InputKrea2
+from ..types.input_krea3 import InputKrea3
 from ..types.input_ltx23 import InputLtx23
 from ..types.input_ltx25 import InputLtx25
 from ..types.input_luma_ray32 import InputLumaRay32
@@ -78,8 +79,10 @@ from ..types.input_minimax_speech25turbo_preview import InputMinimaxSpeech25Turb
 from ..types.input_muse_image import InputMuseImage
 from ..types.input_nano_banana import InputNanoBanana
 from ..types.input_nano_banana2 import InputNanoBanana2
+from ..types.input_nano_banana21 import InputNanoBanana21
 from ..types.input_nano_banana_pro import InputNanoBananaPro
 from ..types.input_omnihuman15 import InputOmnihuman15
+from ..types.input_omnihuman20 import InputOmnihuman20
 from ..types.input_pixverse_v6 import InputPixverseV6
 from ..types.input_qwen_image2 import InputQwenImage2
 from ..types.input_qwen_image21 import InputQwenImage21
@@ -96,7 +99,6 @@ from ..types.input_seedream40 import InputSeedream40
 from ..types.input_seedream45 import InputSeedream45
 from ..types.input_seedream50lite import InputSeedream50Lite
 from ..types.input_seedream50pro import InputSeedream50Pro
-from ..types.input_sora2pro import InputSora2Pro
 from ..types.input_topaz_image_upscaler import InputTopazImageUpscaler
 from ..types.input_topaz_image_upscaler_transparency import InputTopazImageUpscalerTransparency
 from ..types.input_topaz_image_upscaler_wonder import InputTopazImageUpscalerWonder
@@ -214,6 +216,46 @@ class JobsClient:
         )
         """
         _response = self._raw_client.get(job_id, request_options=request_options)
+        return _response.data
+
+    def delete(self, job_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a finished job's outputs, prompt and logs.
+
+        Afterwards `GET /v3/jobs/{job_id}` reports each output `EXPIRED`, with no
+        prompt and no logs, and `GET /v3/jobs` still lists the job with its model,
+        status, timestamps and cost. Another job whose output this job read by
+        `asset_id` is unchanged. Deleting a job again returns 204.
+
+        Returns 409 `ALREADY_IN_PROGRESS` while the job, or another job that names
+        this job's output by `asset_id`, is `IN_QUEUE` or `IN_PROGRESS`; 400
+        `INVALID_ARGUMENT` for a voice clone job; and 503 `UNAVAILABLE` when Hedra
+        could not finish deleting the job. Retry the request to finish it.
+
+        Parameters
+        ----------
+        job_id : str
+            The job's id (`job_<uuid>`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from hedra import Hedra
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.delete(
+            job_id="job_id",
+        )
+        """
+        _response = self._raw_client.delete(job_id, request_options=request_options)
         return _response.data
 
     def get_status(
@@ -2411,55 +2453,6 @@ class JobsClient:
         )
         return _response.data
 
-    def submit_ideogram_v2(
-        self,
-        *,
-        input: InputIdeogramV2,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Best in class for poster-ready images and spot-on text rendering in social graphics.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputIdeogramV2
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputIdeogramV2
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_ideogram_v2(
-            input=InputIdeogramV2(
-                prompt="prompt",
-                aspect_ratio="1:1",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_ideogram_v2(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     def submit_ideogram_v4(
         self,
         *,
@@ -2469,7 +2462,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ideogram V4 renders poster-ready text and layout; the required quality parameter picks turbo, balanced or quality, which sets both the render effort and the price.
+        Ideogram V4 renders poster-ready text and layout; the quality parameter picks turbo, balanced (the default) or quality, which sets both the render effort and the price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -2506,6 +2499,54 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_ideogram_v4(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_ideogram_v45(
+        self,
+        *,
+        input: InputIdeogramV45,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Ideogram 4.5 renders accurate typography for posters, logos and designs, and edits an image from a prompt, keeping its size and the pixels the edit leaves alone; the quality parameter picks low, medium (the default) or high, which sets both the render effort and the price.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputIdeogramV45
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputIdeogramV45
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_ideogram_v45(
+            input=InputIdeogramV45(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_ideogram_v45(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -3283,6 +3324,55 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_krea2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_krea3(
+        self,
+        *,
+        input: InputKrea3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Krea 3 generates an image of about 4 megapixels from a prompt alone or by editing one to four images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKrea3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputKrea3
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_krea3(
+            input=InputKrea3(
+                prompt="prompt",
+                aspect_ratio="auto",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_krea3(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -4098,6 +4188,56 @@ class JobsClient:
         )
         return _response.data
 
+    def submit_nano_banana21(
+        self,
+        *,
+        input: InputNanoBanana21,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Nano Banana 2 with cleaner text and layouts, and characters that stay consistent across references, up to 4K.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputNanoBanana21
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputNanoBanana21
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_nano_banana21(
+            input=InputNanoBanana21(
+                prompt="prompt",
+                aspect_ratio="adaptive",
+                resolution="1K",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_nano_banana21(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     def submit_nano_banana_pro(
         self,
         *,
@@ -4203,6 +4343,64 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_omnihuman15(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_omnihuman20(
+        self,
+        *,
+        input: InputOmnihuman20,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Performs your audio's tone and emotion in one take of up to five minutes.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputOmnihuman20
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import (
+            Hedra,
+            InputOmnihuman20,
+            InputOmnihuman20Audio_Url,
+            InputOmnihuman20StartImage_Url,
+        )
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_omnihuman20(
+            input=InputOmnihuman20(
+                start_image=InputOmnihuman20StartImage_Url(
+                    url="url",
+                ),
+                audio=InputOmnihuman20Audio_Url(
+                    url="url",
+                ),
+            ),
+        )
+        """
+        _response = self._raw_client.submit_omnihuman20(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -5014,57 +5212,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_seedream50pro(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_sora2pro(
-        self,
-        *,
-        input: InputSora2Pro,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        For complex, narrative-driven videos with remarkable consistency and realistic character-world interaction.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputSora2Pro
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputSora2Pro
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_sora2pro(
-            input=InputSora2Pro(
-                prompt="prompt",
-                aspect_ratio="16:9",
-                resolution="720p",
-                duration_ms=1,
-            ),
-        )
-        """
-        _response = self._raw_client.submit_sora2pro(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -6140,6 +6287,54 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(job_id, request_options=request_options)
+        return _response.data
+
+    async def delete(self, job_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a finished job's outputs, prompt and logs.
+
+        Afterwards `GET /v3/jobs/{job_id}` reports each output `EXPIRED`, with no
+        prompt and no logs, and `GET /v3/jobs` still lists the job with its model,
+        status, timestamps and cost. Another job whose output this job read by
+        `asset_id` is unchanged. Deleting a job again returns 204.
+
+        Returns 409 `ALREADY_IN_PROGRESS` while the job, or another job that names
+        this job's output by `asset_id`, is `IN_QUEUE` or `IN_PROGRESS`; 400
+        `INVALID_ARGUMENT` for a voice clone job; and 503 `UNAVAILABLE` when Hedra
+        could not finish deleting the job. Retry the request to finish it.
+
+        Parameters
+        ----------
+        job_id : str
+            The job's id (`job_<uuid>`).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.delete(
+                job_id="job_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(job_id, request_options=request_options)
         return _response.data
 
     async def get_status(
@@ -8683,63 +8878,6 @@ class AsyncJobsClient:
         )
         return _response.data
 
-    async def submit_ideogram_v2(
-        self,
-        *,
-        input: InputIdeogramV2,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Best in class for poster-ready images and spot-on text rendering in social graphics.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputIdeogramV2
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputIdeogramV2
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_ideogram_v2(
-                input=InputIdeogramV2(
-                    prompt="prompt",
-                    aspect_ratio="1:1",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_ideogram_v2(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     async def submit_ideogram_v4(
         self,
         *,
@@ -8749,7 +8887,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Ideogram V4 renders poster-ready text and layout; the required quality parameter picks turbo, balanced or quality, which sets both the render effort and the price.
+        Ideogram V4 renders poster-ready text and layout; the quality parameter picks turbo, balanced (the default) or quality, which sets both the render effort and the price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -8794,6 +8932,62 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_ideogram_v4(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_ideogram_v45(
+        self,
+        *,
+        input: InputIdeogramV45,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Ideogram 4.5 renders accurate typography for posters, logos and designs, and edits an image from a prompt, keeping its size and the pixels the edit leaves alone; the quality parameter picks low, medium (the default) or high, which sets both the render effort and the price.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputIdeogramV45
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputIdeogramV45
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_ideogram_v45(
+                input=InputIdeogramV45(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_ideogram_v45(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -9691,6 +9885,63 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_krea2(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_krea3(
+        self,
+        *,
+        input: InputKrea3,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Krea 3 generates an image of about 4 megapixels from a prompt alone or by editing one to four images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputKrea3
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputKrea3
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_krea3(
+                input=InputKrea3(
+                    prompt="prompt",
+                    aspect_ratio="auto",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_krea3(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -10634,6 +10885,64 @@ class AsyncJobsClient:
         )
         return _response.data
 
+    async def submit_nano_banana21(
+        self,
+        *,
+        input: InputNanoBanana21,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Nano Banana 2 with cleaner text and layouts, and characters that stay consistent across references, up to 4K.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputNanoBanana21
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputNanoBanana21
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_nano_banana21(
+                input=InputNanoBanana21(
+                    prompt="prompt",
+                    aspect_ratio="adaptive",
+                    resolution="1K",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_nano_banana21(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
     async def submit_nano_banana_pro(
         self,
         *,
@@ -10755,6 +11064,72 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_omnihuman15(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_omnihuman20(
+        self,
+        *,
+        input: InputOmnihuman20,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Performs your audio's tone and emotion in one take of up to five minutes.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputOmnihuman20
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import (
+            AsyncHedra,
+            InputOmnihuman20,
+            InputOmnihuman20Audio_Url,
+            InputOmnihuman20StartImage_Url,
+        )
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_omnihuman20(
+                input=InputOmnihuman20(
+                    start_image=InputOmnihuman20StartImage_Url(
+                        url="url",
+                    ),
+                    audio=InputOmnihuman20Audio_Url(
+                        url="url",
+                    ),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_omnihuman20(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -11694,65 +12069,6 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_seedream50pro(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_sora2pro(
-        self,
-        *,
-        input: InputSora2Pro,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        For complex, narrative-driven videos with remarkable consistency and realistic character-world interaction.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputSora2Pro
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputSora2Pro
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_sora2pro(
-                input=InputSora2Pro(
-                    prompt="prompt",
-                    aspect_ratio="16:9",
-                    resolution="720p",
-                    duration_ms=1,
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_sora2pro(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data

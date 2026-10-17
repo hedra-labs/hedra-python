@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
     from .keys.client import AsyncKeysClient, KeysClient
     from .log_drains.client import AsyncLogDrainsClient, LogDrainsClient
     from .models.client import AsyncModelsClient, ModelsClient
+    from .run_a_model.client import AsyncRunAModelClient, RunAModelClient
     from .tokens.client import AsyncTokensClient, TokensClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 
@@ -116,6 +117,7 @@ class BaseHedra:
         self._billing: typing.Optional[BillingClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._log_drains: typing.Optional[LogDrainsClient] = None
+        self._run_a_model: typing.Optional[RunAModelClient] = None
 
     @property
     def jobs(self):
@@ -180,6 +182,14 @@ class BaseHedra:
 
             self._log_drains = LogDrainsClient(client_wrapper=self._client_wrapper)
         return self._log_drains
+
+    @property
+    def run_a_model(self):
+        if self._run_a_model is None:
+            from .run_a_model.client import RunAModelClient  # noqa: E402
+
+            self._run_a_model = RunAModelClient(client_wrapper=self._client_wrapper)
+        return self._run_a_model
 
 
 def _make_default_async_client(
@@ -298,6 +308,7 @@ class AsyncBaseHedra:
         self._billing: typing.Optional[AsyncBillingClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._log_drains: typing.Optional[AsyncLogDrainsClient] = None
+        self._run_a_model: typing.Optional[AsyncRunAModelClient] = None
 
     @property
     def jobs(self):
@@ -362,6 +373,14 @@ class AsyncBaseHedra:
 
             self._log_drains = AsyncLogDrainsClient(client_wrapper=self._client_wrapper)
         return self._log_drains
+
+    @property
+    def run_a_model(self):
+        if self._run_a_model is None:
+            from .run_a_model.client import AsyncRunAModelClient  # noqa: E402
+
+            self._run_a_model = AsyncRunAModelClient(client_wrapper=self._client_wrapper)
+        return self._run_a_model
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: HedraEnvironment) -> str:

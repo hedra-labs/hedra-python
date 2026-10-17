@@ -14,6 +14,8 @@ if typing.TYPE_CHECKING:
     from .chat_capabilities import ChatCapabilities
     from .chat_token_pricing import ChatTokenPricing
     from .chat_usage import ChatUsage
+    from .discount import Discount
+    from .discount_list_response import DiscountListResponse
     from .error_code import ErrorCode
     from .error_envelope import ErrorEnvelope
     from .error_response import ErrorResponse
@@ -57,7 +59,9 @@ if typing.TYPE_CHECKING:
     from .input_elevenlabs_english_sts_v2audio_asset import InputElevenlabsEnglishStsV2AudioAsset
     from .input_elevenlabs_english_sts_v2audio_url import InputElevenlabsEnglishStsV2AudioUrl
     from .input_elevenlabs_flash_multilingual_v2 import InputElevenlabsFlashMultilingualV2
+    from .input_elevenlabs_flash_multilingual_v2language import InputElevenlabsFlashMultilingualV2Language
     from .input_elevenlabs_flash_v2 import InputElevenlabsFlashV2
+    from .input_elevenlabs_flash_v2language import InputElevenlabsFlashV2Language
     from .input_elevenlabs_multilingual_sts_v2 import InputElevenlabsMultilingualStsV2
     from .input_elevenlabs_multilingual_sts_v2audio import (
         InputElevenlabsMultilingualStsV2Audio,
@@ -67,9 +71,11 @@ if typing.TYPE_CHECKING:
     from .input_elevenlabs_multilingual_sts_v2audio_asset import InputElevenlabsMultilingualStsV2AudioAsset
     from .input_elevenlabs_multilingual_sts_v2audio_url import InputElevenlabsMultilingualStsV2AudioUrl
     from .input_elevenlabs_multilingual_v2 import InputElevenlabsMultilingualV2
+    from .input_elevenlabs_multilingual_v2language import InputElevenlabsMultilingualV2Language
     from .input_elevenlabs_music import InputElevenlabsMusic
     from .input_elevenlabs_sound_effects import InputElevenlabsSoundEffects
     from .input_elevenlabs_v3 import InputElevenlabsV3
+    from .input_elevenlabs_v3language import InputElevenlabsV3Language
     from .input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
     from .input_elevenlabs_voice_clone_audio import (
         InputElevenlabsVoiceCloneAudio,
@@ -454,10 +460,18 @@ if typing.TYPE_CHECKING:
     from .input_hidream_o1image_output_format import InputHidreamO1ImageOutputFormat
     from .input_hidream_o1image_quality import InputHidreamO1ImageQuality
     from .input_hidream_o1image_resolution import InputHidreamO1ImageResolution
-    from .input_ideogram_v2 import InputIdeogramV2
-    from .input_ideogram_v2aspect_ratio import InputIdeogramV2AspectRatio
-    from .input_ideogram_v2resolution import InputIdeogramV2Resolution
     from .input_ideogram_v4 import InputIdeogramV4
+    from .input_ideogram_v45 import InputIdeogramV45
+    from .input_ideogram_v45aspect_ratio import InputIdeogramV45AspectRatio
+    from .input_ideogram_v45images_item import (
+        InputIdeogramV45ImagesItem,
+        InputIdeogramV45ImagesItem_Asset,
+        InputIdeogramV45ImagesItem_Url,
+    )
+    from .input_ideogram_v45images_item_asset import InputIdeogramV45ImagesItemAsset
+    from .input_ideogram_v45images_item_url import InputIdeogramV45ImagesItemUrl
+    from .input_ideogram_v45quality import InputIdeogramV45Quality
+    from .input_ideogram_v45resolution import InputIdeogramV45Resolution
     from .input_ideogram_v4aspect_ratio import InputIdeogramV4AspectRatio
     from .input_ideogram_v4output_format import InputIdeogramV4OutputFormat
     from .input_ideogram_v4quality import InputIdeogramV4Quality
@@ -658,6 +672,12 @@ if typing.TYPE_CHECKING:
     from .input_krea2images_item_asset import InputKrea2ImagesItemAsset
     from .input_krea2images_item_url import InputKrea2ImagesItemUrl
     from .input_krea2quality import InputKrea2Quality
+    from .input_krea3 import InputKrea3
+    from .input_krea3aspect_ratio import InputKrea3AspectRatio
+    from .input_krea3images_item import InputKrea3ImagesItem, InputKrea3ImagesItem_Asset, InputKrea3ImagesItem_Url
+    from .input_krea3images_item_asset import InputKrea3ImagesItemAsset
+    from .input_krea3images_item_url import InputKrea3ImagesItemUrl
+    from .input_krea3resolution import InputKrea3Resolution
     from .input_ltx23 import InputLtx23
     from .input_ltx23aspect_ratio import InputLtx23AspectRatio
     from .input_ltx23end_image import InputLtx23EndImage, InputLtx23EndImage_Asset, InputLtx23EndImage_Url
@@ -847,7 +867,9 @@ if typing.TYPE_CHECKING:
     from .input_minimax_hailuo23start_image_asset import InputMinimaxHailuo23StartImageAsset
     from .input_minimax_hailuo23start_image_url import InputMinimaxHailuo23StartImageUrl
     from .input_minimax_speech25hd_preview import InputMinimaxSpeech25HdPreview
+    from .input_minimax_speech25hd_preview_language import InputMinimaxSpeech25HdPreviewLanguage
     from .input_minimax_speech25turbo_preview import InputMinimaxSpeech25TurboPreview
+    from .input_minimax_speech25turbo_preview_language import InputMinimaxSpeech25TurboPreviewLanguage
     from .input_muse_image import InputMuseImage
     from .input_muse_image_aspect_ratio import InputMuseImageAspectRatio
     from .input_muse_image_images_item import (
@@ -860,6 +882,17 @@ if typing.TYPE_CHECKING:
     from .input_muse_image_output_format import InputMuseImageOutputFormat
     from .input_nano_banana import InputNanoBanana
     from .input_nano_banana2 import InputNanoBanana2
+    from .input_nano_banana21 import InputNanoBanana21
+    from .input_nano_banana21aspect_ratio import InputNanoBanana21AspectRatio
+    from .input_nano_banana21images_item import (
+        InputNanoBanana21ImagesItem,
+        InputNanoBanana21ImagesItem_Asset,
+        InputNanoBanana21ImagesItem_Url,
+    )
+    from .input_nano_banana21images_item_asset import InputNanoBanana21ImagesItemAsset
+    from .input_nano_banana21images_item_url import InputNanoBanana21ImagesItemUrl
+    from .input_nano_banana21resolution import InputNanoBanana21Resolution
+    from .input_nano_banana21thinking_level import InputNanoBanana21ThinkingLevel
     from .input_nano_banana2aspect_ratio import InputNanoBanana2AspectRatio
     from .input_nano_banana2images_item import (
         InputNanoBanana2ImagesItem,
@@ -902,6 +935,18 @@ if typing.TYPE_CHECKING:
     )
     from .input_omnihuman15start_image_asset import InputOmnihuman15StartImageAsset
     from .input_omnihuman15start_image_url import InputOmnihuman15StartImageUrl
+    from .input_omnihuman20 import InputOmnihuman20
+    from .input_omnihuman20audio import InputOmnihuman20Audio, InputOmnihuman20Audio_Asset, InputOmnihuman20Audio_Url
+    from .input_omnihuman20audio_asset import InputOmnihuman20AudioAsset
+    from .input_omnihuman20audio_url import InputOmnihuman20AudioUrl
+    from .input_omnihuman20resolution import InputOmnihuman20Resolution
+    from .input_omnihuman20start_image import (
+        InputOmnihuman20StartImage,
+        InputOmnihuman20StartImage_Asset,
+        InputOmnihuman20StartImage_Url,
+    )
+    from .input_omnihuman20start_image_asset import InputOmnihuman20StartImageAsset
+    from .input_omnihuman20start_image_url import InputOmnihuman20StartImageUrl
     from .input_pixverse_v6 import InputPixverseV6
     from .input_pixverse_v6aspect_ratio import InputPixverseV6AspectRatio
     from .input_pixverse_v6resolution import InputPixverseV6Resolution
@@ -1139,16 +1184,6 @@ if typing.TYPE_CHECKING:
     from .input_seedream50pro_images_item_url import InputSeedream50ProImagesItemUrl
     from .input_seedream50pro_output_format import InputSeedream50ProOutputFormat
     from .input_seedream50pro_resolution import InputSeedream50ProResolution
-    from .input_sora2pro import InputSora2Pro
-    from .input_sora2pro_aspect_ratio import InputSora2ProAspectRatio
-    from .input_sora2pro_resolution import InputSora2ProResolution
-    from .input_sora2pro_start_image import (
-        InputSora2ProStartImage,
-        InputSora2ProStartImage_Asset,
-        InputSora2ProStartImage_Url,
-    )
-    from .input_sora2pro_start_image_asset import InputSora2ProStartImageAsset
-    from .input_sora2pro_start_image_url import InputSora2ProStartImageUrl
     from .input_topaz_image_upscaler import InputTopazImageUpscaler
     from .input_topaz_image_upscaler_face_recovery import InputTopazImageUpscalerFaceRecovery
     from .input_topaz_image_upscaler_face_recovery_creativity import InputTopazImageUpscalerFaceRecoveryCreativity
@@ -1385,6 +1420,7 @@ if typing.TYPE_CHECKING:
     from .transaction_list_response import TransactionListResponse
     from .transaction_llm_usage import TransactionLlmUsage
     from .transaction_record import TransactionRecord
+    from .transaction_sandbox_usage import TransactionSandboxUsage
     from .usage_bucket import UsageBucket
     from .usage_group_by import UsageGroupBy
     from .usage_response import UsageResponse
@@ -1410,6 +1446,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatCapabilities": ".chat_capabilities",
     "ChatTokenPricing": ".chat_token_pricing",
     "ChatUsage": ".chat_usage",
+    "Discount": ".discount",
+    "DiscountListResponse": ".discount_list_response",
     "ErrorCode": ".error_code",
     "ErrorEnvelope": ".error_envelope",
     "ErrorResponse": ".error_response",
@@ -1445,7 +1483,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputElevenlabsEnglishStsV2Audio_Asset": ".input_elevenlabs_english_sts_v2audio",
     "InputElevenlabsEnglishStsV2Audio_Url": ".input_elevenlabs_english_sts_v2audio",
     "InputElevenlabsFlashMultilingualV2": ".input_elevenlabs_flash_multilingual_v2",
+    "InputElevenlabsFlashMultilingualV2Language": ".input_elevenlabs_flash_multilingual_v2language",
     "InputElevenlabsFlashV2": ".input_elevenlabs_flash_v2",
+    "InputElevenlabsFlashV2Language": ".input_elevenlabs_flash_v2language",
     "InputElevenlabsMultilingualStsV2": ".input_elevenlabs_multilingual_sts_v2",
     "InputElevenlabsMultilingualStsV2Audio": ".input_elevenlabs_multilingual_sts_v2audio",
     "InputElevenlabsMultilingualStsV2AudioAsset": ".input_elevenlabs_multilingual_sts_v2audio_asset",
@@ -1453,9 +1493,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputElevenlabsMultilingualStsV2Audio_Asset": ".input_elevenlabs_multilingual_sts_v2audio",
     "InputElevenlabsMultilingualStsV2Audio_Url": ".input_elevenlabs_multilingual_sts_v2audio",
     "InputElevenlabsMultilingualV2": ".input_elevenlabs_multilingual_v2",
+    "InputElevenlabsMultilingualV2Language": ".input_elevenlabs_multilingual_v2language",
     "InputElevenlabsMusic": ".input_elevenlabs_music",
     "InputElevenlabsSoundEffects": ".input_elevenlabs_sound_effects",
     "InputElevenlabsV3": ".input_elevenlabs_v3",
+    "InputElevenlabsV3Language": ".input_elevenlabs_v3language",
     "InputElevenlabsVoiceClone": ".input_elevenlabs_voice_clone",
     "InputElevenlabsVoiceCloneAudio": ".input_elevenlabs_voice_clone_audio",
     "InputElevenlabsVoiceCloneAudioAsset": ".input_elevenlabs_voice_clone_audio_asset",
@@ -1764,10 +1806,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputHidreamO1ImageOutputFormat": ".input_hidream_o1image_output_format",
     "InputHidreamO1ImageQuality": ".input_hidream_o1image_quality",
     "InputHidreamO1ImageResolution": ".input_hidream_o1image_resolution",
-    "InputIdeogramV2": ".input_ideogram_v2",
-    "InputIdeogramV2AspectRatio": ".input_ideogram_v2aspect_ratio",
-    "InputIdeogramV2Resolution": ".input_ideogram_v2resolution",
     "InputIdeogramV4": ".input_ideogram_v4",
+    "InputIdeogramV45": ".input_ideogram_v45",
+    "InputIdeogramV45AspectRatio": ".input_ideogram_v45aspect_ratio",
+    "InputIdeogramV45ImagesItem": ".input_ideogram_v45images_item",
+    "InputIdeogramV45ImagesItemAsset": ".input_ideogram_v45images_item_asset",
+    "InputIdeogramV45ImagesItemUrl": ".input_ideogram_v45images_item_url",
+    "InputIdeogramV45ImagesItem_Asset": ".input_ideogram_v45images_item",
+    "InputIdeogramV45ImagesItem_Url": ".input_ideogram_v45images_item",
+    "InputIdeogramV45Quality": ".input_ideogram_v45quality",
+    "InputIdeogramV45Resolution": ".input_ideogram_v45resolution",
     "InputIdeogramV4AspectRatio": ".input_ideogram_v4aspect_ratio",
     "InputIdeogramV4OutputFormat": ".input_ideogram_v4output_format",
     "InputIdeogramV4Quality": ".input_ideogram_v4quality",
@@ -1938,6 +1986,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputKrea2ImagesItem_Asset": ".input_krea2images_item",
     "InputKrea2ImagesItem_Url": ".input_krea2images_item",
     "InputKrea2Quality": ".input_krea2quality",
+    "InputKrea3": ".input_krea3",
+    "InputKrea3AspectRatio": ".input_krea3aspect_ratio",
+    "InputKrea3ImagesItem": ".input_krea3images_item",
+    "InputKrea3ImagesItemAsset": ".input_krea3images_item_asset",
+    "InputKrea3ImagesItemUrl": ".input_krea3images_item_url",
+    "InputKrea3ImagesItem_Asset": ".input_krea3images_item",
+    "InputKrea3ImagesItem_Url": ".input_krea3images_item",
+    "InputKrea3Resolution": ".input_krea3resolution",
     "InputLtx23": ".input_ltx23",
     "InputLtx23AspectRatio": ".input_ltx23aspect_ratio",
     "InputLtx23EndImage": ".input_ltx23end_image",
@@ -2097,7 +2153,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxHailuo23StartImage_Asset": ".input_minimax_hailuo23start_image",
     "InputMinimaxHailuo23StartImage_Url": ".input_minimax_hailuo23start_image",
     "InputMinimaxSpeech25HdPreview": ".input_minimax_speech25hd_preview",
+    "InputMinimaxSpeech25HdPreviewLanguage": ".input_minimax_speech25hd_preview_language",
     "InputMinimaxSpeech25TurboPreview": ".input_minimax_speech25turbo_preview",
+    "InputMinimaxSpeech25TurboPreviewLanguage": ".input_minimax_speech25turbo_preview_language",
     "InputMuseImage": ".input_muse_image",
     "InputMuseImageAspectRatio": ".input_muse_image_aspect_ratio",
     "InputMuseImageImagesItem": ".input_muse_image_images_item",
@@ -2108,6 +2166,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMuseImageOutputFormat": ".input_muse_image_output_format",
     "InputNanoBanana": ".input_nano_banana",
     "InputNanoBanana2": ".input_nano_banana2",
+    "InputNanoBanana21": ".input_nano_banana21",
+    "InputNanoBanana21AspectRatio": ".input_nano_banana21aspect_ratio",
+    "InputNanoBanana21ImagesItem": ".input_nano_banana21images_item",
+    "InputNanoBanana21ImagesItemAsset": ".input_nano_banana21images_item_asset",
+    "InputNanoBanana21ImagesItemUrl": ".input_nano_banana21images_item_url",
+    "InputNanoBanana21ImagesItem_Asset": ".input_nano_banana21images_item",
+    "InputNanoBanana21ImagesItem_Url": ".input_nano_banana21images_item",
+    "InputNanoBanana21Resolution": ".input_nano_banana21resolution",
+    "InputNanoBanana21ThinkingLevel": ".input_nano_banana21thinking_level",
     "InputNanoBanana2AspectRatio": ".input_nano_banana2aspect_ratio",
     "InputNanoBanana2ImagesItem": ".input_nano_banana2images_item",
     "InputNanoBanana2ImagesItemAsset": ".input_nano_banana2images_item_asset",
@@ -2144,6 +2211,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputOmnihuman15StartImageUrl": ".input_omnihuman15start_image_url",
     "InputOmnihuman15StartImage_Asset": ".input_omnihuman15start_image",
     "InputOmnihuman15StartImage_Url": ".input_omnihuman15start_image",
+    "InputOmnihuman20": ".input_omnihuman20",
+    "InputOmnihuman20Audio": ".input_omnihuman20audio",
+    "InputOmnihuman20AudioAsset": ".input_omnihuman20audio_asset",
+    "InputOmnihuman20AudioUrl": ".input_omnihuman20audio_url",
+    "InputOmnihuman20Audio_Asset": ".input_omnihuman20audio",
+    "InputOmnihuman20Audio_Url": ".input_omnihuman20audio",
+    "InputOmnihuman20Resolution": ".input_omnihuman20resolution",
+    "InputOmnihuman20StartImage": ".input_omnihuman20start_image",
+    "InputOmnihuman20StartImageAsset": ".input_omnihuman20start_image_asset",
+    "InputOmnihuman20StartImageUrl": ".input_omnihuman20start_image_url",
+    "InputOmnihuman20StartImage_Asset": ".input_omnihuman20start_image",
+    "InputOmnihuman20StartImage_Url": ".input_omnihuman20start_image",
     "InputPixverseV6": ".input_pixverse_v6",
     "InputPixverseV6AspectRatio": ".input_pixverse_v6aspect_ratio",
     "InputPixverseV6Resolution": ".input_pixverse_v6resolution",
@@ -2329,14 +2408,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputSeedream50ProImagesItem_Url": ".input_seedream50pro_images_item",
     "InputSeedream50ProOutputFormat": ".input_seedream50pro_output_format",
     "InputSeedream50ProResolution": ".input_seedream50pro_resolution",
-    "InputSora2Pro": ".input_sora2pro",
-    "InputSora2ProAspectRatio": ".input_sora2pro_aspect_ratio",
-    "InputSora2ProResolution": ".input_sora2pro_resolution",
-    "InputSora2ProStartImage": ".input_sora2pro_start_image",
-    "InputSora2ProStartImageAsset": ".input_sora2pro_start_image_asset",
-    "InputSora2ProStartImageUrl": ".input_sora2pro_start_image_url",
-    "InputSora2ProStartImage_Asset": ".input_sora2pro_start_image",
-    "InputSora2ProStartImage_Url": ".input_sora2pro_start_image",
     "InputTopazImageUpscaler": ".input_topaz_image_upscaler",
     "InputTopazImageUpscalerFaceRecovery": ".input_topaz_image_upscaler_face_recovery",
     "InputTopazImageUpscalerFaceRecoveryCreativity": ".input_topaz_image_upscaler_face_recovery_creativity",
@@ -2559,6 +2630,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransactionListResponse": ".transaction_list_response",
     "TransactionLlmUsage": ".transaction_llm_usage",
     "TransactionRecord": ".transaction_record",
+    "TransactionSandboxUsage": ".transaction_sandbox_usage",
     "UsageBucket": ".usage_bucket",
     "UsageGroupBy": ".usage_group_by",
     "UsageResponse": ".usage_response",
@@ -2608,6 +2680,8 @@ __all__ = [
     "ChatCapabilities",
     "ChatTokenPricing",
     "ChatUsage",
+    "Discount",
+    "DiscountListResponse",
     "ErrorCode",
     "ErrorEnvelope",
     "ErrorResponse",
@@ -2643,7 +2717,9 @@ __all__ = [
     "InputElevenlabsEnglishStsV2Audio_Asset",
     "InputElevenlabsEnglishStsV2Audio_Url",
     "InputElevenlabsFlashMultilingualV2",
+    "InputElevenlabsFlashMultilingualV2Language",
     "InputElevenlabsFlashV2",
+    "InputElevenlabsFlashV2Language",
     "InputElevenlabsMultilingualStsV2",
     "InputElevenlabsMultilingualStsV2Audio",
     "InputElevenlabsMultilingualStsV2AudioAsset",
@@ -2651,9 +2727,11 @@ __all__ = [
     "InputElevenlabsMultilingualStsV2Audio_Asset",
     "InputElevenlabsMultilingualStsV2Audio_Url",
     "InputElevenlabsMultilingualV2",
+    "InputElevenlabsMultilingualV2Language",
     "InputElevenlabsMusic",
     "InputElevenlabsSoundEffects",
     "InputElevenlabsV3",
+    "InputElevenlabsV3Language",
     "InputElevenlabsVoiceClone",
     "InputElevenlabsVoiceCloneAudio",
     "InputElevenlabsVoiceCloneAudioAsset",
@@ -2962,10 +3040,16 @@ __all__ = [
     "InputHidreamO1ImageOutputFormat",
     "InputHidreamO1ImageQuality",
     "InputHidreamO1ImageResolution",
-    "InputIdeogramV2",
-    "InputIdeogramV2AspectRatio",
-    "InputIdeogramV2Resolution",
     "InputIdeogramV4",
+    "InputIdeogramV45",
+    "InputIdeogramV45AspectRatio",
+    "InputIdeogramV45ImagesItem",
+    "InputIdeogramV45ImagesItemAsset",
+    "InputIdeogramV45ImagesItemUrl",
+    "InputIdeogramV45ImagesItem_Asset",
+    "InputIdeogramV45ImagesItem_Url",
+    "InputIdeogramV45Quality",
+    "InputIdeogramV45Resolution",
     "InputIdeogramV4AspectRatio",
     "InputIdeogramV4OutputFormat",
     "InputIdeogramV4Quality",
@@ -3136,6 +3220,14 @@ __all__ = [
     "InputKrea2ImagesItem_Asset",
     "InputKrea2ImagesItem_Url",
     "InputKrea2Quality",
+    "InputKrea3",
+    "InputKrea3AspectRatio",
+    "InputKrea3ImagesItem",
+    "InputKrea3ImagesItemAsset",
+    "InputKrea3ImagesItemUrl",
+    "InputKrea3ImagesItem_Asset",
+    "InputKrea3ImagesItem_Url",
+    "InputKrea3Resolution",
     "InputLtx23",
     "InputLtx23AspectRatio",
     "InputLtx23EndImage",
@@ -3295,7 +3387,9 @@ __all__ = [
     "InputMinimaxHailuo23StartImage_Asset",
     "InputMinimaxHailuo23StartImage_Url",
     "InputMinimaxSpeech25HdPreview",
+    "InputMinimaxSpeech25HdPreviewLanguage",
     "InputMinimaxSpeech25TurboPreview",
+    "InputMinimaxSpeech25TurboPreviewLanguage",
     "InputMuseImage",
     "InputMuseImageAspectRatio",
     "InputMuseImageImagesItem",
@@ -3306,6 +3400,15 @@ __all__ = [
     "InputMuseImageOutputFormat",
     "InputNanoBanana",
     "InputNanoBanana2",
+    "InputNanoBanana21",
+    "InputNanoBanana21AspectRatio",
+    "InputNanoBanana21ImagesItem",
+    "InputNanoBanana21ImagesItemAsset",
+    "InputNanoBanana21ImagesItemUrl",
+    "InputNanoBanana21ImagesItem_Asset",
+    "InputNanoBanana21ImagesItem_Url",
+    "InputNanoBanana21Resolution",
+    "InputNanoBanana21ThinkingLevel",
     "InputNanoBanana2AspectRatio",
     "InputNanoBanana2ImagesItem",
     "InputNanoBanana2ImagesItemAsset",
@@ -3342,6 +3445,18 @@ __all__ = [
     "InputOmnihuman15StartImageUrl",
     "InputOmnihuman15StartImage_Asset",
     "InputOmnihuman15StartImage_Url",
+    "InputOmnihuman20",
+    "InputOmnihuman20Audio",
+    "InputOmnihuman20AudioAsset",
+    "InputOmnihuman20AudioUrl",
+    "InputOmnihuman20Audio_Asset",
+    "InputOmnihuman20Audio_Url",
+    "InputOmnihuman20Resolution",
+    "InputOmnihuman20StartImage",
+    "InputOmnihuman20StartImageAsset",
+    "InputOmnihuman20StartImageUrl",
+    "InputOmnihuman20StartImage_Asset",
+    "InputOmnihuman20StartImage_Url",
     "InputPixverseV6",
     "InputPixverseV6AspectRatio",
     "InputPixverseV6Resolution",
@@ -3527,14 +3642,6 @@ __all__ = [
     "InputSeedream50ProImagesItem_Url",
     "InputSeedream50ProOutputFormat",
     "InputSeedream50ProResolution",
-    "InputSora2Pro",
-    "InputSora2ProAspectRatio",
-    "InputSora2ProResolution",
-    "InputSora2ProStartImage",
-    "InputSora2ProStartImageAsset",
-    "InputSora2ProStartImageUrl",
-    "InputSora2ProStartImage_Asset",
-    "InputSora2ProStartImage_Url",
     "InputTopazImageUpscaler",
     "InputTopazImageUpscalerFaceRecovery",
     "InputTopazImageUpscalerFaceRecoveryCreativity",
@@ -3757,6 +3864,7 @@ __all__ = [
     "TransactionListResponse",
     "TransactionLlmUsage",
     "TransactionRecord",
+    "TransactionSandboxUsage",
     "UsageBucket",
     "UsageGroupBy",
     "UsageResponse",

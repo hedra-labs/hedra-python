@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .input_elevenlabs_multilingual_v2language import InputElevenlabsMultilingualV2Language
 
 
 class InputElevenlabsMultilingualV2(UniversalBaseModel):
@@ -26,9 +27,9 @@ class InputElevenlabsMultilingualV2(UniversalBaseModel):
     Speech rate multiplier; 1.0 is the voice's natural pace. From 0.7 to 1.2.
     """
 
-    language: typing.Optional[str] = pydantic.Field(default=None)
+    language: typing.Optional[InputElevenlabsMultilingualV2Language] = pydantic.Field(default=None)
     """
-    Language code; 'auto' by default.
+    Language of the text, as an ISO 639-1 code such as 'ko' ('yue' for Cantonese, 'fil' for Filipino), or 'auto' to detect it from the text. Omitted means 'auto'. Regional tags such as 'pt-BR' and English names such as 'Korean' are also accepted.
     """
 
     voice_id: str = pydantic.Field()

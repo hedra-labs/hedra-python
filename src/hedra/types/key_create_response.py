@@ -27,7 +27,7 @@ class KeyCreateResponse(UniversalBaseModel):
 
     scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Scopes granted to the key; null means full access (a legacy key predating scopes).
+    Scopes granted to the key; null means every scope (a legacy key predating scopes).
     """
 
     workspace_id: typing.Optional[str] = pydantic.Field(default=None)

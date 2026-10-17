@@ -56,7 +56,7 @@ class ResultResponse(UniversalBaseModel):
 
     logs: typing.Optional[typing.List[JobLogItem]] = pydantic.Field(default=None)
     """
-    The most recent lifecycle events for this job, oldest first. Capped; GET /v3/jobs/{job_id}/logs serves the full paginated history. Absent from webhook payloads.
+    The most recent lifecycle events for this job, oldest first. Capped; GET /v3/jobs/{job_id}/logs serves the full paginated history. Both are empty after `DELETE /v3/jobs/{job_id}`, and can be empty once the job's output is `EXPIRED`. Absent from webhook payloads.
     """
 
     cost: typing.Optional[float] = pydantic.Field(default=None)

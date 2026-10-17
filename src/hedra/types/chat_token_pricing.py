@@ -13,11 +13,12 @@ class ChatTokenPricing(UniversalBaseModel):
         float,
         FieldMetadata(alias="usd_per_1m_input_tokens"),
         pydantic.Field(
-            alias="usd_per_1m_input_tokens", description="USD per million prompt tokens, cached tokens included."
+            alias="usd_per_1m_input_tokens",
+            description="USD per million prompt tokens not served from cache. `price_description` states the cached rate where it differs.",
         ),
     ]
     """
-    USD per million prompt tokens, cached tokens included.
+    USD per million prompt tokens not served from cache. `price_description` states the cached rate where it differs.
     """
 
     usd_per1m_output_tokens: typing_extensions.Annotated[

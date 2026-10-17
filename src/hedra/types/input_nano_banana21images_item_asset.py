@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputSora2ProStartImageAsset(UniversalBaseModel):
+class InputNanoBanana21ImagesItemAsset(UniversalBaseModel):
     """
     An existing asset you own, referenced by its id.
     """

@@ -140,6 +140,89 @@ client.jobs.get(
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a finished job's outputs, prompt and logs.
+
+Afterwards `GET /v3/jobs/{job_id}` reports each output `EXPIRED`, with no
+prompt and no logs, and `GET /v3/jobs` still lists the job with its model,
+status, timestamps and cost. Another job whose output this job read by
+`asset_id` is unchanged. Deleting a job again returns 204.
+
+Returns 409 `ALREADY_IN_PROGRESS` while the job, or another job that names
+this job's output by `asset_id`, is `IN_QUEUE` or `IN_PROGRESS`; 400
+`INVALID_ARGUMENT` for a voice clone job; and 503 `UNAVAILABLE` when Hedra
+could not finish deleting the job. Retry the request to finish it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.delete(
+    job_id="job_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**job_id:** `str` — The job's id (`job_<uuid>`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">get_status</a>(...) -> StatusResponse</code></summary>
 <dl>
 <dd>
@@ -3846,92 +3929,6 @@ client.jobs.submit_hidream_o1image(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_ideogram_v2</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Best in class for poster-ready images and spot-on text rendering in social graphics.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputIdeogramV2
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_ideogram_v2(
-    input=InputIdeogramV2(
-        prompt="prompt",
-        aspect_ratio="1:1",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputIdeogramV2` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_ideogram_v4</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -3944,7 +3941,7 @@ client.jobs.submit_ideogram_v2(
 <dl>
 <dd>
 
-Ideogram V4 renders poster-ready text and layout; the required quality parameter picks turbo, balanced or quality, which sets both the render effort and the price.
+Ideogram V4 renders poster-ready text and layout; the quality parameter picks turbo, balanced (the default) or quality, which sets both the render effort and the price.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -3992,6 +3989,91 @@ client.jobs.submit_ideogram_v4(
 <dd>
 
 **input:** `InputIdeogramV4` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_ideogram_v45</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Ideogram 4.5 renders accurate typography for posters, logos and designs, and edits an image from a prompt, keeping its size and the pixels the edit leaves alone; the quality parameter picks low, medium (the default) or high, which sets both the render effort and the price.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputIdeogramV45
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_ideogram_v45(
+    input=InputIdeogramV45(
+        prompt="prompt",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputIdeogramV45` 
     
 </dd>
 </dl>
@@ -5305,6 +5387,92 @@ client.jobs.submit_krea2(
 <dd>
 
 **input:** `InputKrea2` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_krea3</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Krea 3 generates an image of about 4 megapixels from a prompt alone or by editing one to four images.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputKrea3
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_krea3(
+    input=InputKrea3(
+        prompt="prompt",
+        aspect_ratio="auto",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputKrea3` 
     
 </dd>
 </dl>
@@ -6730,6 +6898,93 @@ client.jobs.submit_nano_banana2(
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_nano_banana21</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Nano Banana 2 with cleaner text and layouts, and characters that stay consistent across references, up to 4K.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputNanoBanana21
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_nano_banana21(
+    input=InputNanoBanana21(
+        prompt="prompt",
+        aspect_ratio="adaptive",
+        resolution="1K",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputNanoBanana21` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_nano_banana_pro</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -6881,6 +7136,96 @@ client.jobs.submit_omnihuman15(
 <dd>
 
 **input:** `InputOmnihuman15` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_omnihuman20</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Performs your audio's tone and emotion in one take of up to five minutes.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputOmnihuman20, InputOmnihuman20StartImage_Url, InputOmnihuman20Audio_Url
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_omnihuman20(
+    input=InputOmnihuman20(
+        start_image=InputOmnihuman20StartImage_Url(
+            url="url",
+        ),
+        audio=InputOmnihuman20Audio_Url(
+            url="url",
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputOmnihuman20` 
     
 </dd>
 </dl>
@@ -8284,94 +8629,6 @@ client.jobs.submit_seedream50pro(
 <dd>
 
 **input:** `InputSeedream50Pro` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_sora2pro</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-For complex, narrative-driven videos with remarkable consistency and realistic character-world interaction.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputSora2Pro
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_sora2pro(
-    input=InputSora2Pro(
-        prompt="prompt",
-        aspect_ratio="16:9",
-        resolution="720p",
-        duration_ms=1,
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputSora2Pro` 
     
 </dd>
 </dl>
@@ -10626,7 +10883,7 @@ client.keys.create()
 <dl>
 <dd>
 
-**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` — Scopes granted to the key; omitted means full access.
+**scopes:** `typing.Optional[typing.List[ApiKeyScope]]` — Scopes granted to the key; omitted means the creating credential's own scopes.
     
 </dd>
 </dl>
@@ -11134,6 +11391,71 @@ client.billing.list_transactions()
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.billing.<a href="src/hedra/billing/client.py">list_discounts</a>() -> DiscountListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The negotiated discounts the workspace the key bills is charged under
+now. `POST /v3/models/{model}/estimate` and every charge for these models
+already reflect them; `GET /v3/models` shows list prices.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.billing.list_discounts()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -11997,6 +12319,133 @@ client.log_drains.test_log_drain(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Run a model
+<details><summary><code>client.run_a_model.<a href="src/hedra/run_a_model/client.py">responses_create</a>() -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+OpenAI-compatible Responses API. Each request runs as a chat completion, and is charged, limited and recorded as one. Each request must send the whole conversation in `input`: `store: true`, a `previous_response_id`, a `conversation` or an `item_reference` input item gets a 400 that says so. A request without `max_output_tokens` is bounded at 32,768 output tokens, or the model's lower limit. Function and namespace tools are served, and `web_search` tools are ignored. Each image the model does not accept becomes a text note in its place: every image on a model without image input, and on any other model the oldest images beyond the model's `max_images_per_request`. `text.format` becomes chat's `response_format`. Beside tools under `tool_choice` `auto`, the route instead offers a `json_schema` format's schema to the model as one more function, `final_answer`, and sets `tool_choice` to `required`, so the model can call tools before it answers; the route returns a call to `final_answer` as the answer message, with `phase` `final_answer`, and leaves out any text the model writes, because openai-python's `responses.parse` parses every message as the answer. The route accepts `text.verbosity` and `service_tier` and ignores them. Errors are those of `POST /chat/completions`, and the 400 for a value that chat rejects names the chat field, such as `max_tokens` or `messages[3].content`. With `stream: true` the response is `text/event-stream` in the Responses event format, ending with `response.completed` or `response.incomplete`, or with `response.failed` for a failure after streaming has begun.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.run_a_model.responses_create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.run_a_model.<a href="src/hedra/run_a_model/client.py">messages_create</a>() -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Anthropic-compatible Messages API. Set the base URL of an Anthropic SDK or of Claude Code to the v3 base URL followed by `/anthropic`, and send an API key in `x-api-key` or `Authorization: Bearer`. Each request runs as a chat completion, and is charged, limited and recorded as one. The route serves client tools, and answers a tool of any other type with a 400. Each image the model does not accept becomes a text note in its place: every image on a model without image input, and on any other model the oldest images beyond the model's `max_images_per_request`. `output_config.effort` becomes chat's `reasoning_effort`, and `thinking` of type `disabled` becomes `reasoning_effort: none`, whatever `output_config.effort` says. `output_config.format` becomes chat's `response_format`, so the answer's `text` block holds JSON that matches the schema. Beside tools, a request with `output_config.format` must set `tool_choice` to `any`, `tool` or `none`, and gets a 400 under `auto`. The route accepts `thinking.budget_tokens`, `cache_control` and `context_management`, and they have no effect. The model's reasoning comes back as `thinking` blocks with an empty `signature`. Errors are those of `POST /chat/completions` in Anthropic's error body: the body's `type` is `error`, `error.type` is Anthropic's error type for the status, and `error` keeps the v3 error fields. The 400 for a value that chat rejects names the chat field, such as `reasoning_effort` or `messages[3].content`, under the message or `tool_result` block the caller sent. With `stream: true` the response is `text/event-stream` in the Messages event format, ending with `message_stop`, or with an `error` event for a failure after streaming has begun.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.run_a_model.messages_create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>

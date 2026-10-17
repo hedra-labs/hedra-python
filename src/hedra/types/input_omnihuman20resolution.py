@@ -2,4 +2,4 @@
 
 import typing
 
-InputIdeogramV2Resolution = typing.Union[typing.Literal["fixed"], typing.Any]
+InputOmnihuman20Resolution = typing.Union[typing.Literal["720p"], typing.Any]

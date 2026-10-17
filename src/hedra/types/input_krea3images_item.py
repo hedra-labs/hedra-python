@@ -9,11 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputSora2ProStartImage_Url(UniversalBaseModel):
-    """
-    Start frame. At most 10.4 MB.
-    """
-
+class InputKrea3ImagesItem_Url(UniversalBaseModel):
     source: typing.Literal["url"] = "url"
     url: str
 
@@ -27,11 +23,7 @@ class InputSora2ProStartImage_Url(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class InputSora2ProStartImage_Asset(UniversalBaseModel):
-    """
-    Start frame. At most 10.4 MB.
-    """
-
+class InputKrea3ImagesItem_Asset(UniversalBaseModel):
     source: typing.Literal["asset"] = "asset"
     asset_id: str
 
@@ -45,6 +37,6 @@ class InputSora2ProStartImage_Asset(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-InputSora2ProStartImage = typing_extensions.Annotated[
-    typing.Union[InputSora2ProStartImage_Url, InputSora2ProStartImage_Asset], pydantic.Field(discriminator="source")
+InputKrea3ImagesItem = typing_extensions.Annotated[
+    typing.Union[InputKrea3ImagesItem_Url, InputKrea3ImagesItem_Asset], pydantic.Field(discriminator="source")
 ]

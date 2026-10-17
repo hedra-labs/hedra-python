@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputOmnihuman15StartImage_Url(UniversalBaseModel):
     """
-    Start frame. At most 10.4 MB.
+    Start frame. At most 5.2 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputOmnihuman15StartImage_Url(UniversalBaseModel):
 
 class InputOmnihuman15StartImage_Asset(UniversalBaseModel):
     """
-    Start frame. At most 10.4 MB.
+    Start frame. At most 5.2 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

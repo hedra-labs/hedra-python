@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .transaction_llm_usage import TransactionLlmUsage
+from .transaction_sandbox_usage import TransactionSandboxUsage
 
 
 class TransactionRecord(UniversalBaseModel):
@@ -15,17 +16,17 @@ class TransactionRecord(UniversalBaseModel):
 
     id: str = pydantic.Field()
     """
-    The transaction's id. Stable, and the same id the V2 billing history reports for this row. An `llm_usage` row's id starts with `llm_usage:` and names its daily sum.
+    The transaction's id. Stable, and the same id the V2 billing history reports for this transaction. An `llm_usage` transaction's id starts with `llm_usage:` and names its daily sum; a `sandbox_usage` transaction's id starts with `sandbox_usage:`.
     """
 
     kind: str = pydantic.Field()
     """
-    What moved the balance: `purchase` when funds were bought, `grant` when they were granted by a plan entitlement, `usage` when a job was charged, `llm_usage` for a day's chat requests to one model, summed into one row, `refund` when a charge was returned, `adjustment` when Hedra corrected the balance, and `other` for a movement this API version does not yet name. The list is open and may gain values, so switch on it with a default branch; `amount` is authoritative for a kind you do not recognize.
+    What moved the balance: `purchase` when funds were bought, `grant` when they were granted by a plan entitlement, `usage` when a job was charged, `llm_usage` for a day's chat requests to one model, summed into one row, `sandbox_usage` for what one GPU sandbox was charged, summed into one row, `refund` when a charge was returned, `adjustment` when Hedra corrected the balance, and `other` for a movement this API version does not yet name. The list is open and may gain values, so switch on it with a default branch; `amount` is authoritative for a kind you do not recognize.
     """
 
     amount: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The change to the balance, signed: negative for a charge, positive for funds arriving. Null for a row written before the wallet recorded amounts, whose movement is unknown rather than zero; no such row exists in production. For `llm_usage`, the sum of the day's charges so far.
+    The change to the balance, signed: negative for a charge, positive for funds arriving. Null for a transaction from before the wallet recorded amounts, whose movement is unknown rather than zero. For `llm_usage`, the sum of the day's charges so far; for `sandbox_usage`, the net of the sandbox's charges and refunds so far.
     """
 
     currency: typing.Optional[str] = pydantic.Field(default=None)
@@ -35,12 +36,27 @@ class TransactionRecord(UniversalBaseModel):
 
     created_at: dt.datetime = pydantic.Field()
     """
-    ISO-8601 instant the balance moved. For `llm_usage`, the start of the day it covers.
+    ISO-8601 instant the balance moved. For `llm_usage`, the start of the day it covers; for `sandbox_usage`, when the sandbox was created.
     """
 
     llm_usage: typing.Optional[TransactionLlmUsage] = pydantic.Field(default=None)
     """
     Set exactly when `kind` is `llm_usage`; null on every other row.
+    """
+
+    sandbox_usage: typing.Optional[TransactionSandboxUsage] = pydantic.Field(default=None)
+    """
+    Set exactly when `kind` is `sandbox_usage`; null on every other row.
+    """
+
+    list_amount: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    What `amount` would have been at the model's list price, before the discount negotiated for the workspace, in `currency`; negative, like the debit it describes, even when a 100% discount made `amount` 0. Set only on a `usage` or `sandbox_usage` row a discount applied to; null on every other row.
+    """
+
+    discount_percent: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The negotiated percentage off the model's list price that `amount` reflects, e.g. 20 or 12.5. Set exactly when `list_amount` is; null otherwise.
     """
 
     if IS_PYDANTIC_V2:

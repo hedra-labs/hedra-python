@@ -4,13 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .input_ideogram_v2aspect_ratio import InputIdeogramV2AspectRatio
-from .input_ideogram_v2resolution import InputIdeogramV2Resolution
+from .input_krea3aspect_ratio import InputKrea3AspectRatio
+from .input_krea3images_item import InputKrea3ImagesItem
+from .input_krea3resolution import InputKrea3Resolution
 
 
-class InputIdeogramV2(UniversalBaseModel):
+class InputKrea3(UniversalBaseModel):
     """
-    Model-specific inputs for `ideogram-v2`.
+    Model-specific inputs for `krea-3`.
     """
 
     prompt: str = pydantic.Field()
@@ -25,22 +26,22 @@ class InputIdeogramV2(UniversalBaseModel):
 
     enhance_prompt: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
+    Not available on this model. Its price is computed from the exact prompt submitted, which a rewrite would invalidate.
     """
 
-    aspect_ratio: InputIdeogramV2AspectRatio = pydantic.Field()
+    images: typing.Optional[typing.List[InputKrea3ImagesItem]] = pydantic.Field(default=None)
+    """
+    Images to edit or blend. 1 to 4 images, each at most 30 MB.
+    """
+
+    aspect_ratio: InputKrea3AspectRatio = pydantic.Field()
     """
     Output aspect ratio.
     """
 
-    resolution: typing.Optional[InputIdeogramV2Resolution] = pydantic.Field(default=None)
+    resolution: typing.Optional[InputKrea3Resolution] = pydantic.Field(default=None)
     """
     Output resolution.
-    """
-
-    negative_prompt: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    What to avoid in the generated image.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)

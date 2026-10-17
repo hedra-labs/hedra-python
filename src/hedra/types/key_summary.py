@@ -12,7 +12,7 @@ from .key_status import KeyStatus
 class KeySummary(UniversalBaseModel):
     key_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The key's public identifier; null only for legacy rows predating public key ids.
+    The key's public identifier; null only for a legacy key that predates public key ids.
     """
 
     kind: ApiKeyKind
@@ -23,7 +23,7 @@ class KeySummary(UniversalBaseModel):
 
     scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Scopes granted to the key; null means full access (a legacy key predating scopes).
+    Scopes granted to the key; null means every scope (a legacy key predating scopes).
     """
 
     workspace_id: typing.Optional[str] = pydantic.Field(default=None)

@@ -16,6 +16,11 @@ class ChatUsage(UniversalBaseModel):
     Tokens in the prompt.
     """
 
+    cached_tokens: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Of `prompt_tokens`, how many the model served from cache, which Hedra charges at the model's cached input rate; null when the model did not report the count.
+    """
+
     completion_tokens: int = pydantic.Field()
     """
     Tokens generated, reasoning tokens included.

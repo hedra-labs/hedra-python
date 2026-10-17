@@ -18,7 +18,17 @@ class EstimateResponse(UniversalBaseModel):
 
     cost: float = pydantic.Field()
     """
-    The price of submitting the request's `input` to the model, in `currency`.
+    The price of submitting the request's `input` to the model, in `currency`, after any discount negotiated for the key's workspace.
+    """
+
+    list_cost: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The model's list price for the same request, in `currency`, before any negotiated discount; equal to `cost` when none applies.
+    """
+
+    discount_percent: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The negotiated percentage off the model's list price that `cost` reflects, e.g. 20 or 12.5; null when none applies.
     """
 
     currency: str = pydantic.Field()

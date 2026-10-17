@@ -35,19 +35,9 @@ class InputNanoBanana2(UniversalBaseModel):
     Output aspect ratio. 'adaptive' lets the model size the output itself — matching the source image when you pass one.
     """
 
-    resolution: InputNanoBanana2Resolution = pydantic.Field()
-    """
-    Output resolution.
-    """
-
     images: typing.Optional[typing.List[InputNanoBanana2ImagesItem]] = pydantic.Field(default=None)
     """
     Images to edit or blend, at most 10 high-fidelity objects and 4 characters. 1 to 14 images, each at most 30 MB.
-    """
-
-    seed: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Seed for reproducible output; omit for a random seed.
     """
 
     google_search: typing.Optional[bool] = pydantic.Field(default=None)
@@ -63,6 +53,16 @@ class InputNanoBanana2(UniversalBaseModel):
     thinking_level: typing.Optional[InputNanoBanana2ThinkingLevel] = pydantic.Field(default=None)
     """
     How much the model plans before it draws. Omit for the model's own default ('minimal'); 'high' reasons further at the cost of latency.
+    """
+
+    resolution: InputNanoBanana2Resolution = pydantic.Field()
+    """
+    Output resolution.
+    """
+
+    seed: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Seed for reproducible output; omit for a random seed.
     """
 
     if IS_PYDANTIC_V2:
