@@ -27,7 +27,7 @@ class InputMinimaxH3MaxTurbo(UniversalBaseModel):
 
     prompt: str = pydantic.Field()
     """
-    Generation prompt. From 1 to 7000 characters.
+    Generation prompt. From 1 to 50000 characters.
     """
 
     resolution: InputMinimaxH3MaxTurboResolution = pydantic.Field()

@@ -57,7 +57,7 @@ class InputQwenImage2(UniversalBaseModel):
 
     images: typing.Optional[typing.List[InputQwenImage2ImagesItem]] = pydantic.Field(default=None)
     """
-    Images to edit or blend. 1 to 3 images, each at most 30 MB.
+    Images to edit or blend. 1 to 3 images, each at most 10 MB.
     """
 
     seed: typing.Optional[int] = pydantic.Field(default=None)

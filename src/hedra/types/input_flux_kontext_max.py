@@ -39,16 +39,6 @@ class InputFluxKontextMax(UniversalBaseModel):
     The single source image to edit. Exactly 1 image, at most 30 MB.
     """
 
-    output_format: typing.Optional[InputFluxKontextMaxOutputFormat] = pydantic.Field(default=None)
-    """
-    Output image format.
-    """
-
-    seed: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Seed for reproducible output; omit for a random seed.
-    """
-
     aspect_ratio: typing.Optional[InputFluxKontextMaxAspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
@@ -57,6 +47,16 @@ class InputFluxKontextMax(UniversalBaseModel):
     resolution: typing.Optional[InputFluxKontextMaxResolution] = pydantic.Field(default=None)
     """
     Output resolution.
+    """
+
+    output_format: typing.Optional[InputFluxKontextMaxOutputFormat] = pydantic.Field(default=None)
+    """
+    Output image format.
+    """
+
+    seed: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Seed for reproducible output; omit for a random seed.
     """
 
     if IS_PYDANTIC_V2:

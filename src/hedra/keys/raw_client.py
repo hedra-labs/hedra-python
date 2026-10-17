@@ -161,7 +161,7 @@ class RawKeysClient:
             Human-readable label for the key.
 
         scopes : typing.Optional[typing.Sequence[ApiKeyScope]]
-            Scopes granted to the key; omitted means full access.
+            Scopes granted to the key; omitted means the creating credential's own scopes.
 
         kind : typing.Optional[ApiKeyKind]
             `personal` (default) dies with the member; `service` is workspace-shared, OWNER/ADMIN-managed, and survives member removal.
@@ -633,7 +633,7 @@ class AsyncRawKeysClient:
             Human-readable label for the key.
 
         scopes : typing.Optional[typing.Sequence[ApiKeyScope]]
-            Scopes granted to the key; omitted means full access.
+            Scopes granted to the key; omitted means the creating credential's own scopes.
 
         kind : typing.Optional[ApiKeyKind]
             `personal` (default) dies with the member; `service` is workspace-shared, OWNER/ADMIN-managed, and survives member removal.

@@ -63,7 +63,7 @@ class LogDrainConfig(UniversalBaseModel):
 
     last_error: typing.Optional[ErrorEnvelope] = pydantic.Field(default=None)
     """
-    Why the most recent batch delivery failed, in the same error envelope `GET /jobs/{job_id}` returns for a failed job: a stable `code` from the shared error vocabulary, a fixed operator-facing `message`, and `retryable`. Null while no batch has failed, and cleared on the next success. Destination URLs, headers, credentials, response bodies, and internal exception text are never included. Nor is your drain URL written to Hedra's own logs, since it may carry authentication in its query string. `retryable` describes the condition, not what Hedra did: every failed batch is requeued until the drain auto-disables, so it answers whether fixing the destination and re-enabling is likely to help. Drains that last failed before this field became structured report `UNKNOWN`.
+    Why the most recent batch delivery failed, in the same error envelope `GET /jobs/{job_id}` returns for a failed job: a stable `code` from the shared error vocabulary, a fixed operator-facing `message`, and `retryable`. Null while no batch has failed, and cleared on the next success. Destination URLs, headers, credentials, response bodies, and internal exception text are never included. `retryable` describes the condition, not what Hedra did: every failed batch is requeued until the drain auto-disables, so it answers whether fixing the destination and re-enabling is likely to help. Drains that last failed before this field became structured report `UNKNOWN`.
     """
 
     disabled_reason: typing.Optional[str] = pydantic.Field(default=None)
