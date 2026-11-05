@@ -6,14 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputGrokVideoStartImageAsset(UniversalBaseModel):
+class InputFluxKontextImagesItemUrl(UniversalBaseModel):
     """
-    An existing asset you own, referenced by its id.
+    A file uploaded via POST /v3/files, referenced by the returned url.
     """
 
-    asset_id: str = pydantic.Field()
+    url: str = pydantic.Field()
     """
-    The asset's id (`asset_<uuid>`), as issued by the server — a completed generation publishes one per output as `outputs[].asset_id`. Do not construct one or derive it from any other id.
+    A URL returned by POST /v3/files.
     """
 
     if IS_PYDANTIC_V2:

@@ -46,7 +46,7 @@ class InputKrea3(UniversalBaseModel):
 
     seed: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Seed for reproducible output; omit for a random seed.
+    Accepted but not used: Krea 3 renders a different image each time, whatever the seed.
     """
 
     if IS_PYDANTIC_V2:

@@ -2,4 +2,4 @@
 
 import typing
 
-InputSeedance20Quality = typing.Union[typing.Literal["standard", "fast"], typing.Any]
+InputSeedance20Quality = typing.Union[typing.Literal["standard", "fast", "mini"], typing.Any]

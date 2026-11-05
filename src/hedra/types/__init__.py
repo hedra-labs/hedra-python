@@ -122,6 +122,8 @@ if typing.TYPE_CHECKING:
     from .input_flux11ultra_aspect_ratio import InputFlux11UltraAspectRatio
     from .input_flux11ultra_output_format import InputFlux11UltraOutputFormat
     from .input_flux11ultra_resolution import InputFlux11UltraResolution
+    from .input_flux2 import InputFlux2
+    from .input_flux2aspect_ratio import InputFlux2AspectRatio
     from .input_flux2flex import InputFlux2Flex
     from .input_flux2flex_aspect_ratio import InputFlux2FlexAspectRatio
     from .input_flux2flex_images_item import (
@@ -132,6 +134,9 @@ if typing.TYPE_CHECKING:
     from .input_flux2flex_images_item_asset import InputFlux2FlexImagesItemAsset
     from .input_flux2flex_images_item_url import InputFlux2FlexImagesItemUrl
     from .input_flux2flex_output_format import InputFlux2FlexOutputFormat
+    from .input_flux2images_item import InputFlux2ImagesItem, InputFlux2ImagesItem_Asset, InputFlux2ImagesItem_Url
+    from .input_flux2images_item_asset import InputFlux2ImagesItemAsset
+    from .input_flux2images_item_url import InputFlux2ImagesItemUrl
     from .input_flux2klein9b import InputFlux2Klein9B
     from .input_flux2klein9b_aspect_ratio import InputFlux2Klein9BAspectRatio
     from .input_flux2klein9b_images_item import (
@@ -152,6 +157,7 @@ if typing.TYPE_CHECKING:
     from .input_flux2max_images_item_asset import InputFlux2MaxImagesItemAsset
     from .input_flux2max_images_item_url import InputFlux2MaxImagesItemUrl
     from .input_flux2max_output_format import InputFlux2MaxOutputFormat
+    from .input_flux2output_format import InputFlux2OutputFormat
     from .input_flux2pro import InputFlux2Pro
     from .input_flux2pro_aspect_ratio import InputFlux2ProAspectRatio
     from .input_flux2pro_images_item import (
@@ -162,6 +168,7 @@ if typing.TYPE_CHECKING:
     from .input_flux2pro_images_item_asset import InputFlux2ProImagesItemAsset
     from .input_flux2pro_images_item_url import InputFlux2ProImagesItemUrl
     from .input_flux2pro_output_format import InputFlux2ProOutputFormat
+    from .input_flux2quality import InputFlux2Quality
     from .input_flux3 import InputFlux3
     from .input_flux3aspect_ratio import InputFlux3AspectRatio
     from .input_flux3end_image import InputFlux3EndImage, InputFlux3EndImage_Asset, InputFlux3EndImage_Url
@@ -193,6 +200,15 @@ if typing.TYPE_CHECKING:
     from .input_flux_dev_aspect_ratio import InputFluxDevAspectRatio
     from .input_flux_dev_output_format import InputFluxDevOutputFormat
     from .input_flux_dev_resolution import InputFluxDevResolution
+    from .input_flux_kontext import InputFluxKontext
+    from .input_flux_kontext_aspect_ratio import InputFluxKontextAspectRatio
+    from .input_flux_kontext_images_item import (
+        InputFluxKontextImagesItem,
+        InputFluxKontextImagesItem_Asset,
+        InputFluxKontextImagesItem_Url,
+    )
+    from .input_flux_kontext_images_item_asset import InputFluxKontextImagesItemAsset
+    from .input_flux_kontext_images_item_url import InputFluxKontextImagesItemUrl
     from .input_flux_kontext_max import InputFluxKontextMax
     from .input_flux_kontext_max_aspect_ratio import InputFluxKontextMaxAspectRatio
     from .input_flux_kontext_max_images_item import (
@@ -204,6 +220,7 @@ if typing.TYPE_CHECKING:
     from .input_flux_kontext_max_images_item_url import InputFluxKontextMaxImagesItemUrl
     from .input_flux_kontext_max_output_format import InputFluxKontextMaxOutputFormat
     from .input_flux_kontext_max_resolution import InputFluxKontextMaxResolution
+    from .input_flux_kontext_output_format import InputFluxKontextOutputFormat
     from .input_flux_kontext_pro import InputFluxKontextPro
     from .input_flux_kontext_pro_aspect_ratio import InputFluxKontextProAspectRatio
     from .input_flux_kontext_pro_images_item import (
@@ -215,6 +232,8 @@ if typing.TYPE_CHECKING:
     from .input_flux_kontext_pro_images_item_url import InputFluxKontextProImagesItemUrl
     from .input_flux_kontext_pro_output_format import InputFluxKontextProOutputFormat
     from .input_flux_kontext_pro_resolution import InputFluxKontextProResolution
+    from .input_flux_kontext_quality import InputFluxKontextQuality
+    from .input_flux_kontext_resolution import InputFluxKontextResolution
     from .input_gemini_omni_flash import InputGeminiOmniFlash
     from .input_gemini_omni_flash11 import InputGeminiOmniFlash11
     from .input_gemini_omni_flash11aspect_ratio import InputGeminiOmniFlash11AspectRatio
@@ -354,16 +373,6 @@ if typing.TYPE_CHECKING:
     from .input_grok_imagine_output_format import InputGrokImagineOutputFormat
     from .input_grok_imagine_quality import InputGrokImagineQuality
     from .input_grok_imagine_resolution import InputGrokImagineResolution
-    from .input_grok_video import InputGrokVideo
-    from .input_grok_video_aspect_ratio import InputGrokVideoAspectRatio
-    from .input_grok_video_resolution import InputGrokVideoResolution
-    from .input_grok_video_start_image import (
-        InputGrokVideoStartImage,
-        InputGrokVideoStartImage_Asset,
-        InputGrokVideoStartImage_Url,
-    )
-    from .input_grok_video_start_image_asset import InputGrokVideoStartImageAsset
-    from .input_grok_video_start_image_url import InputGrokVideoStartImageUrl
     from .input_happy_horse import InputHappyHorse
     from .input_happy_horse_aspect_ratio import InputHappyHorseAspectRatio
     from .input_happy_horse_images_item import (
@@ -815,6 +824,13 @@ if typing.TYPE_CHECKING:
     from .input_minimax_h3start_image_url import InputMinimaxH3StartImageUrl
     from .input_minimax_h3ultra import InputMinimaxH3Ultra
     from .input_minimax_h3ultra_aspect_ratio import InputMinimaxH3UltraAspectRatio
+    from .input_minimax_h3ultra_audios_item import (
+        InputMinimaxH3UltraAudiosItem,
+        InputMinimaxH3UltraAudiosItem_Asset,
+        InputMinimaxH3UltraAudiosItem_Url,
+    )
+    from .input_minimax_h3ultra_audios_item_asset import InputMinimaxH3UltraAudiosItemAsset
+    from .input_minimax_h3ultra_audios_item_url import InputMinimaxH3UltraAudiosItemUrl
     from .input_minimax_h3ultra_end_image import (
         InputMinimaxH3UltraEndImage,
         InputMinimaxH3UltraEndImage_Asset,
@@ -822,6 +838,13 @@ if typing.TYPE_CHECKING:
     )
     from .input_minimax_h3ultra_end_image_asset import InputMinimaxH3UltraEndImageAsset
     from .input_minimax_h3ultra_end_image_url import InputMinimaxH3UltraEndImageUrl
+    from .input_minimax_h3ultra_images_item import (
+        InputMinimaxH3UltraImagesItem,
+        InputMinimaxH3UltraImagesItem_Asset,
+        InputMinimaxH3UltraImagesItem_Url,
+    )
+    from .input_minimax_h3ultra_images_item_asset import InputMinimaxH3UltraImagesItemAsset
+    from .input_minimax_h3ultra_images_item_url import InputMinimaxH3UltraImagesItemUrl
     from .input_minimax_h3ultra_resolution import InputMinimaxH3UltraResolution
     from .input_minimax_h3ultra_start_image import (
         InputMinimaxH3UltraStartImage,
@@ -1534,6 +1557,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFlux11UltraAspectRatio": ".input_flux11ultra_aspect_ratio",
     "InputFlux11UltraOutputFormat": ".input_flux11ultra_output_format",
     "InputFlux11UltraResolution": ".input_flux11ultra_resolution",
+    "InputFlux2": ".input_flux2",
+    "InputFlux2AspectRatio": ".input_flux2aspect_ratio",
     "InputFlux2Flex": ".input_flux2flex",
     "InputFlux2FlexAspectRatio": ".input_flux2flex_aspect_ratio",
     "InputFlux2FlexImagesItem": ".input_flux2flex_images_item",
@@ -1542,6 +1567,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFlux2FlexImagesItem_Asset": ".input_flux2flex_images_item",
     "InputFlux2FlexImagesItem_Url": ".input_flux2flex_images_item",
     "InputFlux2FlexOutputFormat": ".input_flux2flex_output_format",
+    "InputFlux2ImagesItem": ".input_flux2images_item",
+    "InputFlux2ImagesItemAsset": ".input_flux2images_item_asset",
+    "InputFlux2ImagesItemUrl": ".input_flux2images_item_url",
+    "InputFlux2ImagesItem_Asset": ".input_flux2images_item",
+    "InputFlux2ImagesItem_Url": ".input_flux2images_item",
     "InputFlux2Klein9B": ".input_flux2klein9b",
     "InputFlux2Klein9BAspectRatio": ".input_flux2klein9b_aspect_ratio",
     "InputFlux2Klein9BImagesItem": ".input_flux2klein9b_images_item",
@@ -1558,6 +1588,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFlux2MaxImagesItem_Asset": ".input_flux2max_images_item",
     "InputFlux2MaxImagesItem_Url": ".input_flux2max_images_item",
     "InputFlux2MaxOutputFormat": ".input_flux2max_output_format",
+    "InputFlux2OutputFormat": ".input_flux2output_format",
     "InputFlux2Pro": ".input_flux2pro",
     "InputFlux2ProAspectRatio": ".input_flux2pro_aspect_ratio",
     "InputFlux2ProImagesItem": ".input_flux2pro_images_item",
@@ -1566,6 +1597,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFlux2ProImagesItem_Asset": ".input_flux2pro_images_item",
     "InputFlux2ProImagesItem_Url": ".input_flux2pro_images_item",
     "InputFlux2ProOutputFormat": ".input_flux2pro_output_format",
+    "InputFlux2Quality": ".input_flux2quality",
     "InputFlux3": ".input_flux3",
     "InputFlux3AspectRatio": ".input_flux3aspect_ratio",
     "InputFlux3EndImage": ".input_flux3end_image",
@@ -1597,6 +1629,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFluxDevAspectRatio": ".input_flux_dev_aspect_ratio",
     "InputFluxDevOutputFormat": ".input_flux_dev_output_format",
     "InputFluxDevResolution": ".input_flux_dev_resolution",
+    "InputFluxKontext": ".input_flux_kontext",
+    "InputFluxKontextAspectRatio": ".input_flux_kontext_aspect_ratio",
+    "InputFluxKontextImagesItem": ".input_flux_kontext_images_item",
+    "InputFluxKontextImagesItemAsset": ".input_flux_kontext_images_item_asset",
+    "InputFluxKontextImagesItemUrl": ".input_flux_kontext_images_item_url",
+    "InputFluxKontextImagesItem_Asset": ".input_flux_kontext_images_item",
+    "InputFluxKontextImagesItem_Url": ".input_flux_kontext_images_item",
     "InputFluxKontextMax": ".input_flux_kontext_max",
     "InputFluxKontextMaxAspectRatio": ".input_flux_kontext_max_aspect_ratio",
     "InputFluxKontextMaxImagesItem": ".input_flux_kontext_max_images_item",
@@ -1606,6 +1645,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFluxKontextMaxImagesItem_Url": ".input_flux_kontext_max_images_item",
     "InputFluxKontextMaxOutputFormat": ".input_flux_kontext_max_output_format",
     "InputFluxKontextMaxResolution": ".input_flux_kontext_max_resolution",
+    "InputFluxKontextOutputFormat": ".input_flux_kontext_output_format",
     "InputFluxKontextPro": ".input_flux_kontext_pro",
     "InputFluxKontextProAspectRatio": ".input_flux_kontext_pro_aspect_ratio",
     "InputFluxKontextProImagesItem": ".input_flux_kontext_pro_images_item",
@@ -1615,6 +1655,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputFluxKontextProImagesItem_Url": ".input_flux_kontext_pro_images_item",
     "InputFluxKontextProOutputFormat": ".input_flux_kontext_pro_output_format",
     "InputFluxKontextProResolution": ".input_flux_kontext_pro_resolution",
+    "InputFluxKontextQuality": ".input_flux_kontext_quality",
+    "InputFluxKontextResolution": ".input_flux_kontext_resolution",
     "InputGeminiOmniFlash": ".input_gemini_omni_flash",
     "InputGeminiOmniFlash11": ".input_gemini_omni_flash11",
     "InputGeminiOmniFlash11AspectRatio": ".input_gemini_omni_flash11aspect_ratio",
@@ -1724,14 +1766,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputGrokImagineOutputFormat": ".input_grok_imagine_output_format",
     "InputGrokImagineQuality": ".input_grok_imagine_quality",
     "InputGrokImagineResolution": ".input_grok_imagine_resolution",
-    "InputGrokVideo": ".input_grok_video",
-    "InputGrokVideoAspectRatio": ".input_grok_video_aspect_ratio",
-    "InputGrokVideoResolution": ".input_grok_video_resolution",
-    "InputGrokVideoStartImage": ".input_grok_video_start_image",
-    "InputGrokVideoStartImageAsset": ".input_grok_video_start_image_asset",
-    "InputGrokVideoStartImageUrl": ".input_grok_video_start_image_url",
-    "InputGrokVideoStartImage_Asset": ".input_grok_video_start_image",
-    "InputGrokVideoStartImage_Url": ".input_grok_video_start_image",
     "InputHappyHorse": ".input_happy_horse",
     "InputHappyHorseAspectRatio": ".input_happy_horse_aspect_ratio",
     "InputHappyHorseImagesItem": ".input_happy_horse_images_item",
@@ -2113,11 +2147,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputMinimaxH3StartImage_Url": ".input_minimax_h3start_image",
     "InputMinimaxH3Ultra": ".input_minimax_h3ultra",
     "InputMinimaxH3UltraAspectRatio": ".input_minimax_h3ultra_aspect_ratio",
+    "InputMinimaxH3UltraAudiosItem": ".input_minimax_h3ultra_audios_item",
+    "InputMinimaxH3UltraAudiosItemAsset": ".input_minimax_h3ultra_audios_item_asset",
+    "InputMinimaxH3UltraAudiosItemUrl": ".input_minimax_h3ultra_audios_item_url",
+    "InputMinimaxH3UltraAudiosItem_Asset": ".input_minimax_h3ultra_audios_item",
+    "InputMinimaxH3UltraAudiosItem_Url": ".input_minimax_h3ultra_audios_item",
     "InputMinimaxH3UltraEndImage": ".input_minimax_h3ultra_end_image",
     "InputMinimaxH3UltraEndImageAsset": ".input_minimax_h3ultra_end_image_asset",
     "InputMinimaxH3UltraEndImageUrl": ".input_minimax_h3ultra_end_image_url",
     "InputMinimaxH3UltraEndImage_Asset": ".input_minimax_h3ultra_end_image",
     "InputMinimaxH3UltraEndImage_Url": ".input_minimax_h3ultra_end_image",
+    "InputMinimaxH3UltraImagesItem": ".input_minimax_h3ultra_images_item",
+    "InputMinimaxH3UltraImagesItemAsset": ".input_minimax_h3ultra_images_item_asset",
+    "InputMinimaxH3UltraImagesItemUrl": ".input_minimax_h3ultra_images_item_url",
+    "InputMinimaxH3UltraImagesItem_Asset": ".input_minimax_h3ultra_images_item",
+    "InputMinimaxH3UltraImagesItem_Url": ".input_minimax_h3ultra_images_item",
     "InputMinimaxH3UltraResolution": ".input_minimax_h3ultra_resolution",
     "InputMinimaxH3UltraStartImage": ".input_minimax_h3ultra_start_image",
     "InputMinimaxH3UltraStartImageAsset": ".input_minimax_h3ultra_start_image_asset",
@@ -2768,6 +2812,8 @@ __all__ = [
     "InputFlux11UltraAspectRatio",
     "InputFlux11UltraOutputFormat",
     "InputFlux11UltraResolution",
+    "InputFlux2",
+    "InputFlux2AspectRatio",
     "InputFlux2Flex",
     "InputFlux2FlexAspectRatio",
     "InputFlux2FlexImagesItem",
@@ -2776,6 +2822,11 @@ __all__ = [
     "InputFlux2FlexImagesItem_Asset",
     "InputFlux2FlexImagesItem_Url",
     "InputFlux2FlexOutputFormat",
+    "InputFlux2ImagesItem",
+    "InputFlux2ImagesItemAsset",
+    "InputFlux2ImagesItemUrl",
+    "InputFlux2ImagesItem_Asset",
+    "InputFlux2ImagesItem_Url",
     "InputFlux2Klein9B",
     "InputFlux2Klein9BAspectRatio",
     "InputFlux2Klein9BImagesItem",
@@ -2792,6 +2843,7 @@ __all__ = [
     "InputFlux2MaxImagesItem_Asset",
     "InputFlux2MaxImagesItem_Url",
     "InputFlux2MaxOutputFormat",
+    "InputFlux2OutputFormat",
     "InputFlux2Pro",
     "InputFlux2ProAspectRatio",
     "InputFlux2ProImagesItem",
@@ -2800,6 +2852,7 @@ __all__ = [
     "InputFlux2ProImagesItem_Asset",
     "InputFlux2ProImagesItem_Url",
     "InputFlux2ProOutputFormat",
+    "InputFlux2Quality",
     "InputFlux3",
     "InputFlux3AspectRatio",
     "InputFlux3EndImage",
@@ -2831,6 +2884,13 @@ __all__ = [
     "InputFluxDevAspectRatio",
     "InputFluxDevOutputFormat",
     "InputFluxDevResolution",
+    "InputFluxKontext",
+    "InputFluxKontextAspectRatio",
+    "InputFluxKontextImagesItem",
+    "InputFluxKontextImagesItemAsset",
+    "InputFluxKontextImagesItemUrl",
+    "InputFluxKontextImagesItem_Asset",
+    "InputFluxKontextImagesItem_Url",
     "InputFluxKontextMax",
     "InputFluxKontextMaxAspectRatio",
     "InputFluxKontextMaxImagesItem",
@@ -2840,6 +2900,7 @@ __all__ = [
     "InputFluxKontextMaxImagesItem_Url",
     "InputFluxKontextMaxOutputFormat",
     "InputFluxKontextMaxResolution",
+    "InputFluxKontextOutputFormat",
     "InputFluxKontextPro",
     "InputFluxKontextProAspectRatio",
     "InputFluxKontextProImagesItem",
@@ -2849,6 +2910,8 @@ __all__ = [
     "InputFluxKontextProImagesItem_Url",
     "InputFluxKontextProOutputFormat",
     "InputFluxKontextProResolution",
+    "InputFluxKontextQuality",
+    "InputFluxKontextResolution",
     "InputGeminiOmniFlash",
     "InputGeminiOmniFlash11",
     "InputGeminiOmniFlash11AspectRatio",
@@ -2958,14 +3021,6 @@ __all__ = [
     "InputGrokImagineOutputFormat",
     "InputGrokImagineQuality",
     "InputGrokImagineResolution",
-    "InputGrokVideo",
-    "InputGrokVideoAspectRatio",
-    "InputGrokVideoResolution",
-    "InputGrokVideoStartImage",
-    "InputGrokVideoStartImageAsset",
-    "InputGrokVideoStartImageUrl",
-    "InputGrokVideoStartImage_Asset",
-    "InputGrokVideoStartImage_Url",
     "InputHappyHorse",
     "InputHappyHorseAspectRatio",
     "InputHappyHorseImagesItem",
@@ -3347,11 +3402,21 @@ __all__ = [
     "InputMinimaxH3StartImage_Url",
     "InputMinimaxH3Ultra",
     "InputMinimaxH3UltraAspectRatio",
+    "InputMinimaxH3UltraAudiosItem",
+    "InputMinimaxH3UltraAudiosItemAsset",
+    "InputMinimaxH3UltraAudiosItemUrl",
+    "InputMinimaxH3UltraAudiosItem_Asset",
+    "InputMinimaxH3UltraAudiosItem_Url",
     "InputMinimaxH3UltraEndImage",
     "InputMinimaxH3UltraEndImageAsset",
     "InputMinimaxH3UltraEndImageUrl",
     "InputMinimaxH3UltraEndImage_Asset",
     "InputMinimaxH3UltraEndImage_Url",
+    "InputMinimaxH3UltraImagesItem",
+    "InputMinimaxH3UltraImagesItemAsset",
+    "InputMinimaxH3UltraImagesItemUrl",
+    "InputMinimaxH3UltraImagesItem_Asset",
+    "InputMinimaxH3UltraImagesItem_Url",
     "InputMinimaxH3UltraResolution",
     "InputMinimaxH3UltraStartImage",
     "InputMinimaxH3UltraStartImageAsset",

@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputKlingO3StartImage_Url(UniversalBaseModel):
     """
-    Start frame. At most 10.4 MB.
+    Start frame. With an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputKlingO3StartImage_Url(UniversalBaseModel):
 
 class InputKlingO3StartImage_Asset(UniversalBaseModel):
     """
-    Start frame. At most 10.4 MB.
+    Start frame. With an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

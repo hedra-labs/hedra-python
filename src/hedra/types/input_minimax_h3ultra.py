@@ -5,7 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .input_minimax_h3ultra_aspect_ratio import InputMinimaxH3UltraAspectRatio
+from .input_minimax_h3ultra_audios_item import InputMinimaxH3UltraAudiosItem
 from .input_minimax_h3ultra_end_image import InputMinimaxH3UltraEndImage
+from .input_minimax_h3ultra_images_item import InputMinimaxH3UltraImagesItem
 from .input_minimax_h3ultra_resolution import InputMinimaxH3UltraResolution
 from .input_minimax_h3ultra_start_image import InputMinimaxH3UltraStartImage
 
@@ -15,9 +17,10 @@ class InputMinimaxH3Ultra(UniversalBaseModel):
     Model-specific inputs for `minimax-h3-ultra`.
 
     Accepted field combinations (one per input mode):
-    (1) requires: duration_ms, prompt, start_image; must omit: aspect_ratio, end_image
-    (2) requires: duration_ms, end_image, prompt, start_image; must omit: aspect_ratio
-    (3) requires: aspect_ratio, duration_ms, prompt; must omit: end_image, start_image
+    (1) requires: duration_ms, prompt, start_image; must omit: aspect_ratio, audios, end_image, images
+    (2) requires: duration_ms, end_image, prompt, start_image; must omit: aspect_ratio, audios, images
+    (3) requires: aspect_ratio, duration_ms, images, prompt; must omit: end_image, start_image; accepts aspect_ratio: adaptive | 16:9 | 9:16 | 1:1
+    (4) requires: aspect_ratio, duration_ms, prompt; must omit: audios, end_image, images, start_image; accepts aspect_ratio: 16:9 | 9:16 | 1:1 | 3:4 | 4:3 | 21:9
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -57,7 +60,17 @@ class InputMinimaxH3Ultra(UniversalBaseModel):
 
     aspect_ratio: typing.Optional[InputMinimaxH3UltraAspectRatio] = pydantic.Field(default=None)
     """
-    Output aspect ratio.
+    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image.
+    """
+
+    images: typing.Optional[typing.List[InputMinimaxH3UltraImagesItem]] = pydantic.Field(default=None)
+    """
+    Reference images. 1 to 4 images, each from 256px to 1024px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
+    """
+
+    audios: typing.Optional[typing.List[InputMinimaxH3UltraAudiosItem]] = pydantic.Field(default=None)
+    """
+    Reference audios. 1 to 3 audio files, each from 2s to 15s and at most 104.8 MB, at most 15s in total.
     """
 
     if IS_PYDANTIC_V2:

@@ -69,17 +69,17 @@ class InputKlingO3(UniversalBaseModel):
 
     start_image: typing.Optional[InputKlingO3StartImage] = pydantic.Field(default=None)
     """
-    Start frame. At most 10.4 MB.
+    Start frame. With an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     end_image: typing.Optional[InputKlingO3EndImage] = pydantic.Field(default=None)
     """
-    End frame. At most 10.4 MB.
+    End frame. With an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     images: typing.Optional[typing.List[InputKlingO3ImagesItem]] = pydantic.Field(default=None)
     """
-    Reference images. 1 to 3 images, each at most 10.4 MB.
+    Reference images. 1 to 3 images, each with an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     quality: typing.Optional[InputKlingO3Quality] = pydantic.Field(default=None)

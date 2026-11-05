@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class InputKlingO3EndImage_Url(UniversalBaseModel):
     """
-    End frame. At most 10.4 MB.
+    End frame. With an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     source: typing.Literal["url"] = "url"
@@ -29,7 +29,7 @@ class InputKlingO3EndImage_Url(UniversalBaseModel):
 
 class InputKlingO3EndImage_Asset(UniversalBaseModel):
     """
-    End frame. At most 10.4 MB.
+    End frame. With an aspect ratio from 0.4 to 2.5 and at most 10.4 MB.
     """
 
     source: typing.Literal["asset"] = "asset"

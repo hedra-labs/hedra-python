@@ -2183,92 +2183,7 @@ client.jobs.submit_flux_dev(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux_kontext_max</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Highest-fidelity reference-image support for complex, multi-element scenes and perfectly matched branded visuals.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputFluxKontextMax
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_flux_kontext_max(
-    input=InputFluxKontextMax(
-        prompt="prompt",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputFluxKontextMax` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux_kontext_pro</a>(...) -> SubmitResponse</code></summary>
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux_kontext</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -2297,7 +2212,7 @@ Submits an asynchronous job and returns `202` with a job id. Fetch the result at
 <dd>
 
 ```python
-from hedra import Hedra, InputFluxKontextPro
+from hedra import Hedra, InputFluxKontext
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
@@ -2305,8 +2220,8 @@ client = Hedra(
     environment=HedraEnvironment.PRODUCTION,
 )
 
-client.jobs.submit_flux_kontext_pro(
-    input=InputFluxKontextPro(
+client.jobs.submit_flux_kontext(
+    input=InputFluxKontext(
         prompt="prompt",
     ),
 )
@@ -2325,7 +2240,7 @@ client.jobs.submit_flux_kontext_pro(
 <dl>
 <dd>
 
-**input:** `InputFluxKontextPro` 
+**input:** `InputFluxKontext` 
     
 </dd>
 </dl>
@@ -2353,7 +2268,7 @@ client.jobs.submit_flux_kontext_pro(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2flex</a>(...) -> SubmitResponse</code></summary>
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -2365,7 +2280,7 @@ client.jobs.submit_flux_kontext_pro(
 <dl>
 <dd>
 
-The tunable Flux.2 tier — trade denoising steps against speed per generation.
+The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -2382,7 +2297,7 @@ Submits an asynchronous job and returns `202` with a job id. Fetch the result at
 <dd>
 
 ```python
-from hedra import Hedra, InputFlux2Flex
+from hedra import Hedra, InputFlux2
 from hedra.environment import HedraEnvironment
 
 client = Hedra(
@@ -2390,8 +2305,8 @@ client = Hedra(
     environment=HedraEnvironment.PRODUCTION,
 )
 
-client.jobs.submit_flux2flex(
-    input=InputFlux2Flex(
+client.jobs.submit_flux2(
+    input=InputFlux2(
         prompt="prompt",
         aspect_ratio="16:9",
     ),
@@ -2411,7 +2326,7 @@ client.jobs.submit_flux2flex(
 <dl>
 <dd>
 
-**input:** `InputFlux2Flex` 
+**input:** `InputFlux2` 
     
 </dd>
 </dl>
@@ -2498,178 +2413,6 @@ client.jobs.submit_flux2klein9b(
 <dd>
 
 **input:** `InputFlux2Klein9B` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2max</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-The top Flux.2 tier, for realism and precision in final deliverables.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputFlux2Max
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_flux2max(
-    input=InputFlux2Max(
-        prompt="prompt",
-        aspect_ratio="16:9",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputFlux2Max` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2pro</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputFlux2Pro
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_flux2pro(
-    input=InputFlux2Pro(
-        prompt="prompt",
-        aspect_ratio="16:9",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputFlux2Pro` 
     
 </dd>
 </dl>
@@ -3362,94 +3105,6 @@ client.jobs.submit_grok_imagine20(
 <dd>
 
 **input:** `InputGrokImagine20` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_grok_video</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Short, punchy clips from a prompt at 480p or 720p.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputGrokVideo
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_grok_video(
-    input=InputGrokVideo(
-        prompt="prompt",
-        aspect_ratio="auto",
-        resolution="480p",
-        duration_ms=1,
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputGrokVideo` 
     
 </dd>
 </dl>
@@ -6220,7 +5875,7 @@ client.jobs.submit_minimax_h3max_turbo(
 <dl>
 <dd>
 
-MiniMax H3 Ultra video generation from text, a start frame, or a first and last frame.
+MiniMax H3 Ultra video generation from text, keyframes, or reference images.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -8132,94 +7787,6 @@ client.jobs.submit_seedance20(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_seedance20mini</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-The lightest Seedance tier — short reference-driven clips at 480p and 720p.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputSeedance20Mini
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_seedance20mini(
-    input=InputSeedance20Mini(
-        prompt="prompt",
-        aspect_ratio="1:1",
-        resolution="480p",
-        duration_ms=1,
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputSeedance20Mini` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_seedance25</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -8494,7 +8061,7 @@ client.jobs.submit_seedream45(
 <dl>
 <dd>
 
-Sharp 2K and 4K stills from a prompt, at the light tier's price.
+Sharp 2K and 4K stills from a prompt, or edits and blends of source images, at the light tier's price.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -8581,7 +8148,7 @@ client.jobs.submit_seedream50lite(
 <dl>
 <dd>
 
-The top Seedream tier — layer-separable output and strong multilingual in-image text, up to 2K.
+The top Seedream tier — layer-separable output, precise edits to a source image, and strong multilingual in-image text, up to 2K.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -10153,6 +9720,534 @@ client.jobs.submit_wan30(
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux_kontext_max</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deprecated: run `flux-kontext` with `input.quality` `max` instead.
+
+Highest-fidelity reference-image support for complex, multi-element scenes and perfectly matched branded visuals.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFluxKontextMax
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux_kontext_max(
+    input=InputFluxKontextMax(
+        prompt="prompt",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFluxKontextMax` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux_kontext_pro</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deprecated: run `flux-kontext` with `input.quality` `pro` instead.
+
+Reference-image support for character, brand, or style consistency.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFluxKontextPro
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux_kontext_pro(
+    input=InputFluxKontextPro(
+        prompt="prompt",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFluxKontextPro` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2flex</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deprecated: run `flux2` with `input.quality` `flex` instead.
+
+The tunable Flux.2 tier — trade denoising steps against speed per generation.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux2Flex
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux2flex(
+    input=InputFlux2Flex(
+        prompt="prompt",
+        aspect_ratio="16:9",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux2Flex` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2max</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deprecated: run `flux2` with `input.quality` `max` instead.
+
+The top Flux.2 tier, for realism and precision in final deliverables.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux2Max
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux2max(
+    input=InputFlux2Max(
+        prompt="prompt",
+        aspect_ratio="16:9",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux2Max` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux2pro</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deprecated: run `flux2` with `input.quality` `pro` instead.
+
+The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux2Pro
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux2pro(
+    input=InputFlux2Pro(
+        prompt="prompt",
+        aspect_ratio="16:9",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux2Pro` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_seedance20mini</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deprecated: run `seedance-20` with `input.quality` `mini` instead.
+
+The lightest Seedance tier — short reference-driven clips at 480p and 720p.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputSeedance20Mini
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_seedance20mini(
+    input=InputSeedance20Mini(
+        prompt="prompt",
+        aspect_ratio="1:1",
+        resolution="480p",
+        duration_ms=1,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputSeedance20Mini` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -11288,7 +11383,7 @@ client.billing.get_usage()
 <dl>
 <dd>
 
-**start:** `typing.Optional[datetime.datetime]` — Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job-creation time.
+**start:** `typing.Optional[datetime.datetime]` — Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job and sandbox creation time.
     
 </dd>
 </dl>
@@ -11338,7 +11433,8 @@ client.billing.get_usage()
 
 Every movement of the API wallet's balance, newest first: funds added,
 jobs charged, charges refunded, and corrections. Chat requests are summed
-into one `llm_usage` row per model per UTC day. Scoped to the workspace the
+into one `llm_usage` row per model per UTC day. A GPU sandbox's charges
+and refunds are summed into one `sandbox_usage` row. Scoped to the workspace the
 credential bills, the same one `GET /v3/balance` reports, so an
 `llm_usage` row sums every member's requests.
 </dd>
