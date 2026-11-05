@@ -21,6 +21,7 @@ class InputSeedance20(UniversalBaseModel):
     Accepted field combinations (one per input mode):
     (1) requires: aspect_ratio, duration_ms, prompt, resolution; accepts quality: standard
     (2) requires: aspect_ratio, duration_ms, prompt, resolution; accepts quality: fast; resolution: 480p | 720p
+    (3) requires: aspect_ratio, duration_ms, prompt, resolution; must omit: generate_audio; accepts quality: mini; resolution: 480p | 720p
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -80,7 +81,7 @@ class InputSeedance20(UniversalBaseModel):
 
     quality: typing.Optional[InputSeedance20Quality] = pydantic.Field(default=None)
     """
-    Quality level to generate at. `standard` — the full model, and the only level that reaches 1080p and 4K. `fast` — tuned for turnaround, at 480p and 720p.
+    Quality level to generate at. `standard` — the full model, and the only level that reaches 1080p and 4K. `fast` — tuned for turnaround, at 480p and 720p. `mini` — the cheapest level, at 480p and 720p, with no `generate_audio` toggle.
     """
 
     if IS_PYDANTIC_V2:

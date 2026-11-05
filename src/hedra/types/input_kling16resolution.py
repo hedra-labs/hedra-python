@@ -2,4 +2,4 @@
 
 import typing
 
-InputKling16Resolution = typing.Union[typing.Literal["1080p", "720p"], typing.Any]
+InputKling16Resolution = typing.Union[typing.Literal["720p", "1080p"], typing.Any]

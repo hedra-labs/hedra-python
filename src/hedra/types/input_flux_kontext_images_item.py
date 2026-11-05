@@ -9,11 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InputGrokVideoStartImage_Url(UniversalBaseModel):
-    """
-    Start frame. At most 10.4 MB.
-    """
-
+class InputFluxKontextImagesItem_Url(UniversalBaseModel):
     source: typing.Literal["url"] = "url"
     url: str
 
@@ -27,11 +23,7 @@ class InputGrokVideoStartImage_Url(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class InputGrokVideoStartImage_Asset(UniversalBaseModel):
-    """
-    Start frame. At most 10.4 MB.
-    """
-
+class InputFluxKontextImagesItem_Asset(UniversalBaseModel):
     source: typing.Literal["asset"] = "asset"
     asset_id: str
 
@@ -45,6 +37,7 @@ class InputGrokVideoStartImage_Asset(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-InputGrokVideoStartImage = typing_extensions.Annotated[
-    typing.Union[InputGrokVideoStartImage_Url, InputGrokVideoStartImage_Asset], pydantic.Field(discriminator="source")
+InputFluxKontextImagesItem = typing_extensions.Annotated[
+    typing.Union[InputFluxKontextImagesItem_Url, InputFluxKontextImagesItem_Asset],
+    pydantic.Field(discriminator="source"),
 ]

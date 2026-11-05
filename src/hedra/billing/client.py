@@ -64,7 +64,7 @@ class BillingClient:
         Parameters
         ----------
         start : typing.Optional[dt.datetime]
-            Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job-creation time.
+            Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job and sandbox creation time.
 
         end : typing.Optional[dt.datetime]
             Window end (exclusive, ISO-8601); defaults to now. The window is capped at 90 days.
@@ -102,7 +102,8 @@ class BillingClient:
         """
         Every movement of the API wallet's balance, newest first: funds added,
         jobs charged, charges refunded, and corrections. Chat requests are summed
-        into one `llm_usage` row per model per UTC day. Scoped to the workspace the
+        into one `llm_usage` row per model per UTC day. A GPU sandbox's charges
+        and refunds are summed into one `sandbox_usage` row. Scoped to the workspace the
         credential bills, the same one `GET /v3/balance` reports, so an
         `llm_usage` row sums every member's requests.
 
@@ -222,7 +223,7 @@ class AsyncBillingClient:
         Parameters
         ----------
         start : typing.Optional[dt.datetime]
-            Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job-creation time.
+            Window start (inclusive, ISO-8601); defaults to 7 days before `end`. Bounds job and sandbox creation time.
 
         end : typing.Optional[dt.datetime]
             Window end (exclusive, ISO-8601); defaults to now. The window is capped at 90 days.
@@ -270,7 +271,8 @@ class AsyncBillingClient:
         """
         Every movement of the API wallet's balance, newest first: funds added,
         jobs charged, charges refunded, and corrections. Chat requests are summed
-        into one `llm_usage` row per model per UTC day. Scoped to the workspace the
+        into one `llm_usage` row per model per UTC day. A GPU sandbox's charges
+        and refunds are summed into one `sandbox_usage` row. Scoped to the workspace the
         credential bills, the same one `GET /v3/balance` reports, so an
         `llm_usage` row sums every member's requests.
 

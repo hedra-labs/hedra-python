@@ -19,6 +19,7 @@ from ..types.input_elevenlabs_v3 import InputElevenlabsV3
 from ..types.input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
 from ..types.input_eyeline_id_relight import InputEyelineIdRelight
 from ..types.input_eyeline_id_restyle import InputEyelineIdRestyle
+from ..types.input_flux2 import InputFlux2
 from ..types.input_flux2flex import InputFlux2Flex
 from ..types.input_flux2klein9b import InputFlux2Klein9B
 from ..types.input_flux2max import InputFlux2Max
@@ -29,6 +30,7 @@ from ..types.input_flux3video_upscaler_precise import InputFlux3VideoUpscalerPre
 from ..types.input_flux11pro import InputFlux11Pro
 from ..types.input_flux11ultra import InputFlux11Ultra
 from ..types.input_flux_dev import InputFluxDev
+from ..types.input_flux_kontext import InputFluxKontext
 from ..types.input_flux_kontext_max import InputFluxKontextMax
 from ..types.input_flux_kontext_pro import InputFluxKontextPro
 from ..types.input_gemini_omni_flash import InputGeminiOmniFlash
@@ -39,7 +41,6 @@ from ..types.input_gpt_image25flare import InputGptImage25Flare
 from ..types.input_gpt_image25sunburst import InputGptImage25Sunburst
 from ..types.input_grok_imagine import InputGrokImagine
 from ..types.input_grok_imagine20 import InputGrokImagine20
-from ..types.input_grok_video import InputGrokVideo
 from ..types.input_happy_horse import InputHappyHorse
 from ..types.input_hedra_avatar import InputHedraAvatar
 from ..types.input_hedra_character3 import InputHedraCharacter3
@@ -1432,58 +1433,10 @@ class JobsClient:
         )
         return _response.data
 
-    def submit_flux_kontext_max(
+    def submit_flux_kontext(
         self,
         *,
-        input: InputFluxKontextMax,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Highest-fidelity reference-image support for complex, multi-element scenes and perfectly matched branded visuals.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputFluxKontextMax
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputFluxKontextMax
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_flux_kontext_max(
-            input=InputFluxKontextMax(
-                prompt="prompt",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_flux_kontext_max(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_flux_kontext_pro(
-        self,
-        *,
-        input: InputFluxKontextPro,
+        input: InputFluxKontext,
         webhook: typing.Optional[str] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1495,7 +1448,7 @@ class JobsClient:
 
         Parameters
         ----------
-        input : InputFluxKontextPro
+        input : InputFluxKontext
 
         webhook : typing.Optional[str]
             URL to receive a signed completion webhook.
@@ -1512,38 +1465,38 @@ class JobsClient:
 
         Examples
         --------
-        from hedra import Hedra, InputFluxKontextPro
+        from hedra import Hedra, InputFluxKontext
 
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.jobs.submit_flux_kontext_pro(
-            input=InputFluxKontextPro(
+        client.jobs.submit_flux_kontext(
+            input=InputFluxKontext(
                 prompt="prompt",
             ),
         )
         """
-        _response = self._raw_client.submit_flux_kontext_pro(
+        _response = self._raw_client.submit_flux_kontext(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
 
-    def submit_flux2flex(
+    def submit_flux2(
         self,
         *,
-        input: InputFlux2Flex,
+        input: InputFlux2,
         webhook: typing.Optional[str] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The tunable Flux.2 tier — trade denoising steps against speed per generation.
+        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
         ----------
-        input : InputFlux2Flex
+        input : InputFlux2
 
         webhook : typing.Optional[str]
             URL to receive a signed completion webhook.
@@ -1560,19 +1513,19 @@ class JobsClient:
 
         Examples
         --------
-        from hedra import Hedra, InputFlux2Flex
+        from hedra import Hedra, InputFlux2
 
         client = Hedra(
             api_key="YOUR_API_KEY",
         )
-        client.jobs.submit_flux2flex(
-            input=InputFlux2Flex(
+        client.jobs.submit_flux2(
+            input=InputFlux2(
                 prompt="prompt",
                 aspect_ratio="16:9",
             ),
         )
         """
-        _response = self._raw_client.submit_flux2flex(
+        _response = self._raw_client.submit_flux2(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -1622,104 +1575,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_flux2klein9b(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_flux2max(
-        self,
-        *,
-        input: InputFlux2Max,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        The top Flux.2 tier, for realism and precision in final deliverables.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputFlux2Max
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputFlux2Max
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_flux2max(
-            input=InputFlux2Max(
-                prompt="prompt",
-                aspect_ratio="16:9",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_flux2max(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_flux2pro(
-        self,
-        *,
-        input: InputFlux2Pro,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputFlux2Pro
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputFlux2Pro
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_flux2pro(
-            input=InputFlux2Pro(
-                prompt="prompt",
-                aspect_ratio="16:9",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_flux2pro(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -2116,57 +1971,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_grok_imagine20(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_grok_video(
-        self,
-        *,
-        input: InputGrokVideo,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Short, punchy clips from a prompt at 480p or 720p.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputGrokVideo
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputGrokVideo
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_grok_video(
-            input=InputGrokVideo(
-                prompt="prompt",
-                aspect_ratio="auto",
-                resolution="480p",
-                duration_ms=1,
-            ),
-        )
-        """
-        _response = self._raw_client.submit_grok_video(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -3803,7 +3607,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        MiniMax H3 Ultra video generation from text, a start frame, or a first and last frame.
+        MiniMax H3 Ultra video generation from text, keyframes, or reference images.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4914,57 +4718,6 @@ class JobsClient:
         )
         return _response.data
 
-    def submit_seedance20mini(
-        self,
-        *,
-        input: InputSeedance20Mini,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        The lightest Seedance tier — short reference-driven clips at 480p and 720p.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputSeedance20Mini
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputSeedance20Mini
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_seedance20mini(
-            input=InputSeedance20Mini(
-                prompt="prompt",
-                aspect_ratio="1:1",
-                resolution="480p",
-                duration_ms=1,
-            ),
-        )
-        """
-        _response = self._raw_client.submit_seedance20mini(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     def submit_seedance25(
         self,
         *,
@@ -5125,7 +4878,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Sharp 2K and 4K stills from a prompt, at the light tier's price.
+        Sharp 2K and 4K stills from a prompt, or edits and blends of source images, at the light tier's price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -5175,7 +4928,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The top Seedream tier — layer-separable output and strong multilingual in-image text, up to 2K.
+        The top Seedream tier — layer-separable output, precise edits to a source image, and strong multilingual in-image text, up to 2K.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -6125,6 +5878,312 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_wan30(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux_kontext_max(
+        self,
+        *,
+        input: InputFluxKontextMax,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux-kontext` with `input.quality` `max` instead.
+
+        Highest-fidelity reference-image support for complex, multi-element scenes and perfectly matched branded visuals.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFluxKontextMax
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFluxKontextMax
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux_kontext_max(
+            input=InputFluxKontextMax(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux_kontext_max(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux_kontext_pro(
+        self,
+        *,
+        input: InputFluxKontextPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux-kontext` with `input.quality` `pro` instead.
+
+        Reference-image support for character, brand, or style consistency.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFluxKontextPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFluxKontextPro
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux_kontext_pro(
+            input=InputFluxKontextPro(
+                prompt="prompt",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux_kontext_pro(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux2flex(
+        self,
+        *,
+        input: InputFlux2Flex,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux2` with `input.quality` `flex` instead.
+
+        The tunable Flux.2 tier — trade denoising steps against speed per generation.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux2Flex
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFlux2Flex
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux2flex(
+            input=InputFlux2Flex(
+                prompt="prompt",
+                aspect_ratio="16:9",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2flex(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux2max(
+        self,
+        *,
+        input: InputFlux2Max,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux2` with `input.quality` `max` instead.
+
+        The top Flux.2 tier, for realism and precision in final deliverables.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux2Max
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFlux2Max
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux2max(
+            input=InputFlux2Max(
+                prompt="prompt",
+                aspect_ratio="16:9",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2max(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux2pro(
+        self,
+        *,
+        input: InputFlux2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux2` with `input.quality` `pro` instead.
+
+        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFlux2Pro
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux2pro(
+            input=InputFlux2Pro(
+                prompt="prompt",
+                aspect_ratio="16:9",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux2pro(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_seedance20mini(
+        self,
+        *,
+        input: InputSeedance20Mini,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `seedance-20` with `input.quality` `mini` instead.
+
+        The lightest Seedance tier — short reference-driven clips at 480p and 720p.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputSeedance20Mini
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputSeedance20Mini
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_seedance20mini(
+            input=InputSeedance20Mini(
+                prompt="prompt",
+                aspect_ratio="1:1",
+                resolution="480p",
+                duration_ms=1,
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedance20mini(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -7697,66 +7756,10 @@ class AsyncJobsClient:
         )
         return _response.data
 
-    async def submit_flux_kontext_max(
+    async def submit_flux_kontext(
         self,
         *,
-        input: InputFluxKontextMax,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Highest-fidelity reference-image support for complex, multi-element scenes and perfectly matched branded visuals.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputFluxKontextMax
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputFluxKontextMax
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_flux_kontext_max(
-                input=InputFluxKontextMax(
-                    prompt="prompt",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_flux_kontext_max(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_flux_kontext_pro(
-        self,
-        *,
-        input: InputFluxKontextPro,
+        input: InputFluxKontext,
         webhook: typing.Optional[str] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -7768,7 +7771,7 @@ class AsyncJobsClient:
 
         Parameters
         ----------
-        input : InputFluxKontextPro
+        input : InputFluxKontext
 
         webhook : typing.Optional[str]
             URL to receive a signed completion webhook.
@@ -7787,7 +7790,7 @@ class AsyncJobsClient:
         --------
         import asyncio
 
-        from hedra import AsyncHedra, InputFluxKontextPro
+        from hedra import AsyncHedra, InputFluxKontext
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -7795,8 +7798,8 @@ class AsyncJobsClient:
 
 
         async def main() -> None:
-            await client.jobs.submit_flux_kontext_pro(
-                input=InputFluxKontextPro(
+            await client.jobs.submit_flux_kontext(
+                input=InputFluxKontext(
                     prompt="prompt",
                 ),
             )
@@ -7804,27 +7807,27 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.submit_flux_kontext_pro(
+        _response = await self._raw_client.submit_flux_kontext(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
 
-    async def submit_flux2flex(
+    async def submit_flux2(
         self,
         *,
-        input: InputFlux2Flex,
+        input: InputFlux2,
         webhook: typing.Optional[str] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The tunable Flux.2 tier — trade denoising steps against speed per generation.
+        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
         Parameters
         ----------
-        input : InputFlux2Flex
+        input : InputFlux2
 
         webhook : typing.Optional[str]
             URL to receive a signed completion webhook.
@@ -7843,7 +7846,7 @@ class AsyncJobsClient:
         --------
         import asyncio
 
-        from hedra import AsyncHedra, InputFlux2Flex
+        from hedra import AsyncHedra, InputFlux2
 
         client = AsyncHedra(
             api_key="YOUR_API_KEY",
@@ -7851,8 +7854,8 @@ class AsyncJobsClient:
 
 
         async def main() -> None:
-            await client.jobs.submit_flux2flex(
-                input=InputFlux2Flex(
+            await client.jobs.submit_flux2(
+                input=InputFlux2(
                     prompt="prompt",
                     aspect_ratio="16:9",
                 ),
@@ -7861,7 +7864,7 @@ class AsyncJobsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.submit_flux2flex(
+        _response = await self._raw_client.submit_flux2(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -7919,120 +7922,6 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_flux2klein9b(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_flux2max(
-        self,
-        *,
-        input: InputFlux2Max,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        The top Flux.2 tier, for realism and precision in final deliverables.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputFlux2Max
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputFlux2Max
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_flux2max(
-                input=InputFlux2Max(
-                    prompt="prompt",
-                    aspect_ratio="16:9",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_flux2max(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_flux2pro(
-        self,
-        *,
-        input: InputFlux2Pro,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputFlux2Pro
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputFlux2Pro
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_flux2pro(
-                input=InputFlux2Pro(
-                    prompt="prompt",
-                    aspect_ratio="16:9",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_flux2pro(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -8493,65 +8382,6 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_grok_imagine20(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_grok_video(
-        self,
-        *,
-        input: InputGrokVideo,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Short, punchy clips from a prompt at 480p or 720p.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputGrokVideo
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputGrokVideo
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_grok_video(
-                input=InputGrokVideo(
-                    prompt="prompt",
-                    aspect_ratio="auto",
-                    resolution="480p",
-                    duration_ms=1,
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_grok_video(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -10436,7 +10266,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        MiniMax H3 Ultra video generation from text, a start frame, or a first and last frame.
+        MiniMax H3 Ultra video generation from text, keyframes, or reference images.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -11723,65 +11553,6 @@ class AsyncJobsClient:
         )
         return _response.data
 
-    async def submit_seedance20mini(
-        self,
-        *,
-        input: InputSeedance20Mini,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        The lightest Seedance tier — short reference-driven clips at 480p and 720p.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputSeedance20Mini
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputSeedance20Mini
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_seedance20mini(
-                input=InputSeedance20Mini(
-                    prompt="prompt",
-                    aspect_ratio="1:1",
-                    resolution="480p",
-                    duration_ms=1,
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_seedance20mini(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     async def submit_seedance25(
         self,
         *,
@@ -11966,7 +11737,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Sharp 2K and 4K stills from a prompt, at the light tier's price.
+        Sharp 2K and 4K stills from a prompt, or edits and blends of source images, at the light tier's price.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -12024,7 +11795,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        The top Seedream tier — layer-separable output and strong multilingual in-image text, up to 2K.
+        The top Seedream tier — layer-separable output, precise edits to a source image, and strong multilingual in-image text, up to 2K.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -13118,6 +12889,360 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_wan30(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux_kontext_max(
+        self,
+        *,
+        input: InputFluxKontextMax,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux-kontext` with `input.quality` `max` instead.
+
+        Highest-fidelity reference-image support for complex, multi-element scenes and perfectly matched branded visuals.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFluxKontextMax
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFluxKontextMax
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux_kontext_max(
+                input=InputFluxKontextMax(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux_kontext_max(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux_kontext_pro(
+        self,
+        *,
+        input: InputFluxKontextPro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux-kontext` with `input.quality` `pro` instead.
+
+        Reference-image support for character, brand, or style consistency.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFluxKontextPro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFluxKontextPro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux_kontext_pro(
+                input=InputFluxKontextPro(
+                    prompt="prompt",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux_kontext_pro(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux2flex(
+        self,
+        *,
+        input: InputFlux2Flex,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux2` with `input.quality` `flex` instead.
+
+        The tunable Flux.2 tier — trade denoising steps against speed per generation.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux2Flex
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFlux2Flex
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux2flex(
+                input=InputFlux2Flex(
+                    prompt="prompt",
+                    aspect_ratio="16:9",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2flex(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux2max(
+        self,
+        *,
+        input: InputFlux2Max,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux2` with `input.quality` `max` instead.
+
+        The top Flux.2 tier, for realism and precision in final deliverables.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux2Max
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFlux2Max
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux2max(
+                input=InputFlux2Max(
+                    prompt="prompt",
+                    aspect_ratio="16:9",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2max(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux2pro(
+        self,
+        *,
+        input: InputFlux2Pro,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `flux2` with `input.quality` `pro` instead.
+
+        The everyday Flux.2 tier — style transfer and sequential edits that hold together across passes.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux2Pro
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFlux2Pro
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux2pro(
+                input=InputFlux2Pro(
+                    prompt="prompt",
+                    aspect_ratio="16:9",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux2pro(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_seedance20mini(
+        self,
+        *,
+        input: InputSeedance20Mini,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Deprecated: run `seedance-20` with `input.quality` `mini` instead.
+
+        The lightest Seedance tier — short reference-driven clips at 480p and 720p.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputSeedance20Mini
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputSeedance20Mini
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_seedance20mini(
+                input=InputSeedance20Mini(
+                    prompt="prompt",
+                    aspect_ratio="1:1",
+                    resolution="480p",
+                    duration_ms=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedance20mini(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
