@@ -192,9 +192,12 @@ for job in client.jobs.list(limit=50):
 pager = client.jobs.list(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
-    for item in page:
+    for item in page.items or []:
         print(item)
 ```
+
+Iterate `page.items` inside the page loop. Iterating `page` itself follows all remaining pages,
+so nesting it inside `iter_pages()` repeats items and requests.
 
 ## Media Inputs and File Uploads
 
