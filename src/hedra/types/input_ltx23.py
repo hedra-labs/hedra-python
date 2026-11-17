@@ -32,21 +32,6 @@ class InputLtx23(UniversalBaseModel):
     Generation prompt. From 1 to 5000 characters.
     """
 
-    resolution: InputLtx23Resolution = pydantic.Field()
-    """
-    Output resolution.
-    """
-
-    generate_audio: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to generate native audio for the video.
-    """
-
-    duration_ms: int = pydantic.Field()
-    """
-    Duration in ms.
-    """
-
     aspect_ratio: InputLtx23AspectRatio = pydantic.Field()
     """
     Output aspect ratio.
@@ -60,6 +45,21 @@ class InputLtx23(UniversalBaseModel):
     end_image: typing.Optional[InputLtx23EndImage] = pydantic.Field(default=None)
     """
     End frame. At most 10.4 MB.
+    """
+
+    resolution: InputLtx23Resolution = pydantic.Field()
+    """
+    Output resolution.
+    """
+
+    generate_audio: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to generate native audio for the video.
+    """
+
+    duration_ms: int = pydantic.Field()
+    """
+    Duration in ms.
     """
 
     quality: typing.Optional[InputLtx23Quality] = pydantic.Field(default=None)

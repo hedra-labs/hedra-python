@@ -3,5 +3,5 @@
 import typing
 
 InputMinimaxH3UltraAspectRatio = typing.Union[
-    typing.Literal["adaptive", "16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], typing.Any
+    typing.Literal["1:1", "3:4", "4:3", "16:9", "21:9", "9:16", "adaptive"], typing.Any
 ]

@@ -36,6 +36,11 @@ class InputViduQ3(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
+    aspect_ratio: typing.Optional[InputViduQ3AspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio.
+    """
+
     resolution: InputViduQ3Resolution = pydantic.Field()
     """
     Output resolution.
@@ -54,11 +59,6 @@ class InputViduQ3(UniversalBaseModel):
     end_image: typing.Optional[InputViduQ3EndImage] = pydantic.Field(default=None)
     """
     End frame. At most 10.4 MB.
-    """
-
-    aspect_ratio: typing.Optional[InputViduQ3AspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio.
     """
 
     quality: typing.Optional[InputViduQ3Quality] = pydantic.Field(default=None)

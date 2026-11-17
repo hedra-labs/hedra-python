@@ -523,93 +523,6 @@ client.jobs.submit_creatify_aurora(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_dreamina31</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Polished, print-ready stills when the brief is a finished image rather than a sketch.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputDreamina31
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_dreamina31(
-    input=InputDreamina31(
-        prompt="prompt",
-        aspect_ratio="16:9",
-        resolution="540p",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputDreamina31` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_elevenlabs_audio_isolation</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -1473,192 +1386,6 @@ client.jobs.submit_elevenlabs_voice_clone(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_eyeline_id_relight</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Relight a video from a relit first frame, keeping the scene, the subjects and the original performance.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputEyelineIdRelight, InputEyelineIdRelightSourceVideo_Url, InputEyelineIdRelightImagesItem_Url
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_eyeline_id_relight(
-    input=InputEyelineIdRelight(
-        prompt="prompt",
-        source_video=InputEyelineIdRelightSourceVideo_Url(
-            url="url",
-        ),
-        images=[
-            InputEyelineIdRelightImagesItem_Url(
-                url="url",
-            )
-        ],
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputEyelineIdRelight` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_eyeline_id_restyle</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Restyle a video's scene, lighting and look from an edited first frame while keeping the people in it recognizably themselves.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputEyelineIdRestyle, InputEyelineIdRestyleSourceVideo_Url, InputEyelineIdRestyleImagesItem_Url
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_eyeline_id_restyle(
-    input=InputEyelineIdRestyle(
-        prompt="prompt",
-        source_video=InputEyelineIdRestyleSourceVideo_Url(
-            url="url",
-        ),
-        images=[
-            InputEyelineIdRestyleImagesItem_Url(
-                url="url",
-            )
-        ],
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputEyelineIdRestyle` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux11pro</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -1844,7 +1571,7 @@ client.jobs.submit_flux11ultra(
 <dl>
 <dd>
 
-Video with native audio, straight from a prompt.
+Set a still in motion, with native audio.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -1893,6 +1620,180 @@ client.jobs.submit_flux3(
 <dd>
 
 **input:** `InputFlux3` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux3image</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Black Forest Labs' flagship image model: renders from a prompt or edits and combines up to ten images, with accurate text. Each resolution is an area at any aspect ratio: 768px that of a 768x768 image, 1K about 1 megapixel, 1.5K about 2, 2K about 4 and 4K about 16.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux3Image
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux3image(
+    input=InputFlux3Image(
+        prompt="prompt",
+        aspect_ratio="auto",
+        resolution="768px",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux3Image` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_flux3image_klein</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The fast, low-cost FLUX.3 image model, built for editing: renders from a prompt or edits and combines up to ten images. Each resolution is an area at any aspect ratio: 768px that of a 768x768 image, 1K about 1 megapixel, 1.5K about 2, 2K about 4 and 4K about 16.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputFlux3ImageKlein
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_flux3image_klein(
+    input=InputFlux3ImageKlein(
+        prompt="prompt",
+        aspect_ratio="auto",
+        resolution="768px",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputFlux3ImageKlein` 
     
 </dd>
 </dl>
@@ -2586,6 +2487,93 @@ client.jobs.submit_gemini_omni_flash11(
 <dd>
 
 **input:** `InputGeminiOmniFlash11` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_gemini_omni_flash12</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gemini's fast multimodal video model — cinematic clips of up to 15 seconds with native audio, from a prompt, a keyframe pair, or reference images, up to 4K.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputGeminiOmniFlash12
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_gemini_omni_flash12(
+    input=InputGeminiOmniFlash12(
+        prompt="prompt",
+        aspect_ratio="16:9",
+        resolution="360p",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputGeminiOmniFlash12` 
     
 </dd>
 </dl>
@@ -3729,179 +3717,6 @@ client.jobs.submit_ideogram_v45(
 <dd>
 
 **input:** `InputIdeogramV45` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_imagen3</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Google's earlier photoreal generator, kept for parity.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputImagen3
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_imagen3(
-    input=InputImagen3(
-        prompt="prompt",
-        aspect_ratio="16:9",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputImagen3` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_imagen4</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Google's photoreal model—natural lighting, lifelike skin, and pro-grade sharpness in every shot.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputImagen4
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_imagen4(
-    input=InputImagen4(
-        prompt="prompt",
-        aspect_ratio="16:9",
-        resolution="1K",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputImagen4` 
     
 </dd>
 </dl>
@@ -5167,7 +4982,7 @@ client.jobs.submit_krea3(
 <dl>
 <dd>
 
-Clips up to 4K with synchronized native audio, for final output.
+Animate a start frame up to 4K, optionally toward an end frame, with native audio.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -5195,9 +5010,9 @@ client = Hedra(
 client.jobs.submit_ltx23(
     input=InputLtx23(
         prompt="prompt",
+        aspect_ratio="auto",
         resolution="1080p",
         duration_ms=1,
-        aspect_ratio="auto",
     ),
 )
 
@@ -5255,7 +5070,7 @@ client.jobs.submit_ltx23(
 <dl>
 <dd>
 
-Clips up to 20 seconds with synchronized native audio, on the quick path.
+Clips up to 20 seconds with synchronized native audio, from a prompt, a start frame, or a start and end frame, or cut to a supplied audio track — on the quick path.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -5283,8 +5098,8 @@ client = Hedra(
 client.jobs.submit_ltx25(
     input=InputLtx25(
         prompt="prompt",
-        resolution="1080p",
         aspect_ratio="auto",
+        resolution="1080p",
     ),
 )
 
@@ -6920,7 +6735,7 @@ client.jobs.submit_omnihuman20(
 <dl>
 <dd>
 
-Stylized 1080p clips up to 15 seconds, with native audio.
+Animate a still into a stylized 1080p clip up to 15 seconds, with native audio.
 
 Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 </dd>
@@ -7229,274 +7044,6 @@ client.jobs.submit_recraft_v3(
 <dd>
 
 **input:** `InputRecraftV3` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_reve21</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Generate images from a text prompt with strong prompt adherence, layout intelligence, and accurate text rendering
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputReve21
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_reve21(
-    input=InputReve21(
-        prompt="prompt",
-        aspect_ratio="4:1",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputReve21` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_reve21edit</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Edit one source image from a natural-language instruction, keeping the rest of the image intact
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputReve21Edit, InputReve21EditImagesItem_Url
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_reve21edit(
-    input=InputReve21Edit(
-        prompt="prompt",
-        aspect_ratio="4:1",
-        images=[
-            InputReve21EditImagesItem_Url(
-                url="url",
-            )
-        ],
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputReve21Edit` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_reve21remix</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Compose up to eight reference images into a new image from a text prompt
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputReve21Remix, InputReve21RemixImagesItem_Url
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_reve21remix(
-    input=InputReve21Remix(
-        prompt="prompt",
-        aspect_ratio="4:1",
-        images=[
-            InputReve21RemixImagesItem_Url(
-                url="url",
-            )
-        ],
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputReve21Remix` 
     
 </dd>
 </dl>
@@ -8196,6 +7743,93 @@ client.jobs.submit_seedream50pro(
 <dd>
 
 **input:** `InputSeedream50Pro` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_seedream55</a>(...) -> SubmitResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stills at 1.5K or 2K from a prompt, or edits and blends of source images.
+
+Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from hedra import Hedra, InputSeedream55
+from hedra.environment import HedraEnvironment
+
+client = Hedra(
+    api_key="<token>",
+    environment=HedraEnvironment.PRODUCTION,
+)
+
+client.jobs.submit_seedream55(
+    input=InputSeedream55(
+        prompt="prompt",
+        aspect_ratio="1:1",
+        resolution="1.5K",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**input:** `InputSeedream55` 
     
 </dd>
 </dl>
@@ -9078,91 +8712,6 @@ client.jobs.submit_veed_video_background_removal(
 <dd>
 
 **input:** `InputVeedVideoBackgroundRemoval` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_veo2</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Google's earlier cinematic generator, kept for existing workflows.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputVeo2
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_veo2(
-    input=InputVeo2(
-        prompt="prompt",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputVeo2` 
     
 </dd>
 </dl>

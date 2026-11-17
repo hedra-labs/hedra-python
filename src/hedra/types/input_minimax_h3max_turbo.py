@@ -45,6 +45,11 @@ class InputMinimaxH3MaxTurbo(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
+    aspect_ratio: typing.Optional[InputMinimaxH3MaxTurboAspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio.
+    """
+
     start_image: typing.Optional[InputMinimaxH3MaxTurboStartImage] = pydantic.Field(default=None)
     """
     Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
@@ -53,11 +58,6 @@ class InputMinimaxH3MaxTurbo(UniversalBaseModel):
     end_image: typing.Optional[InputMinimaxH3MaxTurboEndImage] = pydantic.Field(default=None)
     """
     End frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
-    """
-
-    aspect_ratio: typing.Optional[InputMinimaxH3MaxTurboAspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio.
     """
 
     if IS_PYDANTIC_V2:
