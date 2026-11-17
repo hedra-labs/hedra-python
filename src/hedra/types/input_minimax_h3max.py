@@ -49,6 +49,11 @@ class InputMinimaxH3Max(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
+    aspect_ratio: typing.Optional[InputMinimaxH3MaxAspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image, else the first reference video.
+    """
+
     start_image: typing.Optional[InputMinimaxH3MaxStartImage] = pydantic.Field(default=None)
     """
     Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
@@ -57,11 +62,6 @@ class InputMinimaxH3Max(UniversalBaseModel):
     end_image: typing.Optional[InputMinimaxH3MaxEndImage] = pydantic.Field(default=None)
     """
     End frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
-    """
-
-    aspect_ratio: typing.Optional[InputMinimaxH3MaxAspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image, else the first reference video.
     """
 
     images: typing.Optional[typing.List[InputMinimaxH3MaxImagesItem]] = pydantic.Field(default=None)

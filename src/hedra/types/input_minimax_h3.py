@@ -44,6 +44,11 @@ class InputMinimaxH3(UniversalBaseModel):
     Duration in ms.
     """
 
+    aspect_ratio: typing.Optional[InputMinimaxH3AspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image, else the first reference video.
+    """
+
     start_image: typing.Optional[InputMinimaxH3StartImage] = pydantic.Field(default=None)
     """
     Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
@@ -52,11 +57,6 @@ class InputMinimaxH3(UniversalBaseModel):
     end_image: typing.Optional[InputMinimaxH3EndImage] = pydantic.Field(default=None)
     """
     End frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
-    """
-
-    aspect_ratio: typing.Optional[InputMinimaxH3AspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image, else the first reference video.
     """
 
     images: typing.Optional[typing.List[InputMinimaxH3ImagesItem]] = pydantic.Field(default=None)

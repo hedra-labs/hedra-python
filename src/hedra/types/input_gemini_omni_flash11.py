@@ -38,11 +38,6 @@ class InputGeminiOmniFlash11(UniversalBaseModel):
     Output resolution.
     """
 
-    duration_ms: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Duration in ms.
-    """
-
     start_image: typing.Optional[InputGeminiOmniFlash11StartImage] = pydantic.Field(default=None)
     """
     Start frame. At most 10.4 MB.
@@ -66,6 +61,11 @@ class InputGeminiOmniFlash11(UniversalBaseModel):
     videos: typing.Optional[typing.List[InputGeminiOmniFlash11VideosItem]] = pydantic.Field(default=None)
     """
     Reference videos. 1 to 3 videos, each at most 10.15s and at most 524.2 MB.
+    """
+
+    duration_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Duration in ms.
     """
 
     if IS_PYDANTIC_V2:

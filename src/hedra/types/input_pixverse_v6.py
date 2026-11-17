@@ -53,14 +53,14 @@ class InputPixverseV6(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed.
     """
 
-    start_image: typing.Optional[InputPixverseV6StartImage] = pydantic.Field(default=None)
-    """
-    Start frame. At most 10.4 MB.
-    """
-
     aspect_ratio: typing.Optional[InputPixverseV6AspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
+    """
+
+    start_image: typing.Optional[InputPixverseV6StartImage] = pydantic.Field(default=None)
+    """
+    Start frame. At most 10.4 MB.
     """
 
     if IS_PYDANTIC_V2:

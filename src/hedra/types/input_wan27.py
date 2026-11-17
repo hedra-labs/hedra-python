@@ -41,6 +41,11 @@ class InputWan27(UniversalBaseModel):
     Seed for reproducible output; omit for a random seed. From 0 to 2147483647.
     """
 
+    aspect_ratio: typing.Optional[InputWan27AspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio.
+    """
+
     resolution: InputWan27Resolution = pydantic.Field()
     """
     Output resolution.
@@ -59,11 +64,6 @@ class InputWan27(UniversalBaseModel):
     end_image: typing.Optional[InputWan27EndImage] = pydantic.Field(default=None)
     """
     End frame. At most 20 MB.
-    """
-
-    aspect_ratio: typing.Optional[InputWan27AspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio.
     """
 
     images: typing.Optional[typing.List[InputWan27ImagesItem]] = pydantic.Field(default=None)

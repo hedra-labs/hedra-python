@@ -6,7 +6,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.input_creatify_aurora import InputCreatifyAurora
-from ..types.input_dreamina31 import InputDreamina31
 from ..types.input_elevenlabs_audio_isolation import InputElevenlabsAudioIsolation
 from ..types.input_elevenlabs_english_sts_v2 import InputElevenlabsEnglishStsV2
 from ..types.input_elevenlabs_flash_multilingual_v2 import InputElevenlabsFlashMultilingualV2
@@ -17,14 +16,14 @@ from ..types.input_elevenlabs_music import InputElevenlabsMusic
 from ..types.input_elevenlabs_sound_effects import InputElevenlabsSoundEffects
 from ..types.input_elevenlabs_v3 import InputElevenlabsV3
 from ..types.input_elevenlabs_voice_clone import InputElevenlabsVoiceClone
-from ..types.input_eyeline_id_relight import InputEyelineIdRelight
-from ..types.input_eyeline_id_restyle import InputEyelineIdRestyle
 from ..types.input_flux2 import InputFlux2
 from ..types.input_flux2flex import InputFlux2Flex
 from ..types.input_flux2klein9b import InputFlux2Klein9B
 from ..types.input_flux2max import InputFlux2Max
 from ..types.input_flux2pro import InputFlux2Pro
 from ..types.input_flux3 import InputFlux3
+from ..types.input_flux3image import InputFlux3Image
+from ..types.input_flux3image_klein import InputFlux3ImageKlein
 from ..types.input_flux3video_upscaler_creative import InputFlux3VideoUpscalerCreative
 from ..types.input_flux3video_upscaler_precise import InputFlux3VideoUpscalerPrecise
 from ..types.input_flux11pro import InputFlux11Pro
@@ -35,6 +34,7 @@ from ..types.input_flux_kontext_max import InputFluxKontextMax
 from ..types.input_flux_kontext_pro import InputFluxKontextPro
 from ..types.input_gemini_omni_flash import InputGeminiOmniFlash
 from ..types.input_gemini_omni_flash11 import InputGeminiOmniFlash11
+from ..types.input_gemini_omni_flash12 import InputGeminiOmniFlash12
 from ..types.input_gpt_image2 import InputGptImage2
 from ..types.input_gpt_image15 import InputGptImage15
 from ..types.input_gpt_image25flare import InputGptImage25Flare
@@ -48,8 +48,6 @@ from ..types.input_heygen_photo_avatar4 import InputHeygenPhotoAvatar4
 from ..types.input_hidream_o1image import InputHidreamO1Image
 from ..types.input_ideogram_v4 import InputIdeogramV4
 from ..types.input_ideogram_v45 import InputIdeogramV45
-from ..types.input_imagen3 import InputImagen3
-from ..types.input_imagen4 import InputImagen4
 from ..types.input_kling16 import InputKling16
 from ..types.input_kling21master import InputKling21Master
 from ..types.input_kling25turbo import InputKling25Turbo
@@ -88,9 +86,6 @@ from ..types.input_pixverse_v6 import InputPixverseV6
 from ..types.input_qwen_image2 import InputQwenImage2
 from ..types.input_qwen_image21 import InputQwenImage21
 from ..types.input_recraft_v3 import InputRecraftV3
-from ..types.input_reve21 import InputReve21
-from ..types.input_reve21edit import InputReve21Edit
-from ..types.input_reve21remix import InputReve21Remix
 from ..types.input_sana import InputSana
 from ..types.input_seedance15pro import InputSeedance15Pro
 from ..types.input_seedance20 import InputSeedance20
@@ -100,6 +95,7 @@ from ..types.input_seedream40 import InputSeedream40
 from ..types.input_seedream45 import InputSeedream45
 from ..types.input_seedream50lite import InputSeedream50Lite
 from ..types.input_seedream50pro import InputSeedream50Pro
+from ..types.input_seedream55 import InputSeedream55
 from ..types.input_topaz_image_upscaler import InputTopazImageUpscaler
 from ..types.input_topaz_image_upscaler_transparency import InputTopazImageUpscalerTransparency
 from ..types.input_topaz_image_upscaler_wonder import InputTopazImageUpscalerWonder
@@ -110,7 +106,6 @@ from ..types.input_topaz_video_upscaler_starlight_hq import InputTopazVideoUpsca
 from ..types.input_topaz_video_upscaler_starlight_precise import InputTopazVideoUpscalerStarlightPrecise
 from ..types.input_veed_fabric10 import InputVeedFabric10
 from ..types.input_veed_video_background_removal import InputVeedVideoBackgroundRemoval
-from ..types.input_veo2 import InputVeo2
 from ..types.input_veo3 import InputVeo3
 from ..types.input_veo31 import InputVeo31
 from ..types.input_vidu_q3 import InputViduQ3
@@ -438,56 +433,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_creatify_aurora(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_dreamina31(
-        self,
-        *,
-        input: InputDreamina31,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Polished, print-ready stills when the brief is a finished image rather than a sketch.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputDreamina31
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputDreamina31
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_dreamina31(
-            input=InputDreamina31(
-                prompt="prompt",
-                aspect_ratio="16:9",
-                resolution="540p",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_dreamina31(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -1001,128 +946,6 @@ class JobsClient:
         )
         return _response.data
 
-    def submit_eyeline_id_relight(
-        self,
-        *,
-        input: InputEyelineIdRelight,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Relight a video from a relit first frame, keeping the scene, the subjects and the original performance.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputEyelineIdRelight
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import (
-            Hedra,
-            InputEyelineIdRelight,
-            InputEyelineIdRelightImagesItem_Url,
-            InputEyelineIdRelightSourceVideo_Url,
-        )
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_eyeline_id_relight(
-            input=InputEyelineIdRelight(
-                prompt="prompt",
-                source_video=InputEyelineIdRelightSourceVideo_Url(
-                    url="url",
-                ),
-                images=[
-                    InputEyelineIdRelightImagesItem_Url(
-                        url="url",
-                    )
-                ],
-            ),
-        )
-        """
-        _response = self._raw_client.submit_eyeline_id_relight(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_eyeline_id_restyle(
-        self,
-        *,
-        input: InputEyelineIdRestyle,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Restyle a video's scene, lighting and look from an edited first frame while keeping the people in it recognizably themselves.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputEyelineIdRestyle
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import (
-            Hedra,
-            InputEyelineIdRestyle,
-            InputEyelineIdRestyleImagesItem_Url,
-            InputEyelineIdRestyleSourceVideo_Url,
-        )
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_eyeline_id_restyle(
-            input=InputEyelineIdRestyle(
-                prompt="prompt",
-                source_video=InputEyelineIdRestyleSourceVideo_Url(
-                    url="url",
-                ),
-                images=[
-                    InputEyelineIdRestyleImagesItem_Url(
-                        url="url",
-                    )
-                ],
-            ),
-        )
-        """
-        _response = self._raw_client.submit_eyeline_id_restyle(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     def submit_flux11pro(
         self,
         *,
@@ -1231,7 +1054,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Video with native audio, straight from a prompt.
+        Set a still in motion, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -1269,6 +1092,106 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_flux3(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux3image(
+        self,
+        *,
+        input: InputFlux3Image,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Black Forest Labs' flagship image model: renders from a prompt or edits and combines up to ten images, with accurate text. Each resolution is an area at any aspect ratio: 768px that of a 768x768 image, 1K about 1 megapixel, 1.5K about 2, 2K about 4 and 4K about 16.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux3Image
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFlux3Image
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux3image(
+            input=InputFlux3Image(
+                prompt="prompt",
+                aspect_ratio="auto",
+                resolution="768px",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux3image(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_flux3image_klein(
+        self,
+        *,
+        input: InputFlux3ImageKlein,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        The fast, low-cost FLUX.3 image model, built for editing: renders from a prompt or edits and combines up to ten images. Each resolution is an area at any aspect ratio: 768px that of a 768x768 image, 1K about 1 megapixel, 1.5K about 2, 2K about 4 and 4K about 16.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux3ImageKlein
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputFlux3ImageKlein
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_flux3image_klein(
+            input=InputFlux3ImageKlein(
+                prompt="prompt",
+                aspect_ratio="auto",
+                resolution="768px",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_flux3image_klein(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -1674,6 +1597,56 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_gemini_omni_flash11(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_gemini_omni_flash12(
+        self,
+        *,
+        input: InputGeminiOmniFlash12,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Gemini's fast multimodal video model — cinematic clips of up to 15 seconds with native audio, from a prompt, a keyframe pair, or reference images, up to 4K.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputGeminiOmniFlash12
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputGeminiOmniFlash12
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_gemini_omni_flash12(
+            input=InputGeminiOmniFlash12(
+                prompt="prompt",
+                aspect_ratio="16:9",
+                resolution="360p",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_gemini_omni_flash12(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -2351,105 +2324,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_ideogram_v45(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_imagen3(
-        self,
-        *,
-        input: InputImagen3,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Google's earlier photoreal generator, kept for parity.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputImagen3
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputImagen3
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_imagen3(
-            input=InputImagen3(
-                prompt="prompt",
-                aspect_ratio="16:9",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_imagen3(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_imagen4(
-        self,
-        *,
-        input: InputImagen4,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Google's photoreal model—natural lighting, lifelike skin, and pro-grade sharpness in every shot.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputImagen4
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputImagen4
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_imagen4(
-            input=InputImagen4(
-                prompt="prompt",
-                aspect_ratio="16:9",
-                resolution="1K",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_imagen4(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -3190,7 +3064,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Clips up to 4K with synchronized native audio, for final output.
+        Animate a start frame up to 4K, optionally toward an end frame, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3221,9 +3095,9 @@ class JobsClient:
         client.jobs.submit_ltx23(
             input=InputLtx23(
                 prompt="prompt",
+                aspect_ratio="auto",
                 resolution="1080p",
                 duration_ms=1,
-                aspect_ratio="auto",
             ),
         )
         """
@@ -3241,7 +3115,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Clips up to 20 seconds with synchronized native audio, on the quick path.
+        Clips up to 20 seconds with synchronized native audio, from a prompt, a start frame, or a start and end frame, or cut to a supplied audio track — on the quick path.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -3272,8 +3146,8 @@ class JobsClient:
         client.jobs.submit_ltx25(
             input=InputLtx25(
                 prompt="prompt",
-                resolution="1080p",
                 aspect_ratio="auto",
+                resolution="1080p",
             ),
         )
         """
@@ -4218,7 +4092,7 @@ class JobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Stylized 1080p clips up to 15 seconds, with native audio.
+        Animate a still into a stylized 1080p clip up to 15 seconds, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -4405,163 +4279,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_recraft_v3(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_reve21(
-        self,
-        *,
-        input: InputReve21,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Generate images from a text prompt with strong prompt adherence, layout intelligence, and accurate text rendering
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputReve21
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputReve21
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_reve21(
-            input=InputReve21(
-                prompt="prompt",
-                aspect_ratio="4:1",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_reve21(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_reve21edit(
-        self,
-        *,
-        input: InputReve21Edit,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Edit one source image from a natural-language instruction, keeping the rest of the image intact
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputReve21Edit
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputReve21Edit, InputReve21EditImagesItem_Url
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_reve21edit(
-            input=InputReve21Edit(
-                prompt="prompt",
-                aspect_ratio="4:1",
-                images=[
-                    InputReve21EditImagesItem_Url(
-                        url="url",
-                    )
-                ],
-            ),
-        )
-        """
-        _response = self._raw_client.submit_reve21edit(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_reve21remix(
-        self,
-        *,
-        input: InputReve21Remix,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Compose up to eight reference images into a new image from a text prompt
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputReve21Remix
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputReve21Remix, InputReve21RemixImagesItem_Url
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_reve21remix(
-            input=InputReve21Remix(
-                prompt="prompt",
-                aspect_ratio="4:1",
-                images=[
-                    InputReve21RemixImagesItem_Url(
-                        url="url",
-                    )
-                ],
-            ),
-        )
-        """
-        _response = self._raw_client.submit_reve21remix(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -4965,6 +4682,56 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_seedream50pro(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    def submit_seedream55(
+        self,
+        *,
+        input: InputSeedream55,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Stills at 1.5K or 2K from a prompt, or edits and blends of source images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputSeedream55
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        from hedra import Hedra, InputSeedream55
+
+        client = Hedra(
+            api_key="YOUR_API_KEY",
+        )
+        client.jobs.submit_seedream55(
+            input=InputSeedream55(
+                prompt="prompt",
+                aspect_ratio="1:1",
+                resolution="1.5K",
+            ),
+        )
+        """
+        _response = self._raw_client.submit_seedream55(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -5518,54 +5285,6 @@ class JobsClient:
         )
         """
         _response = self._raw_client.submit_veed_video_background_removal(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    def submit_veo2(
-        self,
-        *,
-        input: InputVeo2,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Google's earlier cinematic generator, kept for existing workflows.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputVeo2
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        from hedra import Hedra, InputVeo2
-
-        client = Hedra(
-            api_key="YOUR_API_KEY",
-        )
-        client.jobs.submit_veo2(
-            input=InputVeo2(
-                prompt="prompt",
-            ),
-        )
-        """
-        _response = self._raw_client.submit_veo2(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -6613,64 +6332,6 @@ class AsyncJobsClient:
         )
         return _response.data
 
-    async def submit_dreamina31(
-        self,
-        *,
-        input: InputDreamina31,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Polished, print-ready stills when the brief is a finished image rather than a sketch.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputDreamina31
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputDreamina31
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_dreamina31(
-                input=InputDreamina31(
-                    prompt="prompt",
-                    aspect_ratio="16:9",
-                    resolution="540p",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_dreamina31(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     async def submit_elevenlabs_audio_isolation(
         self,
         *,
@@ -7260,144 +6921,6 @@ class AsyncJobsClient:
         )
         return _response.data
 
-    async def submit_eyeline_id_relight(
-        self,
-        *,
-        input: InputEyelineIdRelight,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Relight a video from a relit first frame, keeping the scene, the subjects and the original performance.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputEyelineIdRelight
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import (
-            AsyncHedra,
-            InputEyelineIdRelight,
-            InputEyelineIdRelightImagesItem_Url,
-            InputEyelineIdRelightSourceVideo_Url,
-        )
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_eyeline_id_relight(
-                input=InputEyelineIdRelight(
-                    prompt="prompt",
-                    source_video=InputEyelineIdRelightSourceVideo_Url(
-                        url="url",
-                    ),
-                    images=[
-                        InputEyelineIdRelightImagesItem_Url(
-                            url="url",
-                        )
-                    ],
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_eyeline_id_relight(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_eyeline_id_restyle(
-        self,
-        *,
-        input: InputEyelineIdRestyle,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Restyle a video's scene, lighting and look from an edited first frame while keeping the people in it recognizably themselves.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputEyelineIdRestyle
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import (
-            AsyncHedra,
-            InputEyelineIdRestyle,
-            InputEyelineIdRestyleImagesItem_Url,
-            InputEyelineIdRestyleSourceVideo_Url,
-        )
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_eyeline_id_restyle(
-                input=InputEyelineIdRestyle(
-                    prompt="prompt",
-                    source_video=InputEyelineIdRestyleSourceVideo_Url(
-                        url="url",
-                    ),
-                    images=[
-                        InputEyelineIdRestyleImagesItem_Url(
-                            url="url",
-                        )
-                    ],
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_eyeline_id_restyle(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
     async def submit_flux11pro(
         self,
         *,
@@ -7522,7 +7045,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Video with native audio, straight from a prompt.
+        Set a still in motion, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -7568,6 +7091,122 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_flux3(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux3image(
+        self,
+        *,
+        input: InputFlux3Image,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Black Forest Labs' flagship image model: renders from a prompt or edits and combines up to ten images, with accurate text. Each resolution is an area at any aspect ratio: 768px that of a 768x768 image, 1K about 1 megapixel, 1.5K about 2, 2K about 4 and 4K about 16.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux3Image
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFlux3Image
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux3image(
+                input=InputFlux3Image(
+                    prompt="prompt",
+                    aspect_ratio="auto",
+                    resolution="768px",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux3image(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_flux3image_klein(
+        self,
+        *,
+        input: InputFlux3ImageKlein,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        The fast, low-cost FLUX.3 image model, built for editing: renders from a prompt or edits and combines up to ten images. Each resolution is an area at any aspect ratio: 768px that of a 768x768 image, 1K about 1 megapixel, 1.5K about 2, 2K about 4 and 4K about 16.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputFlux3ImageKlein
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputFlux3ImageKlein
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_flux3image_klein(
+                input=InputFlux3ImageKlein(
+                    prompt="prompt",
+                    aspect_ratio="auto",
+                    resolution="768px",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_flux3image_klein(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -8037,6 +7676,64 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_gemini_omni_flash11(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_gemini_omni_flash12(
+        self,
+        *,
+        input: InputGeminiOmniFlash12,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Gemini's fast multimodal video model — cinematic clips of up to 15 seconds with native audio, from a prompt, a keyframe pair, or reference images, up to 4K.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputGeminiOmniFlash12
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputGeminiOmniFlash12
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_gemini_omni_flash12(
+                input=InputGeminiOmniFlash12(
+                    prompt="prompt",
+                    aspect_ratio="16:9",
+                    resolution="360p",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_gemini_omni_flash12(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -8818,121 +8515,6 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_ideogram_v45(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_imagen3(
-        self,
-        *,
-        input: InputImagen3,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Google's earlier photoreal generator, kept for parity.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputImagen3
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputImagen3
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_imagen3(
-                input=InputImagen3(
-                    prompt="prompt",
-                    aspect_ratio="16:9",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_imagen3(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_imagen4(
-        self,
-        *,
-        input: InputImagen4,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Google's photoreal model—natural lighting, lifelike skin, and pro-grade sharpness in every shot.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputImagen4
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputImagen4
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_imagen4(
-                input=InputImagen4(
-                    prompt="prompt",
-                    aspect_ratio="16:9",
-                    resolution="1K",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_imagen4(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -9785,7 +9367,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Clips up to 4K with synchronized native audio, for final output.
+        Animate a start frame up to 4K, optionally toward an end frame, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9821,9 +9403,9 @@ class AsyncJobsClient:
             await client.jobs.submit_ltx23(
                 input=InputLtx23(
                     prompt="prompt",
+                    aspect_ratio="auto",
                     resolution="1080p",
                     duration_ms=1,
-                    aspect_ratio="auto",
                 ),
             )
 
@@ -9844,7 +9426,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Clips up to 20 seconds with synchronized native audio, on the quick path.
+        Clips up to 20 seconds with synchronized native audio, from a prompt, a start frame, or a start and end frame, or cut to a supplied audio track — on the quick path.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -9880,8 +9462,8 @@ class AsyncJobsClient:
             await client.jobs.submit_ltx25(
                 input=InputLtx25(
                     prompt="prompt",
-                    resolution="1080p",
                     aspect_ratio="auto",
+                    resolution="1080p",
                 ),
             )
 
@@ -10973,7 +10555,7 @@ class AsyncJobsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SubmitResponse:
         """
-        Stylized 1080p clips up to 15 seconds, with native audio.
+        Animate a still into a stylized 1080p clip up to 15 seconds, with native audio.
 
         Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
 
@@ -11192,187 +10774,6 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_recraft_v3(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_reve21(
-        self,
-        *,
-        input: InputReve21,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Generate images from a text prompt with strong prompt adherence, layout intelligence, and accurate text rendering
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputReve21
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputReve21
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_reve21(
-                input=InputReve21(
-                    prompt="prompt",
-                    aspect_ratio="4:1",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_reve21(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_reve21edit(
-        self,
-        *,
-        input: InputReve21Edit,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Edit one source image from a natural-language instruction, keeping the rest of the image intact
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputReve21Edit
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputReve21Edit, InputReve21EditImagesItem_Url
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_reve21edit(
-                input=InputReve21Edit(
-                    prompt="prompt",
-                    aspect_ratio="4:1",
-                    images=[
-                        InputReve21EditImagesItem_Url(
-                            url="url",
-                        )
-                    ],
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_reve21edit(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_reve21remix(
-        self,
-        *,
-        input: InputReve21Remix,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Compose up to eight reference images into a new image from a text prompt
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputReve21Remix
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputReve21Remix, InputReve21RemixImagesItem_Url
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_reve21remix(
-                input=InputReve21Remix(
-                    prompt="prompt",
-                    aspect_ratio="4:1",
-                    images=[
-                        InputReve21RemixImagesItem_Url(
-                            url="url",
-                        )
-                    ],
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_reve21remix(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -11840,6 +11241,64 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_seedream50pro(
+            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
+        )
+        return _response.data
+
+    async def submit_seedream55(
+        self,
+        *,
+        input: InputSeedream55,
+        webhook: typing.Optional[str] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SubmitResponse:
+        """
+        Stills at 1.5K or 2K from a prompt, or edits and blends of source images.
+
+        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
+
+        Parameters
+        ----------
+        input : InputSeedream55
+
+        webhook : typing.Optional[str]
+            URL to receive a signed completion webhook.
+
+        idempotency_key : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SubmitResponse
+            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
+
+        Examples
+        --------
+        import asyncio
+
+        from hedra import AsyncHedra, InputSeedream55
+
+        client = AsyncHedra(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.jobs.submit_seedream55(
+                input=InputSeedream55(
+                    prompt="prompt",
+                    aspect_ratio="1:1",
+                    resolution="1.5K",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.submit_seedream55(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data
@@ -12473,62 +11932,6 @@ class AsyncJobsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_veed_video_background_removal(
-            input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
-        )
-        return _response.data
-
-    async def submit_veo2(
-        self,
-        *,
-        input: InputVeo2,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SubmitResponse:
-        """
-        Google's earlier cinematic generator, kept for existing workflows.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputVeo2
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SubmitResponse
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-
-        Examples
-        --------
-        import asyncio
-
-        from hedra import AsyncHedra, InputVeo2
-
-        client = AsyncHedra(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.jobs.submit_veo2(
-                input=InputVeo2(
-                    prompt="prompt",
-                ),
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.submit_veo2(
             input=input, webhook=webhook, idempotency_key=idempotency_key, request_options=request_options
         )
         return _response.data

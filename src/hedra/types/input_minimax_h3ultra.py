@@ -19,8 +19,8 @@ class InputMinimaxH3Ultra(UniversalBaseModel):
     Accepted field combinations (one per input mode):
     (1) requires: duration_ms, prompt, start_image; must omit: aspect_ratio, audios, end_image, images
     (2) requires: duration_ms, end_image, prompt, start_image; must omit: aspect_ratio, audios, images
-    (3) requires: aspect_ratio, duration_ms, images, prompt; must omit: end_image, start_image; accepts aspect_ratio: adaptive | 16:9 | 9:16 | 1:1
-    (4) requires: aspect_ratio, duration_ms, prompt; must omit: audios, end_image, images, start_image; accepts aspect_ratio: 16:9 | 9:16 | 1:1 | 3:4 | 4:3 | 21:9
+    (3) requires: aspect_ratio, duration_ms, images, prompt; must omit: end_image, start_image; accepts aspect_ratio: 1:1 | 16:9 | 9:16 | adaptive
+    (4) requires: aspect_ratio, duration_ms, prompt; must omit: audios, end_image, images, start_image; accepts aspect_ratio: 1:1 | 3:4 | 4:3 | 16:9 | 21:9 | 9:16
     """
 
     num_outputs: typing.Optional[int] = pydantic.Field(default=None)
@@ -48,6 +48,11 @@ class InputMinimaxH3Ultra(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
+    aspect_ratio: typing.Optional[InputMinimaxH3UltraAspectRatio] = pydantic.Field(default=None)
+    """
+    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image.
+    """
+
     start_image: typing.Optional[InputMinimaxH3UltraStartImage] = pydantic.Field(default=None)
     """
     Start frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
@@ -56,11 +61,6 @@ class InputMinimaxH3Ultra(UniversalBaseModel):
     end_image: typing.Optional[InputMinimaxH3UltraEndImage] = pydantic.Field(default=None)
     """
     End frame. From 256px to 5760px on each side, with an aspect ratio from 0.4 to 2.5, and at most 30 MB.
-    """
-
-    aspect_ratio: typing.Optional[InputMinimaxH3UltraAspectRatio] = pydantic.Field(default=None)
-    """
-    Output aspect ratio. Omitted or `adaptive` uses the supported ratio nearest the first reference image.
     """
 
     images: typing.Optional[typing.List[InputMinimaxH3UltraImagesItem]] = pydantic.Field(default=None)

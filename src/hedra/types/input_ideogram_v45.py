@@ -34,16 +34,6 @@ class InputIdeogramV45(UniversalBaseModel):
     Rewrite the prompt before generation. An LLM expands it into a fuller description and the model receives that text instead of the submitted one; the result's `prompt` reports what ran.
     """
 
-    images: typing.Optional[typing.List[InputIdeogramV45ImagesItem]] = pydantic.Field(default=None)
-    """
-    Images to edit or blend. 1 to 5 images, each at most 30 MB.
-    """
-
-    seed: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Seed for reproducible output; omit for a random seed.
-    """
-
     aspect_ratio: typing.Optional[InputIdeogramV45AspectRatio] = pydantic.Field(default=None)
     """
     Output aspect ratio.
@@ -52,6 +42,16 @@ class InputIdeogramV45(UniversalBaseModel):
     resolution: typing.Optional[InputIdeogramV45Resolution] = pydantic.Field(default=None)
     """
     Output resolution.
+    """
+
+    images: typing.Optional[typing.List[InputIdeogramV45ImagesItem]] = pydantic.Field(default=None)
+    """
+    Images to edit or blend. 1 to 5 images, each at most 30 MB.
+    """
+
+    seed: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Seed for reproducible output; omit for a random seed.
     """
 
     quality: typing.Optional[InputIdeogramV45Quality] = pydantic.Field(default=None)
