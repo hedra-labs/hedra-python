@@ -13,7 +13,7 @@ from .output_item import OutputItem
 
 class WebhookPayload(UniversalBaseModel):
     """
-    Body of a webhook delivery: the `GET /jobs/{job_id}` result envelope without its poll-only fields (`logs`, `cost`, `currency`) — poll the job to read those.
+    Body of a webhook delivery: the `GET /jobs/{job_id}` result envelope without its poll-only fields (`logs`, `cost`, `currency`, `created_by`) — poll the job to read those.
     """
 
     job_id: str = pydantic.Field()

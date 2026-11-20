@@ -236,9 +236,13 @@ class RawModelsClient:
         *,
         limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobSummary, JobListResponse]:
         """
+        Your jobs for this model, or with `members=true` every job for it in
+        your workspace, each with its `created_by`, newest first.
+
         Parameters
         ----------
         model : str
@@ -249,6 +253,9 @@ class RawModelsClient:
 
         cursor : typing.Optional[str]
             Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        members : typing.Optional[bool]
+            With `true`, every job for this model in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -264,6 +271,7 @@ class RawModelsClient:
             params={
                 "limit": limit,
                 "cursor": cursor,
+                "members": members,
             },
             request_options=request_options,
         )
@@ -283,6 +291,7 @@ class RawModelsClient:
                     model,
                     limit=limit,
                     cursor=_parsed_next,
+                    members=members,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -1038,9 +1047,13 @@ class AsyncRawModelsClient:
         *,
         limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobSummary, JobListResponse]:
         """
+        Your jobs for this model, or with `members=true` every job for it in
+        your workspace, each with its `created_by`, newest first.
+
         Parameters
         ----------
         model : str
@@ -1051,6 +1064,9 @@ class AsyncRawModelsClient:
 
         cursor : typing.Optional[str]
             Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        members : typing.Optional[bool]
+            With `true`, every job for this model in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1066,6 +1082,7 @@ class AsyncRawModelsClient:
             params={
                 "limit": limit,
                 "cursor": cursor,
+                "members": members,
             },
             request_options=request_options,
         )
@@ -1087,6 +1104,7 @@ class AsyncRawModelsClient:
                         model,
                         limit=limit,
                         cursor=_parsed_next,
+                        members=members,
                         request_options=request_options,
                     )
 

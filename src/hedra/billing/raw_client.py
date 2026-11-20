@@ -138,6 +138,7 @@ class RawBillingClient:
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
         group_by: typing.Optional[UsageGroupBy] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UsageResponse]:
         """
@@ -151,6 +152,9 @@ class RawBillingClient:
 
         group_by : typing.Optional[UsageGroupBy]
             One summary row (`total`), one per UTC day (`day`), or one per model (`model`).
+
+        members : typing.Optional[bool]
+            With `true`, the default, the spend of everyone in the workspace the credential bills, the one `GET /v3/balance` reports, whoever submitted the job or created the sandbox, and `members` breaks it down per member, naming each by email and name; with `false`, only your own spend, in every workspace. Any credential holding `usage:read` may pass either.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -167,6 +171,7 @@ class RawBillingClient:
                 "start": serialize_datetime(start) if start is not None else None,
                 "end": serialize_datetime(end) if end is not None else None,
                 "group_by": group_by,
+                "members": members,
             },
             request_options=request_options,
         )
@@ -603,6 +608,7 @@ class AsyncRawBillingClient:
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
         group_by: typing.Optional[UsageGroupBy] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UsageResponse]:
         """
@@ -616,6 +622,9 @@ class AsyncRawBillingClient:
 
         group_by : typing.Optional[UsageGroupBy]
             One summary row (`total`), one per UTC day (`day`), or one per model (`model`).
+
+        members : typing.Optional[bool]
+            With `true`, the default, the spend of everyone in the workspace the credential bills, the one `GET /v3/balance` reports, whoever submitted the job or created the sandbox, and `members` breaks it down per member, naming each by email and name; with `false`, only your own spend, in every workspace. Any credential holding `usage:read` may pass either.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -632,6 +641,7 @@ class AsyncRawBillingClient:
                 "start": serialize_datetime(start) if start is not None else None,
                 "end": serialize_datetime(end) if end is not None else None,
                 "group_by": group_by,
+                "members": members,
             },
             request_options=request_options,
         )

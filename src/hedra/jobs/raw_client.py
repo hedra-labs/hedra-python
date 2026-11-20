@@ -109,7 +109,6 @@ from ..types.input_qwen_image2 import InputQwenImage2
 from ..types.input_qwen_image21 import InputQwenImage21
 from ..types.input_recraft_v3 import InputRecraftV3
 from ..types.input_sana import InputSana
-from ..types.input_seedance15pro import InputSeedance15Pro
 from ..types.input_seedance20 import InputSeedance20
 from ..types.input_seedance20mini import InputSeedance20Mini
 from ..types.input_seedance25 import InputSeedance25
@@ -157,12 +156,15 @@ class RawJobsClient:
         *,
         limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobSummary, JobListResponse]:
         """
-        Your jobs, newest first. Each `POST /v3/chat/completions` request is a
-        job too, whose id is the completion's `id`. A chat job has no outputs,
-        and it sends no `job.completed` or `job.failed` webhook.
+        Your jobs, or with `members=true` every job in your workspace, each
+        with its `created_by`, newest first. Each `POST /v3/chat/completions`
+        request is a job too, whose id is the completion's `id`. A chat job has
+        no outputs, and it sends no `job.completed` or `job.failed` webhook.
+        Any member can read a teammate's job by id, and delete it.
 
         Parameters
         ----------
@@ -171,6 +173,9 @@ class RawJobsClient:
 
         cursor : typing.Optional[str]
             Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        members : typing.Optional[bool]
+            With `true`, every job in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -186,6 +191,7 @@ class RawJobsClient:
             params={
                 "limit": limit,
                 "cursor": cursor,
+                "members": members,
             },
             request_options=request_options,
         )
@@ -204,6 +210,7 @@ class RawJobsClient:
                 _get_next = lambda: self.list(
                     limit=limit,
                     cursor=_parsed_next,
+                    members=members,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -396,7 +403,9 @@ class RawJobsClient:
         Afterwards `GET /v3/jobs/{job_id}` reports each output `EXPIRED`, with no
         prompt and no logs, and `GET /v3/jobs` still lists the job with its model,
         status, timestamps and cost. Another job whose output this job read by
-        `asset_id` is unchanged. Deleting a job again returns 204.
+        `asset_id` is unchanged. Deleting a job again returns 204. Any member of
+        the job's workspace can delete it, whoever submitted it; another
+        member's job outside your credential's workspace returns 404.
 
         Returns 409 `ALREADY_IN_PROGRESS` while the job, or another job that names
         this job's output by `asset_id`, is `IN_QUEUE` or `IN_PROGRESS`; 400
@@ -12725,159 +12734,6 @@ class RawJobsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def submit_seedance15pro(
-        self,
-        *,
-        input: InputSeedance15Pro,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SubmitResponse]:
-        """
-        Keyframe-driven video with native audio, from a start frame, an end frame, or both.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputSeedance15Pro
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[SubmitResponse]
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "models/seedance-15-pro",
-            method="POST",
-            json={
-                "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=InputSeedance15Pro, direction="write"
-                ),
-                "webhook": webhook,
-            },
-            headers={
-                "content-type": "application/json",
-                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    SubmitResponse,
-                    parse_obj_as(
-                        type_=SubmitResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def submit_seedance20(
         self,
         *,
@@ -17495,12 +17351,15 @@ class AsyncRawJobsClient:
         *,
         limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobSummary, JobListResponse]:
         """
-        Your jobs, newest first. Each `POST /v3/chat/completions` request is a
-        job too, whose id is the completion's `id`. A chat job has no outputs,
-        and it sends no `job.completed` or `job.failed` webhook.
+        Your jobs, or with `members=true` every job in your workspace, each
+        with its `created_by`, newest first. Each `POST /v3/chat/completions`
+        request is a job too, whose id is the completion's `id`. A chat job has
+        no outputs, and it sends no `job.completed` or `job.failed` webhook.
+        Any member can read a teammate's job by id, and delete it.
 
         Parameters
         ----------
@@ -17509,6 +17368,9 @@ class AsyncRawJobsClient:
 
         cursor : typing.Optional[str]
             Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        members : typing.Optional[bool]
+            With `true`, every job in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -17524,6 +17386,7 @@ class AsyncRawJobsClient:
             params={
                 "limit": limit,
                 "cursor": cursor,
+                "members": members,
             },
             request_options=request_options,
         )
@@ -17544,6 +17407,7 @@ class AsyncRawJobsClient:
                     return await self.list(
                         limit=limit,
                         cursor=_parsed_next,
+                        members=members,
                         request_options=request_options,
                     )
 
@@ -17739,7 +17603,9 @@ class AsyncRawJobsClient:
         Afterwards `GET /v3/jobs/{job_id}` reports each output `EXPIRED`, with no
         prompt and no logs, and `GET /v3/jobs` still lists the job with its model,
         status, timestamps and cost. Another job whose output this job read by
-        `asset_id` is unchanged. Deleting a job again returns 204.
+        `asset_id` is unchanged. Deleting a job again returns 204. Any member of
+        the job's workspace can delete it, whoever submitted it; another
+        member's job outside your credential's workspace returns 404.
 
         Returns 409 `ALREADY_IN_PROGRESS` while the job, or another job that names
         this job's output by `asset_id`, is `IN_QUEUE` or `IN_PROGRESS`; 400
@@ -29954,159 +29820,6 @@ class AsyncRawJobsClient:
             json={
                 "input": convert_and_respect_annotation_metadata(
                     object_=input, annotation=InputSana, direction="write"
-                ),
-                "webhook": webhook,
-            },
-            headers={
-                "content-type": "application/json",
-                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else generate_idempotency_key(),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    SubmitResponse,
-                    parse_obj_as(
-                        type_=SubmitResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 402:
-                raise PaymentRequiredError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def submit_seedance15pro(
-        self,
-        *,
-        input: InputSeedance15Pro,
-        webhook: typing.Optional[str] = OMIT,
-        idempotency_key: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[SubmitResponse]:
-        """
-        Keyframe-driven video with native audio, from a start frame, an end frame, or both.
-
-        Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-
-        Parameters
-        ----------
-        input : InputSeedance15Pro
-
-        webhook : typing.Optional[str]
-            URL to receive a signed completion webhook.
-
-        idempotency_key : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[SubmitResponse]
-            Accepted. The job runs asynchronously; poll `status_url` / `result_url` from the ack.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "models/seedance-15-pro",
-            method="POST",
-            json={
-                "input": convert_and_respect_annotation_metadata(
-                    object_=input, annotation=InputSeedance15Pro, direction="write"
                 ),
                 "webhook": webhook,
             },

@@ -12,9 +12,11 @@
 <dl>
 <dd>
 
-Your jobs, newest first. Each `POST /v3/chat/completions` request is a
-job too, whose id is the completion's `id`. A chat job has no outputs,
-and it sends no `job.completed` or `job.failed` webhook.
+Your jobs, or with `members=true` every job in your workspace, each
+with its `created_by`, newest first. Each `POST /v3/chat/completions`
+request is a job too, whose id is the completion's `id`. A chat job has
+no outputs, and it sends no `job.completed` or `job.failed` webhook.
+Any member can read a teammate's job by id, and delete it.
 </dd>
 </dl>
 </dd>
@@ -62,6 +64,14 @@ client.jobs.list()
 <dd>
 
 **cursor:** `typing.Optional[str]` — Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `typing.Optional[bool]` — With `true`, every job in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
     
 </dd>
 </dl>
@@ -157,7 +167,9 @@ Delete a finished job's outputs, prompt and logs.
 Afterwards `GET /v3/jobs/{job_id}` reports each output `EXPIRED`, with no
 prompt and no logs, and `GET /v3/jobs` still lists the job with its model,
 status, timestamps and cost. Another job whose output this job read by
-`asset_id` is unchanged. Deleting a job again returns 204.
+`asset_id` is unchanged. Deleting a job again returns 204. Any member of
+the job's workspace can delete it, whoever submitted it; another
+member's job outside your credential's workspace returns 404.
 
 Returns 409 `ALREADY_IN_PROGRESS` while the job, or another job that names
 this job's output by `asset_id`, is `IN_QUEUE` or `IN_PROGRESS`; 400
@@ -7158,94 +7170,6 @@ client.jobs.submit_sana(
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_seedance15pro</a>(...) -> SubmitResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Keyframe-driven video with native audio, from a start frame, an end frame, or both.
-
-Submits an asynchronous job and returns `202` with a job id. Fetch the result at `GET /v3/jobs/{job_id}` — each item in its `outputs[]` follows the `OutputItem` schema — or track progress via `GET /v3/jobs/{job_id}/status` / the SSE stream at `GET /v3/jobs/{job_id}/stream`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from hedra import Hedra, InputSeedance15Pro
-from hedra.environment import HedraEnvironment
-
-client = Hedra(
-    api_key="<token>",
-    environment=HedraEnvironment.PRODUCTION,
-)
-
-client.jobs.submit_seedance15pro(
-    input=InputSeedance15Pro(
-        prompt="prompt",
-        aspect_ratio="1:1",
-        resolution="480p",
-        duration_ms=1,
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**input:** `InputSeedance15Pro` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook:** `typing.Optional[str]` — URL to receive a signed completion webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.jobs.<a href="src/hedra/jobs/client.py">submit_seedance20</a>(...) -> SubmitResponse</code></summary>
 <dl>
 <dd>
@@ -10014,6 +9938,21 @@ client.models.get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Your jobs for this model, or with `members=true` every job for it in
+your workspace, each with its `created_by`, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -10066,6 +10005,14 @@ client.models.list_model_jobs(
 <dd>
 
 **cursor:** `typing.Optional[str]` — Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `typing.Optional[bool]` — With `true`, every job for this model in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
     
 </dd>
 </dl>
@@ -10949,6 +10896,14 @@ client.billing.get_usage()
 <dd>
 
 **group_by:** `typing.Optional[UsageGroupBy]` — One summary row (`total`), one per UTC day (`day`), or one per model (`model`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `typing.Optional[bool]` — With `true`, the default, the spend of everyone in the workspace the credential bills, the one `GET /v3/balance` reports, whoever submitted the job or created the sandbox, and `members` breaks it down per member, naming each by email and name; with `false`, only your own spend, in every workspace. Any credential holding `usage:read` may pass either.
     
 </dd>
 </dl>
