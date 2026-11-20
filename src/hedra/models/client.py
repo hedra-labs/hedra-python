@@ -98,9 +98,13 @@ class ModelsClient:
         *,
         limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[JobSummary, JobListResponse]:
         """
+        Your jobs for this model, or with `members=true` every job for it in
+        your workspace, each with its `created_by`, newest first.
+
         Parameters
         ----------
         model : str
@@ -111,6 +115,9 @@ class ModelsClient:
 
         cursor : typing.Optional[str]
             Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        members : typing.Optional[bool]
+            With `true`, every job for this model in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -136,7 +143,9 @@ class ModelsClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.list_model_jobs(model, limit=limit, cursor=cursor, request_options=request_options)
+        return self._raw_client.list_model_jobs(
+            model, limit=limit, cursor=cursor, members=members, request_options=request_options
+        )
 
     def list_voices(self, model: str, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceListResponse:
         """
@@ -399,9 +408,13 @@ class AsyncModelsClient:
         *,
         limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
+        members: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[JobSummary, JobListResponse]:
         """
+        Your jobs for this model, or with `members=true` every job for it in
+        your workspace, each with its `created_by`, newest first.
+
         Parameters
         ----------
         model : str
@@ -412,6 +425,9 @@ class AsyncModelsClient:
 
         cursor : typing.Optional[str]
             Opaque cursor from the previous page's `next_cursor`; omit for the first page.
+
+        members : typing.Optional[bool]
+            With `true`, every job for this model in your workspace, whoever submitted it; with `false`, the default, only the jobs you submitted. Any member of the workspace may pass `true`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -447,7 +463,7 @@ class AsyncModelsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list_model_jobs(
-            model, limit=limit, cursor=cursor, request_options=request_options
+            model, limit=limit, cursor=cursor, members=members, request_options=request_options
         )
 
     async def list_voices(

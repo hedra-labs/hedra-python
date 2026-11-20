@@ -10,6 +10,7 @@ from .job_log_item import JobLogItem
 from .job_status import JobStatus
 from .metrics import Metrics
 from .output_item import OutputItem
+from .sandbox_creator import SandboxCreator
 
 
 class ResultResponse(UniversalBaseModel):
@@ -67,6 +68,11 @@ class ResultResponse(UniversalBaseModel):
     currency: typing.Optional[str] = pydantic.Field(default=None)
     """
     ISO-4217 currency code for `cost`. Present exactly when `cost` is.
+    """
+
+    created_by: typing.Optional[SandboxCreator] = pydantic.Field(default=None)
+    """
+    Who submitted the job: you, another member of your workspace, or its service key. Absent from webhook payloads.
     """
 
     if IS_PYDANTIC_V2:

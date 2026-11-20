@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .job_status import JobStatus
+from .sandbox_creator import SandboxCreator
 
 
 class JobSummary(UniversalBaseModel):
@@ -28,6 +29,11 @@ class JobSummary(UniversalBaseModel):
     created_at: dt.datetime = pydantic.Field()
     """
     ISO-8601 instant the job was submitted.
+    """
+
+    created_by: typing.Optional[SandboxCreator] = pydantic.Field(default=None)
+    """
+    Who submitted the job: you, another member of your workspace, or its service key. Set on every listed job.
     """
 
     if IS_PYDANTIC_V2:

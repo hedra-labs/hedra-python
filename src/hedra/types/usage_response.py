@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .usage_bucket import UsageBucket
 from .usage_group_by import UsageGroupBy
+from .usage_member import UsageMember
 
 
 class UsageResponse(UniversalBaseModel):
@@ -39,6 +40,11 @@ class UsageResponse(UniversalBaseModel):
     data: typing.Optional[typing.List[UsageBucket]] = pydantic.Field(default=None)
     """
     One bucket per `group_by` group.
+    """
+
+    members: typing.Optional[typing.List[UsageMember]] = pydantic.Field(default=None)
+    """
+    Unless `members=false`, one entry per member who submitted a job or whose sandboxes spent in the window, most spent first. Absent with `members=false`. As with `data`, each `spent` is rounded on its own, so their sum can differ from `total_spent` by up to a millionth of a dollar per entry.
     """
 
     if IS_PYDANTIC_V2:
